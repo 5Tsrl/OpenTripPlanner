@@ -30,22 +30,22 @@ otp.widgets.EventsCategoryWidget =
 			closeable : false,
 	        transparent : true,
 	        openInitially : true,
-			sonOf:	'#sidebar'
+			sonOf:	'#tab2 .top'
 	    });
 
 		categoryView = new otp.modules.datex.CategoryView();
 		categoryView.render().$el.appendTo(this.$());
-		
+
 		filterEventsView = new otp.modules.datex.FilterEventsView();
 		filterEventsView.render().$el.appendTo(this.$());
-		
+
 	},
 
 	setContentAndShow: function(events, module) {
 		//console.log('numero eventi:', events.length)
-		eventListView = new otp.modules.datex.EventListView({collection: events})	
+		eventListView = new otp.modules.datex.EventListView({collection: events})
 		eventListView.rinfresca().$el.appendTo(this.$());
-	
+
 	},
 
 	CLASS_NAME : "otp.widgets.EventsCategoryWidget"

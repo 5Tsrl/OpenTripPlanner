@@ -165,16 +165,16 @@ otp.config = {
             id : 'analyst',
             className : 'otp.modules.analyst.AnalystModule'
         },*/
-         {	
+         {
             id : 'bikeshare',
             className : 'otp.modules.bikeshare.BikeShareModule',
             defaultBaseLayer : 'Punti d\'interesse',
             //isDefault: true
         }
-        ,{	
+        ,{
            id : 'datex',
            className : 'otp.modules.datex.EventModule',
-           defaultBaseLayer : 'Grigione',
+           defaultBaseLayer : 'Mappa',
            isDefault: true
        }
     ],
