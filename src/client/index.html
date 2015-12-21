@@ -230,6 +230,19 @@ $(document).ready(function() {
             }
         });
     }
+		
+		// Init nav toggle		
+		$( "#nav-toggle" ).click(function() {
+			$( ".main-menu-5t" ).toggleClass("active");
+			$( this ).toggleClass("active");
+			$( "#branding" ).toggleClass("full-height");
+		});
+		
+		// Init left panel tab		
+		$( "#left-panel .tabs a" ).click(function() {
+			$( "#left-panel .tabs a" ).toggleClass("active");
+			$( "#left-panel .top .inner-panel" ).toggleClass("active");
+		});
 
 });
 
@@ -243,19 +256,52 @@ $(document).ready(function() {
 <header id="branding" role="banner" class="clearfix">
 
   <hgroup id="logo">
-      <h1 id="site-title">Pronto TPL</h1>
-  </hgroup>
+    <h1 id="site-title">Pronto TPL</h1>
+  </hgroup>  
+ 
 	<nav id="main-menu-container" class="main-menu-container">
-		<div id="language-switcher" class="language-switcher" />
+  
+  <div class="shader"></div>
+  
+	<ul id="main-menu-5t" class="main-menu-5t">
+    <li><a href="#">Calcolo percorso</a></li>
+    <li><a href="#">Home</a></li>
+    <li class="active"><a href="#">Indicazioni stradali</a></li>
+    <li><a href="#">Traffico</a></li>
+    <li><a href="#">News</a></li>
+    <li><a href="#">Contatti</a></li>
+  </ul>
+  
+	<a id="nav-toggle" href="javascript:void(0)"><span></span></a>
+    
+	<!--div id="language-switcher" class="language-switcher"></div-->
+  
 	</nav>
-	<div class="partner">
-		<div class="partner-aux">
-			<a href="http://www.regione.piemonte.it/" class="logo-1 first" target="_blank">Regione Piemonte</a>
-		</div>
-	</div>
 
-</header><!-- #branding -->
-<div id="sidebar"></div>
+</header>
+
+<div id="left-panel">
+  <div class="top">
+    
+    <div class="tabs">      
+      <a class="left active" href="javascript:void(0)">Indicazioni stradali</a>      
+      <a class="right" href="javascript:void(0)">Informazioni traffico</a>
+    </div>
+    
+    <div class="inner-panel itinerary active">
+    <br><br><br>
+    Itinerary
+    </div>
+    
+    <div class="inner-panel traffic">
+    <br><br><br>
+    Traffic  
+    </div>    
+
+  </div>
+</div>
+
+<!-- div id="sidebar"></div-->
 <div id="map"><a class="powered-by" href="http://www.5t.torino.it">Powered by 5T</a></div>
 <div id="otp-minimize-tray"></div>
 
