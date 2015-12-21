@@ -350,12 +350,14 @@ a:focus {
 	background-color:#5182CB;
 }
 
-#sidebar .top .tabs{
+#sidebar .tabs {
 	height:70px;
 	background-color:#456EA9;
 }
-#sidebar .top .tabs > a{
-	display:block;
+#sidebar .tabs li{
+	display:inline;
+}
+#sidebar .tabs a{
 	opacity:0.5;
 	float:left;
 	width:45%;
@@ -373,20 +375,22 @@ a:focus {
 	-o-transition: all .3s;
 	transition: all .3s;
 }
-#sidebar .top .tabs > a:hover{
+#sidebar .tabs a:hover{
 	opacity:1;
 }
-#sidebar .top .tabs > a.active{
+#sidebar .tabs .active a{
 	opacity:1;
 	background-color:#5182CB;
 }
-#sidebar .top .tabs .left{
+#sidebar .tabs .left a{
 	background-image:url(images/icons/ic_directions_white_48px.svg);
 }
-#sidebar .top .tabs .right{
+#sidebar .tabs .right a{
 	background-image:url(images/icons/ic_directions_white_48px.svg);
 }
-#sidebar .top .inner-panel{
+#sidebar .main{width:100%;min-height:100px;float:left;}
+
+/*#sidebar .inner-panel{
 	opacity:0;
 	width:100%;
 	color:#fff;
@@ -395,9 +399,12 @@ a:focus {
 	-ms-transition: all .3s;
 	-o-transition: all .3s;
 }
-#sidebar .top .inner-panel.active{
+#sidebar .inner-panel.active{
 	opacity:1;
-}
+}*/
+
+
+
 
 /* ----------  MAP ----------*/
 
