@@ -333,7 +333,7 @@ a:focus {
 
 /* ----------  LEFT PANEL ----------*/
 
-#left-panel{
+#sidebar{
 	position:fixed;
 	width:350px;
 	height:100%;
@@ -344,15 +344,15 @@ a:focus {
 	z-index:10;
 	box-shadow:0px 0px 5px rgba(0,0,0, 0.5);
 }
-#left-panel .top{
+#sidebar .top{
 	background-color:#5182CB;
 }
 
-#left-panel .top .tabs{
+#sidebar .top .tabs{
 	height:70px;
 	background-color:#456EA9;
 }
-#left-panel .top .tabs > a{
+#sidebar .top .tabs > a{
 	display:block;
 	opacity:0.5;
 	float:left;
@@ -371,20 +371,20 @@ a:focus {
 	-o-transition: all .3s;
 	transition: all .3s;
 }
-#left-panel .top .tabs > a:hover{
+#sidebar .top .tabs > a:hover{
 	opacity:1;
 }
-#left-panel .top .tabs > a.active{
+#sidebar .top .tabs > a.active{
 	opacity:1;
 	background-color:#5182CB;
 }
-#left-panel .top .tabs .left{
+#sidebar .top .tabs .left{
 	background-image:url(images/icons/ic_directions_white_48px.svg);
 }
-#left-panel .top .tabs .right{
+#sidebar .top .tabs .right{
 	background-image:url(images/icons/ic_directions_white_48px.svg);
 }
-#left-panel .top .inner-panel{
+#sidebar .top .inner-panel{
 	opacity:0;
 	width:100%;
 	color:#fff;
@@ -393,7 +393,7 @@ a:focus {
 	-ms-transition: all .3s;
 	-o-transition: all .3s;
 }
-#left-panel .top .inner-panel.active{
+#sidebar .top .inner-panel.active{
 	opacity:1;
 }
 
