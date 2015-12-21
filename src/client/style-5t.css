@@ -32,7 +32,6 @@ author: Madeincima.it
 /* ----------- RESET DEFAULT STYLES -------------------------------------------------------------- */
 
 html {
-	_font-size: 62.5%;
 	width: 100%;
 	height: 100%
 }
@@ -41,7 +40,6 @@ body {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	_font-size: 1.2em;
 	margin: 0;
 	padding: 0;
 	overflow:hidden;
@@ -113,6 +111,7 @@ input, select {
 html {
 	overflow-y: hidden;
 }
+
 /* ----------- COMMON CLASSES -------------------------------------------------------------- */
 
 .alt, .navigation {
@@ -160,6 +159,7 @@ a:focus {
 #otp-widgetManager {
 	display: none;
 }
+
 /* ----------- STRUCTURE ------------------------------------------------------------------------ */
 
 /* ----------- HEADER ---------- */
@@ -201,6 +201,7 @@ a:focus {
 #site-title {
 	margin: 0px;
 }
+
 /* ----------- NAV ---------- */
 
 .main-menu-container {
@@ -244,6 +245,7 @@ a:focus {
 #main-menu-5t.active {
 	left: 0%;
 }
+
 /* ----------- MOBILE NAV TOGGLE ---------- */
 
 #nav-toggle {
@@ -331,11 +333,11 @@ a:focus {
 	background: #5580a9
 }
 
-/* ----------  LEFT PANEL ----------*/
+/* ----------  SIDEBAR ----------*/
 
 #sidebar{
 	position:fixed;
-	width:350px;
+	width:80%;
 	height:100%;
 	left:0px;
 	top:90px;
@@ -356,9 +358,9 @@ a:focus {
 	display:block;
 	opacity:0.5;
 	float:left;
-	width:105px;
+	width:45%;
 	height:50px;
-	padding:20px 0px 0px 70px;
+	padding:5% 0px 0px 5%;
 	color:#fff;
 	text-transform:uppercase;
 	font-size:1em;
@@ -401,7 +403,7 @@ a:focus {
 
 #map {
 	top: 90px;
-	left:350px;
+	left:80%;
 	-webkit-transition: all .3s;
 	-moz-transition: all .3s;
 	-ms-transition: all .3s;
@@ -422,13 +424,14 @@ a:focus {
 	line-height: 0;
 	font-size: 0;
 }
+
 /* ----------  WIDGETS ----------*/
 
 .otp-widget-nonTransparent {
-	box-shadow: 0 0 7px -3px #000;
 	z-index: 11000;
 	position: absolute;
-	background: #fff
+	background-color:#5182CB;
+	border:none;
 }
 .handle {
 	cursor: move
@@ -447,11 +450,15 @@ a:focus {
 .otp-widget-header h2 span {
 	color: #6a9308
 }
+
 /* ----------  Box Trip planner ----------*/
 
 .otp-defaultTripWidget {
-	bottom: 34px;
-	padding: 20px 25px 25px 25px;
+	width:350px;
+	position:static;
+	padding: 0px;
+	border:none;
+	box-shadow:none;
 }
 .otp-defaultTripWidget input {
 	background: #fbfbfb;
@@ -613,9 +620,6 @@ a:focus {
 	border-color: #e9e9e9;
 	border-radius: 4px;
 }
-.otp-widget-nonTransparent {
-	padding: 20px 25px 25px;
-}
 #planner-itinAccord-0 a {
 	color: #29547c
 }
@@ -684,7 +688,6 @@ a:focus {
 .otp-itin-div-icon {
 	width: 89px;
 	height: 52px;
-	_text-align: center;
 	font-size: 9px;
 	font-weight: bold;
 }
@@ -855,14 +858,24 @@ a:focus {
 
 /* END MEDIA SCREEN*/
 
+@media only screen and (min-width:30em) { /* 480px  */
+
+#sidebar {
+	width:350px;
+}
+#map{
+		left:350px;
+}
+
+}
+
 @media only screen and (min-width:60em) { /* 960px  */
 
 .main-menu-container{
 	position:absolute;
 	top:15px;
 	right:40px;	
-}
-	
+}	
 #main-menu-5t {
 	position:static;
 	width:100%;
@@ -897,7 +910,8 @@ a:focus {
 }
 
 }
- @media only screen and (min-width:80em) { /* 1280px */
+
+@media only screen and (min-width:80em) { /* 1280px */
 	 
 #main-menu-5t {
 	display: block;
