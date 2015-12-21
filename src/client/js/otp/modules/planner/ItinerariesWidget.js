@@ -46,7 +46,7 @@ otp.widgets.ItinerariesWidget =
             minimizable: false,
             draggable : false,
             persistOnClose : true,
-            sonOf: '#sidebar',
+            sonOf: '#tab1 .main',
         });
         //this.$().addClass('otp-itinsWidget');
         //this.$().resizable();
@@ -151,7 +151,7 @@ otp.widgets.ItinerariesWidget =
               // IE doesn't register the blur when sorting
               // so trigger focusout handlers to remove .ui-state-focus
               //ui.item.children( "h3" ).triggerHandler( "focusout" );
-     
+
               // Refresh accordion to handle new order
               $( this ).accordion( "refresh" );
             }
@@ -294,7 +294,7 @@ otp.widgets.ItinerariesWidget =
         if (deltaMinutes<1.5) deltaMinutes=1.5;
         return Math.log(deltaMinutes);
     },
-    
+
     renderHeaderContent : function(itin, index, parentDiv) {
         parentDiv.empty();
         var div = $('<div style="position: relative; height: 20px;"></div>').appendTo(parentDiv);
@@ -412,7 +412,7 @@ otp.widgets.ItinerariesWidget =
                 if (leg.routeLongName) {
                     headerHtml += leg.routeLongName;
                 }
-                
+
                 if(leg.headsign) {
                     /*TRANSLATORS: used in sentence like: <Long name of public transport route> "to" <Public transport
                     headsign>. Used in showing itinerary*/
@@ -448,7 +448,7 @@ otp.widgets.ItinerariesWidget =
                 heightStyle: "content",
                 collapsible: true
             });
-            
+
             $(legDiv).find("h3 a").click(function() {
                 //window.location = $(this).attr('href');
                 window.open($(this).attr('href'), '_blank');
@@ -798,7 +798,7 @@ otp.widgets.ItinerariesWidget =
 
     constructLink : function(queryParams, additionalParams) {
         //raf reformat date as locale, while speak iso 8601 with server
-        queryParams.date = moment(queryParams.date).format(otp.config.locale.time.date_format); 
+        queryParams.date = moment(queryParams.date).format(otp.config.locale.time.date_format);
         additionalParams = additionalParams ||  { };
         return otp.config.siteUrl + '?module=' + this.module.id + "&" +
             otp.util.Text.constructUrlParamString(_.extend(_.clone(queryParams), additionalParams));
