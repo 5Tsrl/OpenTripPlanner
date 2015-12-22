@@ -45,6 +45,9 @@
 	width:350px;
 	top:90px;
 }
+#sidebar .tab-container {
+  padding: 15px 0px 0px 20px;
+}
 #sidebar .tabs {
 	height:70px;
 }
@@ -56,6 +59,37 @@
 	background-position:15px 15px;
 	font-size:1em;
 	line-height:1.1em;
+}
+
+/* ----------  Box Trip planner ----------*/
+
+#otp-planner-optionsWidget {
+	font-size:1em;
+}
+#otp-planner-optionsWidget-locSelector-reverseButton {
+	background-size:35px;
+	height: 30px;
+	width: 30px;
+}
+#otp-planner-optionsWidget .address-fields .field label{
+	font-size:1.1em;
+	padding:6px 0px 0px 0px;
+	width:30px;
+}
+#otp-planner-optionsWidget .address-fields .field input{
+	height:26px;
+	padding:0px 0px 0px 50px;
+}
+#otp-planner-optionsWidget-timeSelector-timeSelector select {
+	width: 90px;
+	background-position: right 1px;
+}
+#otp-planner-optionsWidget-timeSelector-date{
+	padding: 0px 5px;
+}
+#otp-planner-optionsWidget-timeSelector-timeSelector select,
+#otp-planner-optionsWidget-timeSelector-timeSelector input{
+	margin: 0px 15px 0px 0px;
 }
 
 /* ----------  MAP ----------*/

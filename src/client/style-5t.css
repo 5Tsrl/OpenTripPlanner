@@ -36,15 +36,21 @@ html {
 	height: 100%
 }
 body {
-	font-family: 'Open Sans', sans-serif;
 	position: relative;
 	width: 100%;
 	height: 100%;
 	margin: 0;
 	padding: 0;
 	overflow:hidden;
+	line-height: 1;
 }
-div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+body *{
+	font-family: 'Open Sans', sans-serif;
+}
+div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, 
+img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, 
+table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, 
+hgroup, menu, nav, section, summary, time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -52,9 +58,6 @@ div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, add
 	font-size: 1em;
 	vertical-align: baseline;
 	background: transparent
-}
-body {
-	line-height: 1
 }
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 	display: block
@@ -429,12 +432,23 @@ a:focus {
 
 /* ----------  WIDGETS ----------*/
 
-.otp-widget-nonTransparent {
-	z-index: 11000;
-	position: absolute;
-	background-color:#4089CE;
-	border:none;
+.otp-widget-header {
+	display:none;
 }
+.otp-widget-header-buttons {
+	display:none;
+}
+.ui-button{
+	background:none;
+	background-color:#65A4E0;
+	border:none;
+	color:#fff;
+	border-bottom:1px solid #7AADDC;
+	border-radius:2px;
+}
+
+/*
+
 .handle {
 	cursor: move
 }
@@ -453,13 +467,111 @@ a:focus {
 	color: #6a9308
 }
 
+*/
+
 /* ----------  Box Trip planner ----------*/
 
 #otp-planner-optionsWidget {
-	
-
-
+	z-index: 11000;
+	position: relative;
+	background-color:#4089CE;
+	border:none;
+	box-shadow:none;
+	left:0px;
+	right:0px;
+	top:0px;
+	bottom:0px;
+	padding:0px;
+	margin:0px;
+	width:100%;
+	font-size:0.9em;
 }
+#otp-planner-optionsWidget hr{
+	display:none;
+}
+#otp-planner-optionsWidget select,
+#otp-planner-optionsWidget input{
+	background-color:#4089CE;
+	border:none;
+	color:#fff;
+	border-bottom:1px solid #7AADDC;
+}
+#otp-planner-optionsWidget .address-fields .field{
+	position:relative;
+	clear:both;
+	margin:0px 0px 10px 0px;
+}
+#otp-planner-optionsWidget .address-fields .field label{
+	position:absolute;
+	width:20px;
+	padding:6px 0px 0px 0px;
+	text-align:right;
+	text-transform:lowercase;
+	opacity:0.6;
+	cursor:default;
+}
+#otp-planner-optionsWidget .address-fields .field input{
+	width:85%;
+	height:22px;
+	padding:0px 0px 0px 30px;
+	font-size:1.1em;
+}
+#otp-planner-optionsWidget-locSelector-reverseButton {
+	opacity:0.5;
+	background-image:url(images/icons/arrow-revert-fields.svg);
+	background-size:25px;
+	background-repeat:no-repeat;
+	background-color:#4089CE;
+	cursor: pointer;
+	display: block;
+	height: 25px;
+	width: 25px;
+	border: 0;
+	position: absolute;
+	top: 14px;
+	right: 5%;
+	-webkit-transition: all .3s;
+	-moz-transition: all .3s;
+	-ms-transition: all .3s;
+	-o-transition: all .3s;
+	transition: all .3s;
+}
+#otp-planner-optionsWidget-locSelector-reverseButton:hover {
+	opacity:1;
+}
+#otp-planner-optionsWidget-timeSelector-timeSelector {
+	margin:0px 0px 10px 0px;
+}
+#otp-planner-optionsWidget-timeSelector-timeSelector button{
+	display:none;
+}
+#otp-planner-optionsWidget-timeSelector-timeSelector select{
+	width:80px;
+	background-image:url(images/icons/ic_expand_more_white_48px.svg);
+	background-repeat:no-repeat;
+	background-position: right -1px;
+	background-size: 23px;
+	overflow:hidden;	
+}
+#otp-planner-optionsWidget-timeSelector-timeSelector select,
+#otp-planner-optionsWidget-timeSelector-timeSelector input{
+	margin: 0px 5px 0px 0px;
+}
+#otp-planner-optionsWidget-submit-button{
+	height: 20px;
+	font-size: 0.8em;
+	text-transform:uppercase;
+}
+.otp-planner-optionsWidget-modeSelector-icons input{
+	visibility:hidden;
+}
+.otp-planner-optionsWidget-modeSelector-icons input:before{
+	display:block;
+	width:20px;
+	height:20px;
+	background-color:#990000;
+}
+
 
 /*
 
@@ -522,17 +634,6 @@ a:focus {
 	margin-left: 4px;
 	font-weight: normal;
 }
-#otp-planner-optionsWidget-locSelector-reverseButton {
-	background: #fff url(images/5t/arrow-revert-fields.gif) -27px 0 no-repeat;
-	cursor: pointer;
-	display: block;
-	height: 25px;
-	width: 20px;
-	border: 0;
-	position: absolute;
-	top: 27%;
-	left: 90%;
-}
 #otp-planner-optionsWidget-locSelector-reverseButton:hover {
 	background-position: 0 0;
 }
@@ -574,9 +675,6 @@ a:focus {
 	margin-right: 5px;
 	padding: 5px 10px 5px 0;
 }
-
-*/
-
 .ui-button-text-only {
 	font-size: .9em;
 }
@@ -824,6 +922,11 @@ a:focus {
 	text-transform: uppercase;
 	color: #1f4168;
 }
+
+*/
+
+/* ----------  Markers ----------*/
+
 .leaflet-marker-icon div {
 	float: left;
 	width: 35px;
