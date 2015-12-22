@@ -44,7 +44,8 @@ otp.widgets.EventsCategoryWidget =
 	setContentAndShow: function(events, module) {
 		//console.log('numero eventi:', events.length)
 		eventListView = new otp.modules.datex.EventListView({collection: events})
-		eventListView.rinfresca().$el.appendTo(this.$());
+		//eventListView.rinfresca().$el.appendTo(this.$());
+		eventListView.rinfresca().$el.appendTo($('#tab2 .main'));
 
 	},
 
