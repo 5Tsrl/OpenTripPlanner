@@ -138,7 +138,7 @@ otp.config = {
 
     showLogo            : false,
     showTitle           : false,
-    showModuleSelector  : true,
+    showModuleSelector  : false,
     metric              : false,
 
 
@@ -159,23 +159,23 @@ otp.config = {
             id : 'planner',
             className : 'otp.modules.multimodal.MultimodalPlannerModule',
             defaultBaseLayer : 'Mappa',
-            //isDefault: true
+            isDefault: true
         },
         /*{
             id : 'analyst',
             className : 'otp.modules.analyst.AnalystModule'
-        },*/
+        },
          {
             id : 'bikeshare',
             className : 'otp.modules.bikeshare.BikeShareModule',
             defaultBaseLayer : 'Punti d\'interesse',
             //isDefault: true
         }
-        ,{
+        ,*/{
            id : 'datex',
            className : 'otp.modules.datex.EventModule',
            defaultBaseLayer : 'Mappa',
-           isDefault: true
+           //isDefault: true
        }
     ],
 
