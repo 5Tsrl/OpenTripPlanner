@@ -45,9 +45,9 @@
 	width:350px;
 	top:90px;
 }
-#sidebar .tab-container {
-  padding: 15px 0px 0px 20px;
-}
+
+/* ----------  TABS ----------*/
+
 #sidebar .tabs {
 	height:70px;
 }
@@ -60,11 +60,16 @@
 	font-size:1em;
 	line-height:1.1em;
 }
+#sidebar .tab1 .top,
+#sidebar .tab2 .top,{
+	padding:0px 0px 0px 20px;
+}
 
 /* ----------  Box Trip planner ----------*/
 
 #otp-planner-optionsWidget {
 	font-size:1em;
+	padding:0px 0px 0px 20px;
 }
 #otp-planner-optionsWidget-locSelector-reverseButton {
 	background-size:35px;

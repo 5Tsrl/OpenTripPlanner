@@ -353,6 +353,23 @@ a:focus {
 
 /* ----------  TABS ----------*/
 
+#sidebar .tab-container{
+	background-color:#4089CE;
+	color:#fff;
+	padding:15px 0px 0px 0px;
+	height:100%;
+}
+#sidebar .tab-content{
+	height:100%;
+}
+#sidebar .main{
+	width:100%;
+	height:100%;
+	min-height:100px;
+	background-color:#fff;
+	overflow:auto;
+	position:relative;
+}
 #sidebar .tabs {
 	height:55px;
 	background-color:#3673AC;
@@ -388,22 +405,14 @@ a:focus {
 	background-color:#4089CE;
 }
 #sidebar .tabs .left a{
-	background-image:url(images/icons/ic_directions_white_48px.svg);
+	background-image:url(images/icons/ic_directions_white.svg);
 }
 #sidebar .tabs .right a{
-	background-image:url(images/icons/ic_directions_traffic_white_48px.svg);
+	background-image:url(images/icons/ic_directions_traffic_white.svg);
 }
-#sidebar .tab-container{
-	background-color:#4089CE;
-	color:#fff;
-	padding:15px 0px 0px 15px;
+#sidebar .tab1 .top{
+	padding:0px 0px 0px 15px;
 }
-#sidebar .main{
-	width:100%;
-	min-height:100px;
-	float:left;
-}
-
 /* ----------  MAP ----------*/
 
 #map {
@@ -447,29 +456,7 @@ a:focus {
 	border-radius:2px;
 }
 
-/*
-
-.handle {
-	cursor: move
-}
-.box-title-close {
-	padding-top: 13px;
-	height: 25px
-}
-.otp-widget-header h2 {
-	float: left;
-	_font-size: 1.25em;
-	text-transform: uppercase;
-	color: #000000;
-	font-weight: bold;
-}
-.otp-widget-header h2 span {
-	color: #6a9308
-}
-
-*/
-
-/* ----------  Box Trip planner ----------*/
+/* ----------  Box Trip planner TOP ----------*/
 
 #otp-planner-optionsWidget {
 	z-index: 11000;
@@ -481,16 +468,20 @@ a:focus {
 	right:0px;
 	top:0px;
 	bottom:0px;
-	padding:0px;
+	padding:0px 0px 0px 15px;
 	margin:0px;
-	width:100%;
 	font-size:0.9em;
 }
 #otp-planner-optionsWidget hr{
 	display:none;
 }
+#otp-planner-optionsWidget select{
+	-webkit-appearance: none;
+	-moz-appearance: none; 
+}
 #otp-planner-optionsWidget select,
 #otp-planner-optionsWidget input{
+	background: transparent;
 	background-color:#4089CE;
 	border:none;
 	color:#fff;
@@ -518,7 +509,7 @@ a:focus {
 }
 #otp-planner-optionsWidget-locSelector-reverseButton {
 	opacity:0.5;
-	background-image:url(images/icons/arrow-revert-fields.svg);
+	background-image:url(images/icons/ic_arrow_revert_fields_white.svg);
 	background-size:25px;
 	background-repeat:no-repeat;
 	background-color:#4089CE;
@@ -528,7 +519,7 @@ a:focus {
 	width: 25px;
 	border: 0;
 	position: absolute;
-	top: 14px;
+	top: 100px;
 	right: 5%;
 	-webkit-transition: all .3s;
 	-moz-transition: all .3s;
@@ -547,7 +538,7 @@ a:focus {
 }
 #otp-planner-optionsWidget-timeSelector-timeSelector select{
 	width:80px;
-	background-image:url(images/icons/ic_expand_more_white_48px.svg);
+	background-image:url(images/icons/ic_expand_more_white.svg);
 	background-repeat:no-repeat;
 	background-position: right -1px;
 	background-size: 23px;
@@ -572,9 +563,171 @@ a:focus {
 	background-color:#990000;
 }
 
+/* ----------  Box Trip planner MAIN ----------*/
+
+#planner-itinWidget{
+	position:static;
+	top:0px;
+	left:0px;
+	padding:0px;
+	border:none;
+	border-radius:0px;
+	box-shadow:none;
+	background:none;
+	width:90%;	
+}
+#planner-itinWidget .ui-accordion-header{
+	border:none;
+	background-color:#fff;	
+}
+#planner-itinWidget .ui-accordion-header .ui-accordion-header-icon{
+	display:none;	
+}
+#planner-itinWidget .ui-accordion-header .otp-itinsAccord-header-number{
+	background-color:#999;
+	border-radius:100%;
+	width:20px;
+	height:20px;
+	text-shadow:none;
+	font-size:0.9em;		
+}
+
+/* ----------  Box Traffic info TOP ----------*/
+
+#sidebar .otp-widget {
+	padding:0px 0px 0px 10px;
+  position: static;				
+}
+#sidebar .otp-widget h2{
+  position: static;
+	text-shadow:none;		
+}
+#sidebar .otp-widget .lista-categorie{
+	position:relative;
+}
+#sidebar .otp-widget .lista-categorie ul{
+	overflow:hidden;
+	margin:10px 0px 0px 0px;
+}
+#sidebar .otp-widget .lista-categorie ul li{
+	float:left;
+	margin:0px 10px 0px 0px;
+}
+#sidebar .otp-widget .lista-categorie ul li input{
+	display:none;	
+}
+#sidebar .otp-widget .lista-categorie ul li label{
+	display:block;
+	width:35px;
+	height:35px;
+	background-color:#5097D9;
+	border-radius:100%;
+	text-indent: -9999px;
+	background-image:url(images/icons/ic_directions_bike_white.svg);
+	background-size:20px;
+	background-position:center center;
+	background-repeat:no-repeat;
+}
+#sidebar .otp-widget .filtroEvt{
+	margin:10px 0px 10px 0px;
+}
+
+/* ----------  Box Traffic info MAIN ----------*/
+
+#tab2{
+	position:relative;
+}
+#tab2 .main {
+	background-color:#EEEEEE;
+	color:#444;
+}
+#tab2 .main ul li a{
+	display:block;
+	position:relative;
+	color:#444;
+	font-size:1em;
+	line-height:1.1em;
+	padding:15px 20px 15px 55px;
+	border-bottom: 1px solid #DEDEDE;
+}
+#tab2 .main ul li a:hover{
+	background-color:#F7F7F7;
+}
+#tab2 .main ul li a span.icon{
+	display:block;
+	position:absolute;
+	left:10px;
+	top:15px;
+	width:35px;
+	height:35px;
+	border-radius:100%;
+	background-color:#4089CE;
+	background-size:20px;
+	background-repeat:no-repeat;
+	background-position:center center;	
+}
+#tab2 .main ul li.alert a span.icon{
+	background-image:url(images/icons/ic_alert_white.svg);
+}
+#tab2 .main ul li.road_sign a span.icon{
+	background-image:url(images/icons/ic_road_sign_white.svg);
+}
+#tab2 .main ul li.weather a span.icon{
+	background-image:url(images/icons/ic_weather_white.svg);
+}
+#tab2 .main ul li.men_at_work a span.icon{
+	background-image:url(images/icons/ic_alert_white.svg);
+}
+#tab2 .main ul li.traffic_jam a span.icon{
+	background-image:url(images/icons/ic_traffic_jam_white.svg);
+}
+#tab2 .main ul li a > p{
+	font-size:0.9em;
+	line-height:1.1em;
+}
+#tab2 .main ul li a > p > em{
+	text-transform:uppercase;
+	font-style:normal;
+	font-weight:700;
+	font-size:0.9em;
+	padding:3px 0px;
+	display:block;
+}
+#tab2 .main ul li a > h3{
+	font-size:1.1em;
+	padding:0px 0px 5px 0px;
+	font-weight:600;
+}
+#tab2 .main ul li.fixed a{
+	background-color:#fff;
+}
+#tab2 .main ul li.fixed a span.icon{
+	background-color:#FF8420;
+}
+
+
+
+/* ----------  Commented ----------*/
 
 /*
 
+.handle {
+	cursor: move
+}
+.box-title-close {
+	padding-top: 13px;
+	height: 25px
+}
+.otp-widget-header h2 {
+	float: left;
+	_font-size: 1.25em;
+	text-transform: uppercase;
+	color: #000000;
+	font-weight: bold;
+}
+.otp-widget-header h2 span {
+	color: #6a9308
+}
 .otp-defaultTripWidget {
 	width:350px;
 	position:static;
