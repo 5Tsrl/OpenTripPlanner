@@ -37,19 +37,19 @@
 
 
 <!-- TimeSelector -->
-
+<!--<button id="{{widgetId}}-nowButton">{{now}}</button>-->
 <script id="otp-tripOptions-timeSelector" type="text/html">
 
-    <div id="{{widgetId}}-timeSelector" class="notDraggable">
+    <div id="{{widgetId}}-timeSelector" class="advanced-options notDraggable">
 
         <select id="{{widgetId}}-depArr">
             <option>{{depart}}</option>
             <option>{{arrive}}</option>
         </select>
         
-        <input type="text" id="{{widgetId}}-time" class="otp-time-input" />
         <input type="text" id="{{widgetId}}-date" class="otp-date-input" />
-        <button id="{{widgetId}}-nowButton">{{now}}</button>        
+        <input type="text" id="{{widgetId}}-time" class="otp-time-input" />
+        
     </div>
 
 </script>
@@ -85,11 +85,11 @@
 -->
 
 <!-- MaxDistanceSelector -->
-
+<!-- raf {{label}} <input id="{{widgetId}}-value" type="text" style="width:35px;" value="{{currentMaxDistance}}" /> {{distSuffix}}&nbsp; -->
 <script id="otp-tripOptions-maxDistance" type="text/html">
 
     <div class="notDraggable">
-        {{label}} <input id="{{widgetId}}-value" type="text" style="width:35px;" value="{{currentMaxDistance}}" /> {{distSuffix}}&nbsp;
+        {{label}}
         <select id="{{widgetId}}-presets"><option>{{presets_label}}:</option>
             {{#presets}}
                 <option>{{.}} {{distSuffix}}</option>

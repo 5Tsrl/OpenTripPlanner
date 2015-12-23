@@ -303,10 +303,12 @@ otp.widgets.tripoptions.TimeSelector =
 
     id          :  null,
     epoch       : null,
+    class       : null,
 
     initialize : function(tripWidget) {
         otp.widgets.tripoptions.TripOptionsWidgetControl.prototype.initialize.apply(this, arguments);
         this.id = tripWidget.id+"-timeSelector";
+        this.class = 'advanced-options'
 
         ich['otp-tripOptions-timeSelector']({
             widgetId : this.id,
@@ -1213,7 +1215,8 @@ otp.widgets.tripoptions.Submit =
         this.id = tripWidget.id+"-submit";
 
         //TRANSLATORS: button to send query for trip planning
-        $('<div class="notDraggable" style="text-align:center;"><button id="'+this.id+'-button">' + _tr("Plan Your Trip") + '</button></div>').appendTo(this.$());
+        //raf $('<div class="notDraggable" style="text-align:center;"><button id="'+this.id+'-button">' + _tr("Plan Your Trip") + '</button></div>').appendTo(this.$());
+        $('<button id="'+this.id+'-button">' + _tr("Plan Your Trip") + '</button>').appendTo(this.$());
         //console.log(this.id+'-button')
 
     },

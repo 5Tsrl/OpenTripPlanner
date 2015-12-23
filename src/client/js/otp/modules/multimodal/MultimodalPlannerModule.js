@@ -58,11 +58,23 @@ otp.modules.multimodal.MultimodalPlannerModule =
 
         if(this.webapp.geocoders && this.webapp.geocoders.length > 0) {
             this.optionsWidget.addControl("locations", new otp.widgets.tripoptions.LocationsSelector(this.optionsWidget, this.webapp.geocoders), true);
-            this.optionsWidget.addVerticalSpace(12, true);
+            // this.optionsWidget.addVerticalSpace(12, true);
         }
 
+        //advanced option 
+        var advancedOptionsWidgetConfig = {
+                title : _tr("Trip Options"),
+                closeable : false,
+                draggable: false,
+                persistOnClose: true,
+                //sonOf: '#tab1 .top'
+                sonOf: 'otp-'+this.id+'-optionsWidget'
+        };
+        this.advancedOptionsWidget = new otp.widgets.tripoptions.TripOptionsWidget(
+            'otp-'+this.id+'-advvancedOptionsWidget', this, advancedOptionsWidgetConfig);
+
         this.optionsWidget.addControl("time", new otp.widgets.tripoptions.TimeSelector(this.optionsWidget), true);
-        this.optionsWidget.addVerticalSpace(12, true);
+        // this.optionsWidget.addVerticalSpace(12, true);
 
 
         var modeSelector = new otp.widgets.tripoptions.ModeSelector(this.optionsWidget);
