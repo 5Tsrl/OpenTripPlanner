@@ -208,7 +208,47 @@
 <script type="text/javascript" language="javascript">
 
 
+
+
 $(document).ready(function() {
+	
+
+	$('.panel-trigger').click(function(){
+		$(this).toggleClass('closed');
+		$('#sidebar').toggleClass('closed');
+		$('#map').toggleClass('open');
+		if(!$('.mapoverlay').hasClass('closed')){
+			$('.mapoverlay').hide().toggleClass('closed');
+		} else if( $('body').width() < 401 && $('.mapoverlay').hasClass('closed')){
+			$('.mapoverlay').show().toggleClass('closed');
+		}		
+	});
+
+	$('.mapoverlay').click(function(){
+		$(this).hide().toggleClass('closed');
+		$('.panel-trigger').toggleClass('closed');
+		$('#sidebar').toggleClass('closed');
+		$('#map').toggleClass('open');
+	});
+
+	function resizeEndActions(){
+		if($('body').width() > 400 || $('#sidebar').hasClass('closed')){
+			$('.mapoverlay').hide().addClass('closed');
+		} else {
+			$('.mapoverlay').show().removeClass('closed');
+		}
+	}
+
+	resizeEndActions();
+
+	$(window).resize(function() {
+		clearTimeout(window.resizedFinished);
+		window.resizedFinished = setTimeout(function(){
+			resizeEndActions();
+		}, 250);
+	});
+
+
 	//Sets datepicker language based on selected/detected language in config.js
 	$.datepicker.setDefaults($.datepicker.regional[otp.config.locale.config.datepicker_locale_short]);
     var templateUrls = [ //new Array(
@@ -240,11 +280,6 @@ $(document).ready(function() {
 			$( "#branding" ).toggleClass("full-height");
 		});
 		
-		// Init left panel tab		
-		/*$( "#sidebar .tabs a" ).click(function() {
-			$( "#sidebar .tabs a" ).toggleClass("active");
-			$( "#sidebar .top .inner-panel" ).toggleClass("active");
-		});*/
 
 
 		// ---- Tabs ----------------------------------------------------------------------------------------------------------
@@ -277,7 +312,7 @@ $(document).ready(function() {
 </script>
 
 </head>
-<body>
+<body class="js-media-query-tester">
 
 <header id="branding" role="banner" class="clearfix">
 
@@ -373,6 +408,7 @@ $(document).ready(function() {
         </div>
     </div>
 
+<span class="panel-trigger fonticon"></span>
   
 </div>
 
@@ -381,6 +417,8 @@ $(document).ready(function() {
 
 
 <div id="map"><a class="powered-by" href="http://www.5t.torino.it">Powered by 5T</a></div>
+<div class="mapoverlay"></div>
+
 <div id="otp-minimize-tray"></div>
 
 <div id="otp-spinner"><img src="images/spinner.gif"></div>

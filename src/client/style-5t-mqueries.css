@@ -45,6 +45,7 @@
 	width:350px;
 	top:90px;
 }
+#sidebar.closed{left:-340px;}
 
 /* ----------  TABS ----------*/
 
