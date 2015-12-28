@@ -1231,6 +1231,32 @@ otp.widgets.tripoptions.Submit =
     }
 });
 
+
+//** Trigger-advanced-option **//
+
+otp.widgets.tripoptions.TriggerOption =
+    otp.Class(otp.widgets.tripoptions.TripOptionsWidgetControl, {
+
+    initialize : function(tripWidget) {
+        otp.widgets.tripoptions.TripOptionsWidgetControl.prototype.initialize.apply(this);//, arguments);
+        this.id = tripWidget.id+"-triggerOption";
+
+        //TRANSLATORS: button to send query for trip planning
+        //raf $('<div class="notDraggable" style="text-align:center;"><button id="'+this.id+'-button">' + _tr("Plan Your Trip") + '</button></div>').appendTo(this.$());
+        //raf $('<button id="'+this.id+'-triggerOption">' + _tr("Plan Your Trip") + '</button>').appendTo(this.$());
+        $('<strong id="'+this.id+'-triggerOption" class="trigger-option">OPZIONI</strong>').appendTo(this.$());
+    },
+
+    doAfterLayout : function() {
+        var this_ = this;
+        $('#'+this.id+'-triggerOption').button().click(function() {
+            //this_.tripWidget.pushSettingsToModule();
+            alert('toggle advanced options')
+        });
+    }
+});
+
+
 //** Group Trip **//
 
 otp.widgets.tripoptions.GroupTripOptions =

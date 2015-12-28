@@ -60,6 +60,10 @@ otp.modules.multimodal.MultimodalPlannerModule =
             this.optionsWidget.addControl("locations", new otp.widgets.tripoptions.LocationsSelector(this.optionsWidget, this.webapp.geocoders), true);
             // this.optionsWidget.addVerticalSpace(12, true);
         }
+        
+        //raf opzioni avanzate
+        this.optionsWidget.addControl("AdvOpz", new otp.widgets.tripoptions.TriggerOption(this.optionsWidget), true);
+        
 
         //advanced option 
         var advancedOptionsWidgetConfig = {
