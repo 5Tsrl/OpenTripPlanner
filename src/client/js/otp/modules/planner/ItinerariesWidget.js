@@ -195,6 +195,7 @@ otp.widgets.ItinerariesWidget =
         var this_ = this;
         var buttonRow = $("<div class='otp-itinsButtonRow'></div>").appendTo(this.footer);
         //TRANSLATORS: button to first itinerary
+        /*
         $('<button>'+_tr("First")+'</button>').button().appendTo(buttonRow).click(function() {
             var itin = this_.itineraries[this_.activeIndex];
             var params = itin.tripPlan.queryParams;
@@ -209,6 +210,7 @@ otp.widgets.ItinerariesWidget =
             this_.module.updateActiveOnly = true;
             this_.module.planTripFunction.call(this_.module, params);
         });
+        */
         //TRANSLATORS: button to previous itinerary
         $('<button>'+_tr("Previous")+'</button>').button().appendTo(buttonRow).click(function() {
             var itin = this_.itineraries[this_.activeIndex];
@@ -242,6 +244,7 @@ otp.widgets.ItinerariesWidget =
             this_.module.planTripFunction.call(this_.module, params);
         });
         //TRANSLATORS: button to last itinerary
+        /*
         $('<button>'+_tr("Last")+'</button>').button().appendTo(buttonRow).click(function() {
             var itin = this_.itineraries[this_.activeIndex];
             var params = itin.tripPlan.queryParams;
@@ -256,6 +259,7 @@ otp.widgets.ItinerariesWidget =
             this_.module.updateActiveOnly = true;
             this_.module.planTripFunction.call(this_.module, params);
         });
+        */
     },
 
     // returns HTML text
