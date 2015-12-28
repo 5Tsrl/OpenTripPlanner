@@ -1371,10 +1371,13 @@ otp.widgets.tripoptions.TriggerOption =
 
     doAfterLayout : function() {
         var this_ = this;
+       
         $('#'+this.id+'-triggerOption').button().click(function() {
             //this_.tripWidget.pushSettingsToModule();
-            alert('toggle advanced options')
+            
+            $(this).toggleClass('open').parent().next().slideToggle().next().slideToggle();
         });
+
     }
 });
 
