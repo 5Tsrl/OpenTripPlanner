@@ -519,7 +519,7 @@ a:focus {
 	width: 25px;
 	border: 0;
 	position: absolute;
-	top: 100px;
+	top: 15px;
 	right: 5%;
 	-webkit-transition: all .3s;
 	-moz-transition: all .3s;
@@ -592,15 +592,67 @@ a:focus {
 	font-size:0.9em;		
 }
 
+.otp-defaultTripWidget{width:auto;}
+.itinerary .top,.traffic .top{padding:5px 0 10px 10px;}
+
+#tripmode{
+	overflow:hidden;
+	margin:10px 0px 0px 0px;
+}
+#tripmode li{
+	float:left;
+	margin:0px 10px 0px 0px;
+}
+#tripmode li input{
+	display:none;	
+}
+#tripmode li label{
+	display:block;
+	width:40px;
+	height:40px;
+	text-indent: -9999px;
+	background-image:url(images/icons/ic_directions_walk_blue.svg);
+	background-size:30px;
+	background-position:center center;
+	background-repeat:no-repeat;
+}
+
+#sidebar .otp-widget .lista-categorie li:hover label,#sidebar .otp-widget .lista-categorie li.active label{
+	background-image:url(images/icons/ic_road_sign_white.svg);
+}
+
+#sidebar .otp-widget .lista-categorie li.code label{
+	background-image:url(images/icons/ic_traffic_jam_blue.svg);
+}
+#sidebar .otp-widget .lista-categorie li.meteo label{
+	background-image:url(images/icons/ic_weather_blue.svg);
+}
+#sidebar .otp-widget .lista-categorie li.altro label{
+	background-image:url(images/icons/ic_road_sign_blue.svg);
+}
+#sidebar .otp-widget .lista-categorie li.code:hover label,#sidebar .otp-widget .lista-categorie li.code.active label{
+	background-image:url(images/icons/ic_traffic_jam_white.svg);
+}
+#sidebar .otp-widget .lista-categorie li.meteo:hover label,#sidebar .otp-widget .lista-categorie li.meteo.active label{
+	background-image:url(images/icons/ic_weather_white.svg);
+}
+#sidebar .otp-widget .lista-categorie li.altro:hover label,#sidebar .otp-widget .lista-categorie li.altro.active label{
+	background-image:url(images/icons/ic_road_sign_white.svg);
+}
+
+.address-fields{position:relative;}
+
+
 /* ----------  Box Traffic info TOP ----------*/
 
 #sidebar .otp-widget {
-	padding:0px 0px 0px 10px;
+	
   position: static;				
 }
 #sidebar .otp-widget h2{
   position: static;
-	text-shadow:none;		
+	text-shadow:none;
+	color:#c7dbee;font-weight:normal;	
 }
 #sidebar .otp-widget .lista-categorie{
 	position:relative;
@@ -609,28 +661,56 @@ a:focus {
 	overflow:hidden;
 	margin:10px 0px 0px 0px;
 }
-#sidebar .otp-widget .lista-categorie ul li{
+#sidebar .otp-widget .lista-categorie li{
 	float:left;
 	margin:0px 10px 0px 0px;
 }
-#sidebar .otp-widget .lista-categorie ul li input{
+#sidebar .otp-widget .lista-categorie li input{
 	display:none;	
 }
-#sidebar .otp-widget .lista-categorie ul li label{
+#sidebar .otp-widget .lista-categorie li label{
 	display:block;
-	width:35px;
-	height:35px;
+	width:40px;
+	height:40px;
 	background-color:#5097D9;
 	border-radius:100%;
 	text-indent: -9999px;
-	background-image:url(images/icons/ic_directions_bike_white.svg);
-	background-size:20px;
+	background-image:url(images/icons/ic_road_sign_blue.svg);
+	background-size:30px;
 	background-position:center center;
 	background-repeat:no-repeat;
 }
+
+#sidebar .otp-widget .lista-categorie li:hover label,#sidebar .otp-widget .lista-categorie li.active label{
+	background-image:url(images/icons/ic_road_sign_white.svg);
+}
+
+#sidebar .otp-widget .lista-categorie li.code label{
+	background-image:url(images/icons/ic_traffic_jam_blue.svg);
+}
+#sidebar .otp-widget .lista-categorie li.meteo label{
+	background-image:url(images/icons/ic_weather_blue.svg);
+}
+#sidebar .otp-widget .lista-categorie li.altro label{
+	background-image:url(images/icons/ic_road_sign_blue.svg);
+}
+#sidebar .otp-widget .lista-categorie li.code:hover label,#sidebar .otp-widget .lista-categorie li.code.active label{
+	background-image:url(images/icons/ic_traffic_jam_white.svg);
+}
+#sidebar .otp-widget .lista-categorie li.meteo:hover label,#sidebar .otp-widget .lista-categorie li.meteo.active label{
+	background-image:url(images/icons/ic_weather_white.svg);
+}
+#sidebar .otp-widget .lista-categorie li.altro:hover label,#sidebar .otp-widget .lista-categorie li.altro.active label{
+	background-image:url(images/icons/ic_road_sign_white.svg);
+}
+
+
 #sidebar .otp-widget .filtroEvt{
 	margin:10px 0px 10px 0px;
 }
+
+.filtroEvt input{background:#5097da;border:0;color:#fff;padding:5px 12px}
+
 
 /* ----------  Box Traffic info MAIN ----------*/
 
@@ -669,16 +749,16 @@ a:focus {
 #tab2 .main ul li.alert a span.icon{
 	background-image:url(images/icons/ic_alert_white.svg);
 }
-#tab2 .main ul li.road_sign a span.icon{
+#tab2 .main ul a.lavori span.icon{
+	background-image:url(images/icons/ic_men_at_work_white.svg);
+}
+#tab2 .main ul a.chiusura span.icon{
 	background-image:url(images/icons/ic_road_sign_white.svg);
 }
-#tab2 .main ul li.weather a span.icon{
+/*#tab2 .main ul li.weather a span.icon{
 	background-image:url(images/icons/ic_weather_white.svg);
-}
-#tab2 .main ul li.men_at_work a span.icon{
-	background-image:url(images/icons/ic_alert_white.svg);
-}
-#tab2 .main ul li.traffic_jam a span.icon{
+}*/
+#tab2 .main ul a.coda span.icon{
 	background-image:url(images/icons/ic_traffic_jam_white.svg);
 }
 #tab2 .main ul li a > p{

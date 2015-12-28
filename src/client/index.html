@@ -290,13 +290,12 @@ $(document).ready(function() {
   <div class="shader"></div>
   
 	<ul id="main-menu-5t" class="main-menu-5t">
-    <li><a href="#">Calcolo percorso</a></li>
-    <li><a href="#">Home</a></li>
-    <li class="active"><a href="#">Indicazioni stradali</a></li>
-    <li><a href="#">Traffico</a></li>
-    <li><a href="#">News</a></li>
-    <li><a href="#">Contatti</a></li>
-  </ul>
+	    <li><a href="#">Home</a></li>
+	    <li class="active"><a href="#">Indicazioni stradali</a></li>
+	    <li><a href="#">Traffico</a></li>
+	    <li><a href="#">News</a></li>
+	    <li><a href="#">Contatti</a></li>
+	  </ul>
   
 	<a id="nav-toggle" href="javascript:void(0)"><span></span></a>
     
@@ -317,354 +316,32 @@ $(document).ready(function() {
         <div id="tab1" class="tab-content itinerary active">
         	<div class="top">
           
-          	<!--  OTP Planner icons  -->
+	          	<div class="otp-planner-optionsWidget-modeSelector-icons">
+		        	<ul id="tripmode">
+			          <li class="public">
+			          	  <input type="radio" class="public" value="autobus" id="otp-planner-optionsWidget-modeSelector-icon-public">
+			          	  <label for="otp-planner-optionsWidget-modeSelector-icon-public">Trasporto pubblico</label>
+			          </li>
+			          <li class="car">
+			          	  <input type="radio" class="car" value="car" id="otp-planner-optionsWidget-modeSelector-icon-car">
+			          	  <label for="otp-planner-optionsWidget-modeSelector-icon-car">Auto</label>
+			          </li>
+			          <li class="bike">
+				          <input type="radio" class="bike" value="autobus" id="otp-planner-optionsWidget-modeSelector-icon-bike">
+				          <label for="otp-planner-optionsWidget-modeSelector-icon-bike">Bici</label>
+			          </li>
+			          <li class="walk">
+				          <input type="radio" class="walk" value="autobus" id="otp-planner-optionsWidget-modeSelector-icon-walk">
+				          <label for="otp-planner-optionsWidget-modeSelector-icon-walk">A piedi</label>
+			          </li>
+			        </ul>
+		        </div>
             
-          	<!-- <div class="otp-planner-optionsWidget-modeSelector-icons">
+            </div> 
           
-            	<label for="otp-planner-optionsWidget-modeSelector-icons-autobus">
-            	<input type="radio" class="autobus" value="autobus" id="otp-planner-optionsWidget-modeSelector-icon-autobus"> 
-              
-            	<label for="otp-planner-optionsWidget-modeSelector-icons-car">  
-            	<input type="radio" class="car" value="car" id="otp-planner-optionsWidget-modeSelector-icon-car">
-                 
-            </div>  -->
-          
-          </div>
         	<div class="main">
 
-<!-- START STATIC HTML IMPORT -->
 
-<div id="planner-itinWidget" class="otp-widget otp-widget-nonTransparent otp-defaultItinsWidget" style="display: block;">
-  <div class="otp-widget-header">2 percorsi trovati</div>
-  <div class="otp-widget-header-buttons"></div>
-  <div class="otp-itinsAccord ui-accordion ui-widget ui-helper-reset" id="planner-itinWidget-itinsAccord" role="tablist">
-    <h3 class="level1 ui-accordion-header ui-helper-reset ui-state-default ui-accordion-header-active ui-state-active ui-corner-top ui-accordion-icons" role="tab" id="ui-accordion-planner-itinWidget-itinsAccord-header-0" aria-controls="planner-itinWidget-itinsAccord-0" aria-selected="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>
-      <div id="planner-itinWidget-itinsAccord-headerContent-0">
-        <div style="position: relative; height: 20px;">
-          <div class="otp-itinsAccord-header-number">1.</div>
-          <div style="left: 20px;" class="otp-itinsAccord-header-time">09:12</div>
-          <div style="left: 350px;" class="otp-itinsAccord-header-time">09:41</div>
-          <div class="otp-itinsAccord-header-segment" style="width: 33px; left: 60px; background: rgb(151, 186, 67) url(&quot;images/5t/mode/walk.png&quot;) no-repeat scroll 30% 50%;"></div>
-          <div class="otp-itinsAccord-header-segment" style="width: 137px; left: 114px; background: rgb(208, 57, 57) url(&quot;images/5t/mode/subway.png&quot;) no-repeat scroll 30% 50%;">
-            <div title="M1" style="margin-left:45%;">M1</div>
-          </div>
-          <div class="otp-itinsAccord-header-segment" style="width: 77px; left: 272px; background: rgb(151, 186, 67) url(&quot;images/5t/mode/walk.png&quot;) no-repeat scroll 30% 50%;"></div>
-        </div>
-      </div>
-    </h3>
-    <div id="planner-itinWidget-itinsAccord-0" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" style="display: block; height: 169px; overflow: auto;" aria-labelledby="ui-accordion-planner-itinWidget-itinsAccord-header-0" role="tabpanel" aria-expanded="true" aria-hidden="false">
-      <div>
-        <div class="otp-itinStartRow"><b>Da</b>: 09:12, 23/12/2015</div>
-        <div class="otp-itinAccord" id="planner-itinAccord-0">
-          <div class="ui-accordion ui-widget ui-helper-reset" role="tablist">
-            <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" id="ui-accordion-1-header-0" aria-controls="ui-accordion-1-panel-0" aria-selected="false" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span><b>A PIEDI</b> 375 m fino a Fermata 8220 - Metro XVIII Dicembre</h3>
-            <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none;" id="ui-accordion-1-panel-0" aria-labelledby="ui-accordion-1-header-0" role="tabpanel" aria-expanded="false" aria-hidden="true">
-              <div class="otp-itin-step-row" id="foo-0">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/depart.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">36</span><br>
-                  m</div>
-                <div class="otp-itin-step-text">Partenza su <b>marciapiede</b> in direzione <b>nod-ovest</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-1">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">214</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A sinistra</b> su <b>Via Giuseppe Luigi Passalacqua</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-2">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/right.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">93</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A destra</b> su <b>Via Antonio Giuseppe Bertola</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-3">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">32</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A sinistra</b> su <b>Corso San Martino</b></div>
-                <div style="clear:both;"></div>
-              </div>
-            </div>
-          </div>
-          <div class="ui-accordion ui-widget ui-helper-reset" role="tablist">
-            <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-header-active ui-state-active ui-corner-top ui-accordion-icons" role="tab" id="ui-accordion-2-header-0" aria-controls="ui-accordion-2-panel-0" aria-selected="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span><b>METRO</b> M1 (<a href="http://www.gtt.to.it">Gruppo Torinese Trasporti</a>) Linea 1 Metropolitana - stazione Fermi (Collegno) - stazione Lingotto in direzione Metro Lingotto</h3>
-            <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" style="display: block;" id="ui-accordion-2-panel-0" aria-labelledby="ui-accordion-2-header-0" role="tabpanel" aria-expanded="true" aria-hidden="false">
-              <div class="otp-itin-leg-leftcol">09:18</div>
-              <div class="otp-itin-leg-endpointDesc"><b>Parti</b> da Fermata 8220 - Metro XVIII Dicembre</div>
-              <div class="otp-itin-leg-endpointDescSub">[<a href="#">Orari</a>]</div>
-              <div class="otp-itin-leg-buffer"></div>
-              <div class="otp-itin-leg-elapsedDesc"><span><i>Tempo a bordo: 14 min</i></span><span>&nbsp;[<a href="#">Percorso</a>]</span></div>
-              <div class="otp-itin-leg-buffer"></div>
-              <div class="otp-itin-leg-leftcol">09:32</div>
-              <div class="otp-itin-leg-endpointDesc"><b>Scendi</b> a Fermata 8229 - Metro Spezia</div>
-            </div>
-          </div>
-          <div class="ui-accordion ui-widget ui-helper-reset" role="tablist">
-            <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" id="ui-accordion-3-header-0" aria-controls="ui-accordion-3-panel-0" aria-selected="false" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span><b>A PIEDI</b> 875 m fino a Corso Unità d'Italia</h3>
-            <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none;" id="ui-accordion-3-panel-0" aria-labelledby="ui-accordion-3-header-0" role="tabpanel" aria-expanded="false" aria-hidden="true">
-              <div class="otp-itin-step-row" id="foo-0">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/depart.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">11</span><br>
-                  m</div>
-                <div class="otp-itin-step-text">Partenza su <b>Via Nizza</b> in direzione <b>sud</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-1">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">128</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A sinistra</b> su <b>Corso Spezia</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-2">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/slightly_left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">73</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>Tenere la sinistra</b> su <b>Piazza Camillo Bozzolo</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-3">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/right.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">69</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A destra</b> continua su <b>Piazza Camillo Bozzolo</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-4">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">224</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A sinistra</b> su <b>Corso Spezia</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-5">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/circle_clockwise.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">9</span><br>
-                  m</div>
-                <div class="otp-itin-step-text">Prendere la rotonda in senso <b>orario</b>, <b>seconda</b> uscita, <b>strada</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-6">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">132</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A sinistra</b> su <b>Piazza Polonia</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-7">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/slightly_right.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">32</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>Tenere la destra</b> su <b>Corso Achille Mario Dogliotti</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-8">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/circle_clockwise.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">75</span><br>
-                  m</div>
-                <div class="otp-itin-step-text">Prendere la rotonda in senso <b>orario</b>, <b>seconda</b> uscita, <b>Corso Unità d'Italia</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-9">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/slightly_left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">120</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>Tenere la sinistra</b> su <b>Corso Unità d'Italia</b></div>
-                <div style="clear:both;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="otp-itinEndRow"><b>A</b>: 09:41, 23/12/2015</div>
-        <div class="otp-itinTripSummary">
-          <div class="otp-itinTripSummaryHeader">Riepilogo</div>
-          <div class="otp-itinTripSummaryLabel">Partenza</div>
-          <div class="otp-itinTripSummaryText">09:12, 23/12/2015</div>
-          <div class="otp-itinTripSummaryLabel">Durata</div>
-          <div class="otp-itinTripSummaryText">29 min</div>
-          <div class="otp-itinTripSummaryLabel">A piedi</div>
-          <div class="otp-itinTripSummaryText">1.2 km</div>
-          <div class="otp-itinTripSummaryLabel">Cambi</div>
-          <div class="otp-itinTripSummaryText">0</div>
-          <div class="otp-itinTripSummaryLabel">Costo</div>
-          <div class="otp-itinTripSummaryText">EUR 1.50</div>
-          <div class="otp-itinTripSummaryFooter">Calcolato il  23.12.2015, 09:12 | <a href="http://localhost:8000/?module=planner&amp;fromPlace=45.07546020688359%2C7.671203613281251&amp;toPlace=45.034714778688596%2C7.676696777343749&amp;date=23%2F12%2F2015&amp;time=09%3A12&amp;mode=TRANSIT%2CWALK&amp;maxWalkDistance=2000&amp;arriveBy=false&amp;wheelchair=false&amp;locale=it&amp;itinIndex=0">Link a questo percorso</a> | <a href="#">Stampa</a></div>
-        </div>
-      </div>
-    </div>
-    <h3 class="level1 ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" id="ui-accordion-planner-itinWidget-itinsAccord-header-1" aria-controls="planner-itinWidget-itinsAccord-1" aria-selected="false" tabindex="-1"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
-      <div id="planner-itinWidget-itinsAccord-headerContent-1">
-        <div style="position: relative; height: 20px;">
-          <div class="otp-itinsAccord-header-number">2.</div>
-          <div style="left: 50px;" class="otp-itinsAccord-header-time">09:15</div>
-          <div style="left: 380px;" class="otp-itinsAccord-header-time">09:44</div>
-          <div class="otp-itinsAccord-header-segment" style="width: 33px; left: 90px; background: rgb(151, 186, 67) url(&quot;images/5t/mode/walk.png&quot;) no-repeat scroll 30% 50%;"></div>
-          <div class="otp-itinsAccord-header-segment" style="width: 137px; left: 144px; background: rgb(208, 57, 57) url(&quot;images/5t/mode/subway.png&quot;) no-repeat scroll 30% 50%;">
-            <div title="M1" style="margin-left:45%;">M1</div>
-          </div>
-          <div class="otp-itinsAccord-header-segment" style="width: 77px; left: 302px; background: rgb(151, 186, 67) url(&quot;images/5t/mode/walk.png&quot;) no-repeat scroll 30% 50%;"></div>
-        </div>
-      </div>
-    </h3>
-    <div id="planner-itinWidget-itinsAccord-1" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none; height: 169px; overflow: auto;" aria-labelledby="ui-accordion-planner-itinWidget-itinsAccord-header-1" role="tabpanel" aria-expanded="false" aria-hidden="true">
-      <div>
-        <div class="otp-itinStartRow"><b>Da</b>: 09:15, 23/12/2015</div>
-        <div class="otp-itinAccord" id="planner-itinAccord-1">
-          <div class="ui-accordion ui-widget ui-helper-reset" role="tablist">
-            <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" id="ui-accordion-4-header-0" aria-controls="ui-accordion-4-panel-0" aria-selected="false" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span><b>A PIEDI</b> 375 m fino a Fermata 8220 - Metro XVIII Dicembre</h3>
-            <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none;" id="ui-accordion-4-panel-0" aria-labelledby="ui-accordion-4-header-0" role="tabpanel" aria-expanded="false" aria-hidden="true">
-              <div class="otp-itin-step-row" id="foo-0">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/depart.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">36</span><br>
-                  m</div>
-                <div class="otp-itin-step-text">Partenza su <b>marciapiede</b> in direzione <b>nod-ovest</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-1">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">214</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A sinistra</b> su <b>Via Giuseppe Luigi Passalacqua</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-2">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/right.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">93</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A destra</b> su <b>Via Antonio Giuseppe Bertola</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-3">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">32</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A sinistra</b> su <b>Corso San Martino</b></div>
-                <div style="clear:both;"></div>
-              </div>
-            </div>
-          </div>
-          <div class="ui-accordion ui-widget ui-helper-reset" role="tablist">
-            <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-header-active ui-state-active ui-corner-top ui-accordion-icons" role="tab" id="ui-accordion-5-header-0" aria-controls="ui-accordion-5-panel-0" aria-selected="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span><b>METRO</b> M1 (<a href="http://www.gtt.to.it">Gruppo Torinese Trasporti</a>) Linea 1 Metropolitana - stazione Fermi (Collegno) - stazione Lingotto in direzione Metro Lingotto</h3>
-            <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" style="display: block;" id="ui-accordion-5-panel-0" aria-labelledby="ui-accordion-5-header-0" role="tabpanel" aria-expanded="true" aria-hidden="false">
-              <div class="otp-itin-leg-leftcol">09:21</div>
-              <div class="otp-itin-leg-endpointDesc"><b>Parti</b> da Fermata 8220 - Metro XVIII Dicembre</div>
-              <div class="otp-itin-leg-endpointDescSub">[<a href="#">Orari</a>]</div>
-              <div class="otp-itin-leg-buffer"></div>
-              <div class="otp-itin-leg-elapsedDesc"><span><i>Tempo a bordo: 14 min</i></span><span>&nbsp;[<a href="#">Percorso</a>]</span></div>
-              <div class="otp-itin-leg-buffer"></div>
-              <div class="otp-itin-leg-leftcol">09:35</div>
-              <div class="otp-itin-leg-endpointDesc"><b>Scendi</b> a Fermata 8229 - Metro Spezia</div>
-            </div>
-          </div>
-          <div class="ui-accordion ui-widget ui-helper-reset" role="tablist">
-            <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" id="ui-accordion-6-header-0" aria-controls="ui-accordion-6-panel-0" aria-selected="false" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span><b>A PIEDI</b> 875 m fino a Corso Unità d'Italia</h3>
-            <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none;" id="ui-accordion-6-panel-0" aria-labelledby="ui-accordion-6-header-0" role="tabpanel" aria-expanded="false" aria-hidden="true">
-              <div class="otp-itin-step-row" id="foo-0">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/depart.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">11</span><br>
-                  m</div>
-                <div class="otp-itin-step-text">Partenza su <b>Via Nizza</b> in direzione <b>sud</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-1">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">128</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A sinistra</b> su <b>Corso Spezia</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-2">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/slightly_left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">73</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>Tenere la sinistra</b> su <b>Piazza Camillo Bozzolo</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-3">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/right.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">69</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A destra</b> continua su <b>Piazza Camillo Bozzolo</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-4">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">224</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A sinistra</b> su <b>Corso Spezia</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-5">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/circle_clockwise.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">9</span><br>
-                  m</div>
-                <div class="otp-itin-step-text">Prendere la rotonda in senso <b>orario</b>, <b>seconda</b> uscita, <b>strada</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-6">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">132</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>A sinistra</b> su <b>Piazza Polonia</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-7">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/slightly_right.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">32</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>Tenere la destra</b> su <b>Corso Achille Mario Dogliotti</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-8">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/circle_clockwise.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">75</span><br>
-                  m</div>
-                <div class="otp-itin-step-text">Prendere la rotonda in senso <b>orario</b>, <b>seconda</b> uscita, <b>Corso Unità d'Italia</b></div>
-                <div style="clear:both;"></div>
-              </div>
-              <div class="otp-itin-step-row" id="foo-9">
-                <div class="otp-itin-step-icon"><img src="images/5t/directions/slightly_left.png"></div>
-                <div class="otp-itin-step-dist"><span style="font-weight:bold; font-size: 1.2em;">120</span><br>
-                  m</div>
-                <div class="otp-itin-step-text"><b>Tenere la sinistra</b> su <b>Corso Unità d'Italia</b></div>
-                <div style="clear:both;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="otp-itinEndRow"><b>A</b>: 09:44, 23/12/2015</div>
-        <div class="otp-itinTripSummary">
-          <div class="otp-itinTripSummaryHeader">Riepilogo</div>
-          <div class="otp-itinTripSummaryLabel">Partenza</div>
-          <div class="otp-itinTripSummaryText">09:15, 23/12/2015</div>
-          <div class="otp-itinTripSummaryLabel">Durata</div>
-          <div class="otp-itinTripSummaryText">29 min</div>
-          <div class="otp-itinTripSummaryLabel">A piedi</div>
-          <div class="otp-itinTripSummaryText">1.2 km</div>
-          <div class="otp-itinTripSummaryLabel">Cambi</div>
-          <div class="otp-itinTripSummaryText">0</div>
-          <div class="otp-itinTripSummaryLabel">Costo</div>
-          <div class="otp-itinTripSummaryText">EUR 1.50</div>
-          <div class="otp-itinTripSummaryFooter">Calcolato il  23.12.2015, 09:12 | <a href="http://localhost:8000/?module=planner&amp;fromPlace=45.07546020688359%2C7.671203613281251&amp;toPlace=45.034714778688596%2C7.676696777343749&amp;date=12%2F11%2F2016&amp;time=09%3A12&amp;mode=TRANSIT%2CWALK&amp;maxWalkDistance=2000&amp;arriveBy=false&amp;wheelchair=false&amp;locale=it&amp;itinIndex=1">Link a questo percorso</a> | <a href="#">Stampa</a></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="otp-itinsWidget-footer">
-    <div class="otp-itinsButtonRow">
-      <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Primo</span></button>
-      <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Precedente</span></button>
-      <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Successivo</span></button>
-      <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Ultimo</span></button>
-    </div>
-  </div>
-</div>
-
-
-<!-- END STATIC HTML IMPORT -->
 
 
         	</div>
@@ -685,41 +362,6 @@ $(document).ready(function() {
       <time pubdate="" datetime="updateDate">dal 17/11/14 </time>
     </p>
     </a></li>
-  <li class="evento road_sign"><a _onclick="this.markers['A11416233042_23-1'].openPopup();" class="dtxEvt chiusura" href="#">
-  	<span class="icon"></span>
-    <h3>SP220 (AL) </h3>
-    <p>SP225-Montechiaro Alto in entrambe le direzioni. <em class="Attivo">chiusura tratto stradale causa frane nei pressi di Montechiaro d`Acqui</em>
-      <time pubdate="" datetime="updateDate">dal 17/11/14 </time>
-    </p>
-    </a></li>
-  <li class="evento weather"><a _onclick="this.markers['A11418466529_13-1'].openPopup();" class="dtxEvt chiusura" href="#">
-  	<span class="icon"></span>
-    <h3>SP135 (AL) </h3>
-    <p>fra Cervari e SP137-Costigliola in entrambe le direzioni. <em class="Attivo">chiusura tratto stradale causa frane a Borghetto di Borbera</em>
-      <time pubdate="" datetime="updateDate">dal 11/12/14 </time>
-    </p>
-    </a></li>
-  <li class="evento men_at_work"><a _onclick="this.markers['A11418641015_60-1'].openPopup();" class="dtxEvt lavori" href="#">
-  	<span class="icon"></span>
-    <h3>SS419 Della Serra</h3>
-    <p>fra Galleria Casale e Bivio Per Bio' in direzione Settimo Vittone/Innesto Ss26 Della Valle D'aosta. <em class="Attivo">senso unico alternato causa lavori in corso </em>
-      <time pubdate="" datetime="updateDate">dal 15/12/14 </time>
-    </p>
-    </a></li>
-  <li class="evento traffic_jam"><a _onclick="this.markers['A11419933674_06-1'].openPopup();" class="dtxEvt lavori" href="#">
-  	<span class="icon"></span>
-    <h3>SP169 (TO) della Val Germanasca</h3>
-    <p>fra Frazione Villa e Borgata Cugno in entrambe le direzioni. <em class="Attivo">senso unico alternato causa lavori di manutenzione </em>
-      <time pubdate="" datetime="updateDate">dal 30/12/14 </time>
-    </p>
-    </a></li>
-  <li class="evento"><a _onclick="this.markers['A11421838368_25-1'].openPopup();" class="dtxEvt lavori" href="#">
-  	<span class="icon"></span>
-    <h3>SP205 (AL) </h3>
-    <p>fra SS456-Acqui Terme e Grognardo in entrambe le direzioni. <em class="Attivo">senso unico alternato causa lavori in corso nel comune di Cassinelle</em>
-      <time pubdate="" datetime="updateDate">dal 26/01/15 </time>
-    </p>
-  </a></li>
 </ul>
 
 

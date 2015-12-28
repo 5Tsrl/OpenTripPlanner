@@ -194,7 +194,7 @@ otp.modules.datex.FilterEventsView =
          },
          render: function(){
      		//this.$el.html( this.template(this.model.toJSON()));
-             this.$el.html( ich['otp-datexFilterEvents']({placeholder:'filtro eventi'})
+             this.$el.html( ich['otp-datexFilterEvents']({placeholder:'Inserisci una parola chiave'})
              );
              return this;
  	    }
