@@ -574,7 +574,7 @@ a:focus {
 	border-radius:0px;
 	box-shadow:none;
 	background:none;
-	width:90%;	
+	width:100%;	
 }
 #planner-itinWidget .ui-accordion-header{
 	border:none;
@@ -583,14 +583,7 @@ a:focus {
 #planner-itinWidget .ui-accordion-header .ui-accordion-header-icon{
 	display:none;	
 }
-#planner-itinWidget .ui-accordion-header .otp-itinsAccord-header-number{
-	background-color:#999;
-	border-radius:100%;
-	width:20px;
-	height:20px;
-	text-shadow:none;
-	font-size:0.9em;		
-}
+
 
 .otp-defaultTripWidget{width:auto;}
 .itinerary .top,.traffic .top{padding:5px 0 10px 10px;}
@@ -711,6 +704,7 @@ a:focus {
 
 .filtroEvt input{background:#5097da;border:0;color:#fff;padding:5px 12px}
 
+#otp-planner-optionsWidget-submit-button{background:#3675ae;border:0;border-radius:none;padding:1px 2px;height:auto;font-size:.8em;margin-top:10px;}
 
 /* ----------  Box Traffic info MAIN ----------*/
 
@@ -784,7 +778,9 @@ a:focus {
 #tab2 .main ul li.fixed a span.icon{
 	background-color:#FF8420;
 }
-
+#tab2 .main ul li.fixed a:hover{
+	cursor:default;
+}
 
 
 /* ----------  Commented ----------*/
@@ -955,7 +951,58 @@ a:focus {
 	padding: 9px 10px;
 	font-size: 1em;
 	text-align: center;
+}*/
+
+#planner-itinWidget .level1{
+	background:#eee;
+	border-radius:0;
+	padding: 15px 10px;
+	min-height:30px;
+	margin:0;
+	border-bottom:1px solid #ddd;
+
 }
+
+#planner-itinWidget .level1.ui-state-active{
+	background:#fff;
+
+}
+
+
+#planner-itinWidget .ui-accordion-header .otp-itinsAccord-header-number{
+	background:#fff;
+	color:#999;
+	border-radius:100%;
+	width:30px;
+	height:25px;
+	text-shadow:none;
+	font-size:1.2em;	
+	text-align:center;
+	padding-top:5px;	
+}
+
+#planner-itinWidget .level1.ui-state-active .otp-itinsAccord-header-number{
+	background:#4089cd;
+	color:#fff;
+
+}
+
+.summary-aux{
+	position:relative;
+}
+
+
+.otp-itinsButtonRow button{
+	background:none;
+	color:#4089cd;
+	text-transform:uppercase;
+	border:0;
+	margin:0;
+	padding:0;
+}
+
+
+
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
 	background: #fafafa;
 }
@@ -1065,10 +1112,7 @@ a:focus {
 .otp-itinsAccord-header-time {
 	color: #404040
 }
-.otp-itinsAccord-header-number {
-	font-size: 1.1em;
-	top: 3px;
-}
+
 .otp-itinTripSummary {
 	background: #fafafa;
 	border: 1px solid #eaeaea;
@@ -1156,7 +1200,6 @@ a:focus {
 	color: #1f4168;
 }
 
-*/
 
 /* ----------  Markers ----------*/
 
