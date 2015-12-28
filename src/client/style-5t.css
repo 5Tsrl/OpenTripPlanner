@@ -445,6 +445,25 @@ a:focus {
 #sidebar .tab1 .top{
 	padding:0px 0px 0px 15px;
 }
+
+strong.trigger-option{
+	margin:0;padding:0;
+	background:transparent;
+	border:0;
+
+}
+
+strong.trigger-option .ui-button-text{
+	padding:0;
+	font-size:.9em;
+	color:#a2c8ed;
+
+}
+
+#otp-planner-optionsWidget-scollPanel div:nth-child(3), #otp-planner-optionsWidget-scollPanel div:nth-child(4){
+	display:none;
+}
+
 /* ----------  MAP ----------*/
 
 #map {
@@ -613,11 +632,6 @@ a:focus {
 #otp-planner-optionsWidget-timeSelector-timeSelector input{
 	margin: 0px 5px 0px 0px;
 }
-#otp-planner-optionsWidget-submit-button{
-	height: 20px;
-	font-size: 0.8em;
-	text-transform:uppercase;
-}
 .otp-planner-optionsWidget-modeSelector-icons input{
 	visibility:hidden;
 }
@@ -772,7 +786,7 @@ a:focus {
 .filtroEvt .fonticon{position:absolute;top:0;right:10px;background:#3675ae;width:33px;height:33px;}
 .filtroEvt .fonticon:before{content: '\e807';position:absolute;top:8px;right:8px;font-size:1.2em;}
 
-#otp-planner-optionsWidget-submit-button{background:#3675ae;border:0;border-radius:none;padding:1px 2px;height:auto;font-size:.8em;margin-top:10px;}
+#otp-planner-optionsWidget-submit-button{text-transform:uppercase;background:#3675ae;border:0;border-radius:0;padding:1px 2px;height:auto;font-size:.9em;margin:10px 0;}
 
 /* ----------  Box Traffic info MAIN ----------*/
 
