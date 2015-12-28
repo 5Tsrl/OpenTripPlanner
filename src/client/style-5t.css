@@ -7,14 +7,17 @@ author: Madeincima.it
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
 
 @font-face {
-	font-family: 'icons-5t';
-	src: url('../fonts/icons-5t.eot?71856095');
-	src: url('../fonts/icons-5t.eot?71856095#iefix') format('embedded-opentype'), url('../fonts/icons-5t.woff?71856095') format('woff'), url('../fonts/icons-5t.ttf?71856095') format('truetype'), url('../fonts/icons-5t.svg?71856095#icons-5t') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
+      font-family: '5t-icons';
+      src: url('../font/5t-icons.eot?13165233');
+      src: url('../font/5t-icons.eot?13165233#iefix') format('embedded-opentype'),
+           url('../font/5t-icons.woff?13165233') format('woff'),
+           url('../font/5t-icons.ttf?13165233') format('truetype'),
+           url('../font/5t-icons.svg?13165233#5t-icons') format('svg');
+      font-weight: normal;
+      font-style: normal;
+    }
 .fonticon {
-	font-family: 'icons-5t';
+	font-family: '5t-icons';
 	vertical-align: middle;
 	speak: none;
 	text-align: center;
@@ -26,6 +29,14 @@ author: Madeincima.it
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale
 }
+
+.icon-left-dir:before { content: '\e800'; } /* '' */
+.icon-right-dir:before { content: '\e801'; } /* '' */
+.icon-down-open-mini:before { content: '\e802'; } /* '' */
+.icon-left-open-mini:before { content: '\e803'; } /* '' */
+.icon-right-open-mini:before { content: '\e804'; } /* '' */
+.icon-up-open-mini:before { content: '\e805'; } /* '' */
+.icon-twitter:before { content: '\e806'; } /* '' */
 
 @media screen {
 	 
@@ -339,6 +350,9 @@ a:focus {
 
 /* ----------- SIDEBAR ------------------------------------------------------------------------ */
 
+
+.mapoverlay{position:absolute;width:100%;height:100%;z-index:1;cursor:pointer;}
+
 #sidebar{
 	position:fixed;
 	width:260px;
@@ -349,7 +363,13 @@ a:focus {
 	background-color:#fff;
 	z-index:10;
 	box-shadow:0px 0px 5px rgba(0,0,0, 0.5);
+	-webkit-transition: all .3s;
+	-moz-transition: all .3s;
+	-ms-transition: all .3s;
+	-o-transition: all .3s;
+	transition: all .3s;
 }
+#sidebar.closed{left:-250px;}
 
 /* ----------  TABS ----------*/
 
@@ -424,6 +444,9 @@ a:focus {
 	-o-transition: all .3s;
 	transition: all .3s;
 }
+
+#map.open{left:0;}
+
 .powered-by {
 	cursor: pointer;
 	z-index: 1000;
@@ -438,6 +461,21 @@ a:focus {
 	line-height: 0;
 	font-size: 0;
 }
+
+.panel-trigger{
+	position:absolute;top:100px;right:-24px;
+	background:#4089cd;
+	width:24px;height:34px;
+	cursor:pointer;
+	padding-top:13px;
+	font-size:1.5em;
+	color:#fff;
+}
+.panel-trigger:before { content: '\e800'; } /* '' */
+.panel-trigger.closed:before { content: '\e801'; } /* '' */
+
+
+
 
 /* ----------  WIDGETS ----------*/
 
