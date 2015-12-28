@@ -37,6 +37,18 @@ author: Madeincima.it
 .icon-right-open-mini:before { content: '\e804'; } /* '' */
 .icon-up-open-mini:before { content: '\e805'; } /* '' */
 .icon-twitter:before { content: '\e806'; } /* '' */
+.icon-search:before { content: '\e807'; } /* '' */
+.icon-cancel:before { content: '\e808'; } /* '' */
+
+::-webkit-input-placeholder{color:#a2c8ed;opacity:  1;}
+:-moz-placeholder{color:#a2c8ed;opacity:  1;}
+::-moz-placeholder{color:#a2c8ed;opacity:  1;}
+:-ms-input-placeholder{color:#a2c8ed;opacity:  1;}
+
+*:focus {
+    outline: 0;
+}
+
 
 @media screen {
 	 
@@ -518,19 +530,22 @@ a:focus {
 	-moz-appearance: none; 
 }
 #otp-planner-optionsWidget select,
-#otp-planner-optionsWidget input{
+#otp-planner-optionsWidget input,.findplace input{
 	background: transparent;
 	background-color:#4089CE;
 	border:none;
 	color:#fff;
 	border-bottom:1px solid #7AADDC;
 }
-#otp-planner-optionsWidget .address-fields .field{
+#otp-planner-optionsWidget .address-fields .field, .findplace{
 	position:relative;
 	clear:both;
 	margin:0px 0px 10px 0px;
 }
-#otp-planner-optionsWidget .address-fields .field label{
+.findplace{
+	margin-bottom:20px;
+}
+#otp-planner-optionsWidget .address-fields .field label, .findplace label{
 	position:absolute;
 	width:20px;
 	padding:6px 0px 0px 0px;
@@ -539,10 +554,22 @@ a:focus {
 	opacity:0.6;
 	cursor:default;
 }
+.findplace label{
+	width:60px;
+	padding:6px 0px 0px 0px;
+	font-size:1.1em;
+
+}
 #otp-planner-optionsWidget .address-fields .field input{
 	width:85%;
 	height:22px;
 	padding:0px 0px 0px 30px;
+	font-size:1.1em;
+}
+.findplace input{
+	width:65%;
+	height:26px;
+	padding:0px 0px 0px 30%;
 	font-size:1.1em;
 }
 #otp-planner-optionsWidget-locSelector-reverseButton {
@@ -738,9 +765,12 @@ a:focus {
 
 #sidebar .otp-widget .filtroEvt{
 	margin:10px 0px 10px 0px;
+	position:relative;
 }
 
-.filtroEvt input{background:#5097da;border:0;color:#fff;padding:5px 12px}
+.filtroEvt input{background:#5097da;border:0;color:#fff;padding:7px 10% 7px 3%;width:84%;}
+.filtroEvt .fonticon{position:absolute;top:0;right:10px;background:#3675ae;width:33px;height:33px;}
+.filtroEvt .fonticon:before{content: '\e807';position:absolute;top:8px;right:8px;font-size:1.2em;}
 
 #otp-planner-optionsWidget-submit-button{background:#3675ae;border:0;border-radius:none;padding:1px 2px;height:auto;font-size:.8em;margin-top:10px;}
 
