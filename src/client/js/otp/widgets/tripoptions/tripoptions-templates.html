@@ -6,13 +6,13 @@
     <div class="address-fields notDraggable">
         
         <div class="field">
-            <label>{{start}}:</label>
+            <label>{{start}}</label>
             <input id="{{widgetId}}-start" class="borderBox otp-tripOptions-loc-input">
             <!-- button id="{{widgetId}}-startDropdown" class="borderBox otp-tripOptions-loc-dropdownBtn">&#x25BC;</button-->
         </div>
 
         <div class="field">
-            <label>{{end}}:</label>
+            <label>{{end}}</label>
             <input id="{{widgetId}}-end" class="borderBox otp-tripOptions-loc-input">
             <!-- button id="{{widgetId}}-endDropdown" class="borderBox otp-tripOptions-loc-dropdownBtn">&#x25BC;</button-->
         </div>
@@ -34,6 +34,32 @@
     {{/showGeocoders}}
     
 </script>
+
+<!-- ModeSelectorIcons -->
+
+<script id="otp-tripOptions-modeSelectorIcons" type="text/html">
+    <div class="otp-planner-optionsWidget-modeSelector-icons">
+        <ul id="tripmode">
+          <li class="public">
+              <input type="radio" name="otpModes" class="public" value="0" id="otp-planner-optionsWidget-modeSelector-icon-public" _onclick="handleClick(this);" >
+              <label for="otp-planner-optionsWidget-modeSelector-icon-public">Trasporto pubblico</label>
+          </li>
+          <li class="car">
+              <input type="radio" name="otpModes" class="car" value="1" id="otp-planner-optionsWidget-modeSelector-icon-car" _onclick="handleClick(this);" >
+              <label for="otp-planner-optionsWidget-modeSelector-icon-car">Auto</label>
+          </li>
+          <li class="bike">
+              <input type="radio" name="otpModes" class="bike" value="2" id="otp-planner-optionsWidget-modeSelector-icon-bike" _onclick="handleClick(this);" >
+              <label for="otp-planner-optionsWidget-modeSelector-icon-bike">Bici</label>
+          </li>
+          <li class="walk">
+              <input type="radio" name="otpModes" class="walk" value="3" id="otp-planner-optionsWidget-modeSelector-icon-walk" _onclick="handleClick(this);" >
+              <label for="otp-planner-optionsWidget-modeSelector-icon-walk">A piedi</label>
+          </li>
+        </ul>
+    </div>
+</script>
+
 
 
 <!-- TimeSelector -->

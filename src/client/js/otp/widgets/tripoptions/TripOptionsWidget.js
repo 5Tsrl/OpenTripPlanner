@@ -658,6 +658,128 @@ otp.widgets.tripoptions.ModeSelector =
 });
 
 
+
+//** ModeSelector ICONS**//
+
+otp.widgets.tripoptions.ModeSelectorIcons =
+    otp.Class(otp.widgets.tripoptions.TripOptionsWidgetControl, {
+
+    id           :  null,
+
+    modes        : otp.config.modes,
+
+    optionLookup : null,
+    modeControls : null,
+
+    initialize : function(tripWidget) {
+        otp.widgets.tripoptions.TripOptionsWidgetControl.prototype.initialize.apply(this, arguments);
+        this.id = tripWidget.id+"-modeSelectorIcons";
+        this.modeControls = [];
+        this.optionLookup = {};
+
+        //TRANSLATORS: Label for dropdown Travel by: [mode of transport]
+        /*
+        var html = "<div class='notDraggable'>" + _tr("Travel by") + ": ";
+        html += '<select id="'+this.id+'">';
+        _.each(this.modes, function(text, key) {
+            html += '<option>'+text+'</option>';
+        });
+        html += '</select>';
+        html += '<div id="'+this.id+'-widgets" style="overflow: hidden;"></div>';
+        html += "</div>";
+
+        $(html).appendTo(this.$());
+        */
+        ich['otp-tripOptions-modeSelectorIcons']({
+            widgetId : this.id,
+            
+        }).appendTo(this.$());
+        
+        
+        
+        
+    },
+    handleClick : function(myRadio) {
+        alert('Old value: ' + currentValue);
+        alert('New value: ' + myRadio.value);
+        currentValue = myRadio.value;
+    },
+
+    doAfterLayout : function() {
+        var this_ = this;
+        var rad = $('input:radio[name=otpModes]');
+        var prev = null;
+        for(var i = 0; i < rad.length; i++) {
+            rad[i].onclick = function() {
+                
+                /*(prev)? console.log(prev.value):null;
+                if(this !== prev) {
+                    prev = this;
+                }*/
+                console.log(this.value)
+                this.checked = true;
+                this_.tripWidget.inputChanged({
+                    //mode : _.keys(this_.modes)[this.selectedIndex],
+                    mode : this.value,
+                });
+                this_.refreshModeControls();
+                
+            };
+        }
+        
+        /*
+        var this_ = this;
+        $("#"+this.id).change(function() {
+            this_.tripWidget.inputChanged({
+                mode : _.keys(this_.modes)[this.selectedIndex],
+            });
+            this_.refreshModeControls();
+        });
+        */
+    },
+    
+/*
+    restorePlan : function(data) {
+        var i = 0;
+        for(mode in this.modes) {
+            if(mode === data.queryParams.mode) {
+                this.tripWidget.module.mode = data.queryParams.mode;
+                $('#'+this.id+' option:eq('+i+')').prop('selected', true);
+            }
+            i++;
+        }
+
+        for(i = 0; i < this.modeControls.length; i++) {
+            this.modeControls[i].restorePlan(data);
+        }
+    },
+
+    controlPadding : "8px",
+*/
+    refreshModeControls : function() {
+        /*
+        var container = $("#"+this.id+'-widgets');
+        container.empty();
+        var mode = _.keys(this.modes)[document.getElementById(this.id).selectedIndex];
+        for(var i = 0; i < this.modeControls.length; i++) {
+            var control = this.modeControls[i];
+            if(control.isApplicableForMode(mode)) {
+                container.append($('<div style="height: '+this.controlPadding+';"></div>'));
+                container.append(control.$());
+                control.doAfterLayout();
+            }
+        }*/
+    },
+
+    addModeControl : function(widget) {
+        this.modeControls.push(widget);
+    }
+
+});
+
+
+
+
 //** MaxWalkSelector **//
 
 otp.widgets.tripoptions.MaxDistanceSelector =

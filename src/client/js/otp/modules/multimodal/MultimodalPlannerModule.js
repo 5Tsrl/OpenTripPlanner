@@ -61,9 +61,13 @@ otp.modules.multimodal.MultimodalPlannerModule =
             // this.optionsWidget.addVerticalSpace(12, true);
         }
         
+        //var modeSelector = new otp.widgets.tripoptions.ModeSelector(this.optionsWidget);
+        var modeSelector = new otp.widgets.tripoptions.ModeSelectorIcons(this.optionsWidget);
+        this.optionsWidget.addControl("mode", modeSelector, true);
+
         //raf opzioni avanzate
         this.optionsWidget.addControl("AdvOpz", new otp.widgets.tripoptions.TriggerOption(this.optionsWidget), true);
-        
+
 
         //advanced option 
         var advancedOptionsWidgetConfig = {
@@ -81,8 +85,7 @@ otp.modules.multimodal.MultimodalPlannerModule =
         // this.optionsWidget.addVerticalSpace(12, true);
 
 
-        var modeSelector = new otp.widgets.tripoptions.ModeSelector(this.optionsWidget);
-        this.optionsWidget.addControl("mode", modeSelector, true);
+
 
         modeSelector.addModeControl(new otp.widgets.tripoptions.MaxWalkSelector(this.optionsWidget));
         //modeSelector.addModeControl(new otp.widgets.tripoptions.MaxBikeSelector(this.optionsWidget));
