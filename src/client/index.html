@@ -211,8 +211,18 @@
 
 
 $(document).ready(function() {
-	
-	 
+
+
+	function setHeight(){
+		var windowHeight = $(window).height();
+		var headerHeight = $('#branding').outerHeight();
+		var tabsHeight = $('#sidebar .tabs').outerHeight();
+		var main1Height = $('#sidebar #tab1 .top').outerHeight();
+		var main2Height = $('#sidebar #tab2 .top').outerHeight();
+		$('#sidebar #tab1 .main').height(windowHeight-tabsHeight-headerHeight-main1Height);
+		$('#sidebar #tab2 .main').height(windowHeight-tabsHeight-headerHeight-main2Height);
+	}
+	setHeight();
 
 	$('.panel-trigger').click(function(){
 		$(this).toggleClass('closed');
@@ -239,6 +249,7 @@ $(document).ready(function() {
 		} else {
 			$('.mapoverlay').show().removeClass('closed');
 		}
+		setHeight();
 	}
 
 	resizeEndActions();
@@ -306,6 +317,7 @@ $(document).ready(function() {
 			$(this).parents('.tabbed-content').find(".tab-content").hide();
 			var activeTab = $(this).find("a").attr("href"); 
 			$(activeTab).fadeIn(); 
+			setHeight();
 			return false;
 		});
 
