@@ -809,6 +809,10 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 #tab2 .main ul.lista-eventi-new li a{
 	color:#3373c2;
 }
+#tab2 .main ul.lista-eventi-new li p{
+	font-size:0.9em;
+	line-height:1.1em;
+}
 #tab2 .main ul.lista-eventi li a{
 	display:block;
 	position:relative;
