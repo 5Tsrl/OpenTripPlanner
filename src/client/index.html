@@ -222,7 +222,8 @@ $(document).ready(function() {
 			$('.mapoverlay').hide().toggleClass('closed');
 		} else if( $('body').width() < 401 && $('.mapoverlay').hasClass('closed')){
 			$('.mapoverlay').show().toggleClass('closed');
-		}		
+		}
+		setTimeout(function(){webapp.map.lmap.invalidateSize()}, 400);	
 	});
 
 	$('.mapoverlay').click(function(){

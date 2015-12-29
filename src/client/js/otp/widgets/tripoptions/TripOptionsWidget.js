@@ -711,31 +711,17 @@ otp.widgets.tripoptions.ModeSelectorIcons =
         var prev = null;
         for(var i = 0; i < rad.length; i++) {
             rad[i].onclick = function() {
-                
-                /*(prev)? console.log(prev.value):null;
-                if(this !== prev) {
-                    prev = this;
-                }*/
+                $("ul#tripmode li").removeClass("active")
                 console.log(this.value)
                 this.checked = true;
+                $(this.parentElement).addClass("active");
                 this_.tripWidget.inputChanged({
-                    //mode : _.keys(this_.modes)[this.selectedIndex],
                     mode : this.value,
                 });
                 this_.refreshModeControls();
                 
             };
         }
-        
-        /*
-        var this_ = this;
-        $("#"+this.id).change(function() {
-            this_.tripWidget.inputChanged({
-                mode : _.keys(this_.modes)[this.selectedIndex],
-            });
-            this_.refreshModeControls();
-        });
-        */
     },
     
 /*
