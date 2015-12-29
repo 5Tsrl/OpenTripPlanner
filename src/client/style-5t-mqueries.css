@@ -70,8 +70,14 @@
 
 #otp-planner-optionsWidget {
 	font-size:1em;
-	padding:0px 0px 0px 0;
+	padding:0px 0px 0px 10px;
 }
+.traffic .top{padding-left:20px}
+
+#sidebar .otp-widget .filtroEvt{
+	width:95%;
+}
+
 #otp-planner-optionsWidget-locSelector-reverseButton {
 	background-size:35px;
 	height: 30px;
@@ -87,7 +93,7 @@
 	padding:0px 0px 0px 50px;
 }
 #otp-planner-optionsWidget-timeSelector-timeSelector select {
-	width: 90px;
+	width: 133px;
 	background-position: right 1px;
 }
 #otp-planner-optionsWidget-timeSelector-date{
@@ -106,9 +112,15 @@
 }
 
 .findplace input{
-	width:70%;
+	width:69%;
 	padding-left:25%;
 }
+
+strong.trigger-option{
+	top:92px;
+
+}
+
 
 }
 
@@ -164,6 +176,7 @@
 	right: 40px;
 	font-size: 1.1em;
 }
+
 
 
 }

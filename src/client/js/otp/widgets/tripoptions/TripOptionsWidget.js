@@ -1366,7 +1366,7 @@ otp.widgets.tripoptions.TriggerOption =
         //TRANSLATORS: button to send query for trip planning
         //raf $('<div class="notDraggable" style="text-align:center;"><button id="'+this.id+'-button">' + _tr("Plan Your Trip") + '</button></div>').appendTo(this.$());
         //raf $('<button id="'+this.id+'-triggerOption">' + _tr("Plan Your Trip") + '</button>').appendTo(this.$());
-        $('<strong id="'+this.id+'-triggerOption" class="trigger-option">OPZIONI</strong>').appendTo(this.$());
+        $('<strong id="'+this.id+'-triggerOption" class="trigger-option">OPZIONI<span class="fonticon"></span></strong>').appendTo(this.$());
     },
 
     doAfterLayout : function() {

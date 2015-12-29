@@ -39,6 +39,13 @@ author: Madeincima.it
 .icon-twitter:before { content: '\e806'; } /* '' */
 .icon-search:before { content: '\e807'; } /* '' */
 .icon-cancel:before { content: '\e808'; } /* '' */
+.icon-ic_directions_park_ride_blue:before { content: '\e809'; } /* '' */
+.icon-ic_directions_bus_blue:before { content: '\e80a'; } /* '' */
+.icon-ic_directions_car_blue:before { content: '\e80b'; } /* '' */
+.icon-ic_directions_bike_blue:before { content: '\e80c'; } /* '' */
+.icon-ic_directions_walk_blue:before { content: '\e80d'; } /* '' */
+.icon-check-empty:before { content: '\e80e'; } /* '' */
+.icon-check:before { content: '\e80f'; } /* '' */
 
 ::-webkit-input-placeholder{color:#a2c8ed;opacity:  1;}
 :-moz-placeholder{color:#a2c8ed;opacity:  1;}
@@ -450,6 +457,7 @@ strong.trigger-option{
 	margin:0;padding:0;
 	background:transparent;
 	border:0;
+	position:absolute;top:82px;right:20px;
 
 }
 
@@ -457,10 +465,16 @@ strong.trigger-option .ui-button-text{
 	padding:0;
 	font-size:.9em;
 	color:#a2c8ed;
-
 }
 
-#otp-planner-optionsWidget-scollPanel div:nth-child(3), #otp-planner-optionsWidget-scollPanel div:nth-child(4){
+strong.trigger-option .ui-button-text:hover,strong.trigger-option :hover .fonticon:before{color:#fff;}
+
+strong.trigger-option .fonticon:before { content: '\e80e';float:left;margin:1px 5px 0 0;font-size:1.2em; } /* '' */
+strong.trigger-option.open .ui-button-text{color:#fff;}
+strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff;} /* '' */
+
+#otp-planner-optionsWidget-scollPanel{position:relative;}
+#otp-planner-optionsWidget-scollPanel div:nth-child(4){
 	display:none;
 }
 
@@ -537,7 +551,7 @@ strong.trigger-option .ui-button-text{
 	right:0px;
 	top:0px;
 	bottom:0px;
-	padding:0px 0px 0px 15px;
+	padding:0px 0px 0px 0;
 	margin:0px;
 	font-size:0.9em;
 }
@@ -615,7 +629,7 @@ strong.trigger-option .ui-button-text{
 	opacity:1;
 }
 #otp-planner-optionsWidget-timeSelector-timeSelector {
-	margin:0px 0px 10px 0px;
+	margin:12px 0px 10px 0px;
 }
 #otp-planner-optionsWidget-timeSelector-timeSelector button{
 	display:none;
@@ -665,11 +679,12 @@ strong.trigger-option .ui-button-text{
 
 
 .otp-defaultTripWidget{width:auto;}
-.itinerary .top,.traffic .top{padding:5px 0 10px 10px;}
+.itinerary .top{padding:5px 0 10px 10px;}
+.traffic .top{padding:5px 0 10px 10px;}
 
 #tripmode{
 	overflow:hidden;
-	margin:10px 0px 0px 0px;
+	margin:15px 0px 0px 0px;
 }
 #tripmode li{
 	float:left;
@@ -680,14 +695,26 @@ strong.trigger-option .ui-button-text{
 }
 #tripmode li label{
 	display:block;
-	width:40px;
-	height:40px;
-	text-indent: -9999px;
-	background-image:url(images/icons/ic_directions_walk_blue.svg);
+	width:33px;
+	height:33px;
+	/*text-indent: -9999px;*/
+	position:relative;
+	/*background-image:url(images/icons/ic_directions_walk_blue.svg);
 	background-size:30px;
 	background-position:center center;
-	background-repeat:no-repeat;
+	background-repeat:no-repeat;*/
 }
+#tripmode .text{text-indent:-9999px;display:none;}
+
+#tripmode .fonticon:before{display:block;font-size:2.4em;color:#345a7f;}
+#tripmode .fonticon:hover:before,#tripmode .active .fonticon:before{color:#fff;}
+#tripmode .public .fonticon:before{content: '\e80a'}
+#tripmode .car .fonticon:before{content: '\e80b'}
+#tripmode .bike .fonticon:before{content: '\e80c'}
+#tripmode .walk .fonticon:before{content: '\e80d'}
+#tripmode .parkride .fonticon:before{content: '\e809'}
+
+
 
 #sidebar .otp-widget .lista-categorie li:hover label,#sidebar .otp-widget .lista-categorie li.active label{
 	background-image:url(images/icons/ic_road_sign_white.svg);
@@ -780,10 +807,11 @@ strong.trigger-option .ui-button-text{
 #sidebar .otp-widget .filtroEvt{
 	margin:10px 0px 10px 0px;
 	position:relative;
+	width:96%;
 }
 
 .filtroEvt input{background:#5097da;border:0;color:#fff;padding:7px 10% 7px 3%;width:84%;}
-.filtroEvt .fonticon{position:absolute;top:0;right:10px;background:#3675ae;width:33px;height:33px;}
+.filtroEvt .fonticon{position:absolute;top:0;right:0;background:#3675ae;width:33px;height:33px;}
 .filtroEvt .fonticon:before{content: '\e807';position:absolute;top:8px;right:8px;font-size:1.2em;}
 
 #otp-planner-optionsWidget-submit-button{text-transform:uppercase;background:#3675ae;border:0;border-radius:0;padding:1px 2px;height:auto;font-size:.9em;margin:10px 0;}
