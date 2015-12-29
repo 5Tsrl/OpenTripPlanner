@@ -69,13 +69,13 @@
 
         <h2>Filtro eventi</h2>
         <ul id="catList">
-          <li class="code"><input type="checkbox" id="input-eventCategory-code" checked /><label for="input-eventCategory-code">{{code}} </label>
+          <li class="code"><input type="checkbox" id="input-eventCategory-code" checked /><label for="input-eventCategory-code"><span class="text">{{code}}</span> <span class="fonticon"></span></label>
 
-          <li class="chiusure"><input type="checkbox" id="input-eventCategory-chiusure"  checked /><label for="input-eventCategory-chiusure">{{chiusure}} </label>
+          <li class="chiusure"><input type="checkbox" id="input-eventCategory-chiusure"  checked /><label for="input-eventCategory-chiusure"><span class="text">{{chiusure}}</span> <span class="fonticon"></span></label>
 
-          <li class="meteo"><input type="checkbox" id="input-eventCategory-meteo"  checked /><label for="input-eventCategory-meteo">{{meteo}} </label>
+          <li class="meteo"><input type="checkbox" id="input-eventCategory-meteo"  checked /><label for="input-eventCategory-meteo"><span class="text">{{meteo}}</span> <span class="fonticon"></span></label>
 
-          <li class="altro"><input type="checkbox" id="input-eventCategory-altro"  checked /><label for="input-eventCategory-altro">{{altro}} </label>
+          <li class="altro"><input type="checkbox" id="input-eventCategory-altro"  checked /><label for="input-eventCategory-altro"><span class="text">{{altro}}</span> <span class="fonticon"></span></label>
         </ul>
 
 </script>
@@ -95,7 +95,7 @@
             {{/ev.terminated}}
     		<time datetime="updateDate" pubdate="">{{ev.eventDates}}</time>
     		</p>
-            <span class="icon"></span>
+            <span class="icon fonticon"></span>
     	  </a>
 
 </script>

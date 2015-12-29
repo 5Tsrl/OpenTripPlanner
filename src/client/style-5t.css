@@ -46,11 +46,27 @@ author: Madeincima.it
 .icon-ic_directions_walk_blue:before { content: '\e80d'; } /* '' */
 .icon-check-empty:before { content: '\e80e'; } /* '' */
 .icon-check:before { content: '\e80f'; } /* '' */
+.icon-ic_alert_blue:before { content: '\e810'; } /* '' */
+.icon-ic_car_accident_blue:before { content: '\e811'; } /* '' */
+.icon-ic_fog_blue:before { content: '\e812'; } /* '' */
+.icon-ic_men_at_work_blue:before { content: '\e813'; } /* '' */
+.icon-ic_road_sign_blue:before { content: '\e814'; } /* '' */
+.icon-ic_road_snow_blue:before { content: '\e815'; } /* '' */
+.icon-ic_road_snow_blue-1:before { content: '\e816'; } /* '' */
+.icon-ic_road_open_blue:before { content: '\e817'; } /* '' */
+.icon-ic_road_closed_blue:before { content: '\e818'; } /* '' */
+.icon-ic_directions_subway_blue:before { content: '\e819'; } /* '' */
+.icon-ic_directions_railway_blue:before { content: '\e81a'; } /* '' */
+.icon-ic_snow_blue:before { content: '\e81b'; } /* '' */
+.icon-ic_storm_blue:before { content: '\e81c'; } /* '' */
+.icon-ic_traffic_jam_blue:before { content: '\e81d'; } /* '' */
+.icon-ic_weather_blue:before { content: '\e81e'; } /* '' */
+.icon-ic_wind_blue:before { content: '\e81f'; } /* '' */
 
-::-webkit-input-placeholder{color:#a2c8ed;opacity:  1;}
-:-moz-placeholder{color:#a2c8ed;opacity:  1;}
-::-moz-placeholder{color:#a2c8ed;opacity:  1;}
-:-ms-input-placeholder{color:#a2c8ed;opacity:  1;}
+::-webkit-input-placeholder{color:#a2c8ed;opacity:  1}
+:-moz-placeholder{color:#a2c8ed;opacity:  1}
+::-moz-placeholder{color:#a2c8ed;opacity:  1}
+:-ms-input-placeholder{color:#a2c8ed;opacity:  1}
 
 *:focus {
     outline: 0;
@@ -370,7 +386,7 @@ a:focus {
 /* ----------- SIDEBAR ------------------------------------------------------------------------ */
 
 
-.mapoverlay{position:absolute;width:100%;height:100%;z-index:1;cursor:pointer;}
+.mapoverlay{position:absolute;width:100%;height:100%;z-index:1;cursor:pointer}
 
 #sidebar{
 	position:fixed;
@@ -388,7 +404,7 @@ a:focus {
 	-o-transition: all .3s;
 	transition: all .3s;
 }
-#sidebar.closed{left:-250px;}
+#sidebar.closed{left:-250px}
 
 /* ----------  TABS ----------*/
 
@@ -451,7 +467,7 @@ a:focus {
 }
 #sidebar .tab1 .top{
 	padding:0px 0px 0px 15px;
-	
+
 }
 
 strong.trigger-option{
@@ -468,13 +484,13 @@ strong.trigger-option .ui-button-text{
 	color:#a2c8ed;
 }
 
-strong.trigger-option .ui-button-text:hover,strong.trigger-option :hover .fonticon:before{color:#fff;}
+strong.trigger-option .ui-button-text:hover,strong.trigger-option :hover .fonticon:before{color:#fff}
 
 strong.trigger-option .fonticon:before { content: '\e80e';float:left;margin:1px 5px 0 0;font-size:1.2em; } /* '' */
-strong.trigger-option.open .ui-button-text{color:#fff;}
-strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff;} /* '' */
+strong.trigger-option.open .ui-button-text{color:#fff}
+strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '' */
 
-#otp-planner-optionsWidget-scollPanel{position:relative;}
+#otp-planner-optionsWidget-scollPanel{position:relative}
 #otp-planner-optionsWidget-scollPanel div:nth-child(4){
 	display:none;
 }
@@ -491,18 +507,18 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff;} /* 
 	transition: all .3s;
 }
 
-#map.open{left:0;}
+#map.open{left:0}
 
 .powered-by {
 	cursor: pointer;
 	z-index: 1000;
-	width: 134px;
-	height: 33px;
-	display: block;
+	width: 100px;
+	height: 24px;
 	position: absolute;
 	right: 0;
 	bottom: 15px;
-	background: url(../images/5t/powered-by-5t.png) 0 0 no-repeat;
+	background: #1467b6 url(../images/5t/powered-by-5t.png) 0 0 no-repeat;
+	background-size:100px 24px;
 	text-indent: -9999px;
 	line-height: 0;
 	font-size: 0;
@@ -679,9 +695,9 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff;} /* 
 }
 
 
-.otp-defaultTripWidget{width:auto;}
-.itinerary .top{padding:5px 0 10px 10px;}
-.traffic .top{padding:5px 0 10px 10px;}
+.otp-defaultTripWidget{width:auto}
+.itinerary .top{padding:5px 0 10px 10px}
+.traffic .top{padding:5px 0 10px 10px}
 
 #tripmode{
 	overflow:hidden;
@@ -705,42 +721,17 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff;} /* 
 	background-position:center center;
 	background-repeat:no-repeat;*/
 }
-#tripmode .text{text-indent:-9999px;display:none;}
+#tripmode .text{text-indent:-9999px;display:none}
 
-#tripmode .fonticon:before{display:block;font-size:2.4em;color:#345a7f;}
-#tripmode .fonticon:hover:before,#tripmode .active .fonticon:before{color:#fff;}
+#tripmode .fonticon:before{display:block;font-size:2.4em;color:#345a7f}
+#tripmode .fonticon:hover:before,#tripmode .active .fonticon:before{color:#fff}
 #tripmode .public .fonticon:before{content: '\e80a'}
 #tripmode .car .fonticon:before{content: '\e80b'}
 #tripmode .bike .fonticon:before{content: '\e80c'}
 #tripmode .walk .fonticon:before{content: '\e80d'}
 #tripmode .parkride .fonticon:before{content: '\e809'}
 
-
-
-#sidebar .otp-widget .lista-categorie li:hover label,#sidebar .otp-widget .lista-categorie li.active label{
-	background-image:url(images/icons/ic_road_sign_white.svg);
-}
-
-#sidebar .otp-widget .lista-categorie li.code label{
-	background-image:url(images/icons/ic_traffic_jam_blue.svg);
-}
-#sidebar .otp-widget .lista-categorie li.meteo label{
-	background-image:url(images/icons/ic_weather_blue.svg);
-}
-#sidebar .otp-widget .lista-categorie li.altro label{
-	background-image:url(images/icons/ic_road_sign_blue.svg);
-}
-#sidebar .otp-widget .lista-categorie li.code:hover label,#sidebar .otp-widget .lista-categorie li.code.active label{
-	background-image:url(images/icons/ic_traffic_jam_white.svg);
-}
-#sidebar .otp-widget .lista-categorie li.meteo:hover label,#sidebar .otp-widget .lista-categorie li.meteo.active label{
-	background-image:url(images/icons/ic_weather_white.svg);
-}
-#sidebar .otp-widget .lista-categorie li.altro:hover label,#sidebar .otp-widget .lista-categorie li.altro.active label{
-	background-image:url(images/icons/ic_road_sign_white.svg);
-}
-
-.address-fields{position:relative;}
+.address-fields{position:relative}
 
 
 /* ----------  Box Traffic info TOP ----------*/
@@ -774,36 +765,16 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff;} /* 
 	height:40px;
 	background-color:#5097D9;
 	border-radius:100%;
-	text-indent: -9999px;
-	background-image:url(images/icons/ic_road_sign_blue.svg);
-	background-size:30px;
-	background-position:center center;
-	background-repeat:no-repeat;
 }
 
-#sidebar .otp-widget .lista-categorie li:hover label,#sidebar .otp-widget .lista-categorie li.active label{
-	background-image:url(images/icons/ic_road_sign_white.svg);
-}
 
-#sidebar .otp-widget .lista-categorie li.code label{
-	background-image:url(images/icons/ic_traffic_jam_blue.svg);
-}
-#sidebar .otp-widget .lista-categorie li.meteo label{
-	background-image:url(images/icons/ic_weather_blue.svg);
-}
-#sidebar .otp-widget .lista-categorie li.altro label{
-	background-image:url(images/icons/ic_road_sign_blue.svg);
-}
-#sidebar .otp-widget .lista-categorie li.code:hover label,#sidebar .otp-widget .lista-categorie li.code.active label{
-	background-image:url(images/icons/ic_traffic_jam_white.svg);
-}
-#sidebar .otp-widget .lista-categorie li.meteo:hover label,#sidebar .otp-widget .lista-categorie li.meteo.active label{
-	background-image:url(images/icons/ic_weather_white.svg);
-}
-#sidebar .otp-widget .lista-categorie li.altro:hover label,#sidebar .otp-widget .lista-categorie li.altro.active label{
-	background-image:url(images/icons/ic_road_sign_white.svg);
-}
-
+#sidebar .lista-categorie li .text{display:none}
+#sidebar .lista-categorie li .fonticon:before{font-size:1.6em;color:#336595;position:relative;top:8px;display:block}
+#sidebar .lista-categorie li.active .fonticon:before,#sidebar .otp-widget .lista-categorie li:hover .fonticon:before{color:#fff}
+#sidebar .lista-categorie li.code .fonticon:before{content: '\e81d';font-size:1.9em}
+#sidebar .lista-categorie li.chiusure .fonticon:before{content: '\e814';top:10px}
+#sidebar .lista-categorie li.meteo .fonticon:before{content: '\e81e';font-size:1.9em;top:6px}
+#sidebar .lista-categorie li.altro .fonticon:before{content: '\e810'}
 
 #sidebar .otp-widget .filtroEvt{
 	margin:10px 0px 10px 0px;
@@ -811,11 +782,11 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff;} /* 
 	width:96%;
 }
 
-.filtroEvt input{background:#5097da;border:0;color:#fff;padding:7px 10% 7px 3%;width:84%;}
-.filtroEvt .fonticon{position:absolute;top:0;right:0;background:#3675ae;width:33px;height:33px;}
-.filtroEvt .fonticon:before{content: '\e807';position:absolute;top:8px;right:8px;font-size:1.2em;}
+.filtroEvt input{background:#5097da;border:0;color:#fff;padding:7px 10% 7px 3%;width:84%}
+.filtroEvt .fonticon{position:absolute;top:0;right:0;background:#3675ae;width:33px;height:33px}
+.filtroEvt .fonticon:before{content: '\e807';position:absolute;top:8px;right:8px;font-size:1.2em}
 
-#otp-planner-optionsWidget-submit-button{text-transform:uppercase;background:#3675ae;border:0;border-radius:0;padding:1px 2px;height:auto;font-size:.9em;margin:10px 0;}
+#otp-planner-optionsWidget-submit-button{text-transform:uppercase;background:#3675ae;border:0;border-radius:0;padding:1px 2px;height:auto;font-size:.9em;margin:10px 0}
 
 /* ----------  Box Traffic info MAIN ----------*/
 
@@ -851,21 +822,22 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff;} /* 
 	background-repeat:no-repeat;
 	background-position:center center;	
 }
-#tab2 .main ul li.alert a span.icon{
-	background-image:url(images/icons/ic_alert_white.svg);
-}
-#tab2 .main ul a.lavori span.icon{
-	background-image:url(images/icons/ic_men_at_work_white.svg);
-}
-#tab2 .main ul a.chiusura span.icon{
-	background-image:url(images/icons/ic_road_sign_white.svg);
-}
-/*#tab2 .main ul li.weather a span.icon{
-	background-image:url(images/icons/ic_weather_white.svg);
-}*/
-#tab2 .main ul a.coda span.icon{
-	background-image:url(images/icons/ic_traffic_jam_white.svg);
-}
+
+#tab2 .main ul .fonticon:before{position:relative;top:7px;font-size:1.5em;color:#fff}
+#tab2 .main ul .lavori .fonticon:before{content: '\e813';top:6px;font-size:1.6em}
+#tab2 .main ul .chiusura .fonticon:before{content: '\e814';top:8px}
+#tab2 .main ul .apertura .fonticon:before{content: '\e817';top:6px;font-size:1.7em}
+#tab2 .main ul .coda .fonticon:before,#tab2 .main ul .traffico .fonticon:before{content: '\e81d'}
+#tab2 .main ul .alert .fonticon:before,#tab2 .main ul .attenzione .fonticon:before{content: '\e810';top:6px;left:1px}
+#tab2 .main ul .weather .fonticon:before{content: '\e81e';top:6px}
+#tab2 .main ul .catene .fonticon:before{content: '\e815';top:3px;font-size:2em}
+#tab2 .main ul .incidente .fonticon:before{content: '\e811';font-size:1.9em;top:5px;}
+#tab2 .main ul .nebbia .fonticon:before{content: '\e812'}
+#tab2 .main ul .neve .fonticon:before{content: '\e81b'}
+#tab2 .main ul .temporale .fonticon:before{content: '\e81c';font-size:1.7em;}
+#tab2 .main ul .vento .fonticon:before{content: '\e81f'}
+
+
 #tab2 .main ul li a > p{
 	font-size:0.9em;
 	line-height:1.1em;
