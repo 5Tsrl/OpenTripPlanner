@@ -797,7 +797,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	background-color:#EEEEEE;
 	color:#444;
 }
-#tab2 .main ul li a{
+#tab2 .main ul.lista-eventi li a{
 	display:block;
 	position:relative;
 	color:#444;
@@ -806,7 +806,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	padding:15px 20px 15px 55px;
 	border-bottom: 1px solid #DEDEDE;
 }
-#tab2 .main ul li a:hover{
+#tab2 .main ul.lista-eventi li a:hover{
 	background-color:#F7F7F7;
 }
 #tab2 .main ul li a span.icon{
@@ -842,7 +842,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	font-size:0.9em;
 	line-height:1.1em;
 }
-#tab2 .main ul li a > p > em{
+#tab2 .main ul.lista-eventi li a > p > em{
 	text-transform:uppercase;
 	font-style:normal;
 	font-weight:700;
@@ -850,18 +850,18 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	padding:3px 0px;
 	display:block;
 }
-#tab2 .main ul li a > h3{
+#tab2 .main ul.lista-eventi li a > h3{
 	font-size:1.1em;
 	padding:0px 0px 5px 0px;
 	font-weight:600;
 }
-#tab2 .main ul li.fixed a{
+#tab2 .main ul li.fixed {
 	background-color:#fff;
 }
-#tab2 .main ul li.fixed a span.icon{
+#tab2 .main ul li.fixed  span.icon{
 	background-color:#FF8420;
 }
-#tab2 .main ul li.fixed a:hover{
+#tab2 .main ul li.fixed:hover{
 	cursor:default;
 }
 
