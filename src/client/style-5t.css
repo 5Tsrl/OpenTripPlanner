@@ -395,7 +395,7 @@ a:focus {
 #sidebar .tab-container{
 	background-color:#4089CE;
 	color:#fff;
-	padding:15px 0px 0px 0px;
+	padding:0 0px 0px 0px;
 	height:100%;
 }
 #sidebar .tab-content{
@@ -451,6 +451,7 @@ a:focus {
 }
 #sidebar .tab1 .top{
 	padding:0px 0px 0px 15px;
+	
 }
 
 strong.trigger-option{
