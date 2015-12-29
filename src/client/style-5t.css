@@ -797,6 +797,18 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	background-color:#EEEEEE;
 	color:#444;
 }
+#tab2 .main ul.lista-eventi-new li{
+	display:block;
+	position:relative;
+	color:#444;
+	font-size:1em;
+	line-height:1.1em;
+	padding:15px 20px 15px 55px;
+	border-bottom: 1px solid #DEDEDE;
+}
+#tab2 .main ul.lista-eventi-new li a{
+	color:#3373c2;
+}
 #tab2 .main ul.lista-eventi li a{
 	display:block;
 	position:relative;
@@ -809,7 +821,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 #tab2 .main ul.lista-eventi li a:hover{
 	background-color:#F7F7F7;
 }
-#tab2 .main ul li a span.icon{
+#tab2 .main ul li span.icon{
 	display:block;
 	position:absolute;
 	left:10px;
