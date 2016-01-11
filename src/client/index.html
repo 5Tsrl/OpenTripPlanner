@@ -320,6 +320,15 @@ $(document).ready(function() {
 			setHeight();
 			return false;
 		});
+		$("ul#main-menu-5t li").click(function() { 
+			if($(this).index() == 1 || $(this).index() == 2){
+				//webapp.setActiveModule(webapp.modules[$(this).index()+1]);
+				$(this).siblings().removeClass("active");
+				$(this).addClass("active"); 
+
+			}
+			
+		});
 
 });
 
@@ -375,11 +384,12 @@ $(document).ready(function() {
         </div>
         <div id="tab2" class="tab-content traffic">
       		<div class="top">
+				<!--
       			<div class="field findplace">
       				<label for ="findplace">Località</label>
       				<input type="text" id="findplace" />
       			</div>
-
+				-->
         	</div>
         	<div class="main">
           

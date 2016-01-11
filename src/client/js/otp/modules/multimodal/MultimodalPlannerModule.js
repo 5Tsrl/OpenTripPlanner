@@ -43,6 +43,7 @@ otp.modules.multimodal.MultimodalPlannerModule =
                 //TRANSLATORS: widget name
                 title : _tr("Trip Options"),
                 closeable : false,
+                minimizable : false,
                 draggable: false,
                 persistOnClose: true,
                 sonOf: '#tab1 .top',

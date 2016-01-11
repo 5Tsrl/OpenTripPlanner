@@ -47,7 +47,7 @@ otp.widgets.transit.TripViewerWidget =
 
         this.scheduleLink = $('<div class="otp-tripViewer-scheduleLink notDraggable" />').appendTo(this.mainDiv);
 
-        console.log("added sched link");
+        //console.log("added sched link");
         this.mainDiv.resizable({
             minWidth: 200,
             alsoResize: this.stopList,

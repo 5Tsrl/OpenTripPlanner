@@ -58,7 +58,8 @@ otp.widgets.tripoptions.TripOptionsWidget =
     },
 
     initScrollPanel : function() {
-        this.scrollPanel = $('<div id="'+this.id+'-scollPanel" class="notDraggable" style="overflow: auto;"></div>').appendTo(this.$());
+        //raf this.scrollPanel = $('<div id="'+this.id+'-scollPanel" class="notDraggable" style="overflow: auto;"></div>').appendTo(this.$());
+        this.scrollPanel = $('<div id="'+this.id+'-scollPanel" class="notDraggable" style="overflow: hidden;"></div>').appendTo(this.$());
         /*this.$().resizable({
             minHeight: 80,
             alsoResize: this.scrollPanel

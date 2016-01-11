@@ -64,7 +64,7 @@ otp.modules.datex.EventModel =
 			}
 			this.set('eventDates',  "dal "+this.get('startDate').replace("00:00","") + alDate );
 		}
-
+        this.set('allText',  this.get('roadNumber') + this.get('roadName') + this.get('locationDescription')   +   this.get('eventDescription')  );
 
     },
     distanceTo: function(point) {
@@ -86,8 +86,8 @@ otp.modules.datex.EventModel =
 otp.modules.datex.EventCollection =
     Backbone.Collection.extend({
 
-    //url: otp.config.hostname + '/traffic-events?category=traffic,closure,weather,others',
-    url: 'http://barrone.5t.torino.it/traffic-events?category=traffic,closure,weather,others',
+    url: otp.config.hostname + '/traffic-events?category=traffic,closure,weather,others',
+    //url: 'http://mip.5t.torino.it/traffic-events?category=traffic,closure,weather,others',
     model: otp.modules.datex.EventModel,
     
     initialize: function(){
@@ -130,15 +130,15 @@ otp.modules.datex.EventCollection =
     },
     
     filterEventsChanged: function(e){
-            console.log('evento', e);
-            var ftext = e.currentTarget.value;
-            console.log('ftext', ftext);
+            //console.log('evento', e);
+            var ftext = e.currentTarget.value.toLowerCase();
+            //console.log('ftext', ftext);
             var filtered = this.filter( function(datexEvent){
                 return datexEvent.get('eventDescription').indexOf(ftext) > -1
             });
-            console.log('filtrati', filtered);
+            //console.log('filtrati', filtered);
             this.each( function(datexEvent){
-                    datexEvent.set('filterVisible', datexEvent.get('eventDescription').indexOf(ftext) > -1);
+                    datexEvent.set('filterVisible', datexEvent.get('allText').toLowerCase().indexOf(ftext) > -1);
                 });
             /*
             _.each(this.filter( function(datexEvent){
@@ -164,6 +164,13 @@ otp.modules.datex.CategoryView =
     Backbone.View.extend({
         tagName: 'div',
         className: 'lista-categorie',
+        initialize: function(){
+                //Backbone.eventBus.on('traffic-on', function(){alert('minchia, codeChanged!')});
+                Backbone.eventBus.on('traffic-switch', this.toggleTraffic, this);
+                Backbone.eventBus.on('closure-switch', this.toggleClosure, this);
+                Backbone.eventBus.on('weather-switch', this.toggleWeather, this);
+                Backbone.eventBus.on('others-switch', this.toggleOthers, this);
+        },
         
         events: {
            "change #input-eventCategory-code" : function(){Backbone.eventBus.trigger('traffic-switch')},
@@ -182,6 +189,19 @@ otp.modules.datex.CategoryView =
                 }) );
             return this;
 	    },
+        toggleTraffic: function(){
+            $('.code').toggleClass('active');
+        },
+        toggleClosure: function(){
+            $('.chiusure').toggleClass('active');
+        },
+        toggleWeather: function(){
+            $('.meteo').toggleClass('active');
+        },
+        toggleOthers: function(){
+            $('.altro').toggleClass('active');
+        }
+        
 });
 
 otp.modules.datex.FilterEventsView =
@@ -241,7 +261,7 @@ otp.modules.datex.EventListView =
                 //console.log(this.collection.length)
                 $('.lista-eventi').remove('');
                 this.$el.empty();
-                this.render().$el.appendTo($('#otp-eventsWidget'));
+                this.render().$el.appendTo($('#tab2 .main'));
                 return this;
             },
             
@@ -401,6 +421,7 @@ otp.modules.datex.EventModule =
         var eventData = event.toJSON(),
             marker;
         icon = icon || this.icons.getEventMarker(eventData);
+        //icon = icon || this.icons.lavori;
 
         //console.log(event);
         marker = new L.Marker(new L.LatLng(eventData.lat, eventData.lng), {icon: icon});

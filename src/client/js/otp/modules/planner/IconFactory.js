@@ -240,6 +240,70 @@ var LargeIcon100Pct = L.Icon.extend({
         popupAnchor: new L.Point(0, -23)
     }
 });
+// icone mip
+/*
+alert
+traffico : new IconTraffico(),
+lavori : new IconLavori(),
+chiusura : new IconChiusura(),
+nebbia : new IconNebbia(),
+catene : new IconCatene(),
+*/
+var IconAlert = L.Icon.extend({
+    options: {
+        iconUrl: resourcePath + 'images/5t/marker/marker_alert.png',
+        shadowUrl: null,
+        iconSize: new L.Point(30, 36),
+        iconAnchor: new L.Point(15, 36),
+        popupAnchor: new L.Point(0, -36)
+    }
+});
+var IconTraffico = L.Icon.extend({
+    options: {
+        iconUrl: resourcePath + 'images/5t/marker/marker_traffic_jam.png',
+        shadowUrl: null,
+        iconSize: new L.Point(30, 36),
+        iconAnchor: new L.Point(15, 36),
+        popupAnchor: new L.Point(0, -36)
+    }
+});
+var IconLavori = L.Icon.extend({
+    options: {
+        iconUrl: resourcePath + 'images/5t/marker/marker_men_at_work.png',
+        shadowUrl: null,
+        iconSize: new L.Point(30, 36),
+        iconAnchor: new L.Point(15, 36),
+        popupAnchor: new L.Point(0, -36)
+    }
+});
+var IconChiusura = L.Icon.extend({
+    options: {
+        iconUrl: resourcePath + 'images/5t/marker/marker_road_closed.png',
+        shadowUrl: null,
+        iconSize: new L.Point(30, 36),
+        iconAnchor: new L.Point(15, 36),
+        popupAnchor: new L.Point(0, -36)
+    }
+});
+var IconNebbia = L.Icon.extend({
+    options: {
+        iconUrl: resourcePath + 'images/5t/marker/marker_fog.png',
+        shadowUrl: null,
+        iconSize: new L.Point(30, 36),
+        iconAnchor: new L.Point(15, 36),
+        popupAnchor: new L.Point(0, -36)
+    }
+});
+var IconCatene = L.Icon.extend({
+    options: {
+        iconUrl: resourcePath + 'images/5t/marker/marker_road_snow.png',
+        shadowUrl: null,
+        iconSize: new L.Point(30, 36),
+        iconAnchor: new L.Point(15, 36),
+        popupAnchor: new L.Point(0, -36)
+    }
+});
+
 
 
 otp.modules.planner.IconFactory = otp.Class({
@@ -275,12 +339,28 @@ otp.modules.planner.IconFactory = otp.Class({
     lowerCutoff : 0.2,
     upperCutoff : 0.8,
     
+    //mip
+    alert : new IconAlert(),
+    traffico : new IconTraffico(),
+    lavori : new IconLavori(),
+    chiusura : new IconChiusura(),
+    nebbia : new IconNebbia(),
+    catene : new IconCatene(),
+    
     
     initialize : function() {
     },
     
     getEventMarker: function(event) {
-        return this.mediumBlue;
+        //console.log(event.style)
+        if(event && event.style){
+            if (event.style == 'traffico') return this.traffico
+            if (event.style == 'lavori') return this.lavori
+            if (event.style == 'chiusura') return this.chiusura
+            if (event.style == 'nebbia') return this.nebbia
+            if (event.style == 'catene') return this.catene
+        }
+        return this.alert;
     },
        
     getSmall : function(station) {

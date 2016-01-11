@@ -86,6 +86,7 @@ otp.config = {
 	{
             name: 'Mappa',
             tileUrl: 'https://{s}.tiles.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw',
+            //tileUrl: 'https://{s}.tiles.mapbox.com/v4/mapbox.mapbox-streets-v6/{z}/{x}/{y}.vector.pbf?access_token=pk.eyJ1Ijoicm9ieTIxMDciLCJhIjoiY2loNjBqd2ttMDAwNHZ5bTF2OHM1NHllYyJ9.WBD97cSFchyu2lW4tcU_Tw',
             subdomains : ['a','b','c'],
             attribution: 'Imagery from <a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	},
@@ -102,7 +103,7 @@ otp.config = {
             attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors. Tiles from <a href="http://www.thunderforest.com/transport/">Andy Allan</a>'
     },
     {
-            name: 'Grigione',
+            name: 'Lite',
             tileUrl: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
             subdomains : ['a','b','c'],
             attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
@@ -174,7 +175,7 @@ otp.config = {
         ,*/{
            id : 'datex',
            className : 'otp.modules.datex.EventModule',
-           defaultBaseLayer : 'Mappa',
+           defaultBaseLayer : 'Lite',
            //isDefault: true
        }
     ],
@@ -193,24 +194,11 @@ otp.config = {
 
      geocoders : [
          {
-             'name': 'Geococker revamp',
+             'name': 'Geococker',
              'className': 'otp.core.GeocoderPelias',
              'url': 'http://prontotpl.5t.torino.it/suggest',
              'addressParam': 'query',
          }
-        /* ,{
-             'name': 'geococker',
-             'className': 'otp.core.Geocoder',
-             'url': 'http://bunet.5t.torino.it/otp-geocoder/geocode',
-             'addressParam': 'address'
-         }
-         ,{
-             'name': 'geocoderYP',
-             'className': 'otp.core.GeocoderYp',
-             //'url': 'http://geo.paginegialle.it/lbs',
-             'url': 'http://oltrepo.5t.torino.it/geopg/lbs',
-             'addressParam': 'dv'
-         }*/
      ],
 
 
