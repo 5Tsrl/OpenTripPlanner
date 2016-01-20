@@ -14,6 +14,47 @@
 
 otp.namespace("otp.modules.datex");
 
+otp.modules.datex.InfoModel =
+    Backbone.Model.extend({
+        defaults: {
+              title: null,
+              description: null,
+        },
+    });
+
+otp.modules.datex.InfoCollection =
+        Backbone.Collection.extend({
+        url: otp.config.hostname + '/traffic-infos',
+        model: otp.modules.datex.InfoModel,
+})
+otp.modules.datex.InfoView =
+    Backbone.View.extend({
+            tagName: 'li',
+            className: 'evento fixed alert',
+            template: _.template('<span class="icon fonticon"></span><h3> <%= inf.title %> </h3> <%= inf.description %>'),
+        	render: function(){
+                this.$el.html(this.template({inf: this.model.toJSON()}));
+                return this;
+    	    }
+});
+otp.modules.datex.InfoListView =
+        Backbone.View.extend({
+            tagName: 'ul',
+            className: 'lista-eventi-new',
+            initialize: function() {
+                this.collection.on('reset', this.render, this);
+            },
+            render: function(){
+                this.collection.each(function(evt){
+                    var eventView = new otp.modules.datex.InfoView({ model: evt });
+            		this.$el.append(eventView.render().el);
+            	  }, this);
+                return this;
+            },
+            
+});
+
+
 otp.modules.datex.EventModel =
     Backbone.Model.extend({
 
@@ -261,7 +302,7 @@ otp.modules.datex.EventListView =
                 //console.log(this.collection.length)
                 $('.lista-eventi').remove('');
                 this.$el.empty();
-                this.render().$el.appendTo($('#tab2 .main'));
+                this.render().$el.appendTo($('#tab2 .main .eventsCtnr'));
                 return this;
             },
             
@@ -287,6 +328,7 @@ otp.modules.datex.EventModule =
     trafficEventsWidget   : null,
 
     events    : null,
+    infos     : null,
     eventLookup :   { },
     //eventsLayer   : null,
     
@@ -324,6 +366,7 @@ otp.modules.datex.EventModule =
         console.log('EventModule activated');
         if(this.activated) return;
         this.initEvents();
+        this.initInfos();
         //this.eventsLayer = new L.LayerGroup();
         this.trafficLayerGroup = new L.LayerGroup();
         this.closureLayerGroup = new L.LayerGroup();
@@ -341,6 +384,7 @@ otp.modules.datex.EventModule =
         this.tagliatelLayer.setZIndex(100);
 
         this.trafficEventsWidget = new otp.widgets.EventsCategoryWidget('otp-eventsWidget', this);
+
 
         var this_ = this;
         setInterval(function() {
@@ -366,6 +410,7 @@ otp.modules.datex.EventModule =
         this.webapp.map.lmap.addLayer(this.tagliatelLayer);
 
         this.trafficEventsWidget.show();
+        this.trafficEventsWidget.showInfos(this.infos, this);
         this.trafficEventsWidget.setContentAndShow(this.events, this);
     },
 
@@ -461,8 +506,13 @@ otp.modules.datex.EventModule =
         this.markers = {};
         this.events = new otp.modules.datex.EventCollection();
         this.events.on('reset', this.onResetEvents, this);
-
         this.events.fetch({reset: true});
+    },
+    initInfos : function() {
+        this.infos = new otp.modules.datex.InfoCollection();
+        //this.infos.on('reset', this.onResetEvents, this);
+        this.infos.fetch({reset: true});
+        
     },
 
     reloadEvents : function(events) {
@@ -513,7 +563,7 @@ otp.modules.datex.EventModule =
     //refresh event markers based on zoom level
     refresh : function() {
         this.filterEventsOnMapBounds();
-        this.trafficEventsWidget.setContentAndShow(this.events, this);
+        this.trafficEventsWidget.setContentAndShow(this.events,  this);
     	var lmap = this.webapp.map.lmap;
         //console.log('markers', this.markers);
         /*

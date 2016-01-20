@@ -40,12 +40,19 @@ otp.widgets.EventsCategoryWidget =
 		filterEventsView.render().$el.appendTo(this.$());
 
 	},
+    showInfos: function(infos, module) {
+		infoListView = new otp.modules.datex.InfoListView({collection: infos});
+		//infoListView.render().$el.appendTo($('#tab2 .main .infosCtnr'));
+		$('#tab2 .main .infosCtnr').html(infoListView.render().$el)
+		
+	},
+	setContentAndShow: function(events,  module) {
+		
 
-	setContentAndShow: function(events, module) {
 		//console.log('numero eventi:', events.length)
 		eventListView = new otp.modules.datex.EventListView({collection: events})
 		//eventListView.rinfresca().$el.appendTo(this.$());
-		eventListView.rinfresca().$el.appendTo($('#tab2 .main'));
+		eventListView.rinfresca().$el.appendTo($('#tab2 .main .eventsCtnr'));
 
 	},
 
