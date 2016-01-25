@@ -882,6 +882,28 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 }
 
 #otp-planner-tripViewerWidget{top:120px}
+
+
+/* ----------  ModalBox ----------*/
+
+.white-popup {
+  position: relative;
+  background: #FFF;
+  width: auto;
+  max-width: 500px;
+  margin: 20px auto;
+  line-height:140%;
+}
+
+	.white-popup header{background:#4089cd;color:#fff;padding:20px;}
+	.white-popup header h1{font-size:2em;font-weight:100;}
+	.white-popup .text{padding:20px;}
+	.mfp-close{height:58px;color:#a0c4e6;}
+	.mfp-close-btn-in .mfp-close{color:#a0c4e6;font-family:"Open Sans",sans-serif;font-size:40px;font-weight:100;}
+
+
+
+
 /* ----------  Commented ----------*/
 
 /*
