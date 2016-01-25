@@ -28,6 +28,7 @@
 <link rel="stylesheet" href="js/otp/modules/fieldtrip/fieldtrip-style.css?v=1" />
 <link rel="stylesheet" href="js/otp/widgets/tripoptions/tripoptions-style.css?v=1" />
 <link rel="stylesheet" href="js/otp/widgets/transit/widgets-transit-style.css?v=1" />
+<link rel="stylesheet" href="js/lib/magnific-popup.css" />
 <link rel="stylesheet" href="style.css?v=1" />
 <link rel="stylesheet" href="style-5t.css?v=1" />
 <link rel="stylesheet" href="style-5t-mqueries.css?v=1" />
@@ -45,6 +46,9 @@
 <script src="./js/lib/jquery-ui/i18n/jquery.ui.datepicker-fr.js"></script>
 <script src="./js/lib/jquery-ui/i18n/jquery.ui.datepicker-it.js"></script>
 <script src="./js/lib/jquery-ui/i18n/jquery.ui.datepicker-ca.js"></script>
+
+<!-- Magnific PopUp -->
+<script src="js/lib/jquery.magnific-popup.js"></script>
 
 <!-- backbone -->
 <script src="js/lib/backbone.js"></script>
@@ -286,49 +290,54 @@ $(document).ready(function() {
         });
     }
 		
-		// Init nav toggle		
-		$( "#nav-toggle" ).click(function() {
-			$( ".main-menu-5t" ).toggleClass("active");
-			$( this ).toggleClass("active");
-			$( "#branding" ).toggleClass("full-height");
-		});
-		
+	// Init nav toggle		
+	$( "#nav-toggle" ).click(function() {
+		$( ".main-menu-5t" ).toggleClass("active");
+		$( this ).toggleClass("active");
+		$( "#branding" ).toggleClass("full-height");
+	});
+	
 
 
-		// ---- Tabs ----------------------------------------------------------------------------------------------------------
-		
-		$(".tab-content").hide(); // Hide all content
-		
-		$(".tabbed-content").each(function(){
-			if($(this).find('.active').size() == 0){
-				$(this).find('.tab-content:first').addClass('active').show();
-				$(this).find('ul.tabs li:first').addClass("active");
-			} else {
-				var activeTab = $(this).find('.active a').attr("href"); 
-				$(activeTab).fadeIn(); 
-			}
-		});
-		
-		$("ul.tabs li").click(function() { 
-			webapp.setActiveModule(webapp.modules[$(this).index()]);
-			$(this).parents('.tabbed-content').find(".active").removeClass();
-			$(this).addClass("active"); 
-			$(this).siblings().removeClass("active");
-			$(this).parents('.tabbed-content').find(".tab-content").hide();
-			var activeTab = $(this).find("a").attr("href"); 
+	// ---- Tabs ----------------------------------------------------------------------------------------------------------
+	
+	$(".tab-content").hide(); // Hide all content
+	
+	$(".tabbed-content").each(function(){
+		if($(this).find('.active').size() == 0){
+			$(this).find('.tab-content:first').addClass('active').show();
+			$(this).find('ul.tabs li:first').addClass("active");
+		} else {
+			var activeTab = $(this).find('.active a').attr("href"); 
 			$(activeTab).fadeIn(); 
-			setHeight();
-			return false;
-		});
-		$("ul#main-menu-5t li").click(function() { 
-			if($(this).index() == 1 || $(this).index() == 2){
-				//webapp.setActiveModule(webapp.modules[$(this).index()+1]);
-				$(this).siblings().removeClass("active");
-				$(this).addClass("active"); 
+		}
+	});
+	
+	$("ul.tabs li").click(function() { 
+		webapp.setActiveModule(webapp.modules[$(this).index()]);
+		$(this).parents('.tabbed-content').find(".active").removeClass();
+		$(this).addClass("active"); 
+		$(this).siblings().removeClass("active");
+		$(this).parents('.tabbed-content').find(".tab-content").hide();
+		var activeTab = $(this).find("a").attr("href"); 
+		$(activeTab).fadeIn(); 
+		setHeight();
+		return false;
+	});
+	$("ul#main-menu-5t li").click(function() { 
+		if($(this).index() == 1 || $(this).index() == 2){
+			//webapp.setActiveModule(webapp.modules[$(this).index()+1]);
+			$(this).siblings().removeClass("active");
+			$(this).addClass("active"); 
 
-			}
-			
-		});
+		}
+		
+	});
+
+	$('.modalbox').magnificPopup({
+		type:'inline',
+		midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+	});
 
 });
 
@@ -375,10 +384,18 @@ $(document).ready(function() {
         	<div class="top">
             </div> 
           
-        	<div class="main">
+        	<div class="main"> 
 
-
-
+        		<a href="#test-popup" class="modalbox">Test lightbox</a>
+        		
+        		<div id="test-popup" class="white-popup mfp-hide">
+					<header>
+				  		<h1>Percorso</h1>
+					</header>
+					<div class="text">
+						Quisque velit magna, luctus quis molestie quis, interdum sed risus. Nulla venenatis metus sit amet mi sagittis porttitor euismod id metus. Aliquam a lacus eget tortor fringilla bibendum. Donec eros urna, venenatis vel dignissim sit amet, sagittis ut massa. Integer vel consectetur lacus. 					
+					</div>
+				</div>
 
         	</div>
         </div>
@@ -392,24 +409,8 @@ $(document).ready(function() {
 				-->
         	</div>
         	<div class="main">
-			<div class="infosCtnr"></div>
-			<div class="eventsCtnr"></div>
-          
-<!-- START STATIC HTML IMPORT -->
-<!--
-<ul class="lista-eventi-new">
-  <li class="evento fixed alert">
-  	<span class="icon fonticon"></span>
-    <h3>Obbligo catene a bordo o pneumatici da neve</h3>
-    <p>Dal 15 novembre 2015 al 15 aprile 2016 su tutte le autostrade piemontesi vige l'obbligo di catene a bordo o pneumatici da neve montati (vedi mappa a lato).
-Per gli obblighi invernali sulle strade Statali e Provinciali, <a href="http://www.muoversinpiemonte.it/infomob/obbligocatene2015-16.pdf">clicca qui</a>.</p>
-  </li>
-</ul>
--->
-
-
-<!-- END STATIC HTML IMPORT -->          
-
+				<div class="infosCtnr"></div>
+				<div class="eventsCtnr"></div>
         	</div>
         </div>
     </div>
