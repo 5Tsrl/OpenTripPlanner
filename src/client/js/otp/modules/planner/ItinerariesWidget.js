@@ -302,7 +302,8 @@ otp.widgets.ItinerariesWidget =
     renderHeaderContent : function(itin, index, parentDiv) {
         parentDiv.empty();
         var div = $('<div class="summary-aux"></div>').appendTo(parentDiv);
-        div.append('<div class="otp-itinsAccord-header-number">'+(index+1)+'</div>');
+        var divGraficBar = $('<div class="graphicbar"></div>').appendTo(div);
+        div.prepend('<div class="otp-itinsAccord-header-number"><span>'+(index+1)+'</span></div>');
 
         /*var maxSpan = itin.tripPlan.latestEndTime - itin.tripPlan.earliestStartTime;
         var startPct = (itin.itinData.startTime - itin.tripPlan.earliestStartTime) / maxSpan;
@@ -320,6 +321,7 @@ otp.widgets.ItinerariesWidget =
         var timeStr = otp.util.Time.formatItinTime(itin.getEndTime(), otp.config.locale.time.time_format);
         div.append('<div class="otp-itinsAccord-header-time" style="left: '+(leftPx+widthPx+2)+'px;">' + timeStr + '</div>');*/
 
+        /* Commented by Madeincima
         var maxSpan = itin.tripPlan.latestEndTime - itin.tripPlan.earliestStartTime;
         var startPct = (itin.itinData.startTime - itin.tripPlan.earliestStartTime) / maxSpan;
         var itinSpan = itin.getEndTime() - itin.getStartTime();
@@ -327,41 +329,95 @@ otp.widgets.ItinerariesWidget =
         var startPx = 20+timeWidth, endPx = div.width()-timeWidth - (itin.groupSize ? 48 : 0);
         var pxSpan = endPx-startPx;
         var leftPx = Math.round(startPx + startPct * pxSpan);
-        var widthPx = Math.round(pxSpan * (itinSpan / maxSpan));
+        var widthPx = Math.round(pxSpan * (itinSpan / maxSpan));*/
+
+        //var maxSpan = itin.tripPlan.latestEndTime - itin.tripPlan.earliestStartTime;
+        //var startPct = 0;
+        //var itinSpan = 0;
+        //var timeWidth = 0;
+        //var startPx = 0, endPx = 100;
+        //var pxSpan = endPx-startPx;
+        //var leftPx = Math.round(startPx + startPct * pxSpan);
+        //var widthPx = Math.round(pxSpan * (itinSpan / maxSpan));
+        //var timeStr = otp.util.Time.formatItinTime(itin.getStartTime(), otp.config.locale.time.time_format);
+        //var timeStr = otp.util.Time.formatItinTime(itin.getEndTime(), otp.config.locale.time.time_format);
+        var lastTime = 0;
+        var maxSpan = itin.itinData.duration*1000;
+        var startTimeSpan = 0;
+        var endTimeSpan = 0;
+        var minPerc = 3;
+        console.log('maxSpan: ' + maxSpan);
+        var totPercReserved = minPerc*(itin.itinData.legs.length);
+        console.log('totPercReserved: ' + totPercReserved);
+
+        var maxSpanReserved = (maxSpan*totPercReserved)/100;
+        console.log('maxSpanReserved: ' + maxSpanReserved);
+
+        var maxSpanReduced = maxSpan - maxSpanReserved;
+        console.log('maxSpanReduced: ' + maxSpanReduced);
 
 
-        var timeStr = otp.util.Time.formatItinTime(itin.getStartTime(), otp.config.locale.time.time_format);
-        div.append('<div class="otp-itinsAccord-header-time" style="left: '+(leftPx-timeWidth)+'px;">' + timeStr + '</div>');
-
-        var timeStr = otp.util.Time.formatItinTime(itin.getEndTime(), otp.config.locale.time.time_format);
-        div.append('<div class="otp-itinsAccord-header-time" style="left: '+(leftPx+widthPx+2)+'px;">' + timeStr + '</div>');
+        //maxSpan = itin.itinData.duration*1000;
 
         for(var l=0; l<itin.itinData.legs.length; l++) {
             var leg = itin.itinData.legs[l];
-            var startPct = (leg.startTime - itin.tripPlan.earliestStartTime) / maxSpan;
+            var waitIsset = false;
+            
+            if(lastTime!=leg.startTime && lastTime!=0){
+                var legTimePerc = ((leg.startTime - lastTime)*100)/maxSpan;
+                if(legTimePerc>=1){
+                    var segment = $('<div class="otp-itinsAccord-header-segment wait" />').css({
+                        width: legTimePerc+'%'
+                    }).appendTo(divGraficBar);
+                    waitIsset = true;
+                }
+                
+            }
+
+            var legTimePerc = (((leg.endTime - leg.startTime)*(100-(totPercReserved + 4)))/maxSpan) + minPerc;
+
+            var border = '';
+            
+            if(!waitIsset && l!=0){
+                border = '<span class="border"></span>';
+                console.log('---test2---');
+            }
+            var segment = $('<div class="otp-itinsAccord-header-segment">'+border+'</div>').css({
+                width: legTimePerc+'%',
+                background: this.getModeColor(leg.mode)+' url('+otp.config.resourcePath+'images/5t/mode/'+leg.mode.toLowerCase()+'.png) 50% 50% no-repeat'
+            }).appendTo(divGraficBar);
+
+            /*var showRouteLabel = widthPx > 10 && otp.util.Itin.isTransit(leg.mode) && leg.routeShortName && leg.routeShortName.length <= 6;
+            if(showRouteLabel) segment.append('<div title="'+ leg.routeShortName +'">'+leg.routeShortName+'</div>');*/
+
+            lastTime = leg.endTime;
+
+            //alert(maxSpan);
+           /* var startPct = (leg.startTime - itin.tripPlan.earliestStartTime) / maxSpan;
             var endPct = (leg.endTime - itin.tripPlan.earliestStartTime) / maxSpan;
-            var leftPx = Math.round(startPx + startPct * pxSpan + 2);
-            var widthPx = Math.round(pxSpan * (leg.endTime - leg.startTime) / maxSpan - 1);
+            var leftPx = Math.round(startPct * pxSpan);
+            var widthPx = Math.round(pxSpan * (leg.endTime - leg.startTime) / maxSpan );*/
+
 
             //div.append('<div class="otp-itinsAccord-header-segment" style="width: '+widthPx+'px; left: '+leftPx+'px; background: '+this.getModeColor(leg.mode)+' url(images/mode/'+leg.mode.toLowerCase()+'.png) center no-repeat;"></div>');
 
-            var showRouteLabel = widthPx > 40 && otp.util.Itin.isTransit(leg.mode) && leg.routeShortName && leg.routeShortName.length <= 6;
+            /*var showRouteLabel = widthPx > 10 && otp.util.Itin.isTransit(leg.mode) && leg.routeShortName && leg.routeShortName.length <= 6;
             var segment = $('<div class="otp-itinsAccord-header-segment" />')
             .css({
-                width: widthPx,
-                left: leftPx,
+                width: widthPx+'%',
+                left: leftPx+'%',
                 //background: this.getModeColor(leg.mode)
                 background: this.getModeColor(leg.mode)+' url('+otp.config.resourcePath+'images/5t/mode/'+leg.mode.toLowerCase()+'.png) 30% 50% no-repeat'
             })
-            .appendTo(div);
+            .appendTo(divGraficBar);
             //if(showRouteLabel) segment.append('<div style="margin-left:'+(widthPx/2+9)+'px;" title="'+ leg.routeShortName +'">'+leg.routeShortName+'</div>');
-            if(showRouteLabel) segment.append('<div style="margin-left:45%;" title="'+ leg.routeShortName +'">'+leg.routeShortName+'</div>');
+            if(showRouteLabel) segment.append('<div style="margin-left:45%;" title="'+ leg.routeShortName +'">'+leg.routeShortName+'</div>');*/
 
         }
 
         if(itin.groupSize) {
             var segment = $('<div class="otp-itinsAccord-header-groupSize">'+itin.groupSize+'</div>')
-            .appendTo(div);
+            .appendTo(divGraficBar);
         }
 
     },
@@ -608,7 +664,7 @@ otp.widgets.ItinerariesWidget =
             // prevaricate if this is a nonstruct frequency trip
             if( leg.isNonExactFrequency === true ){
                 //TRANSLATORS: public transport drives every N minutes
-            	$('<div class="otp-itin-leg-leftcol">' + ngettext("every %d min", "every %d mins", (leg.headway/60))+"</div>").appendTo(legDiv);
+                $('<div class="otp-itin-leg-leftcol">' + ngettext("every %d min", "every %d mins", (leg.headway/60))+"</div>").appendTo(legDiv);
             } else {
                 $('<div class="otp-itin-leg-leftcol">'+otp.util.Time.formatItinTime(leg.startTime, otp.config.locale.time.time_format)+"</div>").appendTo(legDiv);
             }
@@ -718,7 +774,7 @@ otp.widgets.ItinerariesWidget =
             $('<div class="otp-itin-leg-buffer"></div>').appendTo(legDiv);
 
             if( leg.isNonExactFrequency === true ) {
-            	$('<div class="otp-itin-leg-leftcol">' + _tr('late as') + ' ' + otp.util.Time.formatItinTime(leg.endTime, otp.config.locale.time.time_format)+"</div>").appendTo(legDiv);
+                $('<div class="otp-itin-leg-leftcol">' + _tr('late as') + ' ' + otp.util.Time.formatItinTime(leg.endTime, otp.config.locale.time.time_format)+"</div>").appendTo(legDiv);
             } else {
                 $('<div class="otp-itin-leg-leftcol">'+otp.util.Time.formatItinTime(leg.endTime, otp.config.locale.time.time_format)+"</div>").appendTo(legDiv);
             }
