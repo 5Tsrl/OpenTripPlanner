@@ -1078,7 +1078,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 #planner-itinWidget .level1{
 	background:#eee;
 	border-radius:0;
-	padding: 15px 10px;
+	padding: 15px 5%;
 	min-height:30px;
 	margin:0;
 	border-bottom:1px solid #ddd;
@@ -1087,6 +1087,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 #planner-itinWidget .level1.ui-state-active{
 	background:#fff;
+	border:0;
 
 }
 
@@ -1142,11 +1143,12 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	color: #29547c
 }
 .ui-accordion .ui-accordion-content {
-	padding: 0 0 0 10px;
+	padding: 15px 0 15px 10px;
 	border: 0;
-	margin-top: 15px;
-	margin-bottom: 15px;
+	margin-top: 0;
+	margin-bottom: 0;
 	position: relative;
+	height:auto !important;
 }
 .ui-accordion .ui-accordion-content .ui-accordion-content {
 	margin-top: 5px;
