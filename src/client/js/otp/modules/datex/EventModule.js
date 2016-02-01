@@ -374,7 +374,8 @@ otp.modules.datex.EventModule =
         this.othersLayerGroup  = new L.LayerGroup();
         
         
-        this.tagliatelLayer = new L.tileLayer.wms("http://172.21.9.6:8180/geoserver/gwc/service/wms?&configuration=optima&", {
+        //this.tagliatelLayer = new L.tileLayer.wms("http://172.21.9.6:8180/geoserver/gwc/service/wms?&configuration=optima&", {
+        this.tagliatelLayer = new L.tileLayer.wms(otp.config.hostname + "/traffic-layer?&configuration=optima&", {
                                         layers: 'optima:rlin_tre_fore0_cache',
                                         format: 'image/png',
                                         transparent: true,

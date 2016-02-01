@@ -259,10 +259,10 @@ a:focus {
 	top: 70px;
 	display: block;
 	right: 20px;
-}
+}/*
 .main-menu-container #main-menu-5t:nth-child(3) {
 	display: none;
-}
+}*/
 #main-menu-5t {
 	display: block;
 	position: absolute;
@@ -349,7 +349,7 @@ a:focus {
 /* ----------- LANG ---------- */
 
 .language-switcher {
-	float: left;
+	float: right;
 	margin-left: 8px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;

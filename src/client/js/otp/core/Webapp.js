@@ -207,6 +207,8 @@ otp.core.Webapp = otp.Class({
                 var id = "otp-infoWidget-"+i;
 
                 var options = {};
+                options.id = otp.config.infoWidgets[i].id ; //raf
+                
                 if(_.has(otp.config.infoWidgets[i], 'title')) options.title = otp.config.infoWidgets[i].title;
                 if(_.has(otp.config.infoWidgets[i], 'cssClass')) options.cssClass = otp.config.infoWidgets[i].cssClass;
                 //Creates frontend language chooser
@@ -216,15 +218,22 @@ otp.core.Webapp = otp.Class({
                 }
 
                 this.infoWidgets[id] = new otp.widgets.InfoWidget(otp.config.infoWidgets[i].styleId,
-                                                                  this, options, otp.config.infoWidgets[i].content);
-
-                $("<li id='"+id+"'><a href='#'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e) {
-                    e.preventDefault();
-                    var widget = this_.infoWidgets[this.id];
-                    if(!widget.isOpen) widget.show();
-                    widget.bringToFront();
-                });
-
+                                        //raf  this, options, otp.config.infoWidgets[i].content);
+                                        this, options, ich[options.id]);
+                if(options.id){
+                    $("<li id='"+id+"'><a href='#'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e) {
+                        e.preventDefault();
+                        var widget = this_.infoWidgets[this.id];
+                        if(!widget.isOpen) widget.show();
+                        widget.bringToFront();
+                    });
+                } else if (otp.config.infoWidgets[i].link) {
+                    $("<li id='"+i+"'><a href='"+otp.config.infoWidgets[i].link+"'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul)
+                } else if (otp.config.infoWidgets[i].module) {
+                    $("<li id='"+i+"'><a href='#'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e){
+                        alert(otp.config.infoWidgets[i].module)
+                    })
+                }
             }
         }
 
