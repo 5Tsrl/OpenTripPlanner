@@ -52,8 +52,30 @@ otp.locale.Italian = {
      */
     infoWidgets : [
             {
+                title:  'Home',
+                link:   'http://www.5t.torino.it'
+            },
+            {
+                title:  'Indicazioni stradali',
+                module:   'PlannerModule'
+            },
+            {
+                title:  'Traffico',
+                module:   'EventModule'
+            },
+            {
+                title:  'Il servizio',
+                id:"id-servizio-it"
+            },
+            {
+                title:  'Contatti',
+                id: "id-contatti-it"
+            },
+            
+/*            
+            {
                 title: 'Il Servizio',
-                                content: '<p>Il servizio di Calcolo Percorsi Regionale Pronto TPL è il nuovo strumento di infomobilità che permette di ricercare e pianificare gli spostamenti sul territorio regionale utilizzando i servizi di trasporto pubblico in tutte le sue declinazioni (bus e tram urbani, servizi extraurbani e treno) o tramite percorsi pedonali o con l’utilizzo dell’auto personale.</p>\
+                content: '<p>Il servizio di Calcolo Percorsi Regionale Pronto TPL è il nuovo strumento di infomobilità che permette di ricercare e pianificare gli spostamenti sul territorio regionale utilizzando i servizi di trasporto pubblico in tutte le sue declinazioni (bus e tram urbani, servizi extraurbani e treno) o tramite percorsi pedonali o con l’utilizzo dell’auto personale.</p>\
                 <br/><br/>\
                                 <p>Il servizio è un progetto sperimentale a cura della <a href="http://www.regione.piemonte.it/trasporti/">Direzione Opere pubbliche, Difesa del suolo, Montagna, Foreste, Protezione civile, Trasporti e Logistica di Regione Piemonte </a> ed è realizzato e gestito da <a href="http://www.5t.torino.it/">5T</a> in collaborazione con le Amministrazioni pubbliche e le aziende di trasporto pubblico piemontesi.</p>\
                 <br/><br/>\
@@ -79,6 +101,7 @@ otp.locale.Italian = {
                                                   <p>Si ricorda infine che i dati inerenti al servizio di trasporto pubblico (quali localizzazione delle fermate, orari e percorsi) sono stati forniti <a href="http://prontotpl.5t.torino.it/ProntoTPL_Aggiornamento_Dati.pdf">dalle Amministrazioni provinciali e comunali della Regione Piemonte e dalle aziende piemontesi di trasporto pubblico</a> e sono generalmente aggiornati con cadenza trimestrale. Nel caso in cui l’aggiornamento non avvenga secondo tali tempistiche, alcune località potrebbero risultare non raggiungibili con i servizi di trasporto pubblico.</p>\
                  ',
             },
+*/
     ],
 
 
