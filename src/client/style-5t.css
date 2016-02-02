@@ -901,9 +901,10 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	.mfp-close{height:58px;color:#a0c4e6;}
 	.mfp-close-btn-in .mfp-close{color:#a0c4e6;font-family:"Open Sans",sans-serif;font-size:40px;font-weight:100;}
 
-
-
-
+.graphicbar{width:80%;float:left;position:relative;height:23px;}
+#planner-itinWidget .level1{float:left;width:90%;padding:15px 5%;}
+.otp-itinsAccord-header-number{position:relative;margin-bottom:10px;}
+.otp-itinsAccord-header-number span{bottom: 0;left: 0;position: absolute;right: 0;top: 5px;}
 /* ----------  Commented ----------*/
 
 /*
@@ -1077,7 +1078,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 #planner-itinWidget .level1{
 	background:#eee;
 	border-radius:0;
-	padding: 15px 10px;
+	padding: 15px 5%;
 	min-height:30px;
 	margin:0;
 	border-bottom:1px solid #ddd;
@@ -1086,6 +1087,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 #planner-itinWidget .level1.ui-state-active{
 	background:#fff;
+	border:0;
 
 }
 
@@ -1141,11 +1143,12 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	color: #29547c
 }
 .ui-accordion .ui-accordion-content {
-	padding: 0 0 0 10px;
+	padding: 15px 0 15px 10px;
 	border: 0;
-	margin-top: 15px;
-	margin-bottom: 15px;
+	margin-top: 0;
+	margin-bottom: 0;
 	position: relative;
+	height:auto !important;
 }
 .ui-accordion .ui-accordion-content .ui-accordion-content {
 	margin-top: 5px;
@@ -1227,8 +1230,21 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	background: url('images/5t/mode/mode_bubble_se_highlight.png');
 }
 .otp-itinsAccord-header-segment {
-	height: 23px;
+	height: 20px;
 	color: #fff;
+	position:relative;
+	float:left;
+}
+.otp-itinsAccord-header-segment .border{
+width:1px;
+position:absolute;top:0;left:0;bottom:0;
+background:#fff;
+}
+.otp-itinsAccord-header-segment.wait{
+	height:2px;
+	padding-top:0;
+	margin-top:11px;
+	background:#d1d1d1;
 }
 .otp-itinsAccord-header-time {
 	color: #404040
