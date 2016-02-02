@@ -217,24 +217,33 @@ otp.core.Webapp = otp.Class({
                    otp.config.infoWidgets[i].content = options.content;
                 }
 
-                this.infoWidgets[id] = new otp.widgets.InfoWidget(otp.config.infoWidgets[i].styleId,
-                                        //raf  this, options, otp.config.infoWidgets[i].content);
-                                        this, options, ich[options.id]);
+                //this.infoWidgets[id] = new otp.widgets.InfoWidget(otp.config.infoWidgets[i].styleId,
+                //                        //raf  this, options, otp.config.infoWidgets[i].content);
+                //                        this, options, ich[options.id]);
                 if(options.id){
-                    $("<li id='"+id+"'><a href='#'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e) {
-                        e.preventDefault();
-                        var widget = this_.infoWidgets[this.id];
-                        if(!widget.isOpen) widget.show();
-                        widget.bringToFront();
+                    var widg_html = ich[options.id]()
+                    console.log(widg_html) 
+                    $('body').append(widg_html)
+                    //$(ich[options.id]).appendTo('body')
+                    $("<li id='"+id+"'><a href='#"+ options.id +"' class='modalboxMenu'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e) {
+                        //e.preventDefault();
+                        //var widget = this_.infoWidgets[this.id];
+                        //if(!widget.isOpen) widget.show();
+                        //widget.bringToFront();
                     });
                 } else if (otp.config.infoWidgets[i].link) {
                     $("<li id='"+i+"'><a href='"+otp.config.infoWidgets[i].link+"'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul)
                 } else if (otp.config.infoWidgets[i].module) {
+                    var targetModule = otp.config.infoWidgets[i].module;
                     $("<li id='"+i+"'><a href='#'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e){
-                        alert(otp.config.infoWidgets[i].module)
+                        alert(targetModule)
                     })
                 }
             }
+            $('.modalboxMenu').magnificPopup({
+        		type:'inline',
+        		midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+        	});
         }
 
 

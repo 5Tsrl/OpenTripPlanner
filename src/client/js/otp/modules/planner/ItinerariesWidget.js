@@ -636,21 +636,47 @@ otp.widgets.ItinerariesWidget =
             /*if( typeof leg.from.stopCode != 'undefined' ) {
                 stopHtml += _tr("Stop") + ' #'+leg.from.stopCode+ ' ';
             }*/
-            stopHtml += '[<a href="#">' + _tr("Stop Viewer") +'</a>]</div>';
+            stopHtml += '[<a href="#" >' + _tr("Stop Viewer") +'</a>]</div>';
 
             $(stopHtml)
             .appendTo(legDiv)
-            .click(function(evt) {
+            
+            .click(function(evt) {/*
+                var modalboxWidget_html = ich['otp-stopViewer']()
+                console.log(modalboxWidget_html) 
+                //$('body').append(modalboxWidget_html)
+                $('.modalboxWidget').magnificPopup({
+                    items:[
+                        //{src:$('<div class=" white-popup">Dynamically created element</div>')}
+                        {src:$(modalboxWidget_html)}
+                    ],
+            		type:'inline',
+            		midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+            	});
+                */
+                
                 if(!this_.module.stopViewerWidget) {
                     this_.module.stopViewerWidget = new otp.widgets.transit.StopViewerWidget("otp-"+this_.module.id+"-stopViewerWidget", this_.module);
+                    //raf devo chiamare inizialize a mano
+                    this_.module.stopViewerWidget.inizialize()
                     this_.module.stopViewerWidget.$().offset({top: evt.clientY, left: evt.clientX});
                 }
                 this_.module.stopViewerWidget.show();
                 this_.module.stopViewerWidget.setActiveTime(leg.startTime);
                 this_.module.stopViewerWidget.setStop(leg.from.stopId, leg.from.name);
                 this_.module.stopViewerWidget.bringToFront();
+                
+                $.magnificPopup.open({
+                  items: {
+                    src: this_.module.stopViewerWidget.mainDiv,
+                    type: 'inline'
+                  }
+                });
+                
+                
             });
-
+            
+            
 
             $('<div class="otp-itin-leg-buffer"></div>').appendTo(legDiv);
 
@@ -665,12 +691,20 @@ otp.widgets.ItinerariesWidget =
             .click(function(evt) {
                 if(!this_.module.tripViewerWidget) {
                     this_.module.tripViewerWidget = new otp.widgets.transit.TripViewerWidget("otp-"+this_.module.id+"-tripViewerWidget", this_.module);
+                    //this_.module.tripViewerWidget.inizialize();
                     this_.module.tripViewerWidget.$().offset({top: evt.clientY, left: evt.clientX});
                 }
                 this_.module.tripViewerWidget.show();
-                if(this_.module.tripViewerWidget.minimized) this_.module.tripViewerWidget.unminimize();
+                //if(this_.module.tripViewerWidget.minimized) this_.module.tripViewerWidget.unminimize();
                 this_.module.tripViewerWidget.update(leg);
                 this_.module.tripViewerWidget.bringToFront();
+                
+                $.magnificPopup.open({
+                  items: {
+                    src: this_.module.tripViewerWidget.mainDiv,
+                    type: 'inline'
+                  }
+                });
             });
 
             // show the intermediate stops, if applicable -- REPLACED BY TRIP VIEWER

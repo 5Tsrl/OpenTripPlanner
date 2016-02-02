@@ -28,30 +28,37 @@ otp.widgets.transit.TripViewerWidget =
 
     lastSize : null,
     //variantIndexLookup : null,
+    center : function( ){ },
+
+    show : function( ){ },
+
+    bringToFront : function( ){ },
 
     initialize : function(id, module) {
 
         otp.widgets.transit.RouteBasedWidget.prototype.initialize.call(this, id, module, {
             title : _tr('Trip Viewer'),
             cssClass : 'otp-tripViewer',
-            closeable : true,
-            openInitially : false,
-            persistOnClose : true,
+            //closeable : true,
+            //openInitially : false,
+            //persistOnClose : true,
         });
 
         this.module = module;
 
         var this_ = this;
+        
+        //this.mainDiv = $('<div />').attr('id', id).addClass('_otp-widget  white-popup mfp-hide').appendTo('body'/*this.sonOf*/);
+        //console.log("added sched link");
+        /*this.mainDiv.resizable({
+            minWidth: 200,
+            alsoResize: this.stopList,
+        });*/
 
         this.stopList = $('<div class="otp-tripViewer-stopList notDraggable" />').appendTo(this.mainDiv);
 
         this.scheduleLink = $('<div class="otp-tripViewer-scheduleLink notDraggable" />').appendTo(this.mainDiv);
 
-        //console.log("added sched link");
-        this.mainDiv.resizable({
-            minWidth: 200,
-            alsoResize: this.stopList,
-        });
 
     },
 

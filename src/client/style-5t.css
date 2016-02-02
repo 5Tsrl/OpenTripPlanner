@@ -1276,6 +1276,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	line-height: 140%;
 }
 .otp-stopViewer-timeList {
+    /*raf*/height:300px; top:120px
 	border-color: #eaeaea;
 	margin-top: 0;
 	bottom: 40px;
