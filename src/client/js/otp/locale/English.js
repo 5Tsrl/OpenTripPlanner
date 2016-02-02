@@ -52,6 +52,27 @@ otp.locale.English = {
      * If not specified, the default styling is used.
      */
     infoWidgets : [
+        {
+            title:  'Home',
+            link:   'http://www.5t.torino.it'
+        },
+        {
+            title:  'Route Planner',
+            module:   'PlannerModule'
+        },
+        {
+            title:  'Traffic',
+            module:   'EventModule'
+        },
+        {
+            title:  'About',
+            id:"id-servizio-en"
+        },
+        {
+            title:  'Contact',
+            id: "id-contatti-en"
+        },
+        /*
             {
                 title: 'About',
                 content: '<p>Pronto TPL trip planner service is the new infomobility tool to plan your trip in the region using public transport (urban and extra-urban bus and tram, train services), by pedestrian paths or by car.</p>\
@@ -74,7 +95,7 @@ otp.locale.English = {
 						  <p>Pronto TPL trip planner service uses OpenStreetMap (OSM) as cartographic basis, a collaborative project to create a free editable map of the world, constantly updated, so the map may not be entirely complete. Related to adresses’ identification, the systems may produce errors or inaccuracies.</p>\
 						  <br/><br/>\
 						  <p>Please note that public transport data (as locating stops, timetables and routes) are provided by the regional local governments and public transport operators and are generally updated quarterly. In case of missed update, some localities could not be reached by public transport services.</p>'
-            },
+            },*/
     ],
 
 
