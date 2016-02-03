@@ -227,5 +227,14 @@
     "Depart_itinerary": "Parti da",
     "depart_itinerary": "Partenza",
     "Start_popup": "Partenza",
-    "Depart_tripoptions": "Partenza"
+    "Depart_tripoptions": "Partenza",
+    "Route_planner" : "Indicazioni stradali",
+    "Traffic_info" : "Informazioni traffico",
+    "Options" : "Opzioni",
+    "event_filter" : "Filtro eventi",
+    "Traffic": "Traffico",
+    "Closure": "Chiusure",
+    "Weather": "Meteo",
+    "Other": "Altro",
+    "Inserisci una parola chiave":"Inserisci una parola chiave"
 }

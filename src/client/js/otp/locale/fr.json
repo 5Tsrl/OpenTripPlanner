@@ -223,5 +223,14 @@
     "Depart_itinerary": "Départ",
     "depart_itinerary": "Départ",
     "Start_popup": "Départ",
-    "Depart_tripoptions": "Départ"
+    "Depart_tripoptions": "Départ",
+    "Route_planner" : "Route Planner",
+    "Traffic_info" : "Traffic Info",
+    "Options" : "Options",
+    "event_filter" : "Filter events",
+    "Traffic": "Traffic",
+    "Closure": "Closure",
+    "Weather": "Weather",
+    "Other": "Other",
+    "Inserisci una parola chiave":"Insert keyword"
 }

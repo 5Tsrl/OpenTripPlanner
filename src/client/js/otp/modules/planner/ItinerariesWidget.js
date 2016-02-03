@@ -301,9 +301,16 @@ otp.widgets.ItinerariesWidget =
 
     renderHeaderContent : function(itin, index, parentDiv) {
         parentDiv.empty();
+        var divTimes = $('<div class="times"></div>');
+        var partenza = moment(itin.itinData.startTime).format('HH:mm');
+        var arrivo   = moment(itin.itinData.endTime).format('HH:mm');
+        var durata   = moment.duration(itin.itinData.duration, 'seconds').format('H[h] mm[m]');
+        divTimes.html('partenza: ' + partenza + ' arrivo: '+ arrivo + ' durata: '+ durata );
         var div = $('<div class="summary-aux"></div>').appendTo(parentDiv);
+        div.append(divTimes);
         var divGraficBar = $('<div class="graphicbar"></div>').appendTo(div);
         div.prepend('<div class="otp-itinsAccord-header-number"><span>'+(index+1)+'</span></div>');
+        
 
         /*var maxSpan = itin.tripPlan.latestEndTime - itin.tripPlan.earliestStartTime;
         var startPct = (itin.itinData.startTime - itin.tripPlan.earliestStartTime) / maxSpan;

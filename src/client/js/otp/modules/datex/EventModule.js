@@ -223,10 +223,11 @@ otp.modules.datex.CategoryView =
     		//this.$el.html( this.template());
             this.$el.html( ich['otp-datexCategoryList']({
                     widgetId : this.id,
-					code: 'Code e incidenti',
-					chiusure: 'Chiusure e cantieri',
-					meteo: 'Eventi atmosferici',
-					altro: 'Altre informazioni'
+					code: _tr('Traffic'),
+					chiusure: _tr('Closure'),
+					meteo: _tr('Weather'),
+					altro: _tr('Other'),
+                    filtro_eventi: _tr('event_filter')
                 }) );
             return this;
 	    },
@@ -255,7 +256,7 @@ otp.modules.datex.FilterEventsView =
          },
          render: function(){
      		//this.$el.html( this.template(this.model.toJSON()));
-             this.$el.html( ich['otp-datexFilterEvents']({placeholder:'Inserisci una parola chiave'})
+             this.$el.html( ich['otp-datexFilterEvents']({placeholder: _tr('Inserisci una parola chiave')})
              );
              return this;
  	    }
