@@ -693,6 +693,10 @@ otp.widgets.tripoptions.ModeSelectorIcons =
         */
         ich['otp-tripOptions-modeSelectorIcons']({
             widgetId : this.id,
+            public_transport : _tr("Transit"),
+            car : _tr("Drive Only"),
+            bike : _tr("Bicycle Only"),
+            foot : _tr("Walk Only")
             
         }).appendTo(this.$());
         
@@ -1353,7 +1357,7 @@ otp.widgets.tripoptions.TriggerOption =
         //TRANSLATORS: button to send query for trip planning
         //raf $('<div class="notDraggable" style="text-align:center;"><button id="'+this.id+'-button">' + _tr("Plan Your Trip") + '</button></div>').appendTo(this.$());
         //raf $('<button id="'+this.id+'-triggerOption">' + _tr("Plan Your Trip") + '</button>').appendTo(this.$());
-        $('<strong id="'+this.id+'-triggerOption" class="trigger-option">OPZIONI<span class="fonticon"></span></strong>').appendTo(this.$());
+        $('<strong id="'+this.id+'-triggerOption" class="trigger-option">'+_tr("Options").toUpperCase()+'<span class="fonticon"></span></strong>').appendTo(this.$());
     },
 
     doAfterLayout : function() {

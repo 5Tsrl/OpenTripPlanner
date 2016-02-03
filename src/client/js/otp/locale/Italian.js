@@ -53,7 +53,7 @@ otp.locale.Italian = {
     infoWidgets : [
             {
                 title:  'Home',
-                link:   'http://www.5t.torino.it'
+                link:   '#'
             },
             {
                 title:  'Indicazioni stradali',
