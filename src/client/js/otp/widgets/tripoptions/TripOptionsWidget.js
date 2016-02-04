@@ -42,7 +42,27 @@ otp.widgets.tripoptions.TripOptionsWidget =
 
         this.controls = {};
     },
-
+    //raf
+    show : function() {
+        this.isOpen = true;
+        if(this.isMinimized) this.minimizedTab.show();
+        else this.mainDiv.fadeIn(); //show();
+        
+        $(".tab-content").hide(); // Hide all content
+        $('ul.tabs li.planner').addClass("active");
+        $('.tab-container .planner').fadeIn();   
+        $('.main-menu-5t li#planner').addClass("active");
+     
+    },
+    hide : function() {
+        if(this.isMinimized) this.minimizedTab.hide();
+        else this.mainDiv.fadeOut(); //hide();
+        $('ul.tabs li.planner').removeClass("active");
+        $('.tab-container .planner').hide();
+        $('.main-menu-5t li#planner').removeClass("active");
+    },
+    
+    
     addControl : function(id, control, scrollable) {
 
         if(scrollable) {

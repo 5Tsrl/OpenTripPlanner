@@ -696,8 +696,8 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 
 .otp-defaultTripWidget{width:auto}
-.itinerary .top{padding:5px 0 10px 10px}
-.traffic .top{padding:5px 0 10px 10px}
+.tab-content .top{padding:5px 0 10px 10px}
+
 
 #tripmode{
 	overflow:hidden;
