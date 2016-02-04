@@ -6,7 +6,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html dir="ltr" lang="en-US"> <!--<![endif]-->
 
 <head>
-<title>OpenTripPlanner cucu</title>
+<title>Muoversi in Piemonte</title>
 
 <!--  Mobile Viewport Fix -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -302,9 +302,10 @@ $(document).ready(function() {
 
 
 	// ---- Tabs ----------------------------------------------------------------------------------------------------------
-	//_tr()
-	$("ul.tabs").html('<li class="left active"><a href="#tab1">'+ _tr("Route_planner")+'</a></li><li class="right"><a href="#tab2">'+_tr("Traffic_info")+'</a></li>');
-	
+
+	$("ul.tabs").html('<li class="planner left active"><a data-tab="tab1" href="#planner">'+ _tr("Route_planner")+'</a></li>\
+	                   <li class="traffic right">      <a data-tab="tab2" href="#traffic">' +_tr("Traffic_info") +'</a></li>');
+/*	
 	$(".tab-content").hide(); // Hide all content
 	
 	$(".tabbed-content").each(function(){
@@ -312,22 +313,24 @@ $(document).ready(function() {
 			$(this).find('.tab-content:first').addClass('active').show();
 			$(this).find('ul.tabs li:first').addClass("active");
 		} else {
-			var activeTab = $(this).find('.active a').attr("href"); 
-			$(activeTab).fadeIn(); 
+			var activeTab = $(this).find('.active a').attr("data-tab"); 
+			$('#'+activeTab).fadeIn(); 
 		}
 	});
 	
 	$("ul.tabs li").click(function() { 
-		webapp.setActiveModule(webapp.modules[$(this).index()]);
+		//webapp.setActiveModule(webapp.modules[$(this).index()]);
+		//webapp.app_router.navigate("#"+otp.config.modules[$(this).index()]["id"], {trigger: true});
 		$(this).parents('.tabbed-content').find(".active").removeClass();
 		$(this).addClass("active"); 
 		$(this).siblings().removeClass("active");
 		$(this).parents('.tabbed-content').find(".tab-content").hide();
-		var activeTab = $(this).find("a").attr("href"); 
-		$(activeTab).fadeIn(); 
+		var activeTab = $(this).find("a").attr("data-tab"); 
+		$('#'+activeTab).fadeIn(); 
 		setHeight();
-		return false;
+		//return false;
 	});
+*/
 	$("ul#main-menu-5t li").click(function() { 
 		if($(this).index() == 1 || $(this).index() == 2){
 			//webapp.setActiveModule(webapp.modules[$(this).index()+1]);
@@ -384,23 +387,11 @@ $(document).ready(function() {
     </ul>
 
     <div class="tab-container">
-        <div id="tab1" class="tab-content itinerary active">
+        <div id="tab1" class="tab-content planner active">
         	<div class="top">
             </div> 
           
-        	<div class="main"> 
-<!--
-        		<a href="#test-popup" class="modalbox">Test lightbox</a>
-        		
-        		<div id="test-popup" class="white-popup mfp-hide">
-					<header>
-				  		<h1>Percorso</h1>
-					</header>
-					<div class="text">
-						Quisque velit magna, luctus quis molestie quis, interdum sed risus. Nulla venenatis metus sit amet mi sagittis porttitor euismod id metus. Aliquam a lacus eget tortor fringilla bibendum. Donec eros urna, venenatis vel dignissim sit amet, sagittis ut massa. Integer vel consectetur lacus. 					
-					</div>
-				</div>
--->
+        	<div class="main">
         	</div>
         </div>
         <div id="tab2" class="tab-content traffic">

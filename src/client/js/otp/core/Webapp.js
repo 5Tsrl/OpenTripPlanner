@@ -31,10 +31,11 @@ otp.core.Webapp = otp.Class({
     indexApi : null,
 
     urlParams : null,
+    
+    app_router : null,
 
     initialize : function() {
-
-
+        
         // misc. housekeeping
 
         if(typeof console == 'undefined') console = { log: function(str) {} };
@@ -60,7 +61,8 @@ otp.core.Webapp = otp.Class({
             pl     = /\+/g,  // Regex for replacing addition symbol with a space
             search = /([^&=]+)=?([^&]*)/g,
             decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-            query  = window.location.search.substring(1);
+            //query  = window.location.search.substring(1);
+            query  = window.location.toString().substring(window.location.toString().indexOf("?")+1);
 
         //Parser URL query string
         while (match = search.exec(query)) {
@@ -232,13 +234,8 @@ otp.core.Webapp = otp.Class({
                         //widget.bringToFront();
                     });
                 } else if (otp.config.infoWidgets[i].link) {
-                    $("<li id='"+i+"'><a href='"+otp.config.infoWidgets[i].link+"'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul)
-                } else if (otp.config.infoWidgets[i].module) {
-                    var targetModule = otp.config.infoWidgets[i].module;
-                    $("<li id='"+i+"'><a href='#'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e){
-                        alert(targetModule)
-                    })
-                }
+                    $("<li id='"+otp.config.infoWidgets[i].link.substring(1)+"'><a href='"+otp.config.infoWidgets[i].link+"'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul)
+                } 
             }
             $('.modalboxMenu').magnificPopup({
         		type:'inline',
@@ -345,6 +342,49 @@ otp.core.Webapp = otp.Class({
         // retrieve a saved trip, if applicable
 		//if(window.location.hash !== "")
 		//	otp.util.DataStorage.retrieve(window.location.hash.replace("#", ""), this.activeModule);
+
+
+        //Router
+        var that = this;
+        var WebAppRouter = Backbone.Router.extend({
+
+          routes: {
+            "help":                 "help",    // #help
+            //"search/:query":        "search",  // #search/kiwis
+            //"search/:query/p:page": "search"   // #search/kiwis/p7
+            "planner":                  "routeplanner",
+            "planner?*queryString":     "routeplanner",
+            
+            "traffic":                   "infotraffic",
+            "traffic?*queryString":      "infotraffic"
+          },
+
+          help: function() {
+            alert('help')
+          },
+
+          routeplanner: function(query, page) {
+            console.log('Router activated the planner module')
+            that.setActiveModule(that.modules[0]);
+          },
+          
+          infotraffic: function(query, page) {
+              console.log('Router activated the traffic module')
+              that.setActiveModule(that.modules[1]);
+          },
+        });
+        
+        // Initiate the router
+        this.app_router = new WebAppRouter();
+/*
+        app_router.on('routeplanner', function(actions) {
+            console.log('voglio il routeplanner!!!')
+        });
+*/
+        // Start Backbone history a necessary step for bookmarkable URL's
+        Backbone.history.start();
+
+
 
 
     },

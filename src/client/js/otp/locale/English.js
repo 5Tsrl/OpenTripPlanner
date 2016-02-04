@@ -58,11 +58,11 @@ otp.locale.English = {
         },
         {
             title:  'Route Planner',
-            module:   'PlannerModule'
+            link:   '#planner'
         },
         {
             title:  'Traffic',
-            module:   'EventModule'
+            link :  '#traffic'
         },
         {
             title:  'About',

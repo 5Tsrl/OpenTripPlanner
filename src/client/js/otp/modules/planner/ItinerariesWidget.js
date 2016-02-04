@@ -845,6 +845,7 @@ otp.widgets.ItinerariesWidget =
             // render any alerts
 
             if(leg.alerts) {
+                console.log('GOT ALERTS!!',leg.alerts)
                 for(var i = 0; i < leg.alerts.length; i++) {
                     var alert = leg.alerts[i];
 

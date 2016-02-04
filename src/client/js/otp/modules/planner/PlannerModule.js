@@ -125,7 +125,7 @@ otp.modules.planner.PlannerModule =
 
     initialize : function(webapp, id, options) {
         otp.modules.Module.prototype.initialize.apply(this, arguments);
-        this.templateFiles.push('otp/modules/planner/planner-templates.html');
+        //raf this.templateFiles.push('otp/modules/planner/planner-templates.html');
 
         this.icons = new otp.modules.planner.IconFactory();
 

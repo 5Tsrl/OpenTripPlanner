@@ -173,7 +173,7 @@ otp.config = {
             //isDefault: true
         }
         ,*/{
-           id : 'datex',
+           id : 'traffic',
            className : 'otp.modules.datex.EventModule',
            defaultBaseLayer : 'Lite',
            //isDefault: true

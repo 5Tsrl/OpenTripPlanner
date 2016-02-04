@@ -57,11 +57,11 @@ otp.locale.Italian = {
             },
             {
                 title:  'Indicazioni stradali',
-                module:   'PlannerModule'
+                link:   '#planner'
             },
             {
                 title:  'Traffico',
-                module:   'EventModule'
+                link :  '#traffic'
             },
             {
                 title:  'Il servizio',

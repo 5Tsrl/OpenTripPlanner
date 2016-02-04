@@ -40,6 +40,28 @@ otp.widgets.EventsCategoryWidget =
 		filterEventsView.render().$el.appendTo(this.$());
 
 	},
+	show : function() {
+        this.isOpen = true;
+        if(this.isMinimized) this.minimizedTab.show();
+        else this.mainDiv.fadeIn(); //show();
+		
+		$(".tab-content").hide(); // Hide all content
+		$('ul.tabs li.traffic').addClass("active");
+		$('.tab-container .traffic').fadeIn();
+		$('.main-menu-5t li#traffic').addClass("active");
+		
+    },
+	
+	hide : function() {
+        if(this.isMinimized) this.minimizedTab.hide();
+        else this.mainDiv.fadeOut(); //hide();
+		$('ul.tabs li.traffic').removeClass("active");
+		$('.tab-container .traffic').hide();
+		$('.main-menu-5t li#traffic').removeClass("active");
+
+    },
+
+	
     showInfos: function(infos, module) {
 		infoListView = new otp.modules.datex.InfoListView({collection: infos});
 		//infoListView.render().$el.appendTo($('#tab2 .main .infosCtnr'));
