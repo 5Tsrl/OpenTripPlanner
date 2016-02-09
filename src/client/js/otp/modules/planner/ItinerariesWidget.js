@@ -305,7 +305,7 @@ otp.widgets.ItinerariesWidget =
         var partenza = moment(itin.itinData.startTime).format('HH:mm');
         var arrivo   = moment(itin.itinData.endTime).format('HH:mm');
         var durata   = moment.duration(itin.itinData.duration, 'seconds').format('H[h] mm[m]');
-        divTimes.html('partenza: ' + partenza + ' arrivo: '+ arrivo + ' durata: '+ durata );
+        divTimes.html(partenza + ' &rarr; '+ arrivo + ' <span class="duration"><span class="hidden">durata: </span>'+ durata + '</span>' );
         var div = $('<div class="summary-aux"></div>').appendTo(parentDiv);
         div.append(divTimes);
         var divGraficBar = $('<div class="graphicbar"></div>').appendTo(div);
