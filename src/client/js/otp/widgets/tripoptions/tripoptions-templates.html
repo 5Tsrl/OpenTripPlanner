@@ -40,21 +40,13 @@
 <script id="otp-tripOptions-modeSelectorIcons" type="text/html">
     <div class="otp-planner-optionsWidget-modeSelector-icons">
         <ul id="tripmode">
-          <li title="{{public_transport}}" class="public active">
-              <input type="radio" name="otpModes" class="public" value="TRANSIT" id="otp-planner-optionsWidget-modeSelector-icon-public">
-              <label for="otp-planner-optionsWidget-modeSelector-icon-public"><span class="text">{{public_transport}}</span><span class="fonticon"></span></label>
-          </li>
-          <li  title="{{car}}" class="car">
-              <input type="radio" name="otpModes" class="car" value="CAR" id="otp-planner-optionsWidget-modeSelector-icon-car">
-              <label for="otp-planner-optionsWidget-modeSelector-icon-car"><span class="text">{{car}}</span><span class="fonticon"></span></label>
-          </li>
-          <li  title="{{bike}}" class="bike">
+          <li  title="{{bike}}" class="bike active">
               <input type="radio" name="otpModes" class="bike" value="BICYCLE" id="otp-planner-optionsWidget-modeSelector-icon-bike">
               <label for="otp-planner-optionsWidget-modeSelector-icon-bike"><span class="text">{{bike}}</span><span class="fonticon"></span></label>
           </li>
-          <li  title="{{foot}}" class="walk">
-              <input type="radio" name="otpModes" class="walk" value="WALK" id="otp-planner-optionsWidget-modeSelector-icon-walk">
-              <label for="otp-planner-optionsWidget-modeSelector-icon-walk"><span class="text">{{foot}}</span></span><span class="fonticon"></span></label>
+          <li  title="{{bikeshare}}" class="walk">
+              <input type="radio" name="otpModes" class="_walk" value="WALK,BICYCLE_RENT" id="otp-planner-optionsWidget-modeSelector-icon-bikeshare">
+              <label for="otp-planner-optionsWidget-modeSelector-icon-bikeshare"><span class="text">{{foot}}</span></span><span class="fonticon"></span></label>
           </li>
         </ul>
     </div>

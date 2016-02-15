@@ -53,20 +53,12 @@ otp.locale.English = {
      */
     infoWidgets : [
         {
-            title:  'Home',
-            link:   '#'
-        },
-        {
-            title:  'Route Planner',
-            link:   '#planner'
-        },
-        {
-            title:  'Traffic',
-            link :  '#traffic'
-        },
-        {
             title:  'About',
             id:"id-servizio-en"
+        },
+        {
+            title:  'Guide',
+            id:"id-guida-en"
         },
         {
             title:  'Contact',

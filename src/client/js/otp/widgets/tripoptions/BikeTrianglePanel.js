@@ -145,18 +145,22 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
         this.safeLabel.attr({"font-size":"13px", "fill":"#7ba908", "font-weight":"bold","text-anchor":"start", opacity:1});
 
         var cx = margin+tri_side/2, cy = height-margin-(1/Math.sqrt(3))*(tri_side/2);
-        this.cursorVert = canvas.rect(cx-.5, cy-this.cursor_size/2-2, 1, this.cursor_size+4).attr({
+        /*raf this.cursorVert = canvas.rect(cx-.5, cy-this.cursor_size/2-2, 1, this.cursor_size+4).attr({
             fill: "rgb(0,0,0)",
             stroke: "none"
         });
         this.cursorHoriz = canvas.rect(cx-this.cursor_size/2-2, cy-.5, this.cursor_size+4, 1).attr({
             fill: "rgb(0,0,0)",
             stroke: "none"
-        });
-        this.cursor = canvas.circle(cx, cy, this.cursor_size/2).attr({
-            fill: "rgb(128,128,128)",
+        });*/
+        this.bike = canvas.image('/images/5t/bike/bike.png',cx-10,cy-10,20,19);
+        
+        //this.cursor = canvas.circle(cx, cy, this.cursor_size/2).attr({    
+        this.cursor = canvas.circle(cx, cy, 20).attr({
+            //fill: "rgb(128,128,128)",
+            fill: "rgb(250,250,250)",
             stroke: "none",
-            opacity: 0.25
+            opacity: 0.1
         });
             
         var time, topo, safety;
@@ -232,8 +236,9 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
     
     moveCursor : function(x, y) {
         this.cursor.attr({cx: x, cy: y});
-        this.cursorVert.attr({x: x-.5, y: y-this.cursor_size/2-2});
-        this.cursorHoriz.attr({x: x-this.cursor_size/2-2, y: y-.5});
+        this.bike.attr({x: x-10, y: y-10});
+        //this.cursorVert.attr({x: x-.5, y: y-this.cursor_size/2-2});
+        //this.cursorHoriz.attr({x: x-this.cursor_size/2-2, y: y-.5});
     },
 
     enable : function() {

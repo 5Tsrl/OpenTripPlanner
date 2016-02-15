@@ -87,12 +87,15 @@ otp.modules.bikeshare.BikeShareModule =
     activate : function() {
         if(this.activated) return;
         otp.modules.planner.PlannerModule.prototype.activate.apply(this);
-        this.mode = "WALK,BICYCLE_RENT";
+        //this.mode = "WALK,BICYCLE_RENT";
+        this.mode = "BICYCLE";
         
         this.stationsLayer = new L.LayerGroup();
         //raf aagiungo il layer in funzione del livello di zoom
         //this.addLayer("Bike Stations", this.stationsLayer);
         this.webapp.map.lmap.on('dragend zoomend', $.proxy(this.refresh, this));
+        //this.on('bikeTypeChanged', $.proxy(this.refresh, this));
+        this.on('bikeTypeChanged', this.refresh);
         
         this.bikestationsWidget = new otp.widgets.BikeStationsWidget(this.id+"-stationsWidget", this);
 
@@ -140,8 +143,9 @@ otp.modules.bikeshare.BikeShareModule =
     
     initOptionsWidget : function() {
         this.optionsWidget = new otp.widgets.tripoptions.TripOptionsWidget(
-            'otp-'+this.id+'-optionsWidget', this, {
-                title : _tr('Trip Options'),                sonOf: '#sidebar',
+            //'otp-'+this.id+'-optionsWidget', this, {
+            'otp-planner-optionsWidget', this, {
+                sonOf: '#tab1 .top',closeable : false, minimizable : false, draggable: false,
             }
         );
 
@@ -154,12 +158,13 @@ otp.modules.bikeshare.BikeShareModule =
         //this.optionsWidget.addVerticalSpace(12, true);
         
         
-        //var modeSelector = new otp.widgets.tripoptions.ModeSelector(this.optionsWidget);
+        //var modeSelector = new otp.widgets.tripoptions.ModeSelectorIcons(this.optionsWidget);
         //this.optionsWidget.addControl("mode", modeSelector, true);
 
         this.optionsWidget.addControl("triangle", new otp.widgets.tripoptions.BikeTriangle(this.optionsWidget));
 
-        this.optionsWidget.addControl("biketype", new otp.widgets.tripoptions.BikeType(this.optionsWidget));
+        //this.optionsWidget.addControl("biketype", new otp.widgets.tripoptions.BikeType(this.optionsWidget));
+        this.optionsWidget.addControl("biketype", new otp.widgets.tripoptions.BikeTypeIcons(this.optionsWidget));
 
         this.optionsWidget.autoPlan = true;
 
@@ -195,7 +200,8 @@ otp.modules.bikeshare.BikeShareModule =
         }*/
       //raf vedi itinWidget
         if(this.itinWidget == null) {
-            this.itinWidget = new otp.widgets.ItinerariesWidget(this.id+"-itinWidget", this);
+            //this.itinWidget = new otp.widgets.ItinerariesWidget(this.id+"-itinWidget", this);
+            this.itinWidget = new otp.widgets.ItinerariesWidget("planner-itinWidget", this);
         }
         if(restoring && this.restoredItinIndex) {
             this.itinWidget.show();
@@ -389,12 +395,16 @@ otp.modules.bikeshare.BikeShareModule =
     },
     //refresh station markers based on zoom level
     refresh : function() {
+      if(this.mode == "BICYCLE"){
+          this.webapp.map.lmap.removeLayer(this.stationsLayer);
+      }    
+      else if(this.mode != "BICYCLE"){
     	var lmap = this.webapp.map.lmap;
     	 if( lmap.getZoom() < 12   && lmap.hasLayer(this.stationsLayer)  ){
               lmap.removeLayer(this.stationsLayer);
     		 console.log('togli stazioni');
     	 }
-    	 if(lmap.getZoom() >= 12   &&  lmap.getZoom() < 16 && !lmap.hasLayer(this.stationsLayer)){
+    	 if(lmap.getZoom() >= 12   &&  lmap.getZoom() < 16 /*&& !lmap.hasLayer(this.stationsLayer)*/){
     		 lmap.addLayer(this.stationsLayer);
     		/* this.stations.each(function(station) {
     			 setStationMarker(station, 'no-title', this.icons.getMedium(stationData));
@@ -405,6 +415,7 @@ otp.modules.bikeshare.BikeShareModule =
     	 if(lmap.getZoom() >= 16  ){
     		 console.log('icone grandi');
     	 }
+     }
     },
                 
     CLASS_NAME : "otp.modules.bikeshare.BikeShareModule"

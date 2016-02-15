@@ -343,50 +343,6 @@ otp.core.Webapp = otp.Class({
 		//if(window.location.hash !== "")
 		//	otp.util.DataStorage.retrieve(window.location.hash.replace("#", ""), this.activeModule);
 
-
-        //Router
-        var that = this;
-        var WebAppRouter = Backbone.Router.extend({
-
-          routes: {
-            "help":                 "help",    // #help
-            //"search/:query":        "search",  // #search/kiwis
-            //"search/:query/p:page": "search"   // #search/kiwis/p7
-            "planner":                  "routeplanner",
-            "planner?*queryString":     "routeplanner",
-            
-            "traffic":                   "infotraffic",
-            "traffic?*queryString":      "infotraffic"
-          },
-
-          help: function() {
-            alert('help')
-          },
-
-          routeplanner: function(query, page) {
-            console.log('Router activated the planner module')
-            that.setActiveModule(that.modules[0]);
-          },
-          
-          infotraffic: function(query, page) {
-              console.log('Router activated the traffic module')
-              that.setActiveModule(that.modules[1]);
-          },
-        });
-        
-        // Initiate the router
-        this.app_router = new WebAppRouter();
-/*
-        app_router.on('routeplanner', function(actions) {
-            console.log('voglio il routeplanner!!!')
-        });
-*/
-        // Start Backbone history a necessary step for bookmarkable URL's
-        Backbone.history.start();
-
-
-
-
     },
 
     addModule : function(module) {

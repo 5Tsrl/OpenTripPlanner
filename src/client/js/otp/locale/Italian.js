@@ -51,21 +51,14 @@ otp.locale.Italian = {
      * If not specified, the default styling is used.
      */
     infoWidgets : [
-            {
-                title:  'Home',
-                link:   '#'
-            },
-            {
-                title:  'Indicazioni stradali',
-                link:   '#planner'
-            },
-            {
-                title:  'Traffico',
-                link :  '#traffic'
-            },
+
             {
                 title:  'Il servizio',
                 id:"id-servizio-it"
+            },
+            {
+                title:  'Guida all\'uso',
+                id:"id-guida-it"
             },
             {
                 title:  'Contatti',

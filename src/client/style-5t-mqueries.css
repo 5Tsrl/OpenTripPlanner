@@ -7,10 +7,10 @@
 	height: 90px;
 }
 #logo h1 {
-	width: 290px;
+	width: 80px;
 	height: 80px;
-	background: url(images/mip_logo.svg) 0 0 no-repeat;
-	background-size: 230px;
+	background: url(images/5t/bike/logo.gif) 0 0 no-repeat;
+	/*background-size: 230px;*/
 	margin: 9px 0px 0px 10px;
 }
 #main-menu-5t {

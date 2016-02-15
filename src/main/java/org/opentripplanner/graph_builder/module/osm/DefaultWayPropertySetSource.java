@@ -104,7 +104,8 @@ public class DefaultWayPropertySetSource implements WayPropertySetSource {
         setProperties(props, "highway=secondary_link", StreetTraversalPermission.ALL, 2, 2);//5t
         setProperties(props, "highway=primary", StreetTraversalPermission.ALL, 4, 4);//5t
         setProperties(props, "highway=primary_link", StreetTraversalPermission.ALL, 4, 4);//5t
-
+		setProperties(props, "railway=tram", StreetTraversalPermission.ALL, 4, 4);//5t
+		
         /* DRIVING ONLY */
         // trunk and motorway links are often short distances and necessary connections
         setProperties(props, "highway=trunk_link", StreetTraversalPermission.CAR, 2.06,
@@ -301,23 +302,25 @@ public class DefaultWayPropertySetSource implements WayPropertySetSource {
          * path designed for bicycles (should be treated exactly as a cycleway is), this is a multi-use path (MUP)
          */
         setProperties(props, "highway=path;bicycle=designated",
-                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 0.60, 0.60);
+                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 0.45, 0.45); //5t
+		setProperties(props, "highway=cycleway;bicycle=designated",
+                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 0.30, 0.30); //5t	aggiunto	
 
         /* special cases for footway, pedestrian and bicycles */
         setProperties(props, "highway=footway;bicycle=designated",
-                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 0.75, 0.75);
+                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 0.8, 0.8); //5t
         setProperties(props, "highway=footway;bicycle=yes;area=yes",
-                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 0.9, 0.9);
+                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 0.8, 0.8); //5t
         setProperties(props, "highway=pedestrian;bicycle=designated",
-                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 0.75, 0.75);
+                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 0.6, 0.6); //5t
 
         /* sidewalk and crosswalk */
         setProperties(props, "footway=sidewalk;highway=footway;bicycle=yes",
-                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 2.5, 2.5);
+                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 1.8, 1.8); //5t
         setProperties(props, "footway=sidewalk;highway=footway;bicycle=designated",
                 StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 1.1, 1.1);
         setProperties(props, "highway=footway;footway=crossing",
-                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 2.5, 2.5);
+                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 1.5, 1.5); //5t
         setProperties(props, "highway=footway;footway=crossing;bicycle=designated",
                 StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 1.1, 1.1);
 
@@ -338,8 +341,8 @@ public class DefaultWayPropertySetSource implements WayPropertySetSource {
                 StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 1.3, 1.3);
 
         /* bicycle=designated, but no bike infrastructure is present */
-        setProperties(props, "highway=*;bicycle=designated",
-                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 0.97, 0.97);
+        /*setProperties(props, "highway=*;bicycle=designated",
+                StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE, 0.97, 0.97); 5t tolto per problemi pesi*/
         setProperties(props, "highway=service;bicycle=designated", StreetTraversalPermission.ALL,
                 0.84, 0.84);
         setProperties(props, "highway=residential;bicycle=designated",

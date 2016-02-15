@@ -6,7 +6,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html dir="ltr" lang="en-US"> <!--<![endif]-->
 
 <head>
-<title>Muoversi in Piemonte</title>
+<title>Bunet</title>
 
 <!--  Mobile Viewport Fix -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -116,9 +116,6 @@
 <script src="js/otp/modules/planner/ItinerariesWidget.js?v=1"></script>
 
 <script src="js/otp/modules/multimodal/MultimodalPlannerModule.js?v=1"></script>
-
-<script src="js/otp/modules/datex/EventModule.js?v=1"></script>
-<script src="js/otp/modules/datex/EventCategoryWidget.js?v=1"></script>
 
 <script src="js/otp/modules/bikeshare/BikeShareModule.js?v=1"></script>
 <!--Loads some javascript modules only if they are enabled in config.js-->
@@ -304,8 +301,8 @@ $(document).ready(function() {
 
 	// ---- Tabs ----------------------------------------------------------------------------------------------------------
 
-	$("ul.tabs").html('<li class="planner left active"><a data-tab="tab1" href="#planner">'+ _tr("Route_planner")+'</a></li>\
-	                   <li class="traffic right">      <a data-tab="tab2" href="#traffic">' +_tr("Traffic_info") +'</a></li>');
+	$("ul.tabs").html('<li class="planner left active"><a data-tab="tab1" href="#planner">'+ _tr("bici propria")+'</a></li>\
+	                   <li class="traffic right">      <a data-tab="tab2" href="#traffic">' +_tr("TO BIKE") +'</a></li>');
 /*	
 	$(".tab-content").hide(); // Hide all content
 	
@@ -357,11 +354,19 @@ $(document).ready(function() {
 <header id="branding" role="banner" class="clearfix">
 
   <hgroup id="logo">
-    <h1 id="site-title">Pronto TPL</h1>
+    <h1 id="site-title">Bunet</h1>
   </hgroup>  
- 
+
   <nav id="main-menu-container" class="main-menu-container">
 	  <div id="language-switcher" class="language-switcher"></div>
+	  
+	  <div class="partner">
+  		<div class="partner-aux">
+			<a href="http://www.cittametropolitana.torino.it/" class="logo-2 " target="_blank">Torino Metropoli</a>
+ 			<a href="http://www.comune.torino.it/" class="logo-1 first" target="_blank">Comune di Torino</a>
+   		</div>
+  	  </div>
+	  
 	  <div class="shader"></div>
   <!--
 	<ul id="main-menu-5t" class="main-menu-5t">
@@ -432,7 +437,7 @@ $(document).ready(function() {
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('set', 'anonymizeIp', true);
-  ga('create', 'UA-4633264-9', 'auto');
+  ga('create', 'UA-4633264-7', 'auto');
   ga('send', 'pageview');
 </script>
 

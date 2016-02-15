@@ -39,6 +39,20 @@ otp.locale.French = {
         //It will be used automatically when UI is switched to this locale
         datepicker_locale_short: "fr"
     },
+    infoWidgets : [
+        {
+            title:  'Le service',
+            id:"id-servizio-fr"
+        },
+        {
+            title:  'Instructions',
+            id:"id-guida-fr"
+        },
+        {
+            title:  'Contacts',
+            id: "id-contatti-fr"
+        }
+    ],
 
 
     time : {

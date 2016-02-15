@@ -239,7 +239,7 @@ a:focus {
 	text-indent: -9999px;
 	font-size: 0;
 	line-height: 0;
-	background: url(images/mip_logo.svg) 0 0 no-repeat;
+	background: url(images/5t/bike/logo.gif) 0 0 no-repeat;
 	background-size: 110px;
 	margin: 6px 0px 0px 10px;
 	-webkit-transition: all .3s;
@@ -704,9 +704,37 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	padding-left:0;
 	width:80%;
 }
-#planner-itinWidget .ui-accordion-header .ui-accordion-header-icon{
+
+
+
+/*#planner-itinWidget .ui-accordion-header .ui-accordion-header-icon{
+	display:none;	
+}*/
+#planner-itinWidget .level1 .ui-accordion-header-icon{
 	display:none;	
 }
+#planner-itinWidget .ui-accordion-header .ui-accordion-header-icon{
+    position: absolute;
+    left: auto;
+    right: 0.5em
+}
+
+.otp-itinsAccord .otp-itinAccord li{float:left;width:100%;}
+ .otp-itinsAccord .otp-itinAccord li.last{margin-bottom:0; border-bottom:0}
+ .otp-itinsAccord .otp-itinAccord h3{/*width:297px*/;line-height:14px;position:relative;cursor:pointer;padding:8px 28px 8px 38px;font-size:1.08em;font-family:roboto,sans-serif;background:#fbfbfb;border:1px solid #ededed;color:#262626;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+ .otp-itinsAccord .otp-itinAccord h3:hover{background:#f7f7f7}
+ .otp-itinsAccord .otp-itinAccord h3 .arrow{width:10px;height:5px;display:block;position:absolute;top:13px;right:10px;background:url(../img/arrow-list-state.png) 0 -5px no-repeat}
+ .otp-itinsAccord .otp-itinAccord .open h3 .arrow{background-position:0 0}
+ .otp-itinsAccord .otp-itinAccord .open h3{color:#678f09;background:#f1f5e7;border-color:#d9eab0}
+ .otp-itinsAccord .otp-itinAccord .open h3:hover{background:#ecf1e1}
+ .otp-itinsAccord .otp-itinAccord h3 b{height:14px;line-height:14px;font-size:0.92em;float:left;width:48px;font-weight:bold;text-transform:uppercase;margin-right:8px}
+ .otp-itinsAccord .otp-itinAccord h3 .icon{position:absolute;background-image:url(images/5t/bike/sprites.png)}
+ .otp-itinsAccord .otp-itinAccord .walk h3 .icon{top:4px;left:13px;width:12px;height:22px;background-position:-13px -19px}
+ .otp-itinsAccord .otp-itinAccord .walk.open h3 .icon{background-position:-25px -19px}
+ .otp-itinsAccord .otp-itinAccord .bicycle h3 .icon{top:5px;left:8px;width:20px;height:19px;background-position:-20px 0}
+ .otp-itinsAccord .otp-itinAccord .bicycle.open h3 .icon{background-position:-40px 0}
+ 
+
 
 
 .otp-defaultTripWidget{width:auto}
@@ -919,6 +947,29 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 #planner-itinWidget .level1{float:left;width:90%;padding:15px 5%;position:relative;}
 .otp-itinsAccord-header-number{position:relative;margin-bottom:10px;float:left;width:100%;}
 .otp-itinsAccord-header-number span{bottom: 0;left: 0;position: absolute;right: 0;top: 5px;}
+
+
+/*bike staion widget*/
+#bikeshare-stationsWidget{bottom:68px;right:19px;width:190px}
+.otp-bikeshare-stationsWidget-left,
+.otp-bikeshare-stationsWidget-right{box-shadow:0 0 4px -2px #000;background:#f8f8f8;padding:0;border:0;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px}
+#pickup_btn,
+#dropoff_btn{position:relative;padding:11px 10px 5px 51px}
+#pickup_btn{margin-bottom:11px}
+#pickup_btn .icon,
+#dropoff_btn .icon{position:absolute;width:39px;height:100%;display:block;top:0;left:0;bottom:0}
+#pickup_btn h5,
+#dropoff_btn h5{_font-size:1.08em;text-transform:uppercase;color:#373737;margin-bottom:6px}
+#pickup_btn h5 span{color:#6a9308}
+#dropoff_btn h5 span{color:#c20606}
+#pickup_btn p,
+#dropoff_btn p{font-size:1em;color:#373737;margin-bottom:3px;line-height:120%}
+#pickup_btn .icon{background:#7cab0e url(images/5t/bike/pick-up.gif) center center no-repeat}
+#dropoff_btn .icon{background:#d90e0e url(images/5t/bike/drop-off.gif) center center no-repeat}
+.leaflet-popup-content-wrapper {border-radius: 3px}
+.station span {color: #6a9308;}
+
+
 /* ----------  Commented ----------*/
 
 /*

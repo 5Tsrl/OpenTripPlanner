@@ -713,10 +713,8 @@ otp.widgets.tripoptions.ModeSelectorIcons =
         */
         ich['otp-tripOptions-modeSelectorIcons']({
             widgetId : this.id,
-            public_transport : _tr("Transit"),
-            car : _tr("Drive Only"),
             bike : _tr("Bicycle Only"),
-            foot : _tr("Walk Only")
+            bikeshare : _tr("Bicycle Only")
             
         }).appendTo(this.$());
         
@@ -1229,6 +1227,85 @@ otp.widgets.tripoptions.BikeType =
             this_.tripWidget.inputChanged({
                 mode : "WALK,BICYCLE_RENT",
             });
+        });
+    },
+
+    restorePlan : function(planData) {
+        if(planData.queryParams.mode === "BICYCLE") {
+            $('#'+this.id+'-myOwnBikeRBtn').attr('checked', 'checked');
+        }
+        if(planData.queryParams.mode === "WALK,BICYCLE_RENT") {
+            $('#'+this.id+'-sharedBikeRBtn').attr('checked', 'checked');
+        }
+    },
+
+    isApplicableForMode : function(mode) {
+        return otp.util.Itin.includesBicycle(mode) && otp.util.Itin.includesWalk(mode);
+    }
+
+});
+
+//** BikeType with Icons **//
+
+otp.widgets.tripoptions.BikeTypeIcons =
+    otp.Class(otp.widgets.tripoptions.TripOptionsWidgetControl, {
+
+    id           :  null,
+
+    initialize : function(tripWidget) {
+        otp.widgets.tripoptions.TripOptionsWidgetControl.prototype.initialize.apply(this, arguments);
+        this.id = tripWidget.id+"-bikeTypeIcons";
+        this.$().addClass('notDraggable');
+/*
+        var content = '';
+        //TRANSLATORS: In Bike share planner radio button: <Use>: My Own Bike A shared bike
+        content += _tr('Use') + ': ';
+        //TRANSLATORS: In Bike share planner radio button: Use: <My Own Bike> A shared bike
+        content += '<input id="'+this.id+'-myOwnBikeRBtn" type="radio" name="bikeType" value="my_bike" checked> ' + _tr("My Own Bike") + '&nbsp;&nbsp;';
+        //TRANSLATORS: In Bike share planner radio button: Use: My Own Bike <A Shared bike>
+        content += '<input id="'+this.id+'-sharedBikeRBtn" type="radio" name="bikeType" value="shared_bike"> ' + _tr("A Shared Bike");
+
+        //this.setContent(content);
+        
+*/        
+         ich['otp-tripOptions-modeSelectorIcons']({
+            widgetId : this.id,
+            bike : _tr("Bicycle Only"),
+            bikeshare : _tr("bikeshare")
+            
+        }).appendTo(this.$());
+        
+        
+    },
+
+    doAfterLayout : function() {
+        //var module = this.tripWidget.module;
+        var this_ = this;
+        //$('#'+this.id+'-myOwnBikeRBtn').click(function() {
+        $('#otp-planner-optionsWidget-modeSelector-icon-bike').click(function() {
+            //module.mode = "BICYCLE";
+            //module.planTrip();
+            $('#otp-planner-optionsWidget-modeSelector-icon-bikeshare').parent().removeClass("active");
+            $(this).parent().addClass("active");
+            //this_.tripWidget.module.invokeHandlers("bikeTypeBikeshare");
+            this_.tripWidget.inputChanged({
+                mode : "BICYCLE",
+            });
+            this_.tripWidget.module.invokeHandlers("bikeTypeChanged");
+
+        });
+        //$('#'+this.id+'-sharedBikeRBtn').click(function() {
+        $('#otp-planner-optionsWidget-modeSelector-icon-bikeshare').click(function() {
+            //module.mode = "WALK,BICYCLE";
+            //module.planTrip();
+            $('#otp-planner-optionsWidget-modeSelector-icon-bike').parent().removeClass("active");
+            $(this).parent().addClass("active");
+            //this_.tripWidget.module.invokeHandlers("bikeTypeBicycle");
+            
+            this_.tripWidget.inputChanged({
+                mode : "WALK,BICYCLE_RENT",
+            });
+            this_.tripWidget.module.invokeHandlers("bikeTypeChanged");
         });
     },
 

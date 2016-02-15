@@ -10,7 +10,7 @@ otp.config = {
     //This is default locale when wanted locale isn't found
     //Locale language is set based on wanted language in url >
     //user cookie > language set in browser (Not accept-language)
-    locale: otp.locale.English,
+    locale: otp.locale.Italian,
 
     //All avalible locales
     //key is translation name. Must be the same as po file or .json file
@@ -19,7 +19,7 @@ otp.config = {
     locales : {
         'it': otp.locale.Italian,
         'en': otp.locale.English,
-        //'fr': otp.locale.French,
+        'fr': otp.locale.French,
         //'de': otp.locale.German,
         //'sl': otp.locale.Slovenian,
         //'ca_ES': otp.locale.Catalan
@@ -66,7 +66,7 @@ otp.config = {
     // In the 0.10.x API the base path is "otp-rest-servlet/ws"
     // From 0.11.x onward the routerId is a required part of the base path.
     // If using a servlet container, the OTP WAR should be deployed to context path /otp
-    restService: "otp/routers/mip",
+    restService: "otp/routers/bunet",
 
     /**
      * Base layers: the base map tile layers available for use by all modules.
@@ -118,8 +118,8 @@ otp.config = {
      * properties, when set, override that behavioir.
      */
 
-    initLatLng : new L.LatLng(45.07, 7.68),
-    initZoom : 10,
+     initLatLng : new L.LatLng(45.07, 7.68),
+     initZoom : 13,
     // minZoom : 10,
     // maxZoom : 20,
 
@@ -130,10 +130,10 @@ otp.config = {
      * Site name / description / branding display options
      */
 
-    siteName            : "Pronto TPL",
+    siteName            : "Bunet",
     siteDescription     : "An OpenTripPlanner deployment.",
     logoGraphic         : 'images/otp_logo_darkbg_40px.png',
-    // bikeshareName    : "",
+    bikeshareName       : "[TO]Bike",
     //Enable this if you want to show frontend language chooser
     showLanguageChooser : false,
 
@@ -156,28 +156,28 @@ otp.config = {
      */
 
     modules : [
-        {
+        /*{
             id : 'planner',
             className : 'otp.modules.multimodal.MultimodalPlannerModule',
             defaultBaseLayer : 'Mappa',
             isDefault: true
         },
-        /*{
+        {
             id : 'analyst',
             className : 'otp.modules.analyst.AnalystModule'
-        },
+        },*/
          {
             id : 'bikeshare',
             className : 'otp.modules.bikeshare.BikeShareModule',
             defaultBaseLayer : 'Punti d\'interesse',
             //isDefault: true
         }
-        ,*/{
+        /*,{
            id : 'traffic',
            className : 'otp.modules.datex.EventModule',
            defaultBaseLayer : 'Lite',
            //isDefault: true
-       }
+       }*/
     ],
 
 
@@ -314,7 +314,7 @@ i18n.init(options, function(t) {
 otp.config.modes = {
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets)
-        "TRANSIT,WALK"        : _tr("Transit"),
+//        "TRANSIT,WALK"        : _tr("Transit"),
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets)
     //    "BUSISH,WALK"         : _tr("Bus Only"),
@@ -329,20 +329,20 @@ otp.config.modes = {
     //    "TRANSIT,BICYCLE"     : _tr("Bicycle &amp; Transit"),
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets)
-        "WALK"                : _tr('Walk Only'),
+//        "WALK"                : _tr('Walk Only'),
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets)
-        "CAR"                 : _tr('Drive Only'),
+//        "CAR"                 : _tr('Drive Only'),
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets)
-    "CAR_PARK,WALK,TRANSIT"     : _tr('Park and Ride'),
+//    "CAR_PARK,WALK,TRANSIT"     : _tr('Park and Ride'),
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets) http://en.wikipedia.org/wiki/Park_and_ride#Kiss_and_ride
-    "CAR,WALK,TRANSIT"          : _tr('Kiss and Ride'),
+//    "CAR,WALK,TRANSIT"          : _tr('Kiss and Ride'),
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets) (Park bicycle at Public transit station and take a
     //transit
-    "BICYCLE_PARK,WALK,TRANSIT" : _tr('Bike and Ride'),
+//    "BICYCLE_PARK,WALK,TRANSIT" : _tr('Bike and Ride'),
     //uncomment only if bike rental exists in a map
     // TODO: remove this hack, and provide code that allows the mode array to be configured with different transit modes.
     //       (note that we've been broken for awhile here, since many agencies don't have a 'Train' mode either...this needs attention)
@@ -352,5 +352,5 @@ otp.config.modes = {
         'WALK,BICYCLE_RENT'        :_tr('Rented Bicycle'),
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets)
-        'TRANSIT,WALK,BICYCLE_RENT': _tr('Transit & Rented Bicycle')
+//        'TRANSIT,WALK,BICYCLE_RENT': _tr('Transit & Rented Bicycle')
     };
