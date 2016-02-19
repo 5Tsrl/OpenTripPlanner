@@ -177,10 +177,10 @@ public class RoutingRequest implements Cloneable, Serializable {
     // it is assumed that getting off an elevator is completely free
 
     /** Time to get on and off your own bike */
-    public int bikeSwitchTime;
+    public int bikeSwitchTime = 60;
 
     /** Cost of getting on and off your own bike */
-    public int bikeSwitchCost;
+    public int bikeSwitchCost = 300;
 
     /** Time to rent a bike */
     public int bikeRentalPickupTime = 60;
