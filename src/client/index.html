@@ -34,6 +34,10 @@
 <link rel="stylesheet" href="style-5t-mqueries.css?v=1" />
 <!-- <link rel="stylesheet" href="http://bunet/otp-rest-servlet/css/standard.css" /> -->
 
+<!-- Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Nunito:700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+
 <!--Loads jquery, underscore, leaflet, json2, momentjs and raphael makes 7 requests less-->
 <script src="//cdn.jsdelivr.net/g/jquery@1.9.1,underscorejs@1.4.2,leaflet@0.7.3,json2@0.1,momentjs@2.11.1,raphael@2.1.2,i18next@1.7.7"></script>
 
@@ -354,19 +358,13 @@ $(document).ready(function() {
 <header id="branding" role="banner" class="clearfix">
 
   <hgroup id="logo">
-    <h1 id="site-title">Bunet</h1>
+    <h1 id="site-title"><span>Bunet</span></h1>
   </hgroup>  
+
 
   <nav id="main-menu-container" class="main-menu-container">
 	  <div id="language-switcher" class="language-switcher"></div>
-	  
-	  <div class="partner">
-  		<div class="partner-aux">
-			<a href="http://www.cittametropolitana.torino.it/" class="logo-2 " target="_blank">Torino Metropoli</a>
- 			<a href="http://www.comune.torino.it/" class="logo-1 first" target="_blank">Comune di Torino</a>
-   		</div>
-  	  </div>
-	  
+
 	  <div class="shader"></div>
   <!--
 	<ul id="main-menu-5t" class="main-menu-5t">
@@ -381,7 +379,15 @@ $(document).ready(function() {
     
 	</nav>
 
+	<div class="loghi-container">
+	  <a class="logo-1" href="http://www.comune.torino.it/">Città di Torino</a>
+	  <a class="logo-2" href="http://www.cittametropolitana.torino.it/">Città metropolitana di Torino</a>
+	</div>
+
 </header>
+
+
+
 
 <div id="sidebar" class="tabbed-content">
 

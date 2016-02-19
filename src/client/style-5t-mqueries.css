@@ -4,23 +4,32 @@
 /* ----------  HEADER ----------*/
 
 #branding {
-	height: 90px;
+	height: 75px;
 }
-#logo h1 {
-	width: 80px;
+#logo {
+	height:75px;
+	background-size:40px;
+	background-position:20px 18px;
+	padding-left:85px;
+	/*width: 80px;
 	height: 80px;
 	background: url(images/5t/bike/logo.gif) 0 0 no-repeat;
 	/*background-size: 230px;*/
-	margin: 9px 0px 0px 10px;
+	/*margin: 9px 0px 0px 10px;*/
+}
+#logo h1 {
+	height: 55px;
+	padding:20px 0 0 25px;
+	font-size:3em;
 }
 #main-menu-5t {
-	top: 90px;
+	top: 75px;
 }
 
 /* ----------- MOBILE NAV TOGGLE ---------- */
 
 #nav-toggle {
-	top: 20px;
+	top: 15px;
 	right: 20px;
 	width: 45px;
 	height: 25px;
@@ -42,11 +51,14 @@
 .language-switcher {top:115px;}
 .language-switcher.active {right:20px;left:auto;}
 
+
+
+
 /* ----------  SIDEBAR ----------*/
 
 #sidebar{
 	width:350px;
-	top:90px;
+	top:75px;
 }
 #sidebar.closed{left:-340px;}
 
@@ -56,9 +68,9 @@
 	height:70px;
 }
 #sidebar .tabs a{
-	height:50px;
+	height:40px;
 	width:115px;
-	padding:20px 0px 0px 60px;
+	padding:30px 0px 0px 60px;
 	background-size: 40px;
 	background-position:15px 15px;
 	font-size:1em;
@@ -111,7 +123,7 @@
 
 #map{
 		left:350px;
-		top:90px;
+		top:75px;
 }
 
 .findplace input{
@@ -132,7 +144,7 @@ strong.trigger-option{
 .main-menu-container{
 	position:absolute;
 	top:15px;
-	right:85px;	
+	right:355px;	
 }	
 #main-menu-5t {
 	position:static;
@@ -140,6 +152,7 @@ strong.trigger-option{
 	height:100%;
 	background-color:transparent;
 	float:left;
+	padding:8px 0 0 0;
 }
 #main-menu-5t li {
 	display:inline;
@@ -149,28 +162,39 @@ strong.trigger-option{
 #main-menu-5t li a {
 	font-weight: 600;
 	line-height: 28px;
-	height: 50px;
+	height: 28px;
 	padding: 0 13px;
 	display: block;
-	color: #999;
+	color: #fff;
 	text-transform: uppercase;
 	font-size:1em;
+	background: #9bc635 none repeat scroll 0 0;
+    border: 1px solid #a6cd49;
+    border-radius: 4px;
 }
 #main-menu-5t li.active a, #main-menu-5t a:hover {
-	border-bottom: 5px solid #1b69b2;
-	background-color:#fff;
-	color: #222;
+	background: #96c032 none repeat scroll 0 0;
+    border-color: #a0c742;
 }
 #main-menu-5t .active a {
 	background: #fe9b25
 }
+
+.loghi-container{display:block;width:336px;height:75px;float:right;position:absolute;top:0;right:0;background:url(images/5t/bike/bg-loghi.png) 0 0 no-repeat;z-index:10000;}
+	.loghi-container a{background-position:0 0;background-repeat:no-repeat;display:block;position:absolute;text-indent:-9999px;line-height:0;font-size:0}
+	.loghi-container .logo-1{top:20px;right:128px;width:144px;height:42px;background-image:url(images/5t/bike/logo-citta-torino.gif)}
+	.loghi-container .logo-2{top:17px;right:21px;width:95px;height:42px;background-image:url(images/5t/bike/logo-torino-metropoli.png)}
+	.loghi-container a:hover{opacity:0.9}
+
+
+
+
 #nav-toggle {
 	display: none;
 }
 
-.language-switcher{top:18px;right:-60px;left:auto;background:#f0f0f0;}
-.language-switcher span, .language-switcher a{color:#999}
-.language-switcher a:hover {background:#f6f6f6;}
+.language-switcher{top:9px;right:-40px;left:auto;}
+
 
 
 }

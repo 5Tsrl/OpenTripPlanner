@@ -391,9 +391,9 @@ otp.widgets.ItinerariesWidget =
                 border = '<span class="border"></span>';
                 console.log('---test2---');
             }
-            var segment = $('<div class="otp-itinsAccord-header-segment"><span class="durata">' + Math.round(leg.duration/60)+'\'</span>'  +border+'</div>').css({
+            var segment = $('<div class="otp-itinsAccord-header-segment '+leg.mode+'"><span class="durata">' + Math.round(leg.duration/60)+'\'</span>'  +border+'</div>').css({
                 width: legTimePerc+'%',
-                background: this.getModeColor(leg.mode)+' url('+otp.config.resourcePath+'images/5t/mode/'+leg.mode.toLowerCase()+'.png) 50% 50% no-repeat'
+                background: this.getModeColor(leg.mode)+' url('+otp.config.resourcePath+'images/5t/mode/'+leg.mode.toLowerCase()+'.png) 6px 50% no-repeat'
             }).appendTo(divGraficBar);
 
             /*var showRouteLabel = widthPx > 10 && otp.util.Itin.isTransit(leg.mode) && leg.routeShortName && leg.routeShortName.length <= 6;
@@ -432,8 +432,8 @@ otp.widgets.ItinerariesWidget =
     },
 
     getModeColor : function(mode) {
-        if(mode === "WALK") return '#97ba43';
-        if(mode === "BICYCLE") return '#f0cc3b';
+        if(mode === "WALK") return '#373737';
+        if(mode === "BICYCLE") return '#80af10';
         if(mode === "SUBWAY") return '#d03939';
         if(mode === "RAIL") return '#5a95c7';
         if(mode === "BUS") return '#f0952a';
@@ -637,7 +637,7 @@ otp.widgets.ItinerariesWidget =
         console.log(itinLink);
         if(this.showItineraryLink) {
             //TRANSLATORS: Links to this itinerary
-            tripSummaryFooter.append(' | <a href="'+itinLink+'">' + _tr("Link to Itinerary") + '</a>');
+            tripSummaryFooter.append('<a href="'+itinLink+'">' + _tr("Link to Itinerary") + '</a>');
         }
 
         if(this.showPrintLink) {
