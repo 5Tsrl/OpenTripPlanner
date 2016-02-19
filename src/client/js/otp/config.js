@@ -84,31 +84,30 @@ otp.config = {
 
     baseLayers: [
 	{
-            name: 'Mappa',
+            name: 'Map',
             tileUrl: 'https://{s}.tiles.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw',
-            //tileUrl: 'https://{s}.tiles.mapbox.com/v4/mapbox.mapbox-streets-v6/{z}/{x}/{y}.vector.pbf?access_token=pk.eyJ1Ijoicm9ieTIxMDciLCJhIjoiY2loNjBqd2ttMDAwNHZ5bTF2OHM1NHllYyJ9.WBD97cSFchyu2lW4tcU_Tw',
             subdomains : ['a','b','c'],
-            attribution: 'Imagery from <a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-	},
-	{
-            name: 'Punti d\'interesse',
-            tileUrl : 'http://{s}.mz.5t.torino.it/hot/{z}/{x}/{y}.png',
-            subdomains : ['a','b','c'],
-            attribution : 'Data, imagery and map information provided by <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
+            attribution: '<a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	},
     {
-            name: 'Rete Trasporti',
-            tileUrl: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
-            subdomains : ['a','b','c'],
-            attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors. Tiles from <a href="http://www.thunderforest.com/transport/">Andy Allan</a>'
+		    name: 'CycleMap',
+		    //tileUrl : 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+		    tileUrl : 'http://{s}.cm.mz.5t.torino.it/cycle/{z}/{x}/{y}.png',
+		    subdomains : ['a','b','c'],
+		    attribution : 'Data, imagery and map information provided by <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
+	},
+    {
+            name: 'Water Color',
+            tileUrl: 'http://{s}.wc.mz.5t.torino.it/watercolor/{z}/{x}/{y}.png',
+            subdomains : ['a','b','c','d'],
+            attribution : 'Maps tiles by <a href="http://stamen.com" target="_blank">Stamen design</a>, <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
     },
     {
-            name: 'Lite',
-            tileUrl: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+            name: 'Gray',
+            tileUrl: 'https://{s}.tiles.mapbox.com/styles/v1/5ttorino/ciihb2oo900bcbhm06ky87eh8/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw',
             subdomains : ['a','b','c'],
-            attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
-    },
-
+            attribution: '<a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	},
     ],
 
 
@@ -169,7 +168,7 @@ otp.config = {
          {
             id : 'bikeshare',
             className : 'otp.modules.bikeshare.BikeShareModule',
-            defaultBaseLayer : 'Punti d\'interesse',
+            defaultBaseLayer : 'Map',
             //isDefault: true
         }
         /*,{
