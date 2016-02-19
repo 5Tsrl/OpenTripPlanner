@@ -88,6 +88,7 @@ otp.config = {
             tileUrl: 'https://{s}.tiles.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw',
             subdomains : ['a','b','c'],
             attribution: '<a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            , tileSize : 512
 	},
     {
 		    name: 'CycleMap',
@@ -107,6 +108,7 @@ otp.config = {
             tileUrl: 'https://{s}.tiles.mapbox.com/styles/v1/5ttorino/ciihb2oo900bcbhm06ky87eh8/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw',
             subdomains : ['a','b','c'],
             attribution: '<a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            , tileSize : 512
 	},
     ],
 

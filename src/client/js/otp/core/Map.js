@@ -42,7 +42,9 @@ otp.core.Map = otp.Class({
             var layerProps = { };
             if(layerConfig.attribution) layerProps['attribution'] = layerConfig.attribution;
             if(layerConfig.subdomains) layerProps['subdomains'] = layerConfig.subdomains;
-
+            //raf
+            //if(layerConfig.tileSize) layerProps['tileSize'] = layerConfig.tileSize;
+            layerProps['tileSize'] = 512
             var layer = new L.TileLayer(layerConfig.tileUrl, layerProps);
 
 	        this.baseLayers[layerConfig.name] = layer;
