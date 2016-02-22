@@ -22,9 +22,19 @@
 
 
 <script>
+
+   var tjson = {
+		  "tiles": [ "https://api.tiles.mapbox.com/styles/v1/5t/cikdsh8sv00bfb8m9zh4kmh0r/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNXQiLCJhIjoiY2lrOXBldm53MDAxN3dsbHljaWMxNXp1MSJ9.HM3QS7gUU6QH8CFygD67dA" ],
+		  "minzoom": 0,
+		  "maxzoom": 18
+		}
+
+
 	L.mapbox.accessToken = 'pk.eyJ1IjoiNXQiLCJhIjoiY2lrOXBldm53MDAxN3dsbHljaWMxNXp1MSJ9.HM3QS7gUU6QH8CFygD67dA';
-	//var map = L.mapbox.map('map', 'mapbox.streets')
-	var map = L.mapbox.map('map', '', {
+	//var map = L.mapbox.map('map', 'mapbox.emerald', { 
+	//var map = L.mapbox.map('map', 'https://{s}.tiles.mapbox.com/styles/5t/cikdsh8sv00bfb8m9zh4kmh0r/tiles/{z}/{x}/{y}', { 
+	//var map = L.mapbox.map('map', 'cikdsh8sv00bfb8m9zh4kmh0rcikdsh8sv00bfb8m9zh4kmh0r', { 
+	var map = L.mapbox.map('map', '', { 
                 scrollWheelZoom: true,
                 minZoom: 1
             })
@@ -57,7 +67,7 @@
 	    //configuration: "optima",
 	    //uppercase : false
 	});
-	mywms.addTo(map);
+	//mywms.addTo(map);
 	
 	
 </script>

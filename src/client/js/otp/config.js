@@ -85,14 +85,13 @@ otp.config = {
     baseLayers: [
 	{
             name: 'Map',
-            tileUrl: 'https://{s}.tiles.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw',
+            //tileUrl: 'https://{s}.tiles.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw',
+            tileUrl: 'https://{s}.tiles.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ3VhbHRpZXJvbWFyYXNjYSIsImEiOiJjaWt5N3JyOHEwMDR6d3ptNW8zeWo4Zmt1In0.G0VevJzeVSd59c9BAy6zdA',
             subdomains : ['a','b','c'],
             attribution: '<a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            , tileSize : 512
-	},
+    },
     {
 		    name: 'CycleMap',
-		    //tileUrl : 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
 		    tileUrl : 'http://{s}.cm.mz.5t.torino.it/cycle/{z}/{x}/{y}.png',
 		    subdomains : ['a','b','c'],
 		    attribution : 'Data, imagery and map information provided by <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
@@ -105,10 +104,7 @@ otp.config = {
     },
     {
             name: 'Gray',
-            tileUrl: 'https://{s}.tiles.mapbox.com/styles/v1/5ttorino/ciihb2oo900bcbhm06ky87eh8/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw',
-            subdomains : ['a','b','c'],
-            attribution: '<a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            , tileSize : 512
+            styleUrl: 'mapbox://styles/5ttorino/ciihb2oo900bcbhm06ky87eh8',
 	},
     ],
 
