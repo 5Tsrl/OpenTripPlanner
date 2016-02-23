@@ -67,7 +67,7 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
     
         var this_ = this;
    
-        var width = $(this.div).width(), height = $(this.div).height();
+        var width = $(this.div).width()-10, height = $(this.div).height();
         var tri_side = 2 * (height - this.cursor_size) * 1/Math.sqrt(3);
         this.tri_side = tri_side;
         var margin = this.cursor_size/2;	

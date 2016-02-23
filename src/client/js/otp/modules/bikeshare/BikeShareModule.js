@@ -74,6 +74,7 @@ otp.modules.bikeshare.BikeShareModule =
     resultsWidget   : null,
     //raf aggiungo l'itinWidget riportandolo dal Multimodal planner...(nei metodi processPlan() e clearTRip() 
     itinWidget  : null,
+    userPosition : null,
 
     
     stations    : null,    
@@ -93,6 +94,7 @@ otp.modules.bikeshare.BikeShareModule =
         this.stationsLayer = new L.LayerGroup();
         //raf aagiungo il layer in funzione del livello di zoom
         //this.addLayer("Bike Stations", this.stationsLayer);
+        var lmap = this.webapp.map.lmap;
         this.webapp.map.lmap.on('dragend zoomend', $.proxy(this.refresh, this));
         //this.on('bikeTypeChanged', $.proxy(this.refresh, this));
         this.on('bikeTypeChanged', this.refresh);
@@ -111,6 +113,50 @@ otp.modules.bikeshare.BikeShareModule =
         
         this.defaultQueryParams.mode = "WALK,BICYCLE_RENT";
         this.optionsWidget.applyQueryParams(this.defaultQueryParams);
+        
+        
+        /* experiment geolocation */
+/*        
+        if ("geolocation" in navigator) {
+            console.log('geolocation is available')
+            
+            navigator.geolocation.getCurrentPosition(success, error);
+            var watchID = navigator.geolocation.watchPosition(function(position) {
+              success(position);
+            });
+            
+        } else {
+            console.log('geolocation is NOT available')
+          
+        }
+        
+        
+          function success(position) {
+            var latitude  = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            console.log('Latitude is ' + latitude + ' Longitude is ' + longitude );
+            if(! this_.userPosition){
+                this_.userPosition = new L.Marker(new L.LatLng(latitude, longitude));
+                this_.userPosition.addTo(lmap);
+            }
+            
+            this_.userPosition.setLatLng(L.latLng(latitude, longitude));
+            lmap.panTo(L.latLng(latitude, longitude))
+            
+            
+
+            
+          };
+
+          function error() {
+            console.log('Unable to retrieve user location');
+          };
+        
+    */    
+        /* fine experiment geolocation */
+        
+        
        
     },
     /**
