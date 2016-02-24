@@ -67,14 +67,14 @@
 #sidebar .tabs {
 	height:70px;
 }
-#sidebar .tabs a{
-	height:40px;
-	width:115px;
+#sidebar .tabs a,#sidebar .tabs span{
+	height:70px;
 	padding:30px 0px 0px 60px;
-	background-size: 40px;
+	background-size: 50px;
 	background-position:15px 15px;
-	font-size:1em;
+	font-size:1.2em;
 	line-height:1.1em;
+	padding-left:75px;
 }
 #sidebar .tab1 .top,
 #sidebar .tab2 .top,{
@@ -136,6 +136,11 @@ strong.trigger-option{
 
 }
 
+#tripmode li label{
+	width:120px;
+}
+#bikeshare-stationsWidget{display:block !important;}
+
 
 }
 
@@ -195,6 +200,12 @@ strong.trigger-option{
 
 .language-switcher{top:9px;right:-40px;left:auto;}
 
+.powered-by{
+		right: 0;
+	bottom: 20px;
+}
+
+#tripmode {margin-top:15px;}
 
 
 }

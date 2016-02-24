@@ -226,10 +226,15 @@ $(document).ready(function() {
 		var tabsHeight = $('#sidebar .tabs').outerHeight();
 		var main1Height = $('#sidebar #tab1 .top').outerHeight();
 		var main2Height = $('#sidebar #tab2 .top').outerHeight();
-		//$('#sidebar #tab1 .main').height(windowHeight-tabsHeight-headerHeight-main1Height);
+		console.log('windowHeight'+windowHeight);
+		console.log('headerHeight'+headerHeight);
+		console.log('tabsHeight'+tabsHeight);
+		console.log('main1Height'+main1Height);
+
+		$('#sidebar #tab1 .main').height(windowHeight-tabsHeight-headerHeight-main1Height);
 		//$('#sidebar #tab2 .main').height(windowHeight-tabsHeight-headerHeight-main2Height);
 	}
-	setHeight();
+	
 
 	$('.panel-trigger').click(function(){
 		$(this).toggleClass('closed');
@@ -256,7 +261,11 @@ $(document).ready(function() {
 		} else {
 			$('.mapoverlay').show().removeClass('closed');
 		}
-		setHeight();
+		
+		setTimeout(function(){
+			setHeight();
+		}, 250);
+		
 	}
 
 	resizeEndActions();
@@ -306,7 +315,7 @@ $(document).ready(function() {
 
 	// ---- Tabs ----------------------------------------------------------------------------------------------------------
 
-	$("ul.tabs").html('<li class="planner left active"><a data-tab="tab1" href="#planner">'+ _tr("Calcola percorso")+'</a></li>');
+	$("ul.tabs").html('<li class="planner left active"><span data-tab="tab1">'+ _tr("Calcola percorso")+'</span></li>');
 	                   //<li class="traffic right">      <a data-tab="tab2" href="#traffic">' +_tr("TO BIKE") +'</a></li>');
 /*	
 	$(".tab-content").hide(); // Hide all content

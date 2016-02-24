@@ -355,9 +355,16 @@ a:focus {
   top: 0;
 }
 #nav-toggle.active span:before {
+  -webkit-transform: rotate(45deg);
+-moz-transform: rotate(45deg);
+-ms-transform: rotate(45deg);
   transform: rotate(45deg);
+
 }
 #nav-toggle.active span:after {
+  -webkit-transform: rotate(-45deg);
+-moz-transform: rotate(-45deg);
+-ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
 
@@ -449,7 +456,8 @@ a:focus {
 	height:100%;
 	min-height:100px;
 	background-color:#eeeeee;
-	overflow:auto;
+	overflow-y:scroll;
+	 -webkit-overflow-scrolling: touch;
 	position:relative;
 }
 #sidebar .tabs {
@@ -459,37 +467,39 @@ a:focus {
 #sidebar .tabs li{
 	display:inline;
 }
-#sidebar .tabs a{
+#sidebar .tabs a,#sidebar .tabs span{
 	opacity:0.5;
 	float:left;
-	width:85px;
-	height:30px;
-	padding:25px 0px 0px 45px;
+	width:100%;
+	box-sizing:border-box;
+	height:70px;
+	padding:25px 0px 0px 60px;
 	color:#363636;
 	text-transform:uppercase;
-	font-size:0.8em;
+	font-size:1em;
 	line-height:1.1em;
 	font-weight:600;
 	background-repeat:no-repeat;
 	background-position:12px 12px;
-	background-size: 30px;
+	background-size: 40px;
 	-webkit-transition: all .3s;
 	-moz-transition: all .3s;
 	-ms-transition: all .3s;
 	-o-transition: all .3s;
 	transition: all .3s;
+	cursor:default;
 }
 #sidebar .tabs a:hover{
 	opacity:1;
 }
-#sidebar .tabs .active a{
+#sidebar .tabs .active a,#sidebar .tabs .active span{
 	opacity:1;
 	background-color:#fff;
 }
-#sidebar .tabs .left a{
+#sidebar .tabs .left a,#sidebar .tabs .left span{
 	background-image:url(images/icons/ic_directions_green.svg);
 }
-#sidebar .tabs .right a{
+#sidebar .tabs .right a,#sidebar .tabs .right span{
 	background-image:url(images/icons/ic_directions_traffic_white.svg);
 }
 #sidebar .tab1 .top{
@@ -561,8 +571,8 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	width: 100px;
 	height: 24px;
 	position: absolute;
-	right: 0;
-	bottom: 15px;
+	right: 60px;
+	bottom: 0;
 	background: #1467b6 url(../images/5t/powered-by-5t.png) 0 0 no-repeat;
 	background-size:100px 24px;
 	text-indent: -9999px;
@@ -614,7 +624,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	right:0px;
 	top:0px;
 	bottom:0px;
-	padding:0px 0px 0px 0;
+	padding:0px 0px 0px 10px;
 	margin:0px;
 	font-size:0.9em;
 }
@@ -781,35 +791,38 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 #tripmode{
 	overflow:hidden;
-	margin:15px 0px 0px 0px;
+	margin:0 0px 15px 0px;
 }
 #tripmode li{
 	float:left;
 	margin:0px 10px 0px 0px;
+	background:#ccc;
 }
 #tripmode li input{
 	display:none;	
 }
 #tripmode li label{
 	display:block;
-	width:33px;
-	height:33px;
-	/*text-indent: -9999px;*/
+	width:105px;
+	height:12px;
+	padding:12px 0;
+	text-align:center;
+	text-transform:uppercase;
+	font-size:1em;
+	background:#363636;
 	position:relative;
-	/*background-image:url(images/icons/ic_directions_walk_blue.svg);
-	background-size:30px;
-	background-position:center center;
-	background-repeat:no-repeat;*/
+	-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px
+	
 }
-#tripmode .text{text-indent:-9999px;display:none}
 
-#tripmode .fonticon:before{display:block;font-size:2.4em;color:#345a7f}
-#tripmode .fonticon:hover:before,#tripmode .active .fonticon:before{color:#fff}
-#tripmode .public .fonticon:before{content: '\e80a'}
-#tripmode .car .fonticon:before{content: '\e80b'}
-#tripmode .bike .fonticon:before{content: '\e80c'}
-#tripmode .walk .fonticon:before{content: '\e80d'}
-#tripmode .parkride .fonticon:before{content: '\e809'}
+#tripmode li.active label{
+
+	background:#7eb100;
+
+}
+
+.otp-bikeTriangle{position:relative;left:-8px;}
+
 
 .address-fields{position:relative}
 
@@ -977,7 +990,8 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 	.white-popup header{background:#7eb100;color:#fff;padding:20px;}
 	.white-popup header h1{font-size:2em;font-weight:100;text-shadow:none;}
-	.white-popup .text{padding:20px;}
+	.white-popup .text{padding:20px;overflow-y:scroll;
+	 -webkit-overflow-scrolling: touch;}
 	.mfp-close{height:58px;color:#fff;}
 	.mfp-close-btn-in .mfp-close{color:#fff;font-family:"Open Sans",sans-serif;font-size:40px;font-weight:100;}
 
@@ -1527,6 +1541,17 @@ background:#fff;
 .ui-accordion a, .ui-accordion .ui-state-active a, .ui-accordion .ui-state-default a {
 	color: #6a9308;
 }
+.otp-defaultItinsWidget{height:auto;}
+
+.mfp-wrap{z-index:25000;}
+.white-popup{-webkit-box-shadow: 0px 1px 20px -2px rgba(0,0,0,0.49);
+-moz-box-shadow: 0px 1px 20px -2px rgba(0,0,0,0.49);
+box-shadow: 0px 1px 20px -2px rgba(0,0,0,0.49);}
+
+#bikeshare-stationsWidget{display:none !important;}
+
 }
+
+
 
 /* END MEDIA SCREEN*/
