@@ -226,10 +226,6 @@ $(document).ready(function() {
 		var tabsHeight = $('#sidebar .tabs').outerHeight();
 		var main1Height = $('#sidebar #tab1 .top').outerHeight();
 		var main2Height = $('#sidebar #tab2 .top').outerHeight();
-		console.log('windowHeight'+windowHeight);
-		console.log('headerHeight'+headerHeight);
-		console.log('tabsHeight'+tabsHeight);
-		console.log('main1Height'+main1Height);
 
 		$('#sidebar #tab1 .main').height(windowHeight-tabsHeight-headerHeight-main1Height);
 		//$('#sidebar #tab2 .main').height(windowHeight-tabsHeight-headerHeight-main2Height);
@@ -260,6 +256,10 @@ $(document).ready(function() {
 			$('.mapoverlay').hide().addClass('closed');
 		} else {
 			$('.mapoverlay').show().removeClass('closed');
+		}
+
+		if($('body').width() > 960 && $('#branding').hasClass('full-height')) {
+			$('#nav-toggle').click();
 		}
 		
 		setTimeout(function(){
