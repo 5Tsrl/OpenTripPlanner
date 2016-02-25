@@ -1270,8 +1270,8 @@ otp.widgets.tripoptions.BikeTypeIcons =
 */        
          ich['otp-tripOptions-modeSelectorIcons']({
             widgetId : this.id,
-            bike : _tr("Bicycle Only"),
-            bikeshare : _tr("bikeshare")
+            bike : _tr("My Own Bike"),
+            bikeshare : _tr("[TO]Bike")
             
         }).appendTo(this.$());
         

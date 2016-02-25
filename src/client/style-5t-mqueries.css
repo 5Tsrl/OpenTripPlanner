@@ -1,66 +1,9 @@
 
 @media only screen and (min-width:30em) { /* 480px  */
 
-/* ----------  HEADER ----------*/
-
-#branding {
-	height: 75px;
-}
-#logo {
-	height:75px;
-	background-size:40px;
-	background-position:20px 18px;
-	padding-left:85px;
-	/*width: 80px;
-	height: 80px;
-	background: url(images/5t/bike/logo.gif) 0 0 no-repeat;
-	/*background-size: 230px;*/
-	/*margin: 9px 0px 0px 10px;*/
-}
-#logo h1 {
-	height: 55px;
-	padding:20px 0 0 25px;
-	font-size:3em;
-}
-#main-menu-5t {
-	top: 75px;
-}
-
-/* ----------- MOBILE NAV TOGGLE ---------- */
-
-#nav-toggle {
-	top: 15px;
-	right: 20px;
-	width: 45px;
-	height: 25px;
-	padding:20px 0px 0px 10px;
-}
-#nav-toggle span,
-#nav-toggle span:before,
-#nav-toggle span:after {
-  height: 5px;
-  width: 35px;
-}
-#nav-toggle span:before {
-  top: -10px;
-}
-#nav-toggle span:after {
-  bottom: -10px;
-}
-
-.language-switcher {top:115px;}
-.language-switcher.active {right:20px;left:auto;}
 
 
 
-
-/* ----------  SIDEBAR ----------*/
-
-#sidebar{
-	width:350px;
-	top:75px;
-}
-#sidebar.closed{left:-340px;}
 
 /* ----------  TABS ----------*/
 
@@ -120,11 +63,11 @@
 }
 
 /* ----------  MAP ----------*/
-
+/*
 #map{
 		left:350px;
 		top:75px;
-}
+}*/
 
 .findplace input{
 	width:69%;
@@ -137,15 +80,88 @@ strong.trigger-option{
 }
 
 #tripmode li label{
-	width:120px;
+	_width:130px;
 }
 #bikeshare-stationsWidget{display:block}
+.pick_drop_container {display: none}
+
 
 
 }
 
-@media only screen and (min-width:60em) { /* 960px  */
+@media only screen and (min-width:60em) { /* 960px  */ /*---------------------------------------------------------------------*/
+	
+	/* ----------  HEADER ----------*/
 
+	#branding {
+		height: 75px;
+	}
+	#logo {
+		height:75px;
+		background-size:40px;
+		background-position:20px 18px;
+		padding-left:85px;
+		/*width: 80px;
+		height: 80px;
+		background: url(images/5t/bike/logo.gif) 0 0 no-repeat;
+		/*background-size: 230px;*/
+		/*margin: 9px 0px 0px 10px;*/
+	}
+	#logo h1 {
+		height: 55px;
+		padding:20px 0 0 25px;
+		font-size:3em;
+	}
+	#main-menu-5t {
+		top: 75px;
+	}
+	
+	
+	/* ----------- MOBILE NAV TOGGLE ---------- */
+
+	#nav-toggle {
+		top: 15px;
+		right: 20px;
+		width: 45px;
+		height: 25px;
+		padding:20px 0px 0px 10px;
+	}
+	#nav-toggle span,
+	#nav-toggle span:before,
+	#nav-toggle span:after {
+	  height: 5px;
+	  width: 35px;
+	}
+	#nav-toggle span:before {
+	  top: -10px;
+	}
+	#nav-toggle span:after {
+	  bottom: -10px;
+	}
+
+	.language-switcher {top:115px;}
+	.language-switcher.active {right:20px;left:auto;}
+
+	/* ----------  SIDEBAR ----------*/
+
+	#sidebar{
+		width:350px;
+		top:75px;
+	}
+	#sidebar.closed{left:-340px;}
+
+	
+	/* ----------  MAP ----------*/
+	
+	#map{
+			left:350px;
+			top:75px;
+	}
+	
+	
+	
+	
+.pick_drop_container {display: block}
 .main-menu-container{
 	position:absolute;
 	top:15px;
@@ -210,6 +226,13 @@ strong.trigger-option{
 }
 
 #tripmode {margin-top:15px;}
+#tripmode li label{
+	width:147px;
+	font-weight: bold;
+}
+
+
+
 
 
 }

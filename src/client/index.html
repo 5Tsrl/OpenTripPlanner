@@ -315,7 +315,7 @@ $(document).ready(function() {
 
 	// ---- Tabs ----------------------------------------------------------------------------------------------------------
 
-	$("ul.tabs").html('<li class="planner left active"><span data-tab="tab1">'+ _tr("Calcola percorso")+'</span></li>');
+	$("ul.tabs").html('<li class="planner left active"><span data-tab="tab1">'+ _tr("Plan Trip")+'</span></li>');
 	                   //<li class="traffic right">      <a data-tab="tab2" href="#traffic">' +_tr("TO BIKE") +'</a></li>');
 /*	
 	$(".tab-content").hide(); // Hide all content
@@ -355,6 +355,7 @@ $(document).ready(function() {
 
 	$('.modalbox').magnificPopup({
 		type:'inline',
+		overflowY: 'scroll',
 		midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
 	});
 

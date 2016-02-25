@@ -2,7 +2,7 @@
 Theme Name: TPL
 file: style-5t.css
 author: Madeincima.it
----------------------------------------------------*/
+---------------------------------------------------*/  
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
 
@@ -76,6 +76,11 @@ author: Madeincima.it
 @media screen {
 	 
 /* ----------- RESET DEFAULT STYLES -------------------------------------------------------------- */
+::selection {
+background: #999;
+color: #fff;
+text-shadow: none;
+}
 
 html {
 	width: 100%;
@@ -989,7 +994,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 	.white-popup header{background:#7eb100;color:#fff;padding:20px;}
 	.white-popup header h1{font-size:2em;font-weight:100;text-shadow:none;}
-	.white-popup .text{padding:20px;overflow-y:scroll;
+	.white-popup .text{padding:20px;overflow-y:scroll;max-height: 300px;
 	 -webkit-overflow-scrolling: touch;}
 	.mfp-close{height:58px;color:#fff;}
 	.mfp-close-btn-in .mfp-close{color:#fff;font-family:"Open Sans",sans-serif;font-size:40px;font-weight:100;}
@@ -1001,6 +1006,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 
 /*bike staion widget*/
+
 #bikeshare-stationsWidget{bottom:68px;right:19px;width:190px}
 .otp-bikeshare-stationsWidget-left,
 .otp-bikeshare-stationsWidget-right{box-shadow:0 0 4px -2px #000;background:#f8f8f8;padding:0;border:0;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px}
@@ -1017,7 +1023,14 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 #dropoff_btn p{font-size:1em;color:#373737;margin-bottom:3px;line-height:120%}
 #pickup_btn .icon{background:#7cab0e url(images/5t/bike/pick-up.gif) center center no-repeat}
 #dropoff_btn .icon{background:#d90e0e url(images/5t/bike/drop-off.gif) center center no-repeat}
-.leaflet-popup-content-wrapper {border-radius: 3px}
+
+/* leaflet popup */
+.leaflet-popup-content-wrapper{border-radius:3px; box-shadow: 0 3px 14px rgba(0,0,0,0.4); font-size: 1em;  }
+.leaflet-popup-content {margin:-9px 0 0 0; padding:0 8px 4px;color: #666; }
+.leaflet-popup-content h5{ font-size: 1em}
+
+
+.station{margin-bottom:4px}
 .station span {color: #6a9308;}
 
 

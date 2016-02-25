@@ -187,13 +187,13 @@ body {
   	color-stop(1, rgb(102,102,102))
   );
 }
-
+/*
 @media only screen and (min-width: 768px) {
   #branding {
     height: 4em;
   }
 }
-
+*/
 /* Module Selector */
 
 #otp_moduleSelector {
@@ -429,13 +429,13 @@ body {
   left: 0;
   z-index: 1;
 }
-
+/*
 @media only screen and (min-width: 768px) {
   #map {
     top: 4em;
   }
 }
-
+*/
 
 /*.leaflet-control-zoom {
   display: none;
@@ -697,14 +697,10 @@ body {
 .otp-defaultTripWidget hr {
   display: none;
 }
-
+/*
 @media only screen and (min-width: 768px) {
   .otp-defaultTripWidget {
     width: 340px;
-    /*top: auto;
-    left: 20px;
-    bottom: 100px;*/
-    
     padding: 10px;
   }
 
@@ -712,7 +708,7 @@ body {
     display: block;
   }
 }
-
+*/
 
 h3.your-trip,
 h6.drag-to-change {
@@ -731,11 +727,11 @@ h6.drag-to-change {
 
 
 /* Bike Triangle */
-
+/*
 .otp-bikeTriangle {
   display: none;
 }
-
+*/
 
 @media only screen and (min-width: 768px) {  
   .otp-bikeTriangle {
