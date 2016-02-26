@@ -215,22 +215,25 @@
 <script type="text/javascript" language="javascript">
 
 
-
-
-$(document).ready(function() {
-
-
-	function setHeight(){
+function setHeight(){
+	if(!$('#sidebar').hasClass('long')){
 		var windowHeight = $(window).height();
 		var headerHeight = $('#branding').outerHeight();
 		var tabsHeight = $('#sidebar .tabs').outerHeight();
 		var main1Height = $('#sidebar #tab1 .top').outerHeight();
 		var main2Height = $('#sidebar #tab2 .top').outerHeight();
-
-		$('#sidebar #tab1 .main').height(windowHeight-tabsHeight-headerHeight-main1Height);
+		var height = tabsHeight+main1Height;
+		//$('.sidebar-scroll').height(windowHeight-headerHeight);
+		if(height>(windowHeight-headerHeight)){
+			height = windowHeight-headerHeight;
+		}
+		$('.sidebar-scroll').height(height);
 		//$('#sidebar #tab2 .main').height(windowHeight-tabsHeight-headerHeight-main2Height);
 	}
-	
+}
+
+$(document).ready(function() {
+
 
 	$('.panel-trigger').click(function(){
 		$(this).toggleClass('closed');
@@ -401,7 +404,7 @@ $(document).ready(function() {
 
 
 <div id="sidebar" class="tabbed-content">
-
+<div class="sidebar-scroll">
     <ul class="tabs">
 		<!--
         <li class="left active"><a href="#tab1">Indicazioni stradali</a></li>
@@ -417,24 +420,25 @@ $(document).ready(function() {
         	<div class="main">
         	</div>
         </div>
-        <div id="tab2" class="tab-content traffic">
-      		<div class="top">
+        <!--div id="tab2" class="tab-content traffic">
+      		<div class="top"-->
 				<!--
       			<div class="field findplace">
       				<label for ="findplace">Località</label>
       				<input type="text" id="findplace" />
       			</div>
 				-->
-        	</div>
+        	<!-- /div>
         	<div class="main">
 				<div class="infosCtnr"></div>
 				<div class="eventsCtnr"></div>
         	</div>
-        </div>
+        </div -->
     </div>
 
+
+</div>  
 <span class="panel-trigger fonticon"></span>
-  
 </div>
 
 

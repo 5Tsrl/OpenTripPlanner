@@ -428,12 +428,13 @@ a:focus {
 .mapoverlay{position:absolute;width:100%;height:100%;z-index:1;cursor:pointer}
 
 #sidebar{
-	position:fixed;
+	/*position:fixed;*/
+	position:absolute;
 	width:260px;
-	height:100%;
+	/*height:100%;*/
 	left:0px;
 	top:45px;
-	bottom:0px;
+	
 	background-color:#fff;
 	z-index:10;
 	box-shadow:0px 0px 5px rgba(0,0,0, 0.5);
@@ -443,26 +444,36 @@ a:focus {
 	-o-transition: all .3s;
 	transition: all .3s;
 }
+#sidebar.long{bottom:0px;}
+
 #sidebar.closed{left:-250px}
 
+
+.sidebar-scroll{
+	overflow-y:scroll;
+	-webkit-overflow-scrolling: touch;
+	height:100%;
+	
+
+}
 /* ----------  TABS ----------*/
 
 #sidebar .tab-container{
 	background-color:#fff;
 	color:#fff;
 	padding:0 0px 0px 0px;
-	height:100%;
+	/*height:100%;*/
 }
 #sidebar .tab-content{
-	height:100%;
+	/*height:100%;*/
 }
 #sidebar .main{
 	width:100%;
-	height:100%;
-	min-height:100px;
+	/*height:100%;*/
+	/*min-height:100px;*/
 	background-color:#eeeeee;
-	overflow-y:scroll;
-	-webkit-overflow-scrolling: touch;
+	/*overflow-y:scroll;
+	-webkit-overflow-scrolling: touch;*/
 	position:relative;
 }
 #sidebar .tabs {
@@ -560,7 +571,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 #map {
 	top: 45px;
-	left:260px;
+	/*left:260px;*/ left:0;
 	-webkit-transition: all .3s;
 	-moz-transition: all .3s;
 	-ms-transition: all .3s;
@@ -796,7 +807,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 #tripmode{
 	overflow:hidden;
-	margin:0 0px 15px 0px;
+	margin:10px 0px 15px 0px;
 }
 #tripmode li{
 	float:left;
@@ -807,6 +818,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 }
 #tripmode li label{
 	display:block;
+	font-weight:bold;
 	width:105px;
 	height:12px;
 	padding:12px 0;

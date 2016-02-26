@@ -154,7 +154,7 @@ strong.trigger-option{
 	/* ----------  MAP ----------*/
 	
 	#map{
-			left:350px;
+			/*left:350px;*/left:0;
 			top:75px;
 	}
 	
