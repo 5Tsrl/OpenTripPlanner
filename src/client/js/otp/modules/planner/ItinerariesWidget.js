@@ -53,7 +53,7 @@ otp.widgets.ItinerariesWidget =
         //this.minimizable = true;
         //this.addHeader("X Itineraries Returned");
         $('#sidebar').addClass('long');
-        $('.sidebar-scroll').height('auto');
+        $('.sidebar-scroll').height('');
         
     },
 
