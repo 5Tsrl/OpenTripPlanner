@@ -733,7 +733,7 @@ h6.drag-to-change {
 }
 
 
-@media only screen and (min-width: 30em/*768px*/) {  
+@media only screen and (min-width: 320px/*30em/*768px*/) {  
   .otp-bikeTriangle {
     display: block;
     height: 100px;

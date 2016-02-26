@@ -826,6 +826,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 }
 
 .otp-bikeTriangle{position:relative;left:-8px;}
+.barre{display: none}
 
 
 .address-fields{position:relative}

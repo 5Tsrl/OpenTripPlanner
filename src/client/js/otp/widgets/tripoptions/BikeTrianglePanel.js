@@ -122,8 +122,9 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
 
         this.quickBarBck = canvas.rect(barLeft, margin, barWidth, barHeight);
         this.quickBarBck.attr({fill:backFill, stroke:backStroke});
+        this.quickBarBck.node.setAttribute("class","barre");
         this.quickBar = canvas.rect(barLeft, margin, barWidth*.333, barHeight);
-        this.quickBar.attr({fill:quickFill, stroke:"none"});
+        this.quickBar.attr({fill:quickFill, stroke:"none"}).node.setAttribute("class","barre");
 
         this.flatBarBck = canvas.rect(barLeft, margin*2+barHeight, barWidth, barHeight);
         this.flatBarBck.attr({fill:backFill, stroke:backStroke});
