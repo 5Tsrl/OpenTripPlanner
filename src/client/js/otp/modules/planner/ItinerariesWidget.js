@@ -52,6 +52,9 @@ otp.widgets.ItinerariesWidget =
         //this.$().resizable();
         //this.minimizable = true;
         //this.addHeader("X Itineraries Returned");
+        $('#sidebar').addClass('long');
+        $('.sidebar-scroll').height('auto');
+        
     },
 
     activeItin : function() {
