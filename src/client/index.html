@@ -226,6 +226,10 @@ function setHeight(){
 		//$('.sidebar-scroll').height(windowHeight-headerHeight);
 		if(height>(windowHeight-headerHeight)){
 			height = windowHeight-headerHeight;
+			$('.sidebar-scroll').css({'overflow-y':'scroll'});
+
+		} else {
+			$('.sidebar-scroll').css({'overflow-y':'auto'});
 		}
 		$('.sidebar-scroll').height(height);
 		//$('#sidebar #tab2 .main').height(windowHeight-tabsHeight-headerHeight-main2Height);
