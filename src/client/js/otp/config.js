@@ -85,8 +85,8 @@ otp.config = {
     baseLayers: [
 	{
             name: 'Map',
-            //tileUrl: 'https://{s}.tiles.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw',
-            tileUrl: 'https://{s}.tiles.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ3VhbHRpZXJvbWFyYXNjYSIsImEiOiJjaWt5N3JyOHEwMDR6d3ptNW8zeWo4Zmt1In0.G0VevJzeVSd59c9BAy6zdA',
+            //tileUrl: 'https://{s}.tiles.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ3VhbHRpZXJvbWFyYXNjYSIsImEiOiJjaWt5N3JyOHEwMDR6d3ptNW8zeWo4Zmt1In0.G0VevJzeVSd59c9BAy6zdA',
+            tileUrl: 'http://{s}.mb.mz.5t.torino.it/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ3VhbHRpZXJvbWFyYXNjYSIsImEiOiJjaWt5N3JyOHEwMDR6d3ptNW8zeWo4Zmt1In0.G0VevJzeVSd59c9BAy6zdA',
             subdomains : ['a','b','c'],
             attribution: '<a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     },
