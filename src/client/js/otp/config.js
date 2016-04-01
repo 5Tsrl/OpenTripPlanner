@@ -85,9 +85,11 @@ otp.config = {
     baseLayers: [
     {
             name: 'Mappa',
-            tileUrl: 'https://{s}.tiles.mapbox.com/styles/v1/5t/cikdsh8sv00bfb8m9zh4kmh0r/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNXQiLCJhIjoiY2lrOXBldm53MDAxN3dsbHljaWMxNXp1MSJ9.HM3QS7gUU6QH8CFygD67dA',
-            subdomains : ['a','b','c'],
-            attribution: '<a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            //tileUrl: 'https://{s}.tiles.mapbox.com/styles/v1/5t/cikdsh8sv00bfb8m9zh4kmh0r/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNXQiLCJhIjoiY2lrOXBldm53MDAxN3dsbHljaWMxNXp1MSJ9.HM3QS7gUU6QH8CFygD67dA',
+            //tileUrl: 'https://{s}.tiles.mapbox.com/styles/v1/5t/cikdsh8sv00bfb8m9zh4kmh0r/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNXQiLCJhIjoiY2lrOXBldm53MDAxN3dsbHljaWMxNXp1MSJ9.HM3QS7gUU6QH8CFygD67dA',
+            styleUrl: 'mapbox://styles/5t/cikdsh8sv00bfb8m9zh4kmh0r',
+            accessToken: 'pk.eyJ1IjoiNXQiLCJhIjoiY2lrOXBldm53MDAxN3dsbHljaWMxNXp1MSJ9.HM3QS7gUU6QH8CFygD67dA'
+            
     },
 	{
             name: 'Punti d\'interesse',
@@ -103,9 +105,8 @@ otp.config = {
     },
     {
             name: 'Gray',
-            tileUrl: 'https://{s}.tiles.mapbox.com/styles/v1/5ttorino/ciihb2oo900bcbhm06ky87eh8/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw',
-            subdomains : ['a','b','c'],
-            attribution: '<a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            styleUrl: 'mapbox://styles/5ttorino/ciihb2oo900bcbhm06ky87eh8',
+            accessToken: 'pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw'
 	},
 
     ],
