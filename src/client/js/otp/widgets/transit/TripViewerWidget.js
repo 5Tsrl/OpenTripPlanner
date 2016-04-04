@@ -173,6 +173,7 @@ otp.widgets.transit.TripViewerWidget =
         if(url) html += 'Link to: <a href="' + url + '" target="_blank">Route Info</a>';
 
         // TriMet-specific code
+        /*
         if(url.indexOf('http://trimet.org') === 0) {
             var day = "w";
             if(this.activeLeg) {
@@ -184,7 +185,7 @@ otp.widgets.transit.TripViewerWidget =
             var direction = variantData.id.split(':')[2];
             html += ' | <a href="http://trimet.org/schedules/' + day + '/t1' + rte + '_' + direction + '.htm" target="_blank">Timetable</a>';
         }
-
+        */
         this.scheduleLink.html(html);
 
     },

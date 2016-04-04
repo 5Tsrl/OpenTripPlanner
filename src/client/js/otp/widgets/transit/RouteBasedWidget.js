@@ -73,7 +73,6 @@ otp.widgets.transit.RouteBasedWidget =
     newRouteSelected : function() {
         this.activeLeg = null;
         var route = this.routeLookup[this.routeSelect.prop("selectedIndex")]
-        console.log('new route sel', route);
         this.routeId = route.routeData.id;
         this.variantSelect.empty();
         this.clear();
