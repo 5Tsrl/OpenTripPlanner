@@ -21,7 +21,7 @@ otp.widgets.transit.RouteBasedWidget =
     mainDiv         : null,
     sonOf           : 'body', //5t 
 
-    agency_id : null,
+    routeId : null,
 
     activeLeg : null,
     timeIndex : null,
@@ -72,10 +72,9 @@ otp.widgets.transit.RouteBasedWidget =
     },
 
     newRouteSelected : function() {
-        this.agency_id = null;
         this.activeLeg = null;
         var route = this.routeLookup[this.routeSelect.prop("selectedIndex")]
-        this.agency_id = route.routeData.id;
+        this.routeId = route.routeData.id;
         this.variantSelect.empty();
         this.clear() //stopList.empty();
         this.checkAndLoadVariants();
@@ -86,40 +85,37 @@ otp.widgets.transit.RouteBasedWidget =
         var variantId = this.variantSelect.val();
         //console.log("new variant selected: "+variantId);
         this.clear() //stopList.empty();
-        this.setActiveVariant(this.module.webapp.indexApi.routes[this.agency_id].variants[variantId]);
+        this.setActiveVariant(this.module.webapp.indexApi.routes[this.routeId].variants[variantId]);
     },
 
     update : function(leg) {
-        //this.clearTimes();
         this.activeLeg = leg;
         this.activeTime = leg.startTime;
-        //this.times = times;
+        this.routeId = leg.routeId;
 
-        this.agency_id = leg.agencyId + ":" + leg.routeId;
-
-        var tiRouteInfo = this.module.webapp.indexApi.routes[this.agency_id];
+        var tiRouteInfo = this.module.webapp.indexApi.routes[this.activeLeg.routeId];
         $('#'+this.id+'-routeSelect option:eq('+tiRouteInfo.index+')').prop('selected', true);
 
         this.checkAndLoadVariants();
     },
 
     checkAndLoadVariants : function() {
-        var tiRouteInfo = this.module.webapp.indexApi.routes[this.agency_id];
+        var tiRouteInfo = this.module.webapp.indexApi.routes[this.routeId];
         if(tiRouteInfo.variants != null) {
             //console.log("variants exist");
             this.updateVariants();
         }
         else {
-            this.module.webapp.indexApi.loadVariants(this.agency_id, this, this.updateVariants);
+            this.module.webapp.indexApi.loadVariants(this.routeId, this, this.updateVariants);
         }
     },
 
     updateVariants : function() {
         var this_ = this;
-        var route = this.module.webapp.indexApi.routes[this.agency_id];
+        var route = this.module.webapp.indexApi.routes[this.routeId];
 
         if(!route.variants) {
-            console.log("ERROR: indexApi.routes.["+this.agency_id+"].variants null in RouteBasedWidget.updateVariants()");
+            console.log("ERROR: indexApi.routes.["+this.routeId+"].variants null in RouteBasedWidget.updateVariants()");
             return;
         }
 
@@ -129,7 +125,7 @@ otp.widgets.transit.RouteBasedWidget =
         });
 
         if(this.activeLeg) {
-            this.module.webapp.indexApi.readVariantForTrip(this.activeLeg.agencyId,  this.activeLeg.routeId, this.activeLeg.tripId, this, this.setActiveVariant);
+            this.module.webapp.indexApi.readVariantForTrip(this.routeId, this.activeLeg.tripId, this, this.setActiveVariant);
         }
 
 
@@ -140,7 +136,7 @@ otp.widgets.transit.RouteBasedWidget =
 
     setActiveVariant : function(variantData) {
         var this_ = this;
-        var route = this.module.webapp.indexApi.routes[this.agency_id];
+        var route = this.module.webapp.indexApi.routes[this.routeId];
         this.activeVariant = route.variants[variantData.id];
         $('#'+this.id+'-variantSelect option:eq('+this.activeVariant.index+')').prop('selected', true);
 
