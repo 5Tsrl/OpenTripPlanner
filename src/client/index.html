@@ -245,7 +245,13 @@ $(document).ready(function() {
 		} else {
 			$('.mapoverlay').show().removeClass('closed');
 		}
-		setHeight();
+		if($('body').width() > 960 && $('#branding').hasClass('full-height')) {
+			$('#nav-toggle').click();
+		}
+		
+		setTimeout(function(){
+			setHeight();
+		}, 250);
 	}
 
 	resizeEndActions();
