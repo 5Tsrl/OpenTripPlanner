@@ -37,10 +37,32 @@ otp.widgets.tripoptions.TripOptionsWidget =
 
         //this.planTripCallback = planTripCallback;
         this.module = module;
+        
+        
 
         this.controls = {};
     },
-
+    //raf
+    show : function() {
+        this.isOpen = true;
+        if(this.isMinimized) this.minimizedTab.show();
+        else this.mainDiv.fadeIn(); //show();
+        
+        $(".tab-content").hide(); // Hide all content
+        $('ul.tabs li.planner').addClass("active");
+        $('.tab-container .planner').fadeIn();   
+        $('.main-menu-5t li#planner').addClass("active");
+     
+    },
+    hide : function() {
+        if(this.isMinimized) this.minimizedTab.hide();
+        else this.mainDiv.fadeOut(); //hide();
+        $('ul.tabs li.planner').removeClass("active");
+        $('.tab-container .planner').hide();
+        $('.main-menu-5t li#planner').removeClass("active");
+    },
+    
+    
     addControl : function(id, control, scrollable) {
 
         if(scrollable) {
@@ -56,11 +78,12 @@ otp.widgets.tripoptions.TripOptionsWidget =
     },
 
     initScrollPanel : function() {
-        this.scrollPanel = $('<div id="'+this.id+'-scollPanel" class="notDraggable" style="overflow: auto;"></div>').appendTo(this.$());
-        this.$().resizable({
+        //raf this.scrollPanel = $('<div id="'+this.id+'-scollPanel" class="notDraggable" style="overflow: auto;"></div>').appendTo(this.$());
+        this.scrollPanel = $('<div id="'+this.id+'-scollPanel" class="notDraggable" style="overflow: hidden;"></div>').appendTo(this.$());
+        /*this.$().resizable({
             minHeight: 80,
             alsoResize: this.scrollPanel
-        });
+        });*/
     },
 
     addSeparator : function(scrollable) {
@@ -301,10 +324,12 @@ otp.widgets.tripoptions.TimeSelector =
 
     id          :  null,
     epoch       : null,
+    class       : null,
 
     initialize : function(tripWidget) {
         otp.widgets.tripoptions.TripOptionsWidgetControl.prototype.initialize.apply(this, arguments);
         this.id = tripWidget.id+"-timeSelector";
+        this.class = 'advanced-options'
 
         ich['otp-tripOptions-timeSelector']({
             widgetId : this.id,
@@ -452,6 +477,128 @@ otp.widgets.tripoptions.WheelChairSelector =
 });
 
 
+//** TrafficSelector **//
+
+otp.widgets.tripoptions.TrafficSelector =
+    otp.Class(otp.widgets.tripoptions.TripOptionsWidgetControl, {
+
+    id           :  null,
+    //TRANSLATORS: label for checkbox
+    label        : 'info traffico', //_tr("Wheelchair accesible trip:"),
+
+    initialize : function(tripWidget) {
+
+        otp.widgets.tripoptions.TripOptionsWidgetControl.prototype.initialize.apply(this, arguments);
+
+        this.id = tripWidget.id;
+
+/*
+        ich['otp-tripOptions-wheelchair']({
+            widgetId : this.id,
+            label : this.label,
+        }).appendTo(this.$());
+*/
+        var html = '<div class="notDraggable"><label for="traffic-input">' + this.label + '</label>';
+        html += ' <input type="checkbox" id="traffic-input" /></div>';
+                
+        $(html).appendTo(this.$());        
+
+    },
+
+    doAfterLayout : function() {
+        var this_ = this;
+
+        $("#traffic-input").change(function() {
+            
+            //this_.tripWidget.module.wheelchair = this.checked;
+            if($("#traffic-input").prop('checked')) {
+                //alert('yes')
+                //this_.tripWidget.module.webapp.map.lmap.panTo(latlng);
+                //this_.tripWidget.module.webapp.modules['otp.modules.datex.EventModule.otp.Class'].activate();
+                this_.tripWidget.module.webapp.modules[2].activate();
+                this_.tripWidget.module.webapp.modules[2].selected();
+                
+            } else {
+                // something else when not
+                //alert('no')
+                this_.tripWidget.module.webapp.modules[2].deselected();
+            }
+
+            
+            
+        });
+    },
+
+    restorePlan : function(data) {
+        /*if(data.queryParams.wheelchair) {
+            $("#"+this.id+"-wheelchair-input").prop("checked", data.queryParams.wheelchair);
+        }*/
+    },
+
+    isApplicableForMode : function(mode) {
+        //wheelchair mode is shown on transit and walk trips that
+        //doesn't include a bicycle
+        //return (otp.util.Itin.includesTransit(mode)  || mode == "CAR");
+        return  mode == "CAR";
+    }
+});
+
+
+//** EventCategorySelector **//
+/*
+otp.widgets.tripoptions.EventCategorySelector =
+    otp.Class(otp.widgets.tripoptions.TripOptionsWidgetControl, {
+
+    id           :  null,
+    //TRANSLATORS: label for checkbox
+    //label        : 'info traffico', //_tr("Wheelchair accesible trip:"),
+
+    initialize : function(tripWidget) {
+
+        otp.widgets.tripoptions.TripOptionsWidgetControl.prototype.initialize.apply(this, arguments);
+
+        this.id = tripWidget.id;
+
+        ich['otp-tripOptions-eventcategory']({
+            //widgetId : this.id,
+            //label : this.label,
+            code: 'Code e incidenti',
+            chiusure: 'Chiusure e cantieri',
+            meteo: 'Eventi atmosferici',
+            altro: 'Altre informazioni'
+        }).appendTo(this.$());
+
+    },
+
+    doAfterLayout : function() {
+        var this_ = this;
+
+        $("#input-eventCategory-code").change(function() {            
+            if($("#input-eventCategory-code").prop('checked')) {
+                alert('code yes')
+                //this_.tripWidget.module.webapp.modules[2].selected();
+                
+            } else {
+                alert('code no')
+                //this_.tripWidget.module.webapp.modules[2].deselected();
+            }        
+            
+        });
+    },
+
+
+    isApplicableForMode : function(mode) {
+        //wheelchair mode is shown on transit and walk trips that
+        //doesn't include a bicycle
+        //return (otp.util.Itin.includesTransit(mode)  || mode == "CAR");
+        return  mode == "CAR";
+    }
+});
+
+*/
+
+
+
 //** ModeSelector **//
 
 otp.widgets.tripoptions.ModeSelector =
@@ -532,6 +679,118 @@ otp.widgets.tripoptions.ModeSelector =
 });
 
 
+
+//** ModeSelector ICONS**//
+
+otp.widgets.tripoptions.ModeSelectorIcons =
+    otp.Class(otp.widgets.tripoptions.TripOptionsWidgetControl, {
+
+    id           :  null,
+
+    modes        : otp.config.modes,
+
+    optionLookup : null,
+    modeControls : null,
+
+    initialize : function(tripWidget) {
+        otp.widgets.tripoptions.TripOptionsWidgetControl.prototype.initialize.apply(this, arguments);
+        this.id = tripWidget.id+"-modeSelectorIcons";
+        this.modeControls = [];
+        this.optionLookup = {};
+
+        //TRANSLATORS: Label for dropdown Travel by: [mode of transport]
+        /*
+        var html = "<div class='notDraggable'>" + _tr("Travel by") + ": ";
+        html += '<select id="'+this.id+'">';
+        _.each(this.modes, function(text, key) {
+            html += '<option>'+text+'</option>';
+        });
+        html += '</select>';
+        html += '<div id="'+this.id+'-widgets" style="overflow: hidden;"></div>';
+        html += "</div>";
+
+        $(html).appendTo(this.$());
+        */
+        ich['otp-tripOptions-modeSelectorIcons']({
+            widgetId : this.id,
+            public_transport : _tr("Transit"),
+            car : _tr("Drive Only"),
+            bike : _tr("Bicycle Only"),
+            foot : _tr("Walk Only")
+            
+        }).appendTo(this.$());
+        
+        
+        
+        
+    },
+    handleClick : function(myRadio) {
+        alert('Old value: ' + currentValue);
+        alert('New value: ' + myRadio.value);
+        currentValue = myRadio.value;
+    },
+
+    doAfterLayout : function() {
+        var this_ = this;
+        var rad = $('input:radio[name=otpModes]');
+        var prev = null;
+        for(var i = 0; i < rad.length; i++) {
+            rad[i].onclick = function() {
+                $("ul#tripmode li").removeClass("active")
+                console.log(this.value)
+                this.checked = true;
+                $(this.parentElement).addClass("active");
+                this_.tripWidget.inputChanged({
+                    mode : this.value,
+                });
+                this_.refreshModeControls();
+                
+            };
+        }
+    },
+    
+/*
+    restorePlan : function(data) {
+        var i = 0;
+        for(mode in this.modes) {
+            if(mode === data.queryParams.mode) {
+                this.tripWidget.module.mode = data.queryParams.mode;
+                $('#'+this.id+' option:eq('+i+')').prop('selected', true);
+            }
+            i++;
+        }
+
+        for(i = 0; i < this.modeControls.length; i++) {
+            this.modeControls[i].restorePlan(data);
+        }
+    },
+
+    controlPadding : "8px",
+*/
+    refreshModeControls : function() {
+        /*
+        var container = $("#"+this.id+'-widgets');
+        container.empty();
+        var mode = _.keys(this.modes)[document.getElementById(this.id).selectedIndex];
+        for(var i = 0; i < this.modeControls.length; i++) {
+            var control = this.modeControls[i];
+            if(control.isApplicableForMode(mode)) {
+                container.append($('<div style="height: '+this.controlPadding+';"></div>'));
+                container.append(control.$());
+                control.doAfterLayout();
+            }
+        }*/
+    },
+
+    addModeControl : function(widget) {
+        this.modeControls.push(widget);
+    }
+
+});
+
+
+
+
 //** MaxWalkSelector **//
 
 otp.widgets.tripoptions.MaxDistanceSelector =
@@ -579,7 +838,7 @@ otp.widgets.tripoptions.MaxDistanceSelector =
             //distances in Trip Options
             presets_label : _tr("Presets"),
             distSuffix: this.distSuffix,
-            currentMaxDistance: parseFloat(currentMaxDistance)
+            currentMaxDistance: parseInt(currentMaxDistance)
         }).appendTo(this.$());
 
     },
@@ -605,7 +864,7 @@ otp.widgets.tripoptions.MaxDistanceSelector =
             if (!otp.config.metric) { presetVal = otp.util.Imperial.metersToMiles(presetVal); } // Output in miles
 
             // Show the value in miles/meters
-            $('#'+this_.id+'-value').val(presetVal.toFixed(2));
+            $('#'+this_.id+'-value').val(presetVal/*.toFixed(2)*/);
             $('#'+this_.id+'-presets option:eq(0)').prop('selected', true);
         });
     },
@@ -618,7 +877,7 @@ otp.widgets.tripoptions.MaxDistanceSelector =
 
         if (!otp.config.metric) { meters = otp.util.Imperial.metersToMiles(meters); }
 
-        $('#'+this.id+'-value').val(meters.toFixed(2));
+        $('#'+this.id+'-value').val(meters/*.toFixed(2)*/);
         this.tripWidget.module.maxWalkDistance = parseFloat(data.queryParams.maxWalkDistance);
     },
 
@@ -1089,7 +1348,8 @@ otp.widgets.tripoptions.Submit =
         this.id = tripWidget.id+"-submit";
 
         //TRANSLATORS: button to send query for trip planning
-        $('<div class="notDraggable" style="text-align:center;"><button id="'+this.id+'-button">' + _tr("Plan Your Trip") + '</button></div>').appendTo(this.$());
+        //raf $('<div class="notDraggable" style="text-align:center;"><button id="'+this.id+'-button">' + _tr("Plan Your Trip") + '</button></div>').appendTo(this.$());
+        $('<button id="'+this.id+'-button">' + _tr("Plan Your Trip") + '</button>').appendTo(this.$());
         //console.log(this.id+'-button')
 
     },
@@ -1103,6 +1363,35 @@ otp.widgets.tripoptions.Submit =
         });
     }
 });
+
+
+//** Trigger-advanced-option **//
+
+otp.widgets.tripoptions.TriggerOption =
+    otp.Class(otp.widgets.tripoptions.TripOptionsWidgetControl, {
+
+    initialize : function(tripWidget) {
+        otp.widgets.tripoptions.TripOptionsWidgetControl.prototype.initialize.apply(this);//, arguments);
+        this.id = tripWidget.id+"-triggerOption";
+
+        //TRANSLATORS: button to send query for trip planning
+        //raf $('<div class="notDraggable" style="text-align:center;"><button id="'+this.id+'-button">' + _tr("Plan Your Trip") + '</button></div>').appendTo(this.$());
+        //raf $('<button id="'+this.id+'-triggerOption">' + _tr("Plan Your Trip") + '</button>').appendTo(this.$());
+        $('<strong id="'+this.id+'-triggerOption" class="trigger-option">'+_tr("Options").toUpperCase()+'<span class="fonticon"></span></strong>').appendTo(this.$());
+    },
+
+    doAfterLayout : function() {
+        var this_ = this;
+       
+        $('#'+this.id+'-triggerOption').button().click(function() {
+            //this_.tripWidget.pushSettingsToModule();
+            
+            $(this).toggleClass('open').parent().next().slideToggle().next().slideToggle();
+        });
+
+    }
+});
+
 
 //** Group Trip **//
 

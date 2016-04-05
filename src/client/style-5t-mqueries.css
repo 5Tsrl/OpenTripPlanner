@@ -1,0 +1,189 @@
+
+@media only screen and (min-width:30em) { /* 480px  */
+
+/* ----------  HEADER ----------*/
+
+#branding {
+	height: 90px;
+}
+#logo h1 {
+	width: 290px;
+	height: 80px;
+	background: url(images/mip_logo.svg) 0 0 no-repeat;
+	background-size: 230px;
+	margin: 9px 0px 0px 10px;
+}
+#main-menu-5t {
+	top: 90px;
+}
+
+/* ----------- MOBILE NAV TOGGLE ---------- */
+
+#nav-toggle {
+	top: 20px;
+	right: 20px;
+	width: 45px;
+	height: 25px;
+	padding:20px 0px 0px 10px;
+}
+#nav-toggle span,
+#nav-toggle span:before,
+#nav-toggle span:after {
+  height: 5px;
+  width: 35px;
+}
+#nav-toggle span:before {
+  top: -10px;
+}
+#nav-toggle span:after {
+  bottom: -10px;
+}
+
+.language-switcher {top:115px;}
+.language-switcher.active {right:20px;left:auto;}
+
+/* ----------  SIDEBAR ----------*/
+
+#sidebar{
+	width:350px;
+	top:90px;
+}
+#sidebar.closed{left:-340px;}
+
+/* ----------  TABS ----------*/
+
+#sidebar .tabs {
+	height:70px;
+}
+#sidebar .tabs a{
+	height:50px;
+	width:115px;
+	padding:20px 0px 0px 60px;
+	background-size: 40px;
+	background-position:15px 15px;
+	font-size:1em;
+	line-height:1.1em;
+}
+#sidebar .tab1 .top,
+#sidebar .tab2 .top,{
+	padding:0px 0px 0px 20px;
+}
+
+/* ----------  Box Trip planner ----------*/
+
+#otp-planner-optionsWidget {
+	font-size:1em;
+	padding:0px 0px 0px 10px;
+}
+.traffic .top{padding-left:20px}
+
+#sidebar .otp-widget .filtroEvt{
+	width:95%;
+}
+
+#otp-planner-optionsWidget-locSelector-reverseButton {
+	background-size:35px;
+	height: 30px;
+	width: 30px;
+}
+#otp-planner-optionsWidget .address-fields .field label{
+	font-size:1.1em;
+	padding:6px 0px 0px 0px;
+	width:30px;
+}
+#otp-planner-optionsWidget .address-fields .field input{
+	height:26px;
+	padding:0px 0px 0px 50px;
+}
+#otp-planner-optionsWidget-timeSelector-timeSelector select {
+	width: 133px;
+	background-position: right 1px;
+}
+#otp-planner-optionsWidget-timeSelector-date{
+	padding: 0px 5px;
+}
+#otp-planner-optionsWidget-timeSelector-timeSelector select,
+#otp-planner-optionsWidget-timeSelector-timeSelector input{
+	margin: 0px 15px 0px 0px;
+}
+
+/* ----------  MAP ----------*/
+
+#map{
+		left:350px;
+		top:90px;
+}
+
+.findplace input{
+	width:69%;
+	padding-left:25%;
+}
+
+strong.trigger-option{
+	top:92px;
+
+}
+
+
+}
+
+@media only screen and (min-width:60em) { /* 960px  */
+
+.main-menu-container{
+	position:absolute;
+	top:15px;
+	right:85px;	
+}	
+#main-menu-5t {
+	position:static;
+	width:100%;
+	height:100%;
+	background-color:transparent;
+	float:left;
+}
+#main-menu-5t li {
+	display:inline;
+	float: left;
+	margin-left: 8px
+}
+#main-menu-5t li a {
+	font-weight: 600;
+	line-height: 28px;
+	height: 50px;
+	padding: 0 13px;
+	display: block;
+	color: #999;
+	text-transform: uppercase;
+	font-size:1em;
+}
+#main-menu-5t li.active a, #main-menu-5t a:hover {
+	border-bottom: 5px solid #1b69b2;
+	background-color:#fff;
+	color: #222;
+}
+#main-menu-5t .active a {
+	background: #fe9b25
+}
+#nav-toggle {
+	display: none;
+}
+
+.language-switcher{top:18px;right:-60px;left:auto;background:#f0f0f0;}
+.language-switcher span, .language-switcher a{color:#999}
+.language-switcher a:hover {background:#f6f6f6;}
+
+
+}
+
+@media only screen and (min-width:80em) { /* 1280px */
+	 
+#main-menu-5t {
+	display: block;
+	right: 40px;
+	font-size: 1.1em;
+}
+
+
+
+}
+

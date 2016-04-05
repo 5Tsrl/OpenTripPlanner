@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html dir="ltr" lang="en-US" class="ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html dir="ltr" lang="en-US" class="ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html dir="ltr" lang="en-US" class="ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html dir="ltr" lang="en-US" class="ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html dir="ltr" lang="en-US"> <!--<![endif]-->
+<!--[if lt IE 7 ]> <html dir="ltr" lang="it-IT" class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html dir="ltr" lang="it-IT" class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html dir="ltr" lang="it-IT" class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html dir="ltr" lang="it-IT" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html dir="ltr" lang="it-IT"> <!--<![endif]-->
 
 <head>
-<title>OpenTripPlanner</title>
+<title>Muoversi in Piemonte</title>
 
 <!--  Mobile Viewport Fix -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!--  Let the poor EI behave decently -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <link rel="stylesheet" href="js/lib/jquery-ui/css/smoothness/jquery-ui-1.9.1.custom.css" />
 <link rel="stylesheet" href="js/lib/jquery-ui/addons/jquery-ui-timepicker.css" />
-<link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css" />
 <link rel="stylesheet" href="js/otp/widgets/widget-style.css?v=1" />
 <link rel="stylesheet" href="js/otp/modules/planner/planner-style.css?v=1" />
 <link rel="stylesheet" href="js/otp/modules/bikeshare/bikeshare-style.css?v=1" />
@@ -26,27 +28,22 @@
 <link rel="stylesheet" href="js/otp/modules/fieldtrip/fieldtrip-style.css?v=1" />
 <link rel="stylesheet" href="js/otp/widgets/tripoptions/tripoptions-style.css?v=1" />
 <link rel="stylesheet" href="js/otp/widgets/transit/widgets-transit-style.css?v=1" />
+<link rel="stylesheet" href="js/lib/magnific-popup.css" />
 <link rel="stylesheet" href="style.css?v=1" />
+<link rel="stylesheet" href="style-5t.css?v=1" />
+<link rel="stylesheet" href="style-5t-mqueries.css?v=1" />
 
-<!--Loads jquery, underscore, json2, momentjs and raphael makes 7 requests less-->
-<script src="//cdn.jsdelivr.net/g/jquery@1.9.1,underscorejs@1.4.2,json2@0.1,momentjs@1.7.2,raphael@2.1.2"></script>
-
-<!--
-leaflet cannot be loaded with other scripts. it breaks the L.Icon.Default.imagePath regular expression
-Analyst's webinterface was broken by that
--->
-<script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
-
+<!--Loads jquery, underscore,  json2, momentjs and raphael makes 7 requests less-->
+<script src="//cdn.jsdelivr.net/g/jquery@1.9.1,underscorejs@1.4.2,json2@0.1,momentjs@2.11.1,raphael@2.1.2,i18next@1.7.7"></script>
+<script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
 <!-- jquery-ui -->
 <script src="js/lib/jquery-ui/js/jquery-ui-1.9.1.custom.min.js"></script>
 <script src="js/lib/jquery-ui/addons/jquery-ui-timepicker.js"></script>
 
-<script src="./js/lib/jquery-ui/i18n/jquery.ui.datepicker-sl.js"></script>
-<script src="./js/lib/jquery-ui/i18n/jquery.ui.datepicker-de.js"></script>
-<script src="./js/lib/jquery-ui/i18n/jquery.ui.datepicker-fr.js"></script>
 <script src="./js/lib/jquery-ui/i18n/jquery.ui.datepicker-it.js"></script>
-<script src="./js/lib/jquery-ui/i18n/jquery.ui.datepicker-ca.js"></script>
-<script src="./js/lib/jquery-ui/i18n/jquery.ui.datepicker-pl.js"></script>
+
+<!-- Magnific PopUp -->
+<script src="js/lib/jquery.magnific-popup.js"></script>
 
 <!-- backbone -->
 <script src="js/lib/backbone.js"></script>
@@ -54,28 +51,23 @@ Analyst's webinterface was broken by that
 <!-- Mustache/ICanHaz -->
 <script src="//cdn.jsdelivr.net/mustache.js/0.7.2/mustache.js"></script>
 <script src="js/lib/ICanHaz.js"></script>
-
+<!-- moment-duration-format --> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-duration-format/1.3.0/moment-duration-format.min.js"></script>
 
 
 <!-- otp-specific imports -->
 <script src="js/otp/otp.js?v=1"></script>
 
 <!-- otp-locales -->
-<script language="javascript" src="js/lib/i18next-1.7.3.min.js"></script>
 <script src="js/otp/locale/English.js?v=1"></script>
-<script src="js/otp/locale/French.js?v=1"></script>
-<script src="js/otp/locale/German.js?v=1"></script>
-<script src="js/otp/locale/Slovenian.js?v=1"></script>
 <script src="js/otp/locale/Italian.js?v=1"></script>
-<script src="js/otp/locale/Catalan.js?v=1"></script>
-<script src="js/otp/locale/Polish.js?v=1"></script>
 
 <script src="js/otp/config.js?v=1"></script>
 
-<script src="js/otp/debug.js?v=1"></script>
+<!--<script src="js/otp/debug.js?v=1"></script>-->
 <script src="js/otp/templates.js?v=1"></script>
 
-<script src="js/otp/util/DataStorage.js?v=1"></script>
+
 <script src="js/otp/util/Geo.js?v=1"></script>
 <script src="js/otp/util/Itin.js?v=1"></script>
 <script src="js/otp/util/Logger.js?v=1"></script>
@@ -93,6 +85,8 @@ Analyst's webinterface was broken by that
 <script src="js/otp/core/Geocoder.js?v=1"></script>
 <script src="js/otp/core/GeocoderBuiltin.js?v=1"></script>
 <script src="js/otp/core/GeocoderBag.js?v=1"></script>
+<script src="js/otp/core/GeocoderYp.js?v=1"></script>
+<script src="js/otp/core/GeocoderPelias.js?v=1"></script>
 <script src="js/otp/core/SOLRGeocoder.js?v=1"></script>
 <script src="js/otp/core/TransitIndex.js?v=1"></script>
 <script src="js/otp/core/IndexApi.js?v=1"></script>
@@ -113,13 +107,16 @@ Analyst's webinterface was broken by that
 
 <script src="js/otp/modules/multimodal/MultimodalPlannerModule.js?v=1"></script>
 
+<script src="js/otp/modules/datex/EventModule.js?v=1"></script>
+<script src="js/otp/modules/datex/EventCategoryWidget.js?v=1"></script>
+
+<script src="js/otp/modules/bikeshare/BikeShareModule.js?v=1"></script>
 <!--Loads some javascript modules only if they are enabled in config.js-->
 <script type="text/javascript">
 	//Which modules needs which files
 	var modules = {
 		'otp.modules.bikeshare.BikeShareModule':
 			[
-			'js/otp/modules/bikeshare/BikeShareModule.js?v=1',
 			'js/otp/modules/bikeshare/BikeStationsWidget.js?v=1'
 		],
 		'otp.modules.analyst.AnalystModule':
@@ -205,7 +202,60 @@ Analyst's webinterface was broken by that
 <script type="text/javascript" language="javascript">
 
 
+
+
 $(document).ready(function() {
+
+
+	function setHeight(){
+		var windowHeight = $(window).height();
+		var headerHeight = $('#branding').outerHeight();
+		var tabsHeight = $('#sidebar .tabs').outerHeight();
+		var main1Height = $('#sidebar #tab1 .top').outerHeight();
+		var main2Height = $('#sidebar #tab2 .top').outerHeight();
+		$('#sidebar #tab1 .main').height(windowHeight-tabsHeight-headerHeight-main1Height);
+		$('#sidebar #tab2 .main').height(windowHeight-tabsHeight-headerHeight-main2Height);
+	}
+	setHeight();
+
+	$('.panel-trigger').click(function(){
+		$(this).toggleClass('closed');
+		$('#sidebar').toggleClass('closed');
+		$('#map').toggleClass('open');
+		if(!$('.mapoverlay').hasClass('closed')){
+			$('.mapoverlay').hide().toggleClass('closed');
+		} else if( $('body').width() < 401 && $('.mapoverlay').hasClass('closed')){
+			$('.mapoverlay').show().toggleClass('closed');
+		}
+		setTimeout(function(){webapp.map.lmap.invalidateSize()}, 400);	
+	});
+
+	$('.mapoverlay').click(function(){
+		$(this).hide().toggleClass('closed');
+		$('.panel-trigger').toggleClass('closed');
+		$('#sidebar').toggleClass('closed');
+		$('#map').toggleClass('open');
+	});
+
+	function resizeEndActions(){
+		if($('body').width() > 400 || $('#sidebar').hasClass('closed')){
+			$('.mapoverlay').hide().addClass('closed');
+		} else {
+			$('.mapoverlay').show().removeClass('closed');
+		}
+		setHeight();
+	}
+
+	resizeEndActions();
+
+	$(window).resize(function() {
+		clearTimeout(window.resizedFinished);
+		window.resizedFinished = setTimeout(function(){
+			resizeEndActions();
+		}, 250);
+	});
+
+
 	//Sets datepicker language based on selected/detected language in config.js
 	$.datepicker.setDefaults($.datepicker.regional[otp.config.locale.config.datepicker_locale_short]);
     var templateUrls = [ //new Array(
@@ -213,9 +263,11 @@ $(document).ready(function() {
         'js/otp/widgets/widget-templates.html',
         'js/otp/widgets/tripoptions/tripoptions-templates.html',
         'js/otp/widgets/transit/widgets-transit-templates.html',
+		'js/otp/widgets/infowidget-templates.html',
     ];
 
     var loadedTemplates = 0;
+	var webapp = null;
 
     for(var i = 0; i < templateUrls.length; i++) {
         $.get(templateUrls[i])
@@ -224,56 +276,152 @@ $(document).ready(function() {
             loadedTemplates++;
             if(loadedTemplates == templateUrls.length) {
                 ich.grabTemplates();
-                new otp.core.Webapp();
+                webapp = new otp.core.Webapp();
             }
         });
     }
+		
+	// Init nav toggle		
+	$( "#nav-toggle" ).click(function() {
+		$( ".main-menu-5t" ).toggleClass("active");
+		$( ".language-switcher" ).toggleClass("active");
+		$( this ).toggleClass("active");
+		$( "#branding" ).toggleClass("full-height");
+	});
+	
+
+
+	// ---- Tabs ----------------------------------------------------------------------------------------------------------
+
+	$("ul.tabs").html('<li class="planner left active"><a data-tab="tab1" href="#planner">'+ _tr("Route_planner")+'</a></li>\
+	                   <li class="traffic right">      <a data-tab="tab2" href="#traffic">' +_tr("Traffic_info") +'</a></li>');
+/*	
+	$(".tab-content").hide(); // Hide all content
+	
+	$(".tabbed-content").each(function(){
+		if($(this).find('.active').size() == 0){
+			$(this).find('.tab-content:first').addClass('active').show();
+			$(this).find('ul.tabs li:first').addClass("active");
+		} else {
+			var activeTab = $(this).find('.active a').attr("data-tab"); 
+			$('#'+activeTab).fadeIn(); 
+		}
+	});
+	
+	$("ul.tabs li").click(function() { 
+		//webapp.setActiveModule(webapp.modules[$(this).index()]);
+		//webapp.app_router.navigate("#"+otp.config.modules[$(this).index()]["id"], {trigger: true});
+		$(this).parents('.tabbed-content').find(".active").removeClass();
+		$(this).addClass("active"); 
+		$(this).siblings().removeClass("active");
+		$(this).parents('.tabbed-content').find(".tab-content").hide();
+		var activeTab = $(this).find("a").attr("data-tab"); 
+		$('#'+activeTab).fadeIn(); 
+		setHeight();
+		//return false;
+	});
+*/
+	$("ul#main-menu-5t li").click(function() { 
+		if($(this).index() == 1 || $(this).index() == 2){
+			//webapp.setActiveModule(webapp.modules[$(this).index()+1]);
+			$(this).siblings().removeClass("active");
+			$(this).addClass("active"); 
+
+		}
+		
+	});
+
+	$('.modalbox').magnificPopup({
+		type:'inline',
+		overflowY: 'scroll',
+		midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+	});
 
 });
-
-
 
 </script>
 
 </head>
-<body>
+<body class="js-media-query-tester">
 
 <header id="branding" role="banner" class="clearfix">
 
-  <!--<hgroup id="logo">
-    <div class="ribbon">
-      <h1 id="site-title"><span><a href="/" title="cibi.me" rel="home">cibi.me</a></span></h1>
-      <h2 id="site-description">Where can you bike to?</h2>
+  <hgroup id="logo">
+    <h1 id="site-title">Pronto TPL</h1>
+  </hgroup>  
+ 
+  <nav id="main-menu-container" class="main-menu-container">
+	  <div id="language-switcher" class="language-switcher"></div>
+	  <div class="shader"></div>
+  <!--
+	<ul id="main-menu-5t" class="main-menu-5t">
+	    <li><a href="#">Home</a></li>
+	    <li class="active"><a href="#">Indicazioni stradali</a></li>
+	    <li><a href="#">Traffico</a></li>
+	    <li><a href="#">News</a></li>
+	    <li><a href="#">Contatti</a></li>
+	  </ul>
+  -->
+	<a id="nav-toggle" href="javascript:void(0)"><span></span></a>
+    
+	</nav>
+
+</header>
+
+<div id="sidebar" class="tabbed-content">
+
+    <ul class="tabs">
+		<!--
+        <li class="left active"><a href="#tab1">Indicazioni stradali</a></li>
+        <li class="right"><a href="#tab2">Informazioni traffico</a></li>
+	-->
+    </ul>
+
+    <div class="tab-container">
+        <div id="tab1" class="tab-content planner active">
+        	<div class="top">
+            </div> 
+          
+        	<div class="main">
+        	</div>
+        </div>
+        <div id="tab2" class="tab-content traffic">
+      		<div class="top">
+				<!--
+      			<div class="field findplace">
+      				<label for ="findplace">Località</label>
+      				<input type="text" id="findplace" />
+      			</div>
+				-->
+        	</div>
+        	<div class="main">
+				<div class="infosCtnr"></div>
+				<div class="eventsCtnr"></div>
+        	</div>
+        </div>
     </div>
-  </hgroup>-->
 
-  <!--<p id="splash-text"><span>Bike share is coming to NYC this summer!</span> <span>How will you use it to get around?</span></p>-->
+<span class="panel-trigger fonticon"></span>
+  
+</div>
 
- <!--
-  <div class="search">
 
-    <input type="text" name="location_search" placeholder="Search for a location&hellip;" />
-  </div>
- -->
-</header><!-- #branding -->
 
-<div id="map"></div>
-<div id="otp-minimize-tray"></div>
+
+
+<div id="map"><a class="powered-by" href="http://www.5t.torino.it">Powered by 5T</a></div>
+<div class="mapoverlay"></div>
 
 <div id="otp-spinner"><img src="images/spinner.gif"></div>
 
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-8102379-22']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('set', 'anonymizeIp', true);
+  ga('create', 'UA-4633264-9', 'auto');
+  ga('send', 'pageview');
 </script>
 
 </body>

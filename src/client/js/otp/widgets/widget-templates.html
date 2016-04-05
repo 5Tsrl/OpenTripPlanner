@@ -44,3 +44,64 @@
         </div>
     </div>
 </script>
+
+<script id="otp-pick_drop_btn" type="text/html">
+  <div class='otp-bikeshare-stationsWidget-left'>
+        <div id='pickup_btn'>
+			<h5>{{{pickUp}}}</h5>
+			<p>{{startName}}</p>
+			<p>{{bikesNr}} {{bikeWidget.bikes}}</p>
+			<span class="icon"></span>
+        </div>
+  </div>
+
+  <div class='otp-bikeshare-stationsWidget-right'>
+        <div id='dropoff_btn'>
+            <h5>{{{dropOff}}}</h5>
+			<p>{{endName}}</p>
+			<p>{{spaceNr}} {{bikeWidget.spaces}}</p>
+			<span class="icon"></span>
+        </div>
+  </div>
+</script>
+
+<script id="otp-datexCategoryList" type="text/html">
+
+        <h2>{{filtro_eventi}}</h2>
+        <ul id="catList">
+          <li class="code active" title="{{code}}"><input type="checkbox" id="input-eventCategory-code" checked /><label for="input-eventCategory-code"><span class="text">{{code}}</span> <span class="fonticon"></span></label>
+
+          <li class="chiusure active" title="{{chiusure}}"><input type="checkbox" id="input-eventCategory-chiusure"  checked /><label for="input-eventCategory-chiusure"><span class="text">{{chiusure}}</span> <span class="fonticon"></span></label>
+
+          <li class="meteo active" title="{{meteo}}"><input type="checkbox" id="input-eventCategory-meteo"  checked /><label for="input-eventCategory-meteo"><span class="text">{{meteo}}</span> <span class="fonticon"></span></label>
+
+          <li class="altro active" title="{{altro}}"><input type="checkbox" id="input-eventCategory-altro"  checked /><label for="input-eventCategory-altro"><span class="text">{{altro}}</span> <span class="fonticon"></span></label>
+        </ul>
+
+</script>
+
+<script id="otp-datexFilterEvents" type="text/html">
+        <input type="text" id="input-filterEvents" placeholder="{{placeholder}}" /> <span class="fonticon"></span>
+</script>
+
+<script id="otp-datexEventItem" type="text/html">
+        
+    	  <a href="#" class="dtxEvt {{ev.style}}" _onclick="this.markers['{{ev.id}}'].openPopup();">		
+            <h3>{{ev.roadNumber}} {{ev.roadName}}</h3>
+    		<p>{{ev.locationDescription}} {{ev.eventDirection}}
+    		<em class="{{ev.status}}">{{ev.eventDescription}} {{ev.note}}</em>
+            {{#ev.terminated}}
+            <span style='color:green;font-weight:bold;'> Situazione tornata alla normalit&agrave;</span><br />
+            {{/ev.terminated}}
+    		<time datetime="updateDate" pubdate="">{{ev.eventDates}}</time>
+    		</p>
+            <span class="icon fonticon"></span>
+    	  </a>
+
+</script>
+
+<script id="otp-infoItem" type="text/html">
+    <span class="icon fonticon"></span>
+    <h3>{{ev.title}}</h3>
+    <p>{{ev.description}}</p>
+</script>

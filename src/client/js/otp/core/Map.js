@@ -35,7 +35,7 @@ otp.core.Map = otp.Class({
                 
         //var baseLayers = {};
         var defaultBaseLayer = null;
-        
+        //L.mapbox.accessToken = 'pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw';
         for(var i=0; i<otp.config.baseLayers.length; i++) { //otp.config.baseLayers.length-1; i >= 0; i--) {
             var layerConfig = otp.config.baseLayers[i];
 
@@ -44,6 +44,12 @@ otp.core.Map = otp.Class({
             if(layerConfig.subdomains) layerProps['subdomains'] = layerConfig.subdomains;
 
             var layer = new L.TileLayer(layerConfig.tileUrl, layerProps);
+            //raf in caso di custom layer, sovrascrivo layer con un L.mapbox.styleLayer
+            if(layerConfig.styleUrl){
+                L.mapbox.accessToken = layerConfig.accessToken
+                layer = new L.mapbox.styleLayer(layerConfig.styleUrl)
+                
+            }
 
 	        this.baseLayers[layerConfig.name] = layer;
             if(i == 0) defaultBaseLayer = layer;            
@@ -63,7 +69,9 @@ otp.core.Map = otp.Class({
         if(otp.config.minZoom) mapProps['minZoom'] = otp.config.minZoom;  //_.extend(mapProps, { minZoom : otp.config.minZoom });
         if(otp.config.maxZoom) mapProps['maxZoom'] = otp.config.maxZoom; //_.extend(mapProps, { maxZoom : otp.config.maxZoom });
 
-        this.lmap = new L.Map('map', mapProps);
+        //raf mapbox
+        //this.lmap = new L.Map('map', mapProps);
+        this.lmap = new L.mapbox.map('map', null,mapProps);
 
         this.layer_control = L.control.layers(this.baseLayers).addTo(this.lmap);
         L.control.zoom({ position : 'topright' }).addTo(this.lmap);
@@ -88,9 +96,15 @@ otp.core.Map = otp.Class({
                 }
             });
         }
-
-        
-      
+/*
+        this.layer_control.addOverlay(new L.tileLayer.wms("http://172.21.9.6:8180/geoserver/gwc/service/wms?&configuration=optima&", {
+                                        layers: 'optima:rlin_tre_fore0_cache',
+                                        format: 'image/png',
+                                        transparent: true,
+                                        version: '1.1.0',
+                                        //attribution: "myattribution",
+                                        }) , 'traffico');
+*/      
         if(!otp.config.initLatLng) {
             var url = otp.config.hostname + '/' + otp.config.restService;
             $.ajax(url, {

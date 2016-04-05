@@ -21,9 +21,9 @@ otp.modules.planner.defaultQueryParams = {
     date                            : moment().format(otp.config.locale.time.date_format),
     arriveBy                        : false,
     wheelchair                      : false,
-    mode                            : "TRANSIT,WALK",
+    mode                            : "TRANSIT,WALK", // "WALK,BICYCLE_RENT", //"TRANSIT,WALK",
     maxWalkDistance                 : 804.672, // 1/2 mi.
-    metricDefaultMaxWalkDistance    : 750, // meters
+    metricDefaultMaxWalkDistance    : 2000, // meters
     imperialDefaultMaxWalkDistance  : 804.672, // 0.5 mile
     preferredRoutes                 : null,
     otherThanPreferredRoutesPenalty : 300,
@@ -125,7 +125,7 @@ otp.modules.planner.PlannerModule =
 
     initialize : function(webapp, id, options) {
         otp.modules.Module.prototype.initialize.apply(this, arguments);
-        this.templateFiles.push('otp/modules/planner/planner-templates.html');
+        //raf this.templateFiles.push('otp/modules/planner/planner-templates.html');
 
         this.icons = new otp.modules.planner.IconFactory();
 
@@ -331,9 +331,13 @@ otp.modules.planner.PlannerModule =
        	    queryParams = {
                 fromPlace: this.getStartOTPString(),
                 toPlace: this.getEndOTPString(),
-                time : (this.time) ? otp.util.Time.correctAmPmTimeString(this.time) : moment().format("h:mma"),
+                //time : (this.time) ? otp.util.Time.correctAmPmTimeString(this.time) : moment().format("h:mma"),
                 //time : (this.time) ? moment(this.time).add("s", addToStart).format("h:mma") : moment().add("s", addToStart).format("h:mma"),
-                date : (this.date) ? moment(this.date, otp.config.locale.time.date_format).format("MM-DD-YYYY") : moment().format("MM-DD-YYYY"),
+                //date : (this.date) ? moment(this.date, otp.config.locale.time.date_format).format("MM-DD-YYYY") : moment().format("MM-DD-YYYY"),
+                //raf
+                //date : (this.date) ? moment(this.date, otp.config.locale.time.date_format).format(otp.config.locale.time.date_format) : moment().format(otp.config.locale.time.date_format),
+                date : (this.date) ? this.date : moment().format(otp.config.locale.time.date_format),
+                time : (this.time) ? this.time : moment().format(otp.config.locale.time.time_format),
                 mode: this.mode,
                 maxWalkDistance: this.maxWalkDistance
             };
@@ -344,7 +348,7 @@ otp.modules.planner.PlannerModule =
                 if(this.otherThanPreferredRoutesPenalty !== null)
                     queryParams.otherThanPreferredRoutesPenalty = this.otherThanPreferredRoutesPenalty;
             }
-            if(this.bannedRoutes !== null) _.extend(queryParams, { bannedRoutes : this.bannedRoutes } );
+            if(this.bannedRoutes) _.extend(queryParams, { bannedRoutes : this.bannedRoutes } );
             if(this.bannedTrips !== null) _.extend(queryParams, { bannedTrips : this.bannedTrips } );
             if(this.optimize !== null) _.extend(queryParams, { optimize : this.optimize } );
             if(this.optimize === 'TRIANGLE') {
@@ -382,6 +386,8 @@ otp.modules.planner.PlannerModule =
 
     planTripRequest : function(url, queryParams, successCallback) {
         var this_ = this;
+        //raf convert date to ISO 8601 to speak to the server
+        queryParams.date =  moment(this.date, otp.config.locale.time.date_format).format('YYYY-MM-DD'); 
         this.currentRequest = $.ajax(url, {
             data:       queryParams,
             dataType:   'JSON',
@@ -420,8 +426,9 @@ otp.modules.planner.PlannerModule =
     planReceived : function(plan, url, queryParams, successCallback) {
         // compare returned plan.date to sent date/time to determine timezone offset (unless set explicitly in config.js)
         otp.config.timeOffset = (otp.config.timeOffset) ||
-            (moment(queryParams.date+" "+queryParams.time, "MM-DD-YYYY h:mma") - moment(plan.date))/3600000;
-
+            //(moment(queryParams.date+" "+queryParams.time, "MM-DD-YYYY h:mma") - moment(plan.date))/3600000;
+            //(moment(moment(queryParams.date,'YYYY-MM-DD').format(otp.config.locale.time.date_format)+queryParams.time, otp.config.locale.time.date_format +otp.config.locale.time.time_format) - moment(plan.date))/3600000;
+            (moment(this.date+this.time, otp.config.locale.time.date_format +otp.config.locale.time.time_format) - moment(plan.date))/3600000;
         var tripPlan = new otp.modules.planner.TripPlan(plan, queryParams);
 
         var invalidTrips = [];
@@ -496,7 +503,7 @@ otp.modules.planner.PlannerModule =
             // draw the polyline
             var polyline = new L.Polyline(otp.util.Geo.decodePolyline(leg.legGeometry.points));
             var weight = 8;
-            polyline.setStyle({ color : this.getModeColor(leg.mode), weight: weight});
+            polyline.setStyle({ color : this.getModeColor(leg.mode), weight: weight, opacity: 0.9});
             this.pathLayer.addLayer(polyline);
             polyline.leg = leg;
             polyline.bindPopup("("+leg.routeShortName+") "+leg.routeLongName);
@@ -603,12 +610,12 @@ otp.modules.planner.PlannerModule =
     },
 
     getModeColor : function(mode) {
-        if(mode === "WALK") return '#444';
-        if(mode === "BICYCLE") return '#0073e5';
-        if(mode === "SUBWAY") return '#f00';
-        if(mode === "RAIL") return '#b00';
-        if(mode === "BUS") return '#080';
-        if(mode === "TRAM") return '#800';
+        if(mode === "WALK") return '#97ba43';
+        if(mode === "BICYCLE") return '#f0cc3b';
+        if(mode === "SUBWAY") return '#d03939';
+        if(mode === "RAIL") return '#5a95c7';
+        if(mode === "BUS") return '#f0952a';
+        if(mode === "TRAM") return '#f0952a';
         if(mode === "CAR") return '#444';
         if(mode === "AIRPLANE") return '#f0f';
         return '#aaa';

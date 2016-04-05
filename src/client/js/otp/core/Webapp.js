@@ -31,10 +31,11 @@ otp.core.Webapp = otp.Class({
     indexApi : null,
 
     urlParams : null,
+    
+    app_router : null,
 
     initialize : function() {
-
-
+        
         // misc. housekeeping
 
         if(typeof console == 'undefined') console = { log: function(str) {} };
@@ -60,7 +61,8 @@ otp.core.Webapp = otp.Class({
             pl     = /\+/g,  // Regex for replacing addition symbol with a space
             search = /([^&=]+)=?([^&]*)/g,
             decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-            query  = window.location.search.substring(1);
+            //query  = window.location.search.substring(1);
+            query  = window.location.toString().substring(window.location.toString().indexOf("?")+1);
 
         //Parser URL query string
         while (match = search.exec(query)) {
@@ -192,12 +194,13 @@ otp.core.Webapp = otp.Class({
             this_.widgetManagerMenu.show(); // showWidgetManagerMenu();
         });
 
+        // fill the language-switcher - 5T
+        $('#language-switcher').append(otp.config.languageMenu());
 
         // create the info widgets and links along header bar
 
         if(otp.config.infoWidgets !== undefined && otp.config.infoWidgets.length > 0) {
-            var nav = $('<nav id="main-menu" role="article">').appendTo('#branding');
-            var ul = $('<ul>').appendTo(nav);
+            var ul = $('<ul id="main-menu-5t" class="main-menu-5t">').insertBefore('#language-switcher');
 
             for(var i=0; i<otp.config.infoWidgets.length; i++) {
 
@@ -206,6 +209,8 @@ otp.core.Webapp = otp.Class({
                 var id = "otp-infoWidget-"+i;
 
                 var options = {};
+                options.id = otp.config.infoWidgets[i].id ; //raf
+                
                 if(_.has(otp.config.infoWidgets[i], 'title')) options.title = otp.config.infoWidgets[i].title;
                 if(_.has(otp.config.infoWidgets[i], 'cssClass')) options.cssClass = otp.config.infoWidgets[i].cssClass;
                 //Creates frontend language chooser
@@ -214,17 +219,28 @@ otp.core.Webapp = otp.Class({
                    otp.config.infoWidgets[i].content = options.content;
                 }
 
-                this.infoWidgets[id] = new otp.widgets.InfoWidget(otp.config.infoWidgets[i].styleId,
-                                                                  this, options, otp.config.infoWidgets[i].content);
-
-                $("<li id='"+id+"'><a href='#'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e) {
-                    e.preventDefault();
-                    var widget = this_.infoWidgets[this.id];
-                    if(!widget.isOpen) widget.show();
-                    widget.bringToFront();
-                });
-
+                //this.infoWidgets[id] = new otp.widgets.InfoWidget(otp.config.infoWidgets[i].styleId,
+                //                        //raf  this, options, otp.config.infoWidgets[i].content);
+                //                        this, options, ich[options.id]);
+                if(options.id){
+                    var widg_html = ich[options.id]()
+                    console.log(widg_html) 
+                    $('body').append(widg_html)
+                    //$(ich[options.id]).appendTo('body')
+                    $("<li id='"+id+"'><a href='#"+ options.id +"' class='modalboxMenu'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e) {
+                        //e.preventDefault();
+                        //var widget = this_.infoWidgets[this.id];
+                        //if(!widget.isOpen) widget.show();
+                        //widget.bringToFront();
+                    });
+                } else if (otp.config.infoWidgets[i].link) {
+                    $("<li id='"+otp.config.infoWidgets[i].link.substring(1)+"'><a href='"+otp.config.infoWidgets[i].link+"'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul)
+                } 
             }
+            $('.modalboxMenu').magnificPopup({
+        		type:'inline',
+        		midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+        	});
         }
 
 
@@ -326,6 +342,49 @@ otp.core.Webapp = otp.Class({
         // retrieve a saved trip, if applicable
 		//if(window.location.hash !== "")
 		//	otp.util.DataStorage.retrieve(window.location.hash.replace("#", ""), this.activeModule);
+
+
+        //Router
+        var that = this;
+        var WebAppRouter = Backbone.Router.extend({
+
+          routes: {
+            "help":                 "help",    // #help
+            //"search/:query":        "search",  // #search/kiwis
+            //"search/:query/p:page": "search"   // #search/kiwis/p7
+            "planner":                  "routeplanner",
+            "planner?*queryString":     "routeplanner",
+            
+            "traffic":                   "infotraffic",
+            "traffic?*queryString":      "infotraffic"
+          },
+
+          help: function() {
+            alert('help')
+          },
+
+          routeplanner: function(query, page) {
+            console.log('Router activated the planner module')
+            that.setActiveModule(that.modules[0]);
+          },
+          
+          infotraffic: function(query, page) {
+              console.log('Router activated the traffic module')
+              that.setActiveModule(that.modules[1]);
+          },
+        });
+        
+        // Initiate the router
+        this.app_router = new WebAppRouter();
+/*
+        app_router.on('routeplanner', function(actions) {
+            console.log('voglio il routeplanner!!!')
+        });
+*/
+        // Start Backbone history a necessary step for bookmarkable URL's
+        Backbone.history.start();
+
+
 
 
     },

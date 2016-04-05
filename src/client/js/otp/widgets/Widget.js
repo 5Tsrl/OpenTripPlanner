@@ -19,6 +19,7 @@ otp.widgets.Widget = otp.Class({
     id              : null,
     owner           : null,
     mainDiv         : null,
+    sonOf           : 'body', //5t 
     header          : null,
     minimizedTab    : null,
 
@@ -50,7 +51,7 @@ otp.widgets.Widget = otp.Class({
         this.owner.addWidget(this);
 
         // set up the main widget DOM element:
-        this.mainDiv = $('<div />').attr('id', id).addClass('otp-widget').appendTo('body');
+        this.mainDiv = $('<div />').attr('id', id).addClass('otp-widget').appendTo(this.sonOf);
         if(!this.transparent) this.mainDiv.addClass('otp-widget-nonTransparent');
 
         if(!this.openInitially) {
@@ -98,7 +99,7 @@ otp.widgets.Widget = otp.Class({
                 this_.minimize();
             });
         }
-
+        /* raf no popup menu sui box
         // set up context menu
         this.contextMenu = new otp.core.ContextMenu(this.mainDiv, function() {
             //console.log("widget cm clicked");
@@ -113,7 +114,7 @@ otp.widgets.Widget = otp.Class({
         }).addItem(_tr("Send to back"), function() {
             this_.sendToBack();            
         });
-        
+        */
         this.header.dblclick(function() {
             this_.bringToFront();            
         });

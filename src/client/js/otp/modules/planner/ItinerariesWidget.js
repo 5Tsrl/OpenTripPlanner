@@ -30,7 +30,7 @@ otp.widgets.ItinerariesWidget =
     showButtonRow : true,
     showItineraryLink : true,
     showPrintLink : true,
-    showEmailLink : true,
+    showEmailLink : false,
     showSearchLink : false,
 
 
@@ -41,9 +41,12 @@ otp.widgets.ItinerariesWidget =
             //TRANSLATORS: Widget title
             title : _tr("Itineraries"),
             cssClass : module.itinerariesWidgetCssClass || 'otp-defaultItinsWidget',
-            resizable : true,
-            closeable : true,
-            persistOnClose : true
+            resizable : false,
+            closeable : false,
+            minimizable: false,
+            draggable : false,
+            persistOnClose : true,
+            sonOf: '#tab1 .main',
         });
         //this.$().addClass('otp-itinsWidget');
         //this.$().resizable();
@@ -119,7 +122,7 @@ otp.widgets.ItinerariesWidget =
             //$('<h3>'+this.headerContent(itin, i)+'</h3>').appendTo(this.itinsAccord).click(function(evt) {
 
             var headerDivId = divId+'-headerContent-'+i;
-            $('<h3><div id='+headerDivId+'></div></h3>')
+            $('<h3 class="level1"><div id='+headerDivId+'></div></h3>')
             .appendTo(this.itinsAccord)
             .data('itin', itin)
             .data('index', i)
@@ -137,9 +140,33 @@ otp.widgets.ItinerariesWidget =
 
         this.itinsAccord.accordion({
             active: this.activeIndex,
-            heightStyle: "fill"
-        });
+            heightStyle: "fill",
+            collapsible:true,
+            header: ".level1"
+        })/*.sortable({
+            axis: "y",
+            items: "> .level1",
+            //handle:"h3",
+            stop: function( event, ui ) {
+              // IE doesn't register the blur when sorting
+              // so trigger focusout handlers to remove .ui-state-focus
+              //ui.item.children( "h3" ).triggerHandler( "focusout" );
 
+              // Refresh accordion to handle new order
+              $( this ).accordion( "refresh" );
+            }
+        })*/;
+        /*
+        this.itinsAccord.on('accordionactivate', function (event, ui) {
+             // Accordion is not collapsed  planner-itinWidget-itinsAccord
+            if (ui.newPanel.length) {
+                $('#planner-itinWidget-itinsAccord').sortable('disable');
+             // Accordion is collapsed
+            } else {
+                $('#planner-itinWidget-itinsAccord').sortable('enable');
+            }
+        });
+        */
         // headers must be rendered after accordion is laid out to work around chrome layout bug
         /*for(var i=0; i<this.itineraries.length; i++) {
             var header = $("#"+divId+'-headerContent-'+i);
@@ -153,7 +180,7 @@ otp.widgets.ItinerariesWidget =
             this_.renderHeaders();
         });
 
-        this.$().draggable({ cancel: "#"+divId });
+        //raf this.$().draggable({ cancel: "#"+divId });
 
     },
 
@@ -168,6 +195,7 @@ otp.widgets.ItinerariesWidget =
         var this_ = this;
         var buttonRow = $("<div class='otp-itinsButtonRow'></div>").appendTo(this.footer);
         //TRANSLATORS: button to first itinerary
+        /*
         $('<button>'+_tr("First")+'</button>').button().appendTo(buttonRow).click(function() {
             var itin = this_.itineraries[this_.activeIndex];
             var params = itin.tripPlan.queryParams;
@@ -182,6 +210,7 @@ otp.widgets.ItinerariesWidget =
             this_.module.updateActiveOnly = true;
             this_.module.planTripFunction.call(this_.module, params);
         });
+        */
         //TRANSLATORS: button to previous itinerary
         $('<button>'+_tr("Previous")+'</button>').button().appendTo(buttonRow).click(function() {
             var itin = this_.itineraries[this_.activeIndex];
@@ -215,6 +244,7 @@ otp.widgets.ItinerariesWidget =
             this_.module.planTripFunction.call(this_.module, params);
         });
         //TRANSLATORS: button to last itinerary
+        /*
         $('<button>'+_tr("Last")+'</button>').button().appendTo(buttonRow).click(function() {
             var itin = this_.itineraries[this_.activeIndex];
             var params = itin.tripPlan.queryParams;
@@ -229,6 +259,7 @@ otp.widgets.ItinerariesWidget =
             this_.module.updateActiveOnly = true;
             this_.module.planTripFunction.call(this_.module, params);
         });
+        */
     },
 
     // returns HTML text
@@ -262,66 +293,150 @@ otp.widgets.ItinerariesWidget =
         }
     },
 
+    lg : function(deltaInMilli) {
+        deltaMinutes = deltaInMilli/60000;
+        if (deltaMinutes<1.5) deltaMinutes=1.5;
+        return Math.log(deltaMinutes);
+    },
+
     renderHeaderContent : function(itin, index, parentDiv) {
         parentDiv.empty();
-        var div = $('<div style="position: relative; height: 20px;"></div>').appendTo(parentDiv);
-        div.append('<div class="otp-itinsAccord-header-number">'+(index+1)+'.</div>');
+        var divTimes = $('<div class="times"></div>');
+        var partenza = moment(itin.itinData.startTime).format('HH:mm');
+        var arrivo   = moment(itin.itinData.endTime).format('HH:mm');
+        var durata   = moment.duration(itin.itinData.duration, 'seconds').format('H[h] mm[m]');
+        divTimes.html(partenza + ' &rarr; '+ arrivo + ' <span class="duration"><span class="hidden">durata: </span>'+ durata + '</span>' );
+        var div = $('<div class="summary-aux"></div>').appendTo(parentDiv);
+        div.append(divTimes);
+        var divGraficBar = $('<div class="graphicbar"></div>').appendTo(div);
+        div.prepend('<div class="otp-itinsAccord-header-number"><span>'+(index+1)+'</span></div>');
+        
 
+        /*var maxSpan = itin.tripPlan.latestEndTime - itin.tripPlan.earliestStartTime;
+        var startPct = (itin.itinData.startTime - itin.tripPlan.earliestStartTime) / maxSpan;
+        var itinSpan = itin.getEndTime() - itin.getStartTime();
+        var timeWidth = 38;//32;
+        var startPx = 20+timeWidth, endPx = div.width()-timeWidth - (itin.groupSize ? 48 : 0);
+        var pxSpan = endPx-startPx;
+        var leftPx = Math.round(startPx + startPct * pxSpan);
+        var widthPx = Math.round(pxSpan * (itinSpan / maxSpan));
+
+
+        var timeStr = otp.util.Time.formatItinTime(itin.getStartTime(), otp.config.locale.time.time_format);
+        div.append('<div class="otp-itinsAccord-header-time" style="left: '+(leftPx-timeWidth)+'px;">' + timeStr + '</div>');
+
+        var timeStr = otp.util.Time.formatItinTime(itin.getEndTime(), otp.config.locale.time.time_format);
+        div.append('<div class="otp-itinsAccord-header-time" style="left: '+(leftPx+widthPx+2)+'px;">' + timeStr + '</div>');*/
+
+        /* Commented by Madeincima*/
         var maxSpan = itin.tripPlan.latestEndTime - itin.tripPlan.earliestStartTime;
         var startPct = (itin.itinData.startTime - itin.tripPlan.earliestStartTime) / maxSpan;
         var itinSpan = itin.getEndTime() - itin.getStartTime();
-        var timeWidth = 32;
+        var timeWidth = 38;
         var startPx = 20+timeWidth, endPx = div.width()-timeWidth - (itin.groupSize ? 48 : 0);
         var pxSpan = endPx-startPx;
-        var leftPx = startPx + startPct * pxSpan;
-        var widthPx = pxSpan * (itinSpan / maxSpan);
+        var leftPx = Math.round(startPx + startPct * pxSpan);
+        var widthPx = Math.round(pxSpan * (itinSpan / maxSpan));
 
-        div.append('<div style="position:absolute; width: '+(widthPx+5)+'px; height: 2px; left: '+(leftPx-2)+'px; top: 9px; background: black;" />');
+        //var maxSpan = itin.tripPlan.latestEndTime - itin.tripPlan.earliestStartTime;
+        //var startPct = 0;
+        //var itinSpan = 0;
+        //var timeWidth = 0;
+        //var startPx = 0, endPx = 100;
+        //var pxSpan = endPx-startPx;
+        //var leftPx = Math.round(startPx + startPct * pxSpan);
+        //var widthPx = Math.round(pxSpan * (itinSpan / maxSpan));
+        //var timeStr = otp.util.Time.formatItinTime(itin.getStartTime(), otp.config.locale.time.time_format);
+        //var timeStr = otp.util.Time.formatItinTime(itin.getEndTime(), otp.config.locale.time.time_format);
+        var lastTime = 0;
+        var maxSpan = itin.itinData.duration*1000;
+        var startTimeSpan = 0;
+        var endTimeSpan = 0;
+        var minPerc = 3;
+        console.log('maxSpan: ' + maxSpan);
+        var totPercReserved = minPerc*(itin.itinData.legs.length);
+        console.log('totPercReserved: ' + totPercReserved);
 
-        var timeStr = otp.util.Time.formatItinTime(itin.getStartTime(), otp.config.locale.time.time_format);
-	/*timeStr = timeStr.substring(0, timeStr.length - 1);*/
-        div.append('<div class="otp-itinsAccord-header-time" style="left: '+(leftPx-32)+'px;">' + timeStr + '</div>');
+        var maxSpanReserved = (maxSpan*totPercReserved)/100;
+        console.log('maxSpanReserved: ' + maxSpanReserved);
 
-        var timeStr = otp.util.Time.formatItinTime(itin.getEndTime(), otp.config.locale.time.time_format);
-	/*timeStr = timeStr.substring(0, timeStr.length - 1);*/
-        div.append('<div class="otp-itinsAccord-header-time" style="left: '+(leftPx+widthPx+2)+'px;">' + timeStr + '</div>');
+        var maxSpanReduced = maxSpan - maxSpanReserved;
+        console.log('maxSpanReduced: ' + maxSpanReduced);
+
+
+        //maxSpan = itin.itinData.duration*1000;
 
         for(var l=0; l<itin.itinData.legs.length; l++) {
             var leg = itin.itinData.legs[l];
-            var startPct = (leg.startTime - itin.tripPlan.earliestStartTime) / maxSpan;
+            var waitIsset = false;
+            
+            if(lastTime!=leg.startTime && lastTime!=0){
+                var legTimePerc = ((leg.startTime - lastTime)*100)/maxSpan;
+                if(legTimePerc>=1){
+                    var segment = $('<div class="otp-itinsAccord-header-segment wait" />').css({
+                        width: legTimePerc+'%'
+                    }).appendTo(divGraficBar);
+                    waitIsset = true;
+                }
+                
+            }
+
+            var legTimePerc = (((leg.endTime - leg.startTime)*(100-(totPercReserved + 4)))/maxSpan) + minPerc;
+
+            var border = '';
+            
+            if(!waitIsset && l!=0){
+                border = '<span class="border"></span>';
+                console.log('---test2---');
+            }
+            var segment = $('<div class="otp-itinsAccord-header-segment">'+border+'</div>').css({
+                width: legTimePerc+'%',
+                background: this.getModeColor(leg.mode)+' url('+otp.config.resourcePath+'images/5t/mode/'+leg.mode.toLowerCase()+'.png) 50% 50% no-repeat'
+            }).appendTo(divGraficBar);
+
+            /*var showRouteLabel = widthPx > 10 && otp.util.Itin.isTransit(leg.mode) && leg.routeShortName && leg.routeShortName.length <= 6;
+            if(showRouteLabel) segment.append('<div title="'+ leg.routeShortName +'">'+leg.routeShortName+'</div>');*/
+
+            lastTime = leg.endTime;
+
+            //alert(maxSpan);
+           /* var startPct = (leg.startTime - itin.tripPlan.earliestStartTime) / maxSpan;
             var endPct = (leg.endTime - itin.tripPlan.earliestStartTime) / maxSpan;
-            var leftPx = startPx + startPct * pxSpan + 1;
-            var widthPx = pxSpan * (leg.endTime - leg.startTime) / maxSpan - 1;
+            var leftPx = Math.round(startPct * pxSpan);
+            var widthPx = Math.round(pxSpan * (leg.endTime - leg.startTime) / maxSpan );*/
+
 
             //div.append('<div class="otp-itinsAccord-header-segment" style="width: '+widthPx+'px; left: '+leftPx+'px; background: '+this.getModeColor(leg.mode)+' url(images/mode/'+leg.mode.toLowerCase()+'.png) center no-repeat;"></div>');
 
-            var showRouteLabel = widthPx > 40 && otp.util.Itin.isTransit(leg.mode) && leg.routeShortName && leg.routeShortName.length <= 6;
+            /*var showRouteLabel = widthPx > 10 && otp.util.Itin.isTransit(leg.mode) && leg.routeShortName && leg.routeShortName.length <= 6;
             var segment = $('<div class="otp-itinsAccord-header-segment" />')
             .css({
-                width: widthPx,
-                left: leftPx,
+                width: widthPx+'%',
+                left: leftPx+'%',
                 //background: this.getModeColor(leg.mode)
-                background: this.getModeColor(leg.mode)+' url('+otp.config.resourcePath+'images/mode/'+leg.mode.toLowerCase()+'.png) center no-repeat'
+                background: this.getModeColor(leg.mode)+' url('+otp.config.resourcePath+'images/5t/mode/'+leg.mode.toLowerCase()+'.png) 30% 50% no-repeat'
             })
-            .appendTo(div);
-            if(showRouteLabel) segment.append('<div style="margin-left:'+(widthPx/2+9)+'px;">'+leg.routeShortName+'</div>');
+            .appendTo(divGraficBar);
+            //if(showRouteLabel) segment.append('<div style="margin-left:'+(widthPx/2+9)+'px;" title="'+ leg.routeShortName +'">'+leg.routeShortName+'</div>');
+            if(showRouteLabel) segment.append('<div style="margin-left:45%;" title="'+ leg.routeShortName +'">'+leg.routeShortName+'</div>');*/
 
         }
 
         if(itin.groupSize) {
             var segment = $('<div class="otp-itinsAccord-header-groupSize">'+itin.groupSize+'</div>')
-            .appendTo(div);
+            .appendTo(divGraficBar);
         }
 
     },
 
     getModeColor : function(mode) {
-        if(mode === "WALK") return '#bbb';
-        if(mode === "BICYCLE") return '#44f';
-        if(mode === "SUBWAY") return '#f00';
-        if(mode === "RAIL") return '#b00';
-        if(mode === "BUS") return '#0f0';
-        if(mode === "TRAM") return '#f00';
+        if(mode === "WALK") return '#97ba43';
+        if(mode === "BICYCLE") return '#f0cc3b';
+        if(mode === "SUBWAY") return '#d03939';
+        if(mode === "RAIL") return '#5a95c7';
+        if(mode === "BUS") return '#f0952a';
+        if(mode === "TRAM") return '#f0952a';
+        if(mode === "CAR") return '#444';
         if(mode === "AIRPLANE") return '#f0f';
         return '#aaa';
     },
@@ -370,10 +485,14 @@ otp.widgets.ItinerariesWidget =
                 }
             }
             else if(leg.agencyId !== null) {
-                headerHtml += ": "+leg.agencyId+", ";
+                //headerHtml += ": "+leg.agencyId+", ";
+                headerHtml += " ";
                 if(leg.route !== leg.routeLongName) {
-                    headerHtml += "("+leg.route+") ";
+                    //headerHtml += "("+leg.route+") ";
+                    headerHtml += leg.route+" ";
                 }
+                //headerHtml += "("+leg.agencyId+") ";
+                headerHtml += '(<a href="'+leg.agencyUrl + '">'+leg.agencyName+'</a>) ';
                 if (leg.routeLongName) {
                     headerHtml += leg.routeLongName;
                 }
@@ -412,6 +531,12 @@ otp.widgets.ItinerariesWidget =
                 active: otp.util.Itin.isTransit(leg.mode) ? 0 : false,
                 heightStyle: "content",
                 collapsible: true
+            });
+
+            $(legDiv).find("h3 a").click(function() {
+                //window.location = $(this).attr('href');
+                window.open($(this).attr('href'), '_blank');
+                return false;
             });
         }
 
@@ -513,6 +638,7 @@ otp.widgets.ItinerariesWidget =
         tripSummaryFooter.append(_tr('Valid') + ' ' + moment().format(otp.config.locale.time.format));
 
         var itinLink = this.constructLink(itin.tripPlan.queryParams, { itinIndex : index });
+        console.log(itinLink);
         if(this.showItineraryLink) {
             //TRANSLATORS: Links to this itinerary
             tripSummaryFooter.append(' | <a href="'+itinLink+'">' + _tr("Link to Itinerary") + '</a>');
@@ -553,7 +679,7 @@ otp.widgets.ItinerariesWidget =
             // prevaricate if this is a nonstruct frequency trip
             if( leg.isNonExactFrequency === true ){
                 //TRANSLATORS: public transport drives every N minutes
-            	$('<div class="otp-itin-leg-leftcol">' + ngettext("every %d min", "every %d mins", (leg.headway/60))+"</div>").appendTo(legDiv);
+                $('<div class="otp-itin-leg-leftcol">' + ngettext("every %d min", "every %d mins", (leg.headway/60))+"</div>").appendTo(legDiv);
             } else {
                 $('<div class="otp-itin-leg-leftcol">'+otp.util.Time.formatItinTime(leg.startTime, otp.config.locale.time.time_format)+"</div>").appendTo(legDiv);
             }
@@ -578,24 +704,50 @@ otp.widgets.ItinerariesWidget =
             });
 
             var stopHtml = '<div class="otp-itin-leg-endpointDescSub">';
-            if( typeof leg.from.stopCode != 'undefined' ) {
+            /*if( typeof leg.from.stopCode != 'undefined' ) {
                 stopHtml += _tr("Stop") + ' #'+leg.from.stopCode+ ' ';
-            }
-            stopHtml += '[<a href="#">' + _tr("Stop Viewer") +'</a>]</div>';
+            }*/
+            stopHtml += '[<a href="#" >' + _tr("Stop Viewer") +'</a>]</div>';
 
             $(stopHtml)
             .appendTo(legDiv)
-            .click(function(evt) {
+            
+            .click(function(evt) {/*
+                var modalboxWidget_html = ich['otp-stopViewer']()
+                console.log(modalboxWidget_html) 
+                //$('body').append(modalboxWidget_html)
+                $('.modalboxWidget').magnificPopup({
+                    items:[
+                        //{src:$('<div class=" white-popup">Dynamically created element</div>')}
+                        {src:$(modalboxWidget_html)}
+                    ],
+            		type:'inline',
+            		midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+            	});
+                */
+                
                 if(!this_.module.stopViewerWidget) {
                     this_.module.stopViewerWidget = new otp.widgets.transit.StopViewerWidget("otp-"+this_.module.id+"-stopViewerWidget", this_.module);
+                    //raf devo chiamare inizialize a mano
+                    this_.module.stopViewerWidget.inizialize()
                     this_.module.stopViewerWidget.$().offset({top: evt.clientY, left: evt.clientX});
                 }
                 this_.module.stopViewerWidget.show();
                 this_.module.stopViewerWidget.setActiveTime(leg.startTime);
                 this_.module.stopViewerWidget.setStop(leg.from.stopId, leg.from.name);
                 this_.module.stopViewerWidget.bringToFront();
+                
+                $.magnificPopup.open({
+                  items: {
+                    src: this_.module.stopViewerWidget.mainDiv,
+                    type: 'inline'
+                  }
+                });
+                
+                
             });
-
+            
+            
 
             $('<div class="otp-itin-leg-buffer"></div>').appendTo(legDiv);
 
@@ -610,12 +762,20 @@ otp.widgets.ItinerariesWidget =
             .click(function(evt) {
                 if(!this_.module.tripViewerWidget) {
                     this_.module.tripViewerWidget = new otp.widgets.transit.TripViewerWidget("otp-"+this_.module.id+"-tripViewerWidget", this_.module);
+                    //this_.module.tripViewerWidget.inizialize();
                     this_.module.tripViewerWidget.$().offset({top: evt.clientY, left: evt.clientX});
                 }
                 this_.module.tripViewerWidget.show();
-                if(this_.module.tripViewerWidget.minimized) this_.module.tripViewerWidget.unminimize();
+                //if(this_.module.tripViewerWidget.minimized) this_.module.tripViewerWidget.unminimize();
                 this_.module.tripViewerWidget.update(leg);
                 this_.module.tripViewerWidget.bringToFront();
+                
+                $.magnificPopup.open({
+                  items: {
+                    src: this_.module.tripViewerWidget.mainDiv,
+                    type: 'inline'
+                  }
+                });
             });
 
             // show the intermediate stops, if applicable -- REPLACED BY TRIP VIEWER
@@ -663,7 +823,7 @@ otp.widgets.ItinerariesWidget =
             $('<div class="otp-itin-leg-buffer"></div>').appendTo(legDiv);
 
             if( leg.isNonExactFrequency === true ) {
-            	$('<div class="otp-itin-leg-leftcol">' + _tr('late as') + ' ' + otp.util.Time.formatItinTime(leg.endTime, otp.config.locale.time.time_format)+"</div>").appendTo(legDiv);
+                $('<div class="otp-itin-leg-leftcol">' + _tr('late as') + ' ' + otp.util.Time.formatItinTime(leg.endTime, otp.config.locale.time.time_format)+"</div>").appendTo(legDiv);
             } else {
                 $('<div class="otp-itin-leg-leftcol">'+otp.util.Time.formatItinTime(leg.endTime, otp.config.locale.time.time_format)+"</div>").appendTo(legDiv);
             }
@@ -693,6 +853,7 @@ otp.widgets.ItinerariesWidget =
             // render any alerts
 
             if(leg.alerts) {
+                console.log('GOT ALERTS!!',leg.alerts)
                 for(var i = 0; i < leg.alerts.length; i++) {
                     var alert = leg.alerts[i];
 
@@ -727,7 +888,7 @@ otp.widgets.ItinerariesWidget =
                     var html = '<div id="foo-'+i+'" class="otp-itin-step-row">';
                     html += '<div class="otp-itin-step-icon">';
                     if(step.relativeDirection)
-                        html += '<img src="'+otp.config.resourcePath+'images/directions/' +
+                        html += '<img src="'+otp.config.resourcePath+'images/5t/directions/' +
                             step.relativeDirection.toLowerCase()+'.png">';
                     html += '</div>';
                     var distArr= otp.util.Itin.distanceString(step.distance).split(" ");
@@ -762,6 +923,8 @@ otp.widgets.ItinerariesWidget =
     },
 
     constructLink : function(queryParams, additionalParams) {
+        //raf reformat date as locale, while speak iso 8601 with server
+        queryParams.date = moment(queryParams.date).format(otp.config.locale.time.date_format);
         additionalParams = additionalParams ||  { };
         return otp.config.siteUrl + '?module=' + this.module.id + "&" +
             otp.util.Text.constructUrlParamString(_.extend(_.clone(queryParams), additionalParams));

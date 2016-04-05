@@ -15,17 +15,24 @@
 otp.namespace("otp.widgets.transit");
 
 otp.widgets.transit.StopViewerWidget =
-    otp.Class(otp.widgets.Widget, {
+    otp.Class(/*otp.widgets.Widget,*/ {
 
     module : null,
 
     agency_id : null,
 
     timeIndex : null,
-
-
+    
+    mainDiv         : null,
+    sonOf           : 'body', //5t 
+    center : function( ){ },
+    
+    show : function( ){ },
+    
+    bringToFront : function( ){ },
+    
     initialize : function(id, module) {
-
+        /*
         otp.widgets.Widget.prototype.initialize.call(this, id, module, {
             //TRANSLATORS: widget title
             title : _tr('Stop Viewer'),
@@ -35,14 +42,15 @@ otp.widgets.transit.StopViewerWidget =
             openInitially : false,
             persistOnClose : true,
         });
-
+        */
+        this.mainDiv = $('<div />').attr('id', id).addClass('_otp-widget  white-popup mfp-hide').appendTo('body'/*this.sonOf*/);
         this.module = module;
 
         var this_ = this;
 
         this.activeTime = moment().unix() * 1000;
 
-        this.stopFinder = new otp.widgets.transit.StopFinderWidget(this.module.id + "-stopFinder", this.module, this);
+        //this.stopFinder = new otp.widgets.transit.StopFinderWidget(this.module.id + "-stopFinder", this.module, this);
 
         var translated_template = {
             //TRANSLATORS: Date: date chooser (In stop viewer)
@@ -89,7 +97,7 @@ otp.widgets.transit.StopViewerWidget =
         this.stopId = stopId;
         this.clearTimes();
         //TRANSLATORS: Public transport <Stop> (stop name)
-        this.stopInfo.html("<b>" + _tr("Stop") + ":</b> " + stopName + " ("  + stopId + ")");
+        this.stopInfo.html("<b>" + _tr("Stop") + ":</b> " + stopName + " ("  + stopId.substring(0,stopId.lastIndexOf(':')) + ")");
         this.runTimesQuery();
     },
 
