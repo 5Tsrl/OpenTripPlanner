@@ -475,7 +475,12 @@ a:focus {
 }
 #sidebar .tab1 .top{
 	padding:0px 0px 0px 15px;
+}
 
+.sidebar-scroll{
+	overflow-y:scroll;
+	-webkit-overflow-scrolling: touch;
+	height:100%
 }
 
 strong.trigger-option{
