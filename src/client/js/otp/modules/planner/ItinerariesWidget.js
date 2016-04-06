@@ -219,8 +219,8 @@ otp.widgets.ItinerariesWidget =
             var stopId = itin.getFirstStopID();
             _.extend(params, {
                 startTransitStopId :  stopId,
-                time : otp.util.Time.formatItinTime(newEndTime, "h:mma"),
-                date : otp.util.Time.formatItinTime(newEndTime, "MM-DD-YYYY"),
+                time : moment(newEndTime).format(otp.config.locale.time.time_format),
+                date : moment(newEndTime).format(otp.config.locale.time.date_format),
                 arriveBy : true
             });
             this_.refreshActiveOnly = true;
@@ -235,8 +235,8 @@ otp.widgets.ItinerariesWidget =
             var stopId = itin.getFirstStopID();
             _.extend(params, {
                 startTransitStopId :  stopId,
-                time : otp.util.Time.formatItinTime(newStartTime, "h:mma"),
-                date : otp.util.Time.formatItinTime(newStartTime, "MM-DD-YYYY"),
+                time : moment(newStartTime).format(otp.config.locale.time.time_format),
+                date : moment(newStartTime).format(otp.config.locale.time.date_format),
                 arriveBy : false
             });
             this_.refreshActiveOnly = true;
@@ -488,7 +488,13 @@ otp.widgets.ItinerariesWidget =
                 headerHtml += " ";
                 if(leg.route !== leg.routeLongName) {
                     //headerHtml += "("+leg.route+") ";
-                    headerHtml += leg.route+" ";
+                    //headerHtml += leg.route+" ";
+                    if(leg.mode === "RAIL"){
+                        headerHtml += parseInt(leg.tripShortName) + " ";
+                    } else {
+                        headerHtml += leg.route+" ";
+                    }
+                        
                 }
                 //headerHtml += "("+leg.agencyId+") ";
                 headerHtml += '(<a href="'+leg.agencyUrl + '">'+leg.agencyName+'</a>) ';
