@@ -303,32 +303,6 @@ $(document).ready(function() {
 
 	$("ul.tabs").html('<li class="planner left active"><a data-tab="tab1" href="#planner">'+ _tr("Route_planner")+'</a></li>\
 	                   <li class="traffic right">      <a data-tab="tab2" href="#traffic">' +_tr("Traffic_info") +'</a></li>');
-/*	
-	$(".tab-content").hide(); // Hide all content
-	
-	$(".tabbed-content").each(function(){
-		if($(this).find('.active').size() == 0){
-			$(this).find('.tab-content:first').addClass('active').show();
-			$(this).find('ul.tabs li:first').addClass("active");
-		} else {
-			var activeTab = $(this).find('.active a').attr("data-tab"); 
-			$('#'+activeTab).fadeIn(); 
-		}
-	});
-	
-	$("ul.tabs li").click(function() { 
-		//webapp.setActiveModule(webapp.modules[$(this).index()]);
-		//webapp.app_router.navigate("#"+otp.config.modules[$(this).index()]["id"], {trigger: true});
-		$(this).parents('.tabbed-content').find(".active").removeClass();
-		$(this).addClass("active"); 
-		$(this).siblings().removeClass("active");
-		$(this).parents('.tabbed-content').find(".tab-content").hide();
-		var activeTab = $(this).find("a").attr("data-tab"); 
-		$('#'+activeTab).fadeIn(); 
-		setHeight();
-		//return false;
-	});
-*/
 	$("ul#main-menu-5t li").click(function() { 
 		if($(this).index() == 1 || $(this).index() == 2){
 			//webapp.setActiveModule(webapp.modules[$(this).index()+1]);

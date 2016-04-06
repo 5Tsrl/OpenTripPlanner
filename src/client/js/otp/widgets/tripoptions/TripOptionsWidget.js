@@ -51,7 +51,7 @@ otp.widgets.tripoptions.TripOptionsWidget =
         $(".tab-content").hide(); // Hide all content
         $('ul.tabs li.planner').addClass("active");
         $('.tab-container .planner').fadeIn();   
-        $('.main-menu-5t li#planner').addClass("active");
+        $('.main-menu-5t li#menu-planner').addClass("active");
      
     },
     hide : function() {
@@ -59,7 +59,7 @@ otp.widgets.tripoptions.TripOptionsWidget =
         else this.mainDiv.fadeOut(); //hide();
         $('ul.tabs li.planner').removeClass("active");
         $('.tab-container .planner').hide();
-        $('.main-menu-5t li#planner').removeClass("active");
+        $('.main-menu-5t li#menu-planner').removeClass("active");
     },
     
     
