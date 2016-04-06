@@ -202,12 +202,31 @@
 <script type="text/javascript" language="javascript">
 
 
+function setHeight(){
+	if(!$('#sidebar').hasClass('long')){
+		var windowHeight = $(window).height();
+		var headerHeight = $('#branding').outerHeight();
+		var tabsHeight = $('#sidebar .tabs').outerHeight();
+		var main1Height = $('#sidebar #tab1 .top').outerHeight();
+		var main2Height = $('#sidebar #tab2 .top').outerHeight();
+		var height = tabsHeight+main1Height;
+		
 
+		if(height>(windowHeight-headerHeight)){
+			height = windowHeight-headerHeight;
+			$('.sidebar-scroll').css({'overflow-y':'scroll'});
+
+		} else {
+			$('.sidebar-scroll').css({'overflow-y':'auto'});
+		}
+		$('.sidebar-scroll').height(height);
+	}
+}
 
 $(document).ready(function() {
 
 
-	function setHeight(){
+	/*function setHeight(){
 		var windowHeight = $(window).height();
 		var headerHeight = $('#branding').outerHeight();
 		var tabsHeight = $('#sidebar .tabs').outerHeight();
@@ -216,7 +235,7 @@ $(document).ready(function() {
 		$('#sidebar #tab1 .main').height(windowHeight-tabsHeight-headerHeight-main1Height);
 		$('#sidebar #tab2 .main').height(windowHeight-tabsHeight-headerHeight-main2Height);
 	}
-	setHeight();
+	setHeight();*/
 
 	$('.panel-trigger').click(function(){
 		$(this).toggleClass('closed');
@@ -349,7 +368,7 @@ $(document).ready(function() {
 </header>
 
 <div id="sidebar" class="tabbed-content">
-
+<div class="sidebar-scroll">
     <ul class="tabs">
 		<!--
         <li class="left active"><a href="#tab1">Indicazioni stradali</a></li>
@@ -382,7 +401,8 @@ $(document).ready(function() {
     </div>
 
 <span class="panel-trigger fonticon"></span>
-  
+
+</div>  
 </div>
 
 
