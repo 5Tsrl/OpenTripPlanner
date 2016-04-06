@@ -12,6 +12,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 otp.namespace("otp.widgets");
 
 otp.widgets.EventsCategoryWidget =
@@ -49,6 +50,9 @@ otp.widgets.EventsCategoryWidget =
 		$('ul.tabs li.traffic').addClass("active");
 		$('.tab-container .traffic').fadeIn();
 		$('.main-menu-5t li#menu-traffic').addClass("active");
+		setTimeout(function(){
+			setHeight();
+		}, 1000);
 		
     },
 	
