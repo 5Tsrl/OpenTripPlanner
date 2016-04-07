@@ -227,14 +227,14 @@ otp.core.Webapp = otp.Class({
                     console.log(widg_html) 
                     $('body').append(widg_html)
                     //$(ich[options.id]).appendTo('body')
-                    $("<li id='"+id+"'><a href='#"+ options.id +"' class='modalboxMenu'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e) {
+                    $("<li id='menu-"+id+"'><a href='#"+ options.id +"' class='modalboxMenu'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e) {
                         //e.preventDefault();
                         //var widget = this_.infoWidgets[this.id];
                         //if(!widget.isOpen) widget.show();
                         //widget.bringToFront();
                     });
                 } else if (otp.config.infoWidgets[i].link) {
-                    $("<li id='"+otp.config.infoWidgets[i].link.substring(1)+"'><a href='"+otp.config.infoWidgets[i].link+"'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul)
+                    $("<li id='menu-"+otp.config.infoWidgets[i].link.substring(1)+"'><a href='"+otp.config.infoWidgets[i].link+"'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul)
                 } 
             }
             $('.modalboxMenu').magnificPopup({

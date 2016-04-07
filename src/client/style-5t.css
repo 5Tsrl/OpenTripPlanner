@@ -218,7 +218,7 @@ a:focus {
 	width:100%;
 	background: #fff;
 	box-shadow:0px 0px 5px rgba(0,0,0, 0.5);
-	z-index:20000;
+	z-index:1000;
 	-webkit-transition: height .3s;
 	-moz-transition: height .3s;
 	-ms-transition: height .3s;
@@ -475,7 +475,12 @@ a:focus {
 }
 #sidebar .tab1 .top{
 	padding:0px 0px 0px 15px;
+}
 
+.sidebar-scroll{
+	overflow-y:scroll;
+	-webkit-overflow-scrolling: touch;
+	height:100%
 }
 
 strong.trigger-option{
@@ -728,12 +733,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	display:block;
 	width:33px;
 	height:33px;
-	/*text-indent: -9999px;*/
 	position:relative;
-	/*background-image:url(images/icons/ic_directions_walk_blue.svg);
-	background-size:30px;
-	background-position:center center;
-	background-repeat:no-repeat;*/
 }
 #tripmode .text{text-indent:-9999px;display:none}
 

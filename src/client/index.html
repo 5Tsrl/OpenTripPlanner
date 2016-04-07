@@ -202,21 +202,30 @@
 <script type="text/javascript" language="javascript">
 
 
+function setHeight(){
+        var windowHeight = $(window).height();
+        var headerHeight = $('#branding').outerHeight();
+        var tabsHeight = $('#sidebar .tabs').outerHeight();
+        var topHeight = $('#sidebar #tab1 .top').outerHeight();
 
+        if($(".tabs li.traffic").hasClass('active')){
+            topHeight = $('#sidebar #tab2 .top').outerHeight();
+        }
+
+        var height = windowHeight-(tabsHeight+topHeight+headerHeight);
+        
+        console.log( '///////////////////////' );
+        console.log( windowHeight );
+        console.log( tabsHeight);
+        console.log( topHeight);
+        console.log( headerHeight);
+
+        $('.sidebar-scroll').height(height);
+
+}
 
 $(document).ready(function() {
 
-
-	function setHeight(){
-		var windowHeight = $(window).height();
-		var headerHeight = $('#branding').outerHeight();
-		var tabsHeight = $('#sidebar .tabs').outerHeight();
-		var main1Height = $('#sidebar #tab1 .top').outerHeight();
-		var main2Height = $('#sidebar #tab2 .top').outerHeight();
-		$('#sidebar #tab1 .main').height(windowHeight-tabsHeight-headerHeight-main1Height);
-		$('#sidebar #tab2 .main').height(windowHeight-tabsHeight-headerHeight-main2Height);
-	}
-	setHeight();
 
 	$('.panel-trigger').click(function(){
 		$(this).toggleClass('closed');
@@ -249,7 +258,7 @@ $(document).ready(function() {
 		
 		setTimeout(function(){
 			setHeight();
-		}, 250);
+		}, 1000);
 	}
 
 	resizeEndActions();
@@ -301,32 +310,6 @@ $(document).ready(function() {
 
 	$("ul.tabs").html('<li class="planner left active"><a data-tab="tab1" href="#planner">'+ _tr("Route_planner")+'</a></li>\
 	                   <li class="traffic right">      <a data-tab="tab2" href="#traffic">' +_tr("Traffic_info") +'</a></li>');
-/*	
-	$(".tab-content").hide(); // Hide all content
-	
-	$(".tabbed-content").each(function(){
-		if($(this).find('.active').size() == 0){
-			$(this).find('.tab-content:first').addClass('active').show();
-			$(this).find('ul.tabs li:first').addClass("active");
-		} else {
-			var activeTab = $(this).find('.active a').attr("data-tab"); 
-			$('#'+activeTab).fadeIn(); 
-		}
-	});
-	
-	$("ul.tabs li").click(function() { 
-		//webapp.setActiveModule(webapp.modules[$(this).index()]);
-		//webapp.app_router.navigate("#"+otp.config.modules[$(this).index()]["id"], {trigger: true});
-		$(this).parents('.tabbed-content').find(".active").removeClass();
-		$(this).addClass("active"); 
-		$(this).siblings().removeClass("active");
-		$(this).parents('.tabbed-content').find(".tab-content").hide();
-		var activeTab = $(this).find("a").attr("data-tab"); 
-		$('#'+activeTab).fadeIn(); 
-		setHeight();
-		//return false;
-	});
-*/
 	$("ul#main-menu-5t li").click(function() { 
 		if($(this).index() == 1 || $(this).index() == 2){
 			//webapp.setActiveModule(webapp.modules[$(this).index()+1]);
@@ -384,11 +367,13 @@ $(document).ready(function() {
     </ul>
 
     <div class="tab-container">
+
         <div id="tab1" class="tab-content planner active">
         	<div class="top">
             </div> 
-          
-        	<div class="main">
+          	<div class="sidebar-scroll">
+	        	<div class="main">
+	        	</div>
         	</div>
         </div>
         <div id="tab2" class="tab-content traffic">
@@ -400,16 +385,19 @@ $(document).ready(function() {
       			</div>
 				-->
         	</div>
-        	<div class="main">
-				<div class="infosCtnr"></div>
-				<div class="eventsCtnr"></div>
+        	<div class="sidebar-scroll">
+	        	<div class="main">
+					<div class="infosCtnr"></div>
+					<div class="eventsCtnr"></div>
+	        	</div>
         	</div>
         </div>
     </div>
 
 <span class="panel-trigger fonticon"></span>
-  
-</div>
+
+</div>  
+
 
 
 

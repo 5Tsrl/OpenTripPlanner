@@ -12,6 +12,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 otp.namespace("otp.widgets.tripoptions");
 
 otp.widgets.tripoptions.TripOptionsWidget =
@@ -51,7 +52,10 @@ otp.widgets.tripoptions.TripOptionsWidget =
         $(".tab-content").hide(); // Hide all content
         $('ul.tabs li.planner').addClass("active");
         $('.tab-container .planner').fadeIn();   
-        $('.main-menu-5t li#planner').addClass("active");
+        $('.main-menu-5t li#menu-planner').addClass("active");
+        setTimeout(function(){
+            setHeight();
+        }, 1000);
      
     },
     hide : function() {
@@ -59,7 +63,7 @@ otp.widgets.tripoptions.TripOptionsWidget =
         else this.mainDiv.fadeOut(); //hide();
         $('ul.tabs li.planner').removeClass("active");
         $('.tab-container .planner').hide();
-        $('.main-menu-5t li#planner').removeClass("active");
+        $('.main-menu-5t li#menu-planner').removeClass("active");
     },
     
     
