@@ -523,6 +523,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 #map.open{left:0}
 
 .powered-by {
+    display:none;
 	cursor: pointer;
 	z-index: 1000;
 	width: 100px;
