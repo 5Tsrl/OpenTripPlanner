@@ -897,6 +897,54 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 #otp-planner-tripViewerWidget{top:120px}
 
+/*   infopanel eventi su mappa   */
+.event-panel{
+    padding: 0px 15px 0px 45px;
+    max-width: 370px;
+}
+.event-panel .location{font-weight: bold}
+.event-panel .locationDescription{ font-size: 0.9em}
+.event-panel em{
+	text-transform:uppercase;
+	font-style:normal;
+	font-weight:700;
+	font-size:0.9em;
+	padding:3px 0px;
+	display:block;
+}
+
+.event-panel span.icon{
+	display:block;
+	position:absolute;
+	left:10px;
+	top:20px;
+	width:35px;
+	height:35px;
+	_border-radius:100%;
+	_background-color:#4089CE;
+    color:#4089CE;
+    font-size: 1.4em;
+	background-size:20px;
+	background-repeat:no-repeat;
+	background-position:5px 18px;	
+}
+
+.event-panel.fonticon:before{position:relative;top:7px;font-size:1.5em;color:#fff}
+.event-panel.lavori .fonticon:before{content: '\e813';top:6px;font-size:1.6em}
+.event-panel.chiusura .fonticon:before{content: '\e814';top:8px}
+.event-panel.apertura .fonticon:before{content: '\e817';top:6px;font-size:1.7em}
+.event-panel.coda .fonticon:before,.event-panel.traffico .fonticon:before{content: '\e81d'}
+.event-panel.alert .fonticon:before,.event-panel.attenzione .fonticon:before{content: '\e810';top:6px;left:1px}
+.event-panel.weather .fonticon:before{content: '\e81e';top:6px}
+.event-panel.catene .fonticon:before{content: '\e815';top:3px;font-size:2em}
+.event-panel.incidente .fonticon:before{content: '\e811';font-size:1.9em;top:5px;}
+.event-panel.nebbia .fonticon:before{content: '\e812'}
+.event-panel.neve .fonticon:before{content: '\e81b'}
+.event-panel.temporale .fonticon:before{content: '\e81c';font-size:1.7em;}
+.event-panel.vento .fonticon:before{content: '\e81f'}
+
+
+
 
 /* ----------  ModalBox ----------*/
 
@@ -1392,6 +1440,7 @@ background:#fff;
 .leaflet-marker-icon div {
 	float: left;
 	width: 35px;
+    height:28px;
 	background: #f7861b;
 	padding: 6px 0;
 	-moz-border-radius: 5px;
@@ -1407,7 +1456,7 @@ background:#fff;
 	width: 51px;
 	margin-right: 3px;
 	margin-top: 1px;
-	padding: 8px 0;
+	padding: 5px 0;
 	font-size: 1.3em;
 	font-weight: normal;
 }

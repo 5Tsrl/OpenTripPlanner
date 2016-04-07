@@ -100,6 +100,20 @@
 
 </script>
 
+<script id="otp-datexEventItemMap" type="text/html">
+        <div class="event-panel  {{ev.style}}">		
+            <div class="location">{{ev.roadNumber}} {{ev.roadName}}</div>
+    		<span class="locationDescription">{{ev.locationDescription}} {{ev.eventDirection}}</span>
+            <div>
+    		          <em class="{{ev.status}}">{{ev.eventDescription}} {{ev.note}}</em>
+                      {{#ev.terminated}}
+                        <span style='color:green;font-weight:bold;'> Situazione tornata alla normalit&agrave;</span><br />
+                      {{/ev.terminated}}
+            </div>
+            <span class="icon fonticon"></span>
+        </div>
+</script>
+
 <script id="otp-infoItem" type="text/html">
     <span class="icon fonticon"></span>
     <h3>{{ev.title}}</h3>
