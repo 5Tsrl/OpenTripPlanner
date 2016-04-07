@@ -527,14 +527,18 @@ otp.modules.datex.EventModule =
     },
 
     constructEventInfo : function(title, event) {
-        name=event.eventDescription;
-
-        header0 = name.indexOf(' ')>0 ? name.substring(0,name.indexOf(' ')+1):name;
-    	header1 = name.indexOf(' ')>0 ? name.substring(name.indexOf(' ')):'';
-
-    	info = '<h5 class="event"><span>'+header0+'</span>'+header1+'</h5>';
-        info += event.primaryLocation
-        return info;
+        
+        var popup = ich['otp-datexEventItemMap']({ev:event})
+        /*
+        var info = '<div class="event-panel lavori">'
+    	info += '<b>'+event.primaryLocation+'</b><br>'
+        info += event.eventDescription;
+        info += '<span class="icon fonticon"></span>'
+        info += '</div>' */
+        return popup[0];
+        //return info;
+        
+        
     },
     
     trafficSwitchMap : function(){
