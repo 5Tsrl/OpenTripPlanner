@@ -127,7 +127,7 @@ strong.trigger-option{
 
 }
 
-@media only screen and (min-width:60em) { /* 960px  */
+@media only screen and (min-width:990px) { /* 960px 60em */
 
 .main-menu-container{
 	position:absolute;
@@ -167,6 +167,7 @@ strong.trigger-option{
 #nav-toggle {
 	display: none;
 }
+.powered-by{display: block}
 
 .language-switcher{top:18px;right:-60px;left:auto;background:#f0f0f0;}
 .language-switcher span, .language-switcher a{color:#999}
