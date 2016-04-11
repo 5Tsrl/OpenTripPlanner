@@ -120,7 +120,7 @@
 }
 
 strong.trigger-option{
-	top:92px;
+	top:107px;
 
 }
 
@@ -168,6 +168,8 @@ strong.trigger-option{
 	display: none;
 }
 .powered-by{display: block}
+
+.legend{bottom:20px;left:20px;}
 
 .language-switcher{top:18px;right:-60px;left:auto;background:#f0f0f0;}
 .language-switcher span, .language-switcher a{color:#999}
