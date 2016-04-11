@@ -182,12 +182,12 @@ ul {
 	list-style-type: none
 }
 a {
-	color: #ccc;
+	color: #4089cd;
 	text-decoration: none
 }
-a:hover {
+a:hover,a:active, a:visited  {
 	text-decoration: none;
-	color: #ccc
+	color: #4089cd
 }
 a:focus {
 	outline: none
@@ -487,7 +487,7 @@ strong.trigger-option{
 	margin:0;padding:0;
 	background:transparent;
 	border:0;
-	position:absolute;top:82px;right:20px;
+	position:absolute;top:97px;right:20px;
 
 }
 
@@ -503,7 +503,7 @@ strong.trigger-option .fonticon:before { content: '\e80e';float:left;margin:1px 
 strong.trigger-option.open .ui-button-text{color:#fff}
 strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '' */
 
-#otp-planner-optionsWidget-scollPanel{position:relative}
+#otp-planner-optionsWidget-scollPanel{position:relative;padding-top:15px;}
 #otp-planner-optionsWidget-scollPanel div:nth-child(4){
 	display:none;
 }
@@ -530,7 +530,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	height: 24px;
 	position: absolute;
 	right: 0;
-	bottom: 15px;
+	bottom: 20px;
 	background: #1467b6 url(../images/5t/powered-by-5t.png) 0 0 no-repeat;
 	background-size:100px 24px;
 	text-indent: -9999px;
@@ -550,8 +550,103 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 .panel-trigger:before { content: '\e800'; } /* '' */
 .panel-trigger.closed:before { content: '\e801'; } /* '' */
 
+.legend{
+	position:absolute;
+	bottom:-265px;
+	left:30px;
+	width:270px;
+	background:#fff;
+	z-index:2000;
+	box-shadow:1px 0px 5px 0px  rgba(0,0,0,.3);
+	-webkit-transition: all 1s;
+	-moz-transition: all 1s;
+	-ms-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;
+	cursor:default;
+}
 
+.open .legend{display:block;bottom:20px;}
 
+.legend h2{
+	background:#4089ce;
+	color:#fff;
+	font-size:1.6em;
+	padding:10px 20px;
+	font-weight:100;
+}
+
+.legend ul{
+	padding:0 20px 8px 20px;
+	float:left;
+	width:270px;
+}
+.legend li{
+	float:left;
+	width:50%;
+	text-transform:uppercase;
+	padding:5px 0 5px 0;
+	font-size:.9em;
+}
+.legend li:odd{
+	margin-left:10%;
+}
+
+.legend li:before{
+	content: ' ';
+	display:block;
+	float:left;
+	margin-right:7px;
+	position:relative;top:2px;
+    background: #33ba2e;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.legend li.yellow:before{background:#ffde00}
+.legend li.orange:before{background:#ff8420}
+.legend li.red:before{background:#fe0000}
+
+.leaflet-right .leaflet-control{
+	box-shadow:1px 0 2px 0 rgba(0, 0, 0, 0.3);
+	border:0;
+	border-radius:0;
+}
+
+.leaflet-right .leaflet-control-layers{
+
+}
+
+.leaflet-right .leaflet-control-layers a,.leaflet-right .leaflet-control a.leaflet-control-zoom-in,.leaflet-right .leaflet-control a.leaflet-control-zoom-out{
+	color:#4089cd;
+	height:35px;width:35px;
+	display:block;
+	background:url(../images/5t/ico-layer.png) 50% 50% no-repeat	
+}
+
+.leaflet-right .leaflet-control-layers-expanded a{display:none;}
+.leaflet-control-layers label{padding:3px 0;text-transform:uppercase;font-size:.9em;}
+.leaflet-control-layers input{margin-right:5px;position:relative;top:-2px;}
+
+.leaflet-right .leaflet-control a.leaflet-control-zoom-in{
+	background-image:url(../images/5t/ico-plus.png)
+}
+
+.leaflet-right .leaflet-control a.leaflet-control-zoom-out{
+	background-image:url(../images/5t/ico-minus.png)
+}
+
+.leaflet-right .leaflet-control a:hover{
+	background-color:#ecf1f5;
+
+}
+
+.leaflet-bar a, .leaflet-control-layers-toggle, .leaflet-popup-close-button, .map-tooltip.closable .close, .mapbox-button-icon::before, .mapbox-icon{vertical-align:initial;}
+
+.leaflet-right .leaflet-control{margin-right:25px;}
+.leaflet-top .leaflet-control{margin-top:25px;}
+.leaflet-top .leaflet-control-zoom{margin-top:15px;}
 
 /* ----------  WIDGETS ----------*/
 

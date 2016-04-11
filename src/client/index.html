@@ -337,36 +337,21 @@ $(document).ready(function() {
 
 <header id="branding" role="banner" class="clearfix">
 
-  <hgroup id="logo">
-    <h1 id="site-title">Pronto TPL</h1>
-  </hgroup>  
+	<hgroup id="logo">
+		<h1 id="site-title">Pronto TPL</h1>
+	</hgroup>  
  
-  <nav id="main-menu-container" class="main-menu-container">
-	  <div id="language-switcher" class="language-switcher"></div>
-	  <div class="shader"></div>
-  <!--
-	<ul id="main-menu-5t" class="main-menu-5t">
-	    <li><a href="#">Home</a></li>
-	    <li class="active"><a href="#">Indicazioni stradali</a></li>
-	    <li><a href="#">Traffico</a></li>
-	    <li><a href="#">News</a></li>
-	    <li><a href="#">Contatti</a></li>
-	  </ul>
-  -->
-	<a id="nav-toggle" href="javascript:void(0)"><span></span></a>
-    
+	<nav id="main-menu-container" class="main-menu-container">
+		<div id="language-switcher" class="language-switcher"></div>
+		<div class="shader"></div>
+		<a id="nav-toggle" href="javascript:void(0)"><span></span></a>
 	</nav>
 
 </header>
 
 <div id="sidebar" class="tabbed-content">
 
-    <ul class="tabs">
-		<!--
-        <li class="left active"><a href="#tab1">Indicazioni stradali</a></li>
-        <li class="right"><a href="#tab2">Informazioni traffico</a></li>
-	-->
-    </ul>
+    <ul class="tabs"></ul>
 
     <div class="tab-container">
 
@@ -380,12 +365,6 @@ $(document).ready(function() {
         </div>
         <div id="tab2" class="tab-content traffic">
       		<div class="top">
-				<!--
-      			<div class="field findplace">
-      				<label for ="findplace">Località</label>
-      				<input type="text" id="findplace" />
-      			</div>
-				-->
         	</div>
         	<div class="sidebar-scroll">
 	        	<div class="main">
@@ -396,16 +375,23 @@ $(document).ready(function() {
         </div>
     </div>
 
-<span class="panel-trigger fonticon"></span>
+	<span class="panel-trigger fonticon"></span>
 
 </div>  
 
 
-
-
-
-
-<div id="map"><a class="powered-by" href="http://www.5t.torino.it">Powered by 5T</a></div>
+<div id="map">
+	<a class="powered-by" href="http://www.5t.torino.it">Powered by 5T</a>
+	<div class="legend">
+		<h2>Traffico</h2>
+		<ul>
+			<li class="green">Regolare</li>
+			<li class="yellow">Rallentamenti</li>
+			<li class="orange">Intenso</li>
+			<li class="red">Code</li>
+		</ul>	
+	</div>
+</div>
 <div class="mapoverlay"></div>
 
 <div id="otp-spinner"><img src="images/spinner.gif"></div>
