@@ -1055,7 +1055,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 	.white-popup header{background:#4089cd;color:#fff;padding:20px;}
 	.white-popup header h1{font-size:2em;font-weight:100;}
-	.white-popup .text{padding:20px;}
+	.white-popup .text{padding:20px;overflow-y: scroll;max-height: 300px;}
 	.mfp-close{height:58px;color:#a0c4e6;}
 	.mfp-close-btn-in .mfp-close{color:#a0c4e6;font-family:"Open Sans",sans-serif;font-size:40px;font-weight:100;}
 
