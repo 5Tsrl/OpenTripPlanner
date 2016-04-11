@@ -234,7 +234,11 @@ otp.core.Webapp = otp.Class({
                         //widget.bringToFront();
                     });
                 } else if (otp.config.infoWidgets[i].link) {
-                    $("<li id='menu-"+otp.config.infoWidgets[i].link.substring(1)+"'><a href='"+otp.config.infoWidgets[i].link+"'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul)
+                    $("<li id='menu-"+otp.config.infoWidgets[i].link.substring(1)+"'><a href='"+otp.config.infoWidgets[i].link+"'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e) {
+                        if( $('#nav-toggle').is(":visible") == true ) {
+                			$('#nav-toggle').click();
+                		}
+                    });
                 } 
             }
             $('.modalboxMenu').magnificPopup({
