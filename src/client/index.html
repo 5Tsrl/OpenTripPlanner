@@ -310,8 +310,8 @@ $(document).ready(function() {
 
 	// ---- Tabs ----------------------------------------------------------------------------------------------------------
 
-	$("ul.tabs").html('<li class="planner left "><a data-tab="tab1" href="#planner">'+ _tr("Route_planner")+'</a></li>\
-	                   <li class="traffic right active">      <a data-tab="tab2" href="#traffic">' +_tr("Traffic_info") +'</a></li>');
+	$("ul.tabs").html('<li class="planner left active"><a data-tab="tab1" href="#planner">'+ _tr("Route_planner")+'</a></li>\
+	                   <li class="traffic right">      <a data-tab="tab2" href="#traffic">' +_tr("Traffic_info") +'</a></li>');
 	$("ul#main-menu-5t li").click(function() { 
 		if($(this).index() == 1 || $(this).index() == 2){
 			//webapp.setActiveModule(webapp.modules[$(this).index()+1]);
