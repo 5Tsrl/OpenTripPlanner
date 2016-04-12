@@ -108,6 +108,9 @@ otp.modules.multimodal.MultimodalPlannerModule =
         this.stopsLayer = new otp.layers.StopsLayer(this);
     },
 
+    selected : function() {
+        $('.legend').hide()
+    },
     routesLoaded : function() {
         // set trip / stop viewer widgets
 
