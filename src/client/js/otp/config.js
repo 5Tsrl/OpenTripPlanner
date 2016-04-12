@@ -130,7 +130,7 @@ otp.config = {
      * Site name / description / branding display options
      */
 
-    siteName            : "Pronto TPL",
+    siteName            : "Muoversi in Piemonte",
     siteDescription     : "An OpenTripPlanner deployment.",
     logoGraphic         : 'images/otp_logo_darkbg_40px.png',
     // bikeshareName    : "",
