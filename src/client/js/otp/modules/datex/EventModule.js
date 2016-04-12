@@ -414,7 +414,9 @@ otp.modules.datex.EventModule =
         this.trafficEventsWidget.show();
         this.trafficEventsWidget.showInfos(this.infos, this);
         this.trafficEventsWidget.setContentAndShow(this.events, this);
-        $('.legend').show()
+        //$('.legend').show()
+        if($('#nav-toggle').is(":visible") == false)
+            $('.legend').css("bottom", "20px")
     },
 
 
