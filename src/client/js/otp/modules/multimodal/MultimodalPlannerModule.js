@@ -109,7 +109,7 @@ otp.modules.multimodal.MultimodalPlannerModule =
     },
 
     selected : function() {
-        $('.legend').hide()
+        $('.legend').css("bottom", "-265px")
     },
     routesLoaded : function() {
         // set trip / stop viewer widgets
