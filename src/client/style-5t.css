@@ -843,6 +843,8 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 .address-fields{position:relative}
 
+.routeList{}
+    .routeList span{font-weight: bold}
 
 /* ----------  Box Traffic info TOP ----------*/
 

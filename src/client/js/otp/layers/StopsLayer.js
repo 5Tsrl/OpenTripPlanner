@@ -126,6 +126,14 @@ otp.layers.StopsLayer =
             this_.module.stopViewerWidget.setActiveTime(moment().add("hours", -otp.config.timeOffset).unix()*1000);
             this_.module.stopViewerWidget.setStop(thisStop.id, thisStop.name);
             this_.module.stopViewerWidget.bringToFront();
+            
+            $.magnificPopup.open({
+              items: {
+                src: this_.module.stopViewerWidget.mainDiv,
+                type: 'inline'
+              }
+            });
+            
         });
 
         popupContent.find('.planFromLink').data('stop', stop).click(function() {
