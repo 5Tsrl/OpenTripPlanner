@@ -373,6 +373,9 @@ otp.widgets.ItinerariesWidget =
 
         for(var l=0; l<itin.itinData.legs.length; l++) {
             var leg = itin.itinData.legs[l];
+            //raf
+            if(leg.mode == "BICYCLE" && leg.distance == 0) {continue;}
+
             var waitIsset = false;
             
             if(lastTime!=leg.startTime && lastTime!=0){
@@ -457,10 +460,13 @@ otp.widgets.ItinerariesWidget =
         var accordHtml = "<div id='"+divId+"' class='otp-itinAccord'></div>";
         var itinAccord = $(accordHtml);
         for(var l=0; l<itin.itinData.legs.length; l++) {
-
+            
             var legDiv = $('<div />').appendTo(itinAccord);
 
             var leg = itin.itinData.legs[l];
+            //raf 
+            if(leg.mode == "BICYCLE" && leg.distance == 0) {continue;}
+
             //raf
             legDiv.addClass(leg.mode.toLowerCase());
             //TRANSLATORS: Used when passengers can stay on vehicle. Continues
