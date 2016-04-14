@@ -294,10 +294,10 @@ otp.modules.bikeshare.BikeShareModule =
        	}
     },
     
-    noTripFound : function() {
+    /*noTripFound : function() {
         this.resultsWidget.hide();
     },
-        
+    */    
     processStations : function(start, end) {
         var this_ = this;
         var tol = .0005, distTol = .01;
