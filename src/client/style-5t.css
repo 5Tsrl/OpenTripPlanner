@@ -434,7 +434,7 @@ a:focus {
 	position:relative;
 }
 #sidebar .tabs {
-	height:55px;
+	height:45px;
 	background-color:#3673AC;
 }
 #sidebar .tabs li{
@@ -444,15 +444,15 @@ a:focus {
 	opacity:0.5;
 	float:left;
 	width:85px;
-	height:40px;
-	padding:15px 0px 0px 45px;
+	height:35px;
+	padding:10px 0px 0px 45px;
 	color:#fff;
 	text-transform:uppercase;
 	font-size:0.8em;
 	line-height:1.1em;
 	font-weight:600;
 	background-repeat:no-repeat;
-	background-position:12px 12px;
+	background-position: 12px 6px;
 	background-size: 30px;
 	-webkit-transition: all .3s;
 	-moz-transition: all .3s;
@@ -478,7 +478,7 @@ a:focus {
 }
 
 .sidebar-scroll{
-	overflow-y:scroll;
+	/*overflow-y:scroll;*/
 	-webkit-overflow-scrolling: touch;
 	height:100%
 }
@@ -487,8 +487,7 @@ strong.trigger-option{
 	margin:0;padding:0;
 	background:transparent;
 	border:0;
-	position:absolute;top:97px;right:20px;
-
+	position:absolute;top:77px;right:20px;
 }
 
 strong.trigger-option .ui-button-text{
@@ -503,10 +502,12 @@ strong.trigger-option .fonticon:before { content: '\e80e';float:left;margin:1px 
 strong.trigger-option.open .ui-button-text{color:#fff}
 strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '' */
 
-#otp-planner-optionsWidget-scollPanel{position:relative;padding-top:15px;}
+#otp-planner-optionsWidget-scollPanel{position:relative;padding-top:0}
 #otp-planner-optionsWidget-scollPanel div:nth-child(4){
 	display:none;
 }
+
+.otp-date-input{width:70px;}
 
 /* ----------  MAP ----------*/
 
@@ -607,6 +608,20 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 .legend li.yellow:before{background:#ffde00}
 .legend li.orange:before{background:#ff8420}
 .legend li.red:before{background:#fe0000}
+
+
+.features{
+	display:none;
+	background:url(../images/5t/features.png) 0 0 no-repeat;
+	width:62px;
+	height:135px;
+	position:absolute;
+	top:45%;
+	right:10px;
+	z-index:2000;
+}
+
+
 
 .leaflet-right .leaflet-control{
 	box-shadow:1px 0 2px 0 rgba(0, 0, 0, 0.3);
@@ -811,12 +826,12 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 
 .otp-defaultTripWidget{width:auto}
-.tab-content .top{padding:5px 0 10px 10px}
+.tab-content .top{padding:5px 0 0 10px}
 
 
 #tripmode{
 	overflow:hidden;
-	margin:15px 0px 0px 0px;
+	margin:5px 0px 0px 0px;
 }
 #tripmode li{
 	float:left;
@@ -850,7 +865,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 #sidebar .otp-eventsWidget {
 		position:static;
-		padding:20px 0 10px 0;		
+		padding:5px 0 0 0;		
 }
 #sidebar .otp-widget h2{
   position: static;
@@ -898,7 +913,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 .filtroEvt .fonticon{position:absolute;top:0;right:0;background:#3675ae;width:33px;height:33px}
 .filtroEvt .fonticon:before{content: '\e807';position:absolute;top:8px;right:8px;font-size:1.2em}
 
-#otp-planner-optionsWidget-submit-button{text-transform:uppercase;background:#3675ae;border:0;border-radius:0;padding:1px 2px;height:auto;font-size:.9em;margin:10px 0}
+#otp-planner-optionsWidget-submit-button{text-transform:uppercase;background:#3675ae;border:0;border-radius:0;padding:1px 2px;height:auto;font-size:.9em;margin:0 0 8px 0}
 
 /* ----------  Box Traffic info MAIN ----------*/
 
@@ -1521,6 +1536,7 @@ background:#fff;
 	padding: 1em;
 	background: #fff;
 	box-shadow: 0 0 7px -3px #000;
+	max-width:150px;
 }
 .ui-widget-header {
 	background: none;
