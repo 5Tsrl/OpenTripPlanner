@@ -76,7 +76,7 @@ author: Madeincima.it
 @media screen {
 	 
 /* ----------- RESET DEFAULT STYLES -------------------------------------------------------------- */
-::selection {
+::selection, ::-moz-selection  {
 background: #999;
 color: #fff;
 text-shadow: none;
@@ -453,7 +453,7 @@ a:focus {
 	overflow-y:scroll;
 	-webkit-overflow-scrolling: touch;
 	height:100%;
-	
+	min-height: 350px;
 
 }
 /* ----------  TABS ----------*/
@@ -1520,6 +1520,7 @@ background:#fff;
 	padding: 1em;
 	background: #fff;
 	box-shadow: 0 0 7px -3px #000;
+    position: absolute !important;
 }
 .ui-widget-header {
 	background: none;
