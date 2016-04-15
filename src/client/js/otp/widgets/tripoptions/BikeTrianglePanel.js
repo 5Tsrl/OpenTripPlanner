@@ -216,10 +216,12 @@ otp.widgets.BikeTrianglePanel = new otp.Class({
             if(topo < 0.005) {
                 topo = 0.0;
             }
-            
-            this_.quickFactor = time;
-            this_.flatFactor = topo;
-            this_.safeFactor = safety;
+            //raf gestisce il caso di click su cursor senza movimento (kb3)
+            if(time || topo || safety){
+                this_.quickFactor = time;
+                this_.flatFactor = topo;
+                this_.safeFactor = safety;
+            }
             if(this_.onChanged && typeof(this_.onChanged) === "function") {
                 this_.onChanged();
             }
