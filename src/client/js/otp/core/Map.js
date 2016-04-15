@@ -72,6 +72,40 @@ otp.core.Map = otp.Class({
 
         this.layer_control = L.control.layers(this.baseLayers).addTo(this.lmap);
         L.control.zoom({ position : 'topright' }).addTo(this.lmap);
+        
+        //Locate control
+        
+        L.control.locate({
+            position: 'topright',
+            strings: {
+                title: "mostra la mia posizione",  // title of the locate control
+                metersUnit: "metri", // string for metric units
+                feetUnit: "feet", // string for imperial units
+                popup: "Ti trovi in un raggio di {distance} {unit} da questo punto",  // text to appear if user clicks on circle
+                outsideMapBoundsMsg: "You seem located outside the boundaries of the map" // default message for onLocationOutsideMapBounds
+            },
+            circleStyle: {
+                color: '#136AEC',
+                fillColor: '#136AEC',
+                fillOpacity: 0.15,
+                weight: 2,
+                opacity: 0.5
+            },
+            // inner marker
+            markerStyle: {
+                color: '#136AEC',
+                fillColor: '#2A93EE',
+                fillOpacity: 0.7,
+                weight: 2,
+                opacity: 0.9,
+                radius: 5
+            },
+        });
+        L.control.locate().addTo(this.lmap);
+            
+        
+        
+        
         //this.lmap.addControl(new L.Control.Zoom({ position : 'topright' }));
        
         //Adds debug inspector layers overlay to layers control
