@@ -448,18 +448,9 @@ otp.modules.bikeshare.BikeShareModule =
     	var lmap = this.webapp.map.lmap;
     	 if( lmap.getZoom() < 12   && lmap.hasLayer(this.stationsLayer)  ){
               lmap.removeLayer(this.stationsLayer);
-    		 console.log('togli stazioni');
-    	 }
-    	 if(lmap.getZoom() >= 12   &&  lmap.getZoom() < 16 /*&& !lmap.hasLayer(this.stationsLayer)*/){
+    	}
+    	 if(lmap.getZoom() >= 12  ){
     		 lmap.addLayer(this.stationsLayer);
-    		/* this.stations.each(function(station) {
-    			 setStationMarker(station, 'no-title', this.icons.getMedium(stationData));
-    		 });*/
-    		 
-    		 console.log('metti stazioni piccole');
-    	 }
-    	 if(lmap.getZoom() >= 16  ){
-    		 console.log('icone grandi');
     	 }
      }
     },

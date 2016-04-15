@@ -358,17 +358,10 @@ otp.widgets.ItinerariesWidget =
         var startTimeSpan = 0;
         var endTimeSpan = 0;
         var minPerc = 3;
-        console.log('maxSpan: ' + maxSpan);
         var totPercReserved = minPerc*(itin.itinData.legs.length);
-        console.log('totPercReserved: ' + totPercReserved);
-
         var maxSpanReserved = (maxSpan*totPercReserved)/100;
-        console.log('maxSpanReserved: ' + maxSpanReserved);
-
         var maxSpanReduced = maxSpan - maxSpanReserved;
-        console.log('maxSpanReduced: ' + maxSpanReduced);
-
-
+        
         //maxSpan = itin.itinData.duration*1000;
 
         for(var l=0; l<itin.itinData.legs.length; l++) {
@@ -395,7 +388,6 @@ otp.widgets.ItinerariesWidget =
             
             if(!waitIsset && l!=0){
                 border = '<span class="border"></span>';
-                console.log('---test2---');
             }
             var segment = $('<div class="otp-itinsAccord-header-segment '+leg.mode+'"><span class="durata">' + Math.round(leg.duration/60)+'\'</span>'  +border+'</div>').css({
                 width: legTimePerc+'%',
@@ -643,7 +635,7 @@ otp.widgets.ItinerariesWidget =
         //tripSummaryFooter.append(_tr('Valid') + ' ' + moment().format(otp.config.locale.time.format));
 
         var itinLink = this.constructLink(itin.tripPlan.queryParams, { itinIndex : index });
-        console.log(itinLink);
+        //console.log(itinLink);
         if(this.showItineraryLink) {
             //TRANSLATORS: Links to this itinerary
             tripSummaryFooter.append('<a href="'+itinLink+'">' + _tr("Link to Itinerary") + '</a>');

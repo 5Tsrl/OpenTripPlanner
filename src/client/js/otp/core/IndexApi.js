@@ -61,7 +61,7 @@ otp.core.IndexApi = otp.Class({
         $.ajax(url, {
             success: function(data) {
                 if(_.isEmpty(data)) {
-                    console.log("Error: routes call returned no route data. OTP Message: "+data.message);
+                    //console.log("Error: routes call returned no route data. OTP Message: "+data.message);
                     return;
                 }
                 var sortedRoutes = data;
