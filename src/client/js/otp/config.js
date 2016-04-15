@@ -193,7 +193,7 @@ otp.config = {
          {
              'name': 'Geococker',
              'className': 'otp.core.GeocoderPelias',
-             'url': 'http://bunet.torino.it/suggest',
+             'url': 'http://www.bunet.torino.it/suggest',
              'addressParam': 'query',
          }
      ],
