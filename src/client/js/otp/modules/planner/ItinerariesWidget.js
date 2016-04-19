@@ -437,7 +437,8 @@ otp.widgets.ItinerariesWidget =
         if(mode === "BUS") return '#f0952a';
         if(mode === "TRAM") return '#f0952a';
         if(mode === "CAR") return '#444';
-        return '#97ba43';
+        if(mode === "AIRPLANE") return '#f0f';
+        return '#aaa';
     },
 
 

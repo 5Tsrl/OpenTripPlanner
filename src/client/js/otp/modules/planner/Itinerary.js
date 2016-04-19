@@ -269,8 +269,8 @@ otp.modules.planner.Itinerary = otp.Class({
                 html += '<li><i>' + _tr('Time in transit') +': '+otp.util.Time.secsToHrMin(leg.duration)+'</i></li>';
                 //TRANSLATORS: Alight Public transit route name (agency name
                 //Stop ID ) end time
-                html += '<li><b>' + _tr('Alight') + '</b>: ' + leg.to.name + ' ' + _tr("(%(agency_id)s Stop ID #%(stop_id)s),", {'agency_id': leg.to.stopId.split(':')[0], 'stop_id': leg.to.stopId.split(':')[1] }) + ' ' + otp.util.Time.formatItinTime(leg.endTime, otp.config.locale.time.time_format) + '</li>';
-
+                html += '<li><b>' + _tr('Alight') + '</b>: ' + leg.to.name + ' ' /*+ _tr("(%(agency_id)s Stop ID #%(stop_id)s),", {'agency_id': leg.to.stopId.split(':')[0], 'stop_id': leg.to.stopId.split(':')[1] })*/ + ' - ' + otp.util.Time.formatItinTime(leg.endTime, otp.config.locale.time.time_format) + '</li>';
+                
                 html += '</ul>';
             }
             else if (leg.steps) { // walk / bike / car
