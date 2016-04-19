@@ -85,25 +85,27 @@ otp.core.Map = otp.Class({
                 outsideMapBoundsMsg: "You seem located outside the boundaries of the map" // default message for onLocationOutsideMapBounds
             },
             circleStyle: {
-                color: '#136AEC',
-                fillColor: '#136AEC',
+                color: '#7eb100',
+                fillColor: '#7eb100',
                 fillOpacity: 0.15,
                 weight: 2,
                 opacity: 0.5
             },
             // inner marker
             markerStyle: {
-                color: '#136AEC',
-                fillColor: '#2A93EE',
+                color: '#7eb100',
+                fillColor: '#7eb100',
                 fillOpacity: 0.7,
                 weight: 2,
                 opacity: 0.9,
                 radius: 5
             },
+            icon: 'fa fa-location-arrow',  // class for icon, fa-location-arrow or fa-map-marker
+            follow: true,
         });
-        L.control.locate().addTo(this.lmap);
-            
-        
+        if(! /Edge\/|Trident\/|MSIE /.test(window.navigator.userAgent)){
+            this.lmap.lc = L.control.locate().addTo(this.lmap);
+        }
         
         
         //this.lmap.addControl(new L.Control.Zoom({ position : 'topright' }));

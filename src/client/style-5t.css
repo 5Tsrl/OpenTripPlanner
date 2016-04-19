@@ -581,6 +581,13 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 #map.open{left:0}
 
+.leaflet-control-locate.active a {
+  color: #7eb100;
+}
+.leaflet-control-locate.active.following a {
+  color: #7eb100;
+}
+
 .powered-by {
 	cursor: pointer;
 	z-index: 1000;
@@ -694,6 +701,20 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	padding:0px 0px 0px 30%;
 	font-size:1.1em;
 }
+.mylocation{
+    background-image:url(images/5t/mylocation.png);
+	background-repeat:no-repeat;
+	cursor: pointer;
+	display: block;
+	height: 18px;
+	width: 18px;
+	border: 0;
+    position:absolute;
+	top: 8px;
+	right: 15%;
+}
+
+
 #otp-planner-optionsWidget-locSelector-reverseButton {
 	opacity:0.5;
 	background-image:url(images/icons/ic_arrow_revert_fields_grey.svg);
