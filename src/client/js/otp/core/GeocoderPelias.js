@@ -61,4 +61,23 @@ otp.core.GeocoderPelias = otp.Class({
                 alert("Something went wrong retrieving the geocoder results from: " + this_.url + " for: " + address);
             });
     }
+    ,
+    reverse : function(latlng, callback) {
+        var params = {};
+        //params[this.addressParam] = address;
+        params['lat'] = latlng.lat;
+        params['lng'] = latlng.lng;
+        var this_ = this;
+        var revUrl = this.url.replace('suggest','reverse')
+
+        $.getJSON(revUrl, params)
+            .done( function (data) {
+                var props = data.features[0].properties;
+                var response = props.name + ', ' + props.local_admin_name + ' ('+props.admin1_abbr +')'
+                callback.call(this, response);
+            })
+            .fail( function (err) {
+                alert("Something went wrong retrieving the reverse geocoder result from: " + revUrl + " for: " + latlng.lat);
+            });
+    }
 });
