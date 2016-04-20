@@ -194,11 +194,21 @@ otp.modules.planner.PlannerModule =
         var this_ = this;
         //TRANSLATORS: Context menu
         this.webapp.map.addContextMenuItem(_tr("Set as Start Location"), function(latlng) {
-            this_.setStartPoint(latlng, true);
+            //raf reverse geocoding
+            this_.webapp.geocoders[0].reverse(latlng, function(result) {
+                console.log("got result: "+ result);
+                this_.setStartPoint(latlng, true, result);
+            });
+            //this_.setStartPoint(latlng, true);
         });
         //TRANSLATORS: Context menu
         this.webapp.map.addContextMenuItem(_tr("Set as End Location"), function(latlng) {
-            this_.setEndPoint(latlng, true);
+            //raf reverse geocoding
+            this_.webapp.geocoders[0].reverse(latlng, function(result) {
+                console.log("got result: "+ result);
+                this_.setEndPoint(latlng, true, result);
+            });
+            //this_.setEndPoint(latlng, true);
         });
     },
 
@@ -224,6 +234,7 @@ otp.modules.planner.PlannerModule =
     },
 
     setStartPoint : function(latlng, update, name) {
+        var this_ = this;
         this.startName = (typeof name !== 'undefined') ? name : null;
         this.startLatLng = latlng;
         if(this.startMarker == null) {
@@ -232,7 +243,12 @@ otp.modules.planner.PlannerModule =
             //this.startMarker.bindPopup('<strong>' + pgettext('popup', 'Start') + '</strong>');
             this.startMarker.on('dragend', $.proxy(function() {
                 this.webapp.hideSplash();
-                this.setStartPoint(this.startMarker.getLatLng(), false);
+                //raf reverse geocoding
+                this.webapp.geocoders[0].reverse(this.startMarker.getLatLng(), function(result) {
+                    console.log("got result: "+ result);
+                    this_.setStartPoint(this_.startMarker.getLatLng(), true, result);
+                });
+                //this.setStartPoint(this.startMarker.getLatLng(), false);
                 this.invokeHandlers("startChanged", [this.startLatLng]);
                 if(typeof this.userPlanTripStart == 'function') this.userPlanTripStart();
                 this.planTripFunction.apply(this);//planTrip();
@@ -255,6 +271,7 @@ otp.modules.planner.PlannerModule =
     },
 
     setEndPoint : function(latlng, update, name) {
+        var this_ = this;
         this.endName = (typeof name !== 'undefined') ? name : null;
         this.endLatLng = latlng;
         if(this.endMarker == null) {
@@ -263,7 +280,12 @@ otp.modules.planner.PlannerModule =
             //this.endMarker.bindPopup('<strong>' + _tr('Destination') + '</strong>');
             this.endMarker.on('dragend', $.proxy(function() {
                 this.webapp.hideSplash();
-                this.setEndPoint(this.endMarker.getLatLng(), false);
+                //raf reverse geocoding
+                this.webapp.geocoders[0].reverse(this.endMarker.getLatLng(), function(result) {
+                    console.log("got result: "+ result);
+                    this_.setEndPoint(this_.endMarker.getLatLng(), true, result);
+                });
+                //this.setEndPoint(this.endMarker.getLatLng(), false);
                 this.invokeHandlers("endChanged", [this.endLatLng]);
                 if(typeof this.userPlanTripStart == 'function') this.userPlanTripStart();
                 this.planTripFunction.apply(this);//this_.planTrip();
