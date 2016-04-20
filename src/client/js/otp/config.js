@@ -60,7 +60,7 @@ otp.config = {
     /**
      * The OTP web service locations
      */
-    hostname : "http://mip.5t.torino.it",
+    hostname : "",
     //municoderHostname : "http://localhost:8080",
     //datastoreUrl : 'http://localhost:9000',
     // In the 0.10.x API the base path is "otp-rest-servlet/ws"
@@ -198,6 +198,7 @@ otp.config = {
              'className': 'otp.core.GeocoderPelias',
              'url': 'http://mip.5t.torino.it/suggest',
              'addressParam': 'query',
+             
          }
      ],
 
