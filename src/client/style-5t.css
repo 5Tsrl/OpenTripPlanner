@@ -704,15 +704,23 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 .mylocation{
     background-image:url(images/5t/mylocation.png);
 	background-repeat:no-repeat;
+    background-color:#fff;
 	cursor: pointer;
 	display: block;
 	height: 18px;
 	width: 18px;
 	border: 0;
     position:absolute;
-	top: 8px;
+	top: 4px;
 	right: 15%;
+    opacity: 0.5;
+    -webkit-transition: all .3s;
+	-moz-transition: all .3s;
+	-ms-transition: all .3s;
+	-o-transition: all .3s;
+	transition: all .3s;
 }
+.mylocation:hover{opacity: 1;}
 
 
 #otp-planner-optionsWidget-locSelector-reverseButton {
