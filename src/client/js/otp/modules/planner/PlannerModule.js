@@ -203,12 +203,23 @@ otp.modules.planner.PlannerModule =
     },
 
     handleClick : function(event) {
+        var this_ = this;
         if(this.startLatLng == null) {
-        	this.setStartPoint(new L.LatLng(event.latlng.lat, event.latlng.lng), true);
+            //raf reverse geocoding
+            this.webapp.geocoders[0].reverse(event.latlng, function(result) {
+                console.log("got result: "+ result);
+                this_.setStartPoint(new L.LatLng(event.latlng.lat, event.latlng.lng), true, result);
+            });
+        	//this.setStartPoint(new L.LatLng(event.latlng.lat, event.latlng.lng), true);
         }
 
         else if(this.endLatLng == null) {
-        	this.setEndPoint(new L.LatLng(event.latlng.lat, event.latlng.lng), true);
+            //raf reverse geocoding
+            this.webapp.geocoders[0].reverse(event.latlng, function(result) {
+                console.log("got result: "+ result);
+                this_.setEndPoint(new L.LatLng(event.latlng.lat, event.latlng.lng), true, result);
+            });
+        	//this.setEndPoint(new L.LatLng(event.latlng.lat, event.latlng.lng), true);
         }
     },
 
