@@ -75,7 +75,9 @@ otp.core.GeocoderPelias = otp.Class({
                 var response = null;
                 if(data.features.length>0){
                     var props = data.features[0].properties;
-                    var response = props.name + ', ' + props.local_admin_name + ' ('+props.admin1_abbr +')'
+                    response = props.name + ', ' + props.local_admin_name
+                    if (props.admin1_abbr)
+                        response += ' ('+props.admin1_abbr +')'
                 }
                 callback.call(this, response);
             })
