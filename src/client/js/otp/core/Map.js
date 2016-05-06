@@ -64,7 +64,8 @@ otp.core.Map = otp.Class({
             layers  : [ defaultBaseLayer ],
             center : (otp.config.initLatLng || new L.LatLng(0,0)),
             zoom : (otp.config.initZoom || 2),
-            zoomControl : false
+            zoomControl : false,
+            doubleClickZoom: true
         }
         if(otp.config.minZoom) mapProps['minZoom'] = otp.config.minZoom;  //_.extend(mapProps, { minZoom : otp.config.minZoom });
         if(otp.config.maxZoom) mapProps['maxZoom'] = otp.config.maxZoom; //_.extend(mapProps, { maxZoom : otp.config.maxZoom });
