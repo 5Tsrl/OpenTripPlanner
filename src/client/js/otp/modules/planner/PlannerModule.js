@@ -420,7 +420,7 @@ otp.modules.planner.PlannerModule =
     planTripRequest : function(url, queryParams, successCallback) {
         var this_ = this;
         //raf convert date to ISO 8601 to speak to the server
-        queryParams.date =  moment(this.date, otp.config.locale.time.date_format).format('YYYY-MM-DD'); 
+        queryParams.date =  moment(this.date, ['YYYY-MM-DD',otp.config.locale.time.date_format]).format('YYYY-MM-DD'); 
         this.currentRequest = $.ajax(url, {
             data:       queryParams,
             dataType:   'JSON',
@@ -527,7 +527,7 @@ otp.modules.planner.PlannerModule =
 
         var queryParams = itin.tripPlan.queryParams;
 
-        console.log(itin.itinData);
+        //console.log(itin.itinData);
         for(var i=0; i < itin.itinData.legs.length; i++) {
             var leg = itin.itinData.legs[i];
 
