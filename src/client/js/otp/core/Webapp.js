@@ -224,7 +224,6 @@ otp.core.Webapp = otp.Class({
                 //                        this, options, ich[options.id]);
                 if(options.id){
                     var widg_html = ich[options.id]()
-                    console.log(widg_html) 
                     $('body').append(widg_html)
                     //$(ich[options.id]).appendTo('body')
                     $("<li id='menu-"+id+"'><a href='#"+ options.id +"' class='modalboxMenu'>"+otp.config.infoWidgets[i].title+"</a></li>").appendTo(ul).click(function(e) {
