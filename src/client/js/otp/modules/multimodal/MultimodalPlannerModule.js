@@ -80,7 +80,7 @@ otp.modules.multimodal.MultimodalPlannerModule =
                 sonOf: 'otp-'+this.id+'-optionsWidget'
         };
         this.advancedOptionsWidget = new otp.widgets.tripoptions.TripOptionsWidget(
-            'otp-'+this.id+'-advvancedOptionsWidget', this, advancedOptionsWidgetConfig);
+            'otp-'+this.id+'-advancedOptionsWidget', this, advancedOptionsWidgetConfig);
 
         this.optionsWidget.addControl("time", new otp.widgets.tripoptions.TimeSelector(this.optionsWidget), true);
         // this.optionsWidget.addVerticalSpace(12, true);
@@ -109,7 +109,7 @@ otp.modules.multimodal.MultimodalPlannerModule =
     },
 
     selected : function() {
-        //$('.legend').css("bottom", "-265px")
+        $('.legend').css("bottom", "-265px")
     },
     routesLoaded : function() {
         // set trip / stop viewer widgets

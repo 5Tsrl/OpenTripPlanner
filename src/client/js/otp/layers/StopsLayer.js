@@ -123,7 +123,7 @@ otp.layers.StopsLayer =
         popupContent.find('.stopViewerLink').data('stop', stop).click(function() {
             var thisStop = $(this).data('stop');
             this_.module.stopViewerWidget.show();
-            this_.module.stopViewerWidget.setActiveTime(moment().add("hours", -otp.config.timeOffset).unix()*1000);
+            this_.module.stopViewerWidget.setActiveTime(moment().add( -otp.config.timeOffset,"hours").unix()*1000);
             this_.module.stopViewerWidget.setStop(thisStop.id, thisStop.name);
             this_.module.stopViewerWidget.bringToFront();
             
