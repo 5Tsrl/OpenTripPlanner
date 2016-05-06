@@ -177,7 +177,7 @@ otp.widgets.transit.TripViewerWidget =
         if(url.indexOf('http://trimet.org') === 0) {
             var day = "w";
             if(this.activeLeg) {
-                var dow = moment(this.activeLeg.startTime).add("h", -3).day();
+                var dow = moment(this.activeLeg.startTime).add(-3,"h").day();
                 if(dow === 0) day = "h";
                 if(dow === 6) day = "s";
             }

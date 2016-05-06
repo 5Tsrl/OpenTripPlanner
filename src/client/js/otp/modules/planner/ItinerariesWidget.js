@@ -251,7 +251,7 @@ otp.widgets.ItinerariesWidget =
             var stopId = itin.getFirstStopID();
             _.extend(params, {
                 startTransitStopId :  stopId,
-                date : moment(this_.module.date, otp.config.locale.time.date_format).add('days', 1).format("MM-DD-YYYY"),
+                date : moment(this_.module.date, otp.config.locale.time.date_format).add(1,'days').format("MM-DD-YYYY"),
                 time : serviceBreakTime,
                 arriveBy : true
             });
@@ -353,15 +353,15 @@ otp.widgets.ItinerariesWidget =
         var startTimeSpan = 0;
         var endTimeSpan = 0;
         var minPerc = 3;
-        console.log('maxSpan: ' + maxSpan);
+        //console.log('maxSpan: ' + maxSpan);
         var totPercReserved = minPerc*(itin.itinData.legs.length);
-        console.log('totPercReserved: ' + totPercReserved);
+        //console.log('totPercReserved: ' + totPercReserved);
 
         var maxSpanReserved = (maxSpan*totPercReserved)/100;
-        console.log('maxSpanReserved: ' + maxSpanReserved);
+        //console.log('maxSpanReserved: ' + maxSpanReserved);
 
         var maxSpanReduced = maxSpan - maxSpanReserved;
-        console.log('maxSpanReduced: ' + maxSpanReduced);
+        //console.log('maxSpanReduced: ' + maxSpanReduced);
 
 
         //maxSpan = itin.itinData.duration*1000;
@@ -387,7 +387,7 @@ otp.widgets.ItinerariesWidget =
             
             if(!waitIsset && l!=0){
                 border = '<span class="border"></span>';
-                console.log('---test2---');
+                //console.log('---test2---');
             }
             var segment = $('<div class="otp-itinsAccord-header-segment">'+border+'</div>').css({
                 width: legTimePerc+'%',
@@ -931,7 +931,7 @@ otp.widgets.ItinerariesWidget =
 
     constructLink : function(queryParams, additionalParams) {
         //raf reformat date as locale, while speak iso 8601 with server
-        queryParams.date = moment(queryParams.date).format(otp.config.locale.time.date_format);
+        //queryParams.date = moment(queryParams.date).format(otp.config.locale.time.date_format);
         additionalParams = additionalParams ||  { };
         return otp.config.siteUrl + '?module=' + this.module.id + "&" +
             otp.util.Text.constructUrlParamString(_.extend(_.clone(queryParams), additionalParams));

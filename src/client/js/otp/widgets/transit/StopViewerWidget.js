@@ -73,7 +73,7 @@ otp.widgets.transit.StopViewerWidget =
             onSelect: function(date) {
                 var hrs = moment(this_.activeTime).hours();
                 var mins = moment(this_.activeTime).minutes();
-                this_.activeTime = moment(date).add('hours', hrs).add('minutes', mins).unix() * 1000;
+                this_.activeTime = moment(date).add(hrs,"hours").add(mins,"minutes").unix() * 1000;
                 this_.clearTimes();
                 this_.runTimesQuery();
             }
@@ -104,7 +104,7 @@ otp.widgets.transit.StopViewerWidget =
 
     runTimesQuery : function() {
         var this_ = this;
-        //var startTime = moment(this.datePicker.val(), otp.config.locale.time.date_format).add("hours", -otp.config.timeOffset).unix();
+        //var startTime = moment(this.datePicker.val(), otp.config.locale.time.date_format).add(-otp.config.timeOffset,"hours").unix();
         this.module.webapp.indexApi.runStopTimesQuery(this.stopId, this.datePicker.datepicker("getDate"), this, function(data) {
             this_.times = [];
             // rearrange stoptimes, flattening and sorting;

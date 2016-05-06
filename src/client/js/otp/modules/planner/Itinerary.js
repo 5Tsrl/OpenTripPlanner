@@ -105,15 +105,15 @@ otp.modules.planner.Itinerary = otp.Class({
 
     differentServiceDayFrom : function(itin, offsetHrs) {
         offsetHrs = offsetHrs || 3; // default to 3 hrs; i.e. use 3am as breakpoint between days
-        var time1 = moment(this.itinData.startTime).add("hours", otp.config.timeOffset-offsetHrs).format('D');
-        var time2 = moment(itin.itinData.startTime).add("hours", otp.config.timeOffset-offsetHrs).format('D');
+        var time1 = moment(this.itinData.startTime).add(otp.config.timeOffset-offsetHrs,"hours").format('D');
+        var time2 = moment(itin.itinData.startTime).add(otp.config.timeOffset-offsetHrs,"hours").format('D');
         return time1 !== time2;
     },
 
     differentServiceDayFromQuery : function(queryTime, offsetHrs) {
         offsetHrs = offsetHrs || 3; // default to 3 hrs; i.e. use 3am as breakpoint between days
-        var time1 = moment(this.itinData.startTime).add("hours", otp.config.timeOffset-offsetHrs).format('D');
-        var time2 = moment(queryTime).add("hours", otp.config.timeOffset-offsetHrs).format('D');
+        var time1 = moment(this.itinData.startTime).add(otp.config.timeOffset-offsetHrs,"hours").format('D');
+        var time2 = moment(queryTime).add(otp.config.timeOffset-offsetHrs,"hours").format('D');
         return time1 !== time2;
     },
 
