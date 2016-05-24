@@ -53,7 +53,7 @@ otp.widgets.EventsCategoryWidget =
 		setTimeout(function(){
 			setHeight();
 		}, 1000);
-		$('.features').fadeIn();
+		$('.features').addClass("visible");
 		
     },
 	
@@ -63,7 +63,7 @@ otp.widgets.EventsCategoryWidget =
 		$('ul.tabs li.traffic').removeClass("active");
 		$('.tab-container .traffic').hide();
 		$('.main-menu-5t li#menu-traffic').removeClass("active");
-		$('.features').fadeOut();
+		$('.features').removeClass("visible");
 
     },
 

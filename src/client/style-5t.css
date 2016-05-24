@@ -620,6 +620,9 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	right:10px;
 	z-index:2000;
 }
+.features .tooltip{
+	display:none;
+}
 
 
 

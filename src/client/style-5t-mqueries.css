@@ -199,7 +199,7 @@ strong.trigger-option{
 
 .legend{bottom:20px;left:20px;}
 
-.features{display:block}
+.features.visible{display:block}
 
 .language-switcher{top:18px;right:-60px;left:auto;background:#f0f0f0;}
 .language-switcher span, .language-switcher a{color:#999}
