@@ -114,18 +114,20 @@ otp.widgets.transit.TripViewerWidget =
             idHtml += stop.id; //.agencyId+' #'+stop.id.id;
             if(stop.url) idHtml += '</a>';
             idHtml += '</i></span>'
-            $(idHtml).appendTo(idLine);
+            //$(idHtml).appendTo(idLine);
 
             //TRANSLATORS: Recenter map on this stop (Shown at each stop in
             //Trip viewer
+            /*
             $('<span>&nbsp;[<a href="#">' + _tr('Recenter') + '</a>]</span>').appendTo(idLine)
             .data("stop", stop)
             .click(function(evt) {
                 var stop = $(this).data("stop");
                 this_.module.webapp.map.lmap.panTo(new L.LatLng(stop.lat, stop.lon));
-            });
+            });*/
             //TRANSLATORS: Link to Stop viewer (Shown at each stop in Trip
             //viewer)
+            /*
             $('<span>&nbsp;[<a href="#">' + _tr('Viewer') + '</a>]</span>').appendTo(idLine)
             .data("stop", stop)
             .click(function(evt) {
@@ -139,7 +141,7 @@ otp.widgets.transit.TripViewerWidget =
                 this_.module.stopViewerWidget.setStop(stop.id, stop.name);
                 this_.module.stopViewerWidget.bringToFront();
             });
-
+            */
             // highlight the boarded stops
             if(this.activeLeg && i >= this.activeLeg.from.stopIndex && i <= this.activeLeg.to.stopIndex) {
                 stopIcon.css({ background : '#bbb' });
