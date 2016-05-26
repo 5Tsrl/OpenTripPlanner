@@ -174,9 +174,9 @@ otp.modules.datex.EventCollection =
             //console.log('evento', e);
             var ftext = e.currentTarget.value.toLowerCase();
             //console.log('ftext', ftext);
-            var filtered = this.filter( function(datexEvent){
+            /*var filtered = this.filter( function(datexEvent){
                 return datexEvent.get('eventDescription').indexOf(ftext) > -1
-            });
+            });*/
             //console.log('filtrati', filtered);
             this.each( function(datexEvent){
                     datexEvent.set('filterVisible', datexEvent.get('allText').toLowerCase().indexOf(ftext) > -1);

@@ -303,6 +303,51 @@ var IconCatene = L.Icon.extend({
         popupAnchor: new L.Point(0, -36)
     }
 });
+var IconVento = L.Icon.extend({
+    options: {
+        iconUrl: resourcePath + 'images/5t/marker/marker_wind.png',
+        shadowUrl: null,
+        iconSize: new L.Point(30, 36),
+        iconAnchor: new L.Point(15, 36),
+        popupAnchor: new L.Point(0, -36)
+    }
+});
+var IconIncidente = L.Icon.extend({
+    options: {
+        iconUrl: resourcePath + 'images/5t/marker/marker_car_accident.png',
+        shadowUrl: null,
+        iconSize: new L.Point(30, 36),
+        iconAnchor: new L.Point(15, 36),
+        popupAnchor: new L.Point(0, -36)
+    }
+});
+var IconStradaAperta = L.Icon.extend({
+    options: {
+        iconUrl: resourcePath + 'images/5t/marker/marker_road_open.png',
+        shadowUrl: null,
+        iconSize: new L.Point(30, 36),
+        iconAnchor: new L.Point(15, 36),
+        popupAnchor: new L.Point(0, -36)
+    }
+});
+var IconNeve = L.Icon.extend({
+    options: {
+        iconUrl: resourcePath + 'images/5t/marker/marker_snow.png',
+        shadowUrl: null,
+        iconSize: new L.Point(30, 36),
+        iconAnchor: new L.Point(15, 36),
+        popupAnchor: new L.Point(0, -36)
+    }
+});
+var IconTemporale = L.Icon.extend({
+    options: {
+        iconUrl: resourcePath + 'images/5t/marker/marker_storm.png',
+        shadowUrl: null,
+        iconSize: new L.Point(30, 36),
+        iconAnchor: new L.Point(15, 36),
+        popupAnchor: new L.Point(0, -36)
+    }
+});
 
 
 
@@ -346,6 +391,11 @@ otp.modules.planner.IconFactory = otp.Class({
     chiusura : new IconChiusura(),
     nebbia : new IconNebbia(),
     catene : new IconCatene(),
+    vento  : new IconVento(),
+    incidente  : new IconIncidente(),
+    stradaAperta  : new IconStradaAperta(),
+    neve  : new IconNeve(),
+    temporale  : new IconTemporale(),
     
     
     initialize : function() {
@@ -359,6 +409,11 @@ otp.modules.planner.IconFactory = otp.Class({
             if (event.style == 'chiusura') return this.chiusura
             if (event.style == 'nebbia') return this.nebbia
             if (event.style == 'catene') return this.catene
+            if (event.style == 'vento') return this.vento
+            if (event.style == 'incidente') return this.incidente
+            if (event.style == 'stradaAperta') return this.stradaAperta
+            if (event.style == 'neve') return this.neve
+            if (event.style == 'temporale') return this.temporale
         }
         return this.alert;
     },
