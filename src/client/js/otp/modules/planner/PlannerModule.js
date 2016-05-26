@@ -235,7 +235,8 @@ otp.modules.planner.PlannerModule =
 
     setStartPoint : function(latlng, update, name) {
         var this_ = this;
-        this.startName = (typeof name !== 'undefined') ? name : null;
+        //this.startName = (typeof name !== 'undefined') ? name : null;
+        if(name) {this.startName = name}
         this.startLatLng = latlng;
         if(this.startMarker == null) {
             this.startMarker = new L.Marker(this.startLatLng, {icon: this.icons.startFlag, draggable: true});
@@ -259,7 +260,8 @@ otp.modules.planner.PlannerModule =
             this.startMarker.setLatLng(latlng);
         }
 
-        this.invokeHandlers("startChanged", [latlng, name]);
+        //this.invokeHandlers("startChanged", [latlng, name]);
+        this.invokeHandlers("startChanged", [latlng, this.startName]);
 
         if(update) {
             this.updateTipStep(2);
@@ -272,7 +274,8 @@ otp.modules.planner.PlannerModule =
 
     setEndPoint : function(latlng, update, name) {
         var this_ = this;
-        this.endName = (typeof name !== 'undefined') ? name : null;
+        //this.endName = (typeof name !== 'undefined') ? name : null;
+        if(name) {this.endName = name}
         this.endLatLng = latlng;
         if(this.endMarker == null) {
             this.endMarker = new L.Marker(this.endLatLng, {icon: this.icons.endFlag, draggable: true});
@@ -296,7 +299,7 @@ otp.modules.planner.PlannerModule =
             this.endMarker.setLatLng(latlng);
         }
 
-        this.invokeHandlers("endChanged", [latlng, name]);
+        this.invokeHandlers("endChanged", [latlng, this.endName]);
 
         if(update) {
             if(this.startLatLng) {

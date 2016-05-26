@@ -561,6 +561,7 @@ otp.widgets.ItinerariesWidget =
         alerts = alerts || [];
 
         // create an alert if this is a different day from the searched day
+        if(! itin.tripPlan.queryParams.time){itin.tripPlan.queryParams.time = moment().format('HH:mm')}
         var queryTime = itin.tripPlan.queryParams.date + ' ' + itin.tripPlan.queryParams.time;
         queryTime = moment(queryTime, 'YYYY-MM-DD HH:mm').unix()*1000
         if(itin.differentServiceDayFromQuery(queryTime)) {
