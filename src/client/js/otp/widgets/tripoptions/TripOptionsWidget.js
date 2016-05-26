@@ -24,7 +24,7 @@ otp.widgets.tripoptions.TripOptionsWidget =
 
     scrollPanel : null,
 
-    autoPlan : false,
+    autoPlan : true,
 
     initialize : function(id, module, options) {
 
@@ -293,7 +293,6 @@ otp.widgets.tripoptions.LocationsSelector =
 
     restorePlan : function(data) {
         if(data.queryParams.fromPlace) {
-            console.log("rP: "+data.queryParams.fromPlace);
             var fromName = otp.util.Itin.getLocationName(data.queryParams.fromPlace);
             if(fromName) {
                 $("#"+this.id+"-start").val(fromName);
@@ -366,41 +365,24 @@ otp.widgets.tripoptions.TimeSelector =
             }
         });
         $('#'+this.id+'-date').datepicker("setDate", new Date());
-
         $('#'+this.id+'-time').val(moment().format(otp.config.locale.time.time_format))
-        .keyup(function() {
-            if(otp.config.locale.time.time_format.toLowerCase().charAt(otp.config.locale.time.time_format.length-1) === 'a') {
-                var val = $(this).val().toLowerCase();
-                if(val.charAt(val.length-1) === 'm') {
-                    val = val.substring(0, val.length-1);
-                }
-                if(val.charAt(val.length-1) === 'a' || val.charAt(val.length-1) === 'p') {
-                    if(otp.util.Text.isNumber(val.substring(0, val.length-1))) {
-                        var num = parseInt(val.substring(0, val.length-1));
-                        if(num >= 1 && num <= 12) $(this).val(num + ":00" + val.charAt(val.length-1) + "m");
-                        else if(num >= 100) {
-                            var hour = Math.floor(num/100), min = num % 100;
-                            if(hour >= 1 && hour <= 12 && min >= 0 && min < 60) {
-                                $(this).val(hour + ":" + (min < 10 ? "0" : "") + min + val.charAt(val.length-1) + "m");
-                            }
-                        }
-                    }
-                }
-            }
-            this_.tripWidget.inputChanged({
-                time : $(this).val(),
-            });
-
+        .on('change', function(){
+          //perform validation; if invalid, set to current time
+          if(moment($(this).val(), otp.config.locale.time.time_format).isValid()){
+            this_.tripWidget.inputChanged({ time : $(this).val()});
+          } else {
+            $('#'+this_.id+'-time').val(moment().format(otp.config.locale.time.time_format))
+          }          
         });
 
-        $("#"+this.id+'-nowButton').click(function() {
+        /*$("#"+this.id+'-nowButton').click(function() {
             $('#'+this_.id+'-date').datepicker("setDate", new Date());
             $('#'+this_.id+'-time').val(moment().format(otp.config.locale.time.time_format))
             this_.tripWidget.inputChanged({
                 time : $('#'+this_.id+'-time').val(),
                 date : $('#'+this_.id+'-date').val()
             });
-        });
+        });*/
 
     },
 
@@ -753,24 +735,23 @@ otp.widgets.tripoptions.ModeSelectorIcons =
         }
     },
     
-/*
+
     restorePlan : function(data) {
-        var i = 0;
+        $("ul#tripmode li").removeClass("active")
         for(mode in this.modes) {
             if(mode === data.queryParams.mode) {
                 this.tripWidget.module.mode = data.queryParams.mode;
-                $('#'+this.id+' option:eq('+i+')').prop('selected', true);
+                var modeId = mode.replace(',','-');
+                $("ul#tripmode li#"+modeId).addClass("active");
             }
-            i++;
         }
-
         for(i = 0; i < this.modeControls.length; i++) {
             this.modeControls[i].restorePlan(data);
         }
     },
 
     controlPadding : "8px",
-*/
+
     refreshModeControls : function() {
         /*
         var container = $("#"+this.id+'-widgets');
