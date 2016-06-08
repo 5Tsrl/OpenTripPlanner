@@ -266,13 +266,14 @@ a:focus {
 #main-menu-5t {
 	display: block;
 	position: absolute;
-	background-color: #4089CD;
+	_background-color: #4089CD;
+  background-color: #1961ac;
 	top: 45px;
 	left: 100%;
 	z-index: 20000;
 	width: 100%;
 	height: 100%;
-	padding:20px 0px 0px 20px;
+	padding:25px 0px 0px 44px;
 	-webkit-transition: left .3s;
 	-moz-transition: left .3s;
 	-ms-transition: left .3s;
@@ -291,6 +292,7 @@ a:focus {
 	padding:5px 0px 5px 0px;
 	color:#fff;
 	font-size:1.4em;
+  font-weight: 700;
 }
 #main-menu-5t.active {
 	left: 0%;
@@ -306,7 +308,8 @@ a:focus {
 	right: 10px;
 	width: 28px;
 	height: 15px;
-	background-color: #4089CD;
+	_background-color: #4089CD;
+  background-color: #fff;
 	padding:12px 0px 0px 6px;
 }
 #nav-toggle span,
@@ -316,7 +319,8 @@ a:focus {
   border-radius: 1px;
   height: 3px;
   width: 22px;
-  background: white;
+  _background: white;
+  background-color: #1961ac;
   position: absolute;
   display: block;
   content: '';
@@ -663,6 +667,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 .leaflet-bar a, .leaflet-control-layers-toggle, .leaflet-popup-close-button, .map-tooltip.closable .close, .mapbox-button-icon::before, .mapbox-icon{vertical-align:initial;}
 
 .leaflet-right .leaflet-control{margin-right:25px;}
+.leaflet-control-attribution.leaflet-control{margin-right:0px;}
 .leaflet-top .leaflet-control{margin-top:25px;}
 .leaflet-top .leaflet-control-zoom{margin-top:15px;}
 
@@ -1455,7 +1460,7 @@ background:#fff;
 .otp-itinsAccord-header-segment.wait{
 	height:2px;
 	padding-top:0;
-	margin-top:11px;
+	margin:11px 0;
 	background:#d1d1d1;
 }
 .otp-itinsAccord-header-time {

@@ -57,8 +57,8 @@ strong.trigger-option{
 #nav-toggle span,
 #nav-toggle span:before,
 #nav-toggle span:after {
-  height: 5px;
-  width: 35px;
+  height: 4px;
+  width: 30px;
 }
 #nav-toggle span:before {
   top: -10px;
