@@ -903,6 +903,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 }
 
 
+#sidebar .lista-categorie li{position:relative;}
 #sidebar .lista-categorie li .text{display:none}
 #sidebar .lista-categorie li .fonticon:before{font-size:1.6em;color:#336595;position:relative;top:8px;display:block}
 #sidebar .lista-categorie li.active .fonticon:before,#sidebar .otp-widget .lista-categorie li:hover .fonticon:before{color:#fff}
@@ -910,6 +911,21 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 #sidebar .lista-categorie li.chiusure .fonticon:before{content: '\e814';top:10px}
 #sidebar .lista-categorie li.meteo .fonticon:before{content: '\e81e';font-size:1.9em;top:6px}
 #sidebar .lista-categorie li.altro .fonticon:before{content: '\e810'}
+
+#sidebar .lista-categorie li:hover .text{display:block;position:absolute;top:5px;left:50px;z-index:20;font-size:.9em;font-weight:bold;text-transform:uppercase;background:#204466;padding:8px 10px;}
+#sidebar .lista-categorie li:hover .text:after{
+    display: block;
+    content: '';
+    position: absolute;
+    z-index: 10;
+    left: -14px;
+    top:25%;
+    margin: 0;
+    width: 0;
+    height: 0;
+    border: 7px solid transparent;
+    border-right-color: #204466;
+}
 
 #sidebar .otp-widget .filtroEvt{
 	margin:10px 0px 10px 0px;
