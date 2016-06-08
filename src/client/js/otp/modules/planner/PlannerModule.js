@@ -241,7 +241,7 @@ otp.modules.planner.PlannerModule =
         if(this.startMarker == null) {
             this.startMarker = new L.Marker(this.startLatLng, {icon: this.icons.startFlag, draggable: true});
             //TRANSLATORS: Shown in a popup on first point of a path in a map
-            this.startMarker.bindPopup('<strong>' + pgettext('popup', 'Start') + '</strong>');
+            //this.startMarker.bindPopup('<strong>' + pgettext('popup', 'Start') + '</strong>');
             this.startMarker.on('dragend', $.proxy(function() {
                 this.webapp.hideSplash();
                 //raf reverse geocoding
@@ -280,7 +280,7 @@ otp.modules.planner.PlannerModule =
         if(this.endMarker == null) {
             this.endMarker = new L.Marker(this.endLatLng, {icon: this.icons.endFlag, draggable: true});
             //TRANSLATORS: shown in a popup on last point of a path in a map
-            this.endMarker.bindPopup('<strong>' + _tr('Destination') + '</strong>');
+            //this.endMarker.bindPopup('<strong>' + _tr('Destination') + '</strong>');
             this.endMarker.on('dragend', $.proxy(function() {
                 this.webapp.hideSplash();
                 //raf reverse geocoding

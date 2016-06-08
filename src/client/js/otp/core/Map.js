@@ -36,7 +36,7 @@ otp.core.Map = otp.Class({
         //var baseLayers = {};
         var defaultBaseLayer = null;
         //L.mapbox.accessToken = 'pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw';
-        for(var i=0; i<otp.config.baseLayers.length; i++) { //otp.config.baseLayers.length-1; i >= 0; i--) {
+        for(var i=0; i<otp.config.baseLayers.length; i++) { //otp.config.baseLayers.length-1; i >= 0; i--) 
             var layerConfig = otp.config.baseLayers[i];
 
             var layerProps = { };
