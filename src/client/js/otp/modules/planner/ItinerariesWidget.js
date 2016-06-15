@@ -534,7 +534,8 @@ otp.widgets.ItinerariesWidget =
 
             $(legDiv).accordion({
                 header : 'h3',
-                active: otp.util.Itin.isTransit(leg.mode) ? 0 : false,
+                //active: otp.util.Itin.isTransit(leg.mode) ? 0 : false,
+                active:0,
                 heightStyle: "content",
                 collapsible: true
             });
