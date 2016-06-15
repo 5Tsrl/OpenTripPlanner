@@ -66,12 +66,12 @@ otp.locale.Italian = {
             {
                 title:  'Il servizio',
                 //id:"id-servizio-it"
-                link:   '/home/servizio'
+                link:   '/home/page/il-servizio'
             },
             {
                 title:  'Contatti',
                 //id: "id-contatti-it"
-                link:   '/home/contatti'
+                link:   '/home/page/contatti'
             },
     ],
 
