@@ -53,7 +53,7 @@ otp.locale.Italian = {
     infoWidgets : [
             {
                 title:  'Home',
-                link:   '/home/'
+                link:   '/home'
             },
             {
                 title:  'Calcolo percorsi',
