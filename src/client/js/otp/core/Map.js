@@ -103,9 +103,8 @@ otp.core.Map = otp.Class({
             icon: 'fa fa-location-arrow',  // class for icon, fa-location-arrow or fa-map-marker
             follow: true,
         });
-        if(! /Edge\/|Trident\/|MSIE /.test(window.navigator.userAgent)){
+        //if(! /Edge\/|Trident\/|MSIE /.test(window.navigator.userAgent))
             this.lmap.lc = L.control.locate().addTo(this.lmap);
-        }
         
         
         //this.lmap.addControl(new L.Control.Zoom({ position : 'topright' }));

@@ -260,12 +260,20 @@ otp.widgets.tripoptions.LocationsSelector =
           var lmap = this.tripWidget.module.webapp.map.lmap;
           
           function setStartPointByLocation(e){
-               module.webapp.activeModule.setStartPoint(e.latlng, true);
-               lmap.off('locationfound', setStartPointByLocation);
+              this_.geocoders[0].reverse(e.latlng, function(result) {
+                  console.log("got result: "+ result);
+                  module.webapp.activeModule.setStartPoint(e.latlng, true, result);
+              });
+              //module.webapp.activeModule.setStartPoint(e.latlng, true);
+              lmap.off('locationfound', setStartPointByLocation);
           }
           function setEndPointByLocation(e){
-               module.webapp.activeModule.setEndPoint(e.latlng, true);
-               lmap.off('locationfound', setEndPointByLocation);
+              this_.geocoders[0].reverse(e.latlng, function(result) {
+                    console.log("got result: "+ result);
+                    module.webapp.activeModule.setEndPoint(e.latlng, true, result);
+              });
+              //module.webapp.activeModule.setEndPoint(e.latlng, true);
+              lmap.off('locationfound', setEndPointByLocation);
           }
           
           $('#mylocation-start').click($.proxy(function(){
