@@ -171,13 +171,14 @@ strong.trigger-option{
 }
 #main-menu-5t li {
 	display:inline;
+  position:relative;
 	float: left;
 	margin-left: 8px
 }
 #main-menu-5t li a {
 	font-weight: 600;
 	line-height: 28px;
-	height: 50px;
+	height: 45px;
 	padding: 0 13px;
 	display: block;
 	color: #999;
@@ -188,6 +189,18 @@ strong.trigger-option{
 	border-bottom: 5px solid #1b69b2;
 	background-color:#fff;
 	color: #222;
+}
+#main-menu-5t li.active a:before, #main-menu-5t a:hover:before{
+  display: block;
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 43%;
+  margin: 0;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-bottom-color: #1b69b2;
 }
 #main-menu-5t .active a {
 	background: #fe9b25
