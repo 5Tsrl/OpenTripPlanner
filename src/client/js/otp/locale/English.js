@@ -54,7 +54,7 @@ otp.locale.English = {
     infoWidgets : [
         {
             title:  'Home',
-            link:   '/home'
+            link:   '/home?setLng=en'
         },
         {
             title:  'Route Planner',
@@ -66,11 +66,11 @@ otp.locale.English = {
         },
         {
             title:  'About',
-            link:   '/home/page/il-servizio'
+            link:   '/home/page/about?setLng=en'
         },
         {
             title:  'Contact',
-            link:   '/home/page/contatti'
+            link:   '/home/page/contacts?setLng=en'
         },
     ],
 
