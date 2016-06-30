@@ -748,6 +748,18 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	padding:0px 0px 0px 30px;
 	font-size:1.1em;
 }
+
+#otp-planner-optionsWidget .mylocation{
+	width:15px;
+	height:15px;
+	background:url(images/5t/location.png) 0 0 no-repeat;
+	background-size:cover;
+	border:0;
+	position:absolute;
+	top:3px;
+	right:36px;	
+}
+
 .findplace input{
 	width:65%;
 	height:26px;

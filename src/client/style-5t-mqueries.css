@@ -152,6 +152,10 @@ strong.trigger-option{
 
 }
 
+#otp-planner-optionsWidget .mylocation{
+	right:48px;	
+}
+
 
 }
 
@@ -388,6 +392,15 @@ strong.trigger-option{
 }
 
 
+#otp-planner-optionsWidget .mylocation{
+	width:18px;
+	height:18px;
+	right:48px;	
+}
+
+#otp-planner-optionsWidget .mylocation:hover{
+	background-image:url(images/5t/location-h.png);
+}
 
 }
 
