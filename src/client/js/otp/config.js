@@ -59,14 +59,14 @@ otp.config = {
     /**
      * The OTP web service locations
      */
-    hostname : "http://www.5t.torino.it",
+    hostname : "",
     //municoderHostname : "http://localhost:8080",
     //datastoreUrl : 'http://localhost:9000',
     // In the 0.10.x API the base path is "otp-rest-servlet/ws"
     // From 0.11.x onward the routerId is a required part of the base path.
     // If using a servlet container, the OTP WAR should be deployed to context path /otp
-    restService: "otpws/routers/default",
-
+    restService: "otp/routers/default",
+    
     /**
      * Base layers: the base map tile layers available for use by all modules.
      * Expressed as an array of objects, where each object has the following
@@ -83,28 +83,17 @@ otp.config = {
 
     baseLayers: [
 	{
-	   name: 'OSM',
+	   name: 'Mappa',
 	   //tileUrl : 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
 	   tileUrl : 'http://{s}.mz.5t.torino.it/hot/{z}/{x}/{y}.png',
 	   subdomains : ['a','b','c'],
 	   attribution : 'Data, imagery and map information provided by <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
 	},
         {
-            name: 'Transport Tiles',
+            name: 'Rete trasporti',
             tileUrl: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
             subdomains : ['a','b','c'],
             attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors. Tiles from <a href="http://www.thunderforest.com/transport/">Andy Allan</a>'
-        },
-        {
-            name: 'MapQuest OSM',
-            tileUrl: 'http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
-            subdomains : ['otile1','otile2','otile3','otile4'],
-            attribution : 'Data, imagery and map information provided by <a href="http://open.mapquest.com" target="_blank">MapQuest</a>, <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
-        },
-        {
-            name: 'Conveyal Tiles',
-            tileUrl: 'http://a.tiles.mapbox.com/v3/conveyal.hml987j0/{z}/{x}/{y}.png',
-            attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors. Tiles from MapBox.</a>'
         }
     ],
 
