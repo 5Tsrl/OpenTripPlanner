@@ -18,7 +18,7 @@
 }
 
 #sidebar .otp-eventsWidget {
-		padding:20px 0 10px 0;		
+		padding:20px 0 10px 0;
 }
 
 .tab-content .top{padding-bottom:10px}
@@ -153,7 +153,7 @@ strong.trigger-option{
 }
 
 #otp-planner-optionsWidget .mylocation{
-	right:48px;	
+	right:48px;
 }
 
 
@@ -164,8 +164,8 @@ strong.trigger-option{
 .main-menu-container{
 	position:absolute;
 	top:15px;
-	right:85px;	
-}	
+	right:226px;
+}
 #main-menu-5t {
 	position:static;
 	width:100%;
@@ -221,6 +221,19 @@ strong.trigger-option{
 .language-switcher{top:18px;right:-60px;left:auto;background:#f0f0f0;}
 .language-switcher span, .language-switcher a{color:#999}
 .language-switcher a:hover {background:#f6f6f6;}
+
+#logo_regPie {
+  width: 120px;
+  height: 40px;
+  text-indent: -9999px;
+  font-size: 0;
+  line-height: 0;
+  display: block;
+  float: right;
+  margin: 28px 15px 0 0;
+  background:url(images/5t/RegionePiemonte.jpg) no-repeat top right;
+  background-size:contain;
+}
 
 .features .tooltip{
 	display:none;
@@ -395,7 +408,7 @@ strong.trigger-option{
 #otp-planner-optionsWidget .mylocation{
 	width:18px;
 	height:18px;
-	right:48px;	
+	right:48px;
 }
 
 #otp-planner-optionsWidget .mylocation:hover{
@@ -405,7 +418,7 @@ strong.trigger-option{
 }
 
 @media only screen and (min-width:80em) { /* 1280px */
-	 
+
 #main-menu-5t {
 	display: block;
 	right: 40px;
@@ -415,4 +428,3 @@ strong.trigger-option{
 
 
 }
-

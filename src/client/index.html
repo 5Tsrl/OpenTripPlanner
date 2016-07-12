@@ -52,7 +52,7 @@
 <!-- Mustache/ICanHaz -->
 <script src="//cdn.jsdelivr.net/mustache.js/0.7.2/mustache.js"></script>
 <script src="js/lib/ICanHaz.js"></script>
-<!-- moment-duration-format --> 
+<!-- moment-duration-format -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-duration-format/1.3.0/moment-duration-format.min.js"></script>
 
 
@@ -216,7 +216,7 @@ function setHeight(){
         }
 
         var height = windowHeight-(tabsHeight+topHeight+headerHeight);
-        
+
         /*console.log( '///////////////////////' );
         console.log( windowHeight );
         console.log( tabsHeight);
@@ -230,7 +230,7 @@ function setHeight(){
 var AudioActivated = false;
 
 function initAudio() {
-	
+
 	var supportsAudio = !!document.createElement('audio').canPlayType,
 			audio,
 			loadingIndicator,
@@ -240,21 +240,21 @@ function initAudio() {
 			manualSeek = false;
 
 	if (supportsAudio) {
-		
+
 		var player = 	'<p class="player">\
 							<span id="playtoggle" />\
 							<audio preload="metadata">\
 								<source src="http://www.muoversinpiemonte.it/notiziario/notiziario.mp3" type="audio/mpeg"></source>\
 							</audio>\
-						</p>';									
-		
+						</p>';
+
 		$(".notiziario").append(player);
 
 		audio = $('.player audio').get(0);
 		loadingIndicator = $('.player #loading');
 		positionIndicator = $('.player #handle');
 		timeleft = $('.player #timeleft');
-		
+
 		if ((audio.buffered != undefined) && (audio.buffered.length != 0)) {
 			$(audio).bind('progress', function() {
 				var loaded = parseInt(((audio.buffered.end(0) / audio.duration) * 100), 10);
@@ -264,17 +264,17 @@ function initAudio() {
 		else {
 			loadingIndicator.remove();
 		}
-		
+
 
 		$(audio).bind('play',function(){
-			$("#playtoggle").addClass('playing');		
+			$("#playtoggle").addClass('playing');
 		}).bind('pause ended', function() {
-			$("#playtoggle").removeClass('playing');		
-		});		
-		
-		$("#playtoggle").click(function() {			
-			if (audio.paused) {	audio.play();	} 
-			else { audio.pause(); }			
+			$("#playtoggle").removeClass('playing');
+		});
+
+		$("#playtoggle").click(function() {
+			if (audio.paused) {	audio.play();	}
+			else { audio.pause(); }
 		});
 
 		showPlayer(audio);
@@ -283,13 +283,13 @@ function initAudio() {
 
 // -------- show notiziario --------------------------------------------------------
 function showPlayer(audio) {
-	
+
 	$('.notiziario').click(function(){
 		if(!AudioActivated){
 			$(this).removeClass('close');
-			audio.play();	
+			audio.play();
 			AudioActivated = true;
-		}		
+		}
 	});
 }
 
@@ -307,7 +307,7 @@ $(document).ready(function() {
 		} else if( $('body').width() < 401 && $('.mapoverlay').hasClass('closed')){
 			$('.mapoverlay').show().toggleClass('closed');
 		}
-		setTimeout(function(){webapp.map.lmap.invalidateSize()}, 400);	
+		setTimeout(function(){webapp.map.lmap.invalidateSize()}, 400);
 	});
 
 	$('.mapoverlay').click(function(){
@@ -326,7 +326,7 @@ $(document).ready(function() {
 		if($('body').width() > 960 && $('#branding').hasClass('full-height')) {
 			$('#nav-toggle').click();
 		}
-		
+
 		setTimeout(function(){
 			setHeight();
 		}, 1000);
@@ -366,29 +366,29 @@ $(document).ready(function() {
             }
         });
     }
-		
-	// Init nav toggle		
+
+	// Init nav toggle
 	$( "#nav-toggle" ).click(function() {
 		$( ".main-menu-5t" ).toggleClass("active");
 		$( ".language-switcher" ).toggleClass("active");
 		$( this ).toggleClass("active");
 		$( "#branding" ).toggleClass("full-height");
 	});
-	
+
 
 
 	// ---- Tabs ----------------------------------------------------------------------------------------------------------
 
 	$("ul.tabs").html('<li class="planner left active"><a data-tab="tab1" href="#planner">'+ _tr("Route_planner")+'</a></li>\
 	                   <li class="traffic right">      <a data-tab="tab2" href="#traffic">' +_tr("Traffic_info") +'</a></li>');
-	$("ul#main-menu-5t li").click(function() { 
+	$("ul#main-menu-5t li").click(function() {
 		if($(this).index() == 1 || $(this).index() == 2){
 			//webapp.setActiveModule(webapp.modules[$(this).index()+1]);
 			$(this).siblings().removeClass("active");
-			$(this).addClass("active"); 
+			$(this).addClass("active");
 
 		}
-		
+
 	});
 
 	$('.modalbox').magnificPopup({
@@ -408,13 +408,14 @@ $(document).ready(function() {
 
 	<hgroup id="logo">
 		<h1 id="site-title">Muoversi in Piemonte</h1>
-	</hgroup>  
- 
+	</hgroup>
+
 	<nav id="main-menu-container" class="main-menu-container">
 		<div id="language-switcher" class="language-switcher"></div>
 		<div class="shader"></div>
 		<a id="nav-toggle" href="javascript:void(0)"><span></span></a>
 	</nav>
+	<a href="http://www.regione.piemonte.it/" id="logo_regPie" target="_blank">Regione Piemonte</a>
 
 </header>
 
@@ -426,7 +427,7 @@ $(document).ready(function() {
 
         <div id="tab1" class="tab-content planner active">
         	<div class="top">
-            </div> 
+            </div>
           	<div class="sidebar-scroll">
 	        	<div class="main">
 	        	</div>
@@ -446,7 +447,7 @@ $(document).ready(function() {
 
 	<span class="panel-trigger fonticon"></span>
 
-</div>  
+</div>
 
 <div class="features">
 	<div class="notiziario close"><span class="tooltip">Ascolta il notiziario</span></div>
@@ -462,7 +463,7 @@ $(document).ready(function() {
 			<li class="yellow">Rallentamenti</li>
 			<li class="orange">Intenso</li>
 			<li class="red">Code</li>
-		</ul>	
+		</ul>
 	</div>
 </div>
 <div class="mapoverlay"></div>

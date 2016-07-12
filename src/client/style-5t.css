@@ -74,7 +74,7 @@ author: Madeincima.it
 
 
 @media screen {
-	 
+
 /* ----------- RESET DEFAULT STYLES -------------------------------------------------------------- */
 
 html {
@@ -93,9 +93,9 @@ body {
 body *{
 	font-family: 'Open Sans', sans-serif;
 }
-div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, 
-img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, 
-table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, 
+div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em,
+img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header,
 hgroup, menu, nav, section, summary, time, mark, audio, video {
 	margin: 0;
 	padding: 0;
@@ -252,13 +252,16 @@ a:focus {
 	margin: 0px;
 }
 
+#logo_regPie {
+  display: none;
+}
 /* ----------- NAV ---------- */
 
 .main-menu-container {
 	position: static;
 	top: 70px;
 	display: block;
-	right: 20px;
+	right: 300px;
 }/*
 .main-menu-container #main-menu-5t:nth-child(3) {
 	display: none;
@@ -644,7 +647,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	color:#4089cd;
 	height:35px;width:35px;
 	display:block;
-	background:url(../images/5t/ico-layer.png) 50% 50% no-repeat	
+	background:url(../images/5t/ico-layer.png) 50% 50% no-repeat
 }
 
 .leaflet-right .leaflet-control-layers-expanded a{display:none;}
@@ -709,7 +712,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 }
 #otp-planner-optionsWidget select{
 	-webkit-appearance: none;
-	-moz-appearance: none; 
+	-moz-appearance: none;
 }
 #otp-planner-optionsWidget select,
 #otp-planner-optionsWidget input,.findplace input{
@@ -757,7 +760,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	border:0;
 	position:absolute;
 	top:3px;
-	right:36px;	
+	right:36px;
 }
 
 .findplace input{
@@ -801,7 +804,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	background-repeat:no-repeat;
 	background-position: right -1px;
 	background-size: 23px;
-	overflow:hidden;	
+	overflow:hidden;
 }
 #otp-planner-optionsWidget-timeSelector-timeSelector select,
 #otp-planner-optionsWidget-timeSelector-timeSelector input{
@@ -829,11 +832,11 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	border-radius:0px;
 	box-shadow:none;
 	background:none;
-	width:100%;	
+	width:100%;
 }
 #planner-itinWidget .ui-accordion-header{
 	border:none;
-	background-color:#fff;	
+	background-color:#fff;
 	border-bottom:1px solid #ddd;
 	border-radius:0;
 	margin-left:10%;
@@ -841,7 +844,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	width:80%;
 }
 #planner-itinWidget .ui-accordion-header .ui-accordion-header-icon{
-	display:none;	
+	display:none;
 }
 
 
@@ -858,7 +861,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	margin:0px 10px 0px 0px;
 }
 #tripmode li input{
-	display:none;	
+	display:none;
 }
 #tripmode li label{
 	display:block;
@@ -885,12 +888,12 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 #sidebar .otp-eventsWidget {
 		position:static;
-		padding:5px 0 0 0;		
+		padding:5px 0 0 0;
 }
 #sidebar .otp-widget h2{
   position: static;
 	text-shadow:none;
-	color:#c7dbee;font-weight:normal;	
+	color:#c7dbee;font-weight:normal;
 }
 #sidebar .otp-widget .lista-categorie{
 	position:relative;
@@ -904,7 +907,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	margin:0px 10px 0px 0px;
 }
 #sidebar .otp-widget .lista-categorie li input{
-	display:none;	
+	display:none;
 }
 #sidebar .otp-widget .lista-categorie li label{
 	display:block;
@@ -999,7 +1002,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	background-color:#4089CE;
 	background-size:20px;
 	background-repeat:no-repeat;
-	background-position:center center;	
+	background-position:center center;
 }
 
 #tab2 .main ul .fonticon:before{position:relative;top:7px;font-size:1.5em;color:#fff}
@@ -1075,7 +1078,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
     font-size: 1.4em;
 	background-size:20px;
 	background-repeat:no-repeat;
-	background-position:5px 18px;	
+	background-position:5px 18px;
 }
 
 .event-panel.fonticon:before{position:relative;top:7px;font-size:1.5em;color:#fff}
@@ -1310,7 +1313,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	width:27px;
 	height:27px;
 	text-shadow:none;
-	font-size:1.2em;	
+	font-size:1.2em;
 	text-align:center;
 	float:left;
 	margin-right:10px;
@@ -1340,7 +1343,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	font-size:1em;
 	padding-top:32px;
 	background:url(images/5t/clock.svg) center 0 no-repeat;
-	background-size:25px;	
+	background-size:25px;
 	text-align:center;
 
 }
@@ -1594,7 +1597,7 @@ background:#fff;
     padding-left: 11px;
     padding-top: 5px;
   }
-  
+
 /* ----------  Markers ----------*/
 
 .leaflet-marker-icon div {
