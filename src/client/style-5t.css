@@ -746,7 +746,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 
 }
 #otp-planner-optionsWidget .address-fields .field input{
-	width:85%;
+	width:80%;
 	height:22px;
 	padding:0px 0px 0px 30px;
 	font-size:1.1em;
