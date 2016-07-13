@@ -168,17 +168,11 @@ otp.config = {
      */
 
      geocoders : [
-         {
-             'name': 'google',
-             'className': 'otp.core.Geocoder',
-             'url': 'http://www.5t.torino.it/otp-geocoder/geocode',
-             'addressParam': 'address'
-         }
-         ,{
-             'name': 'geococker',
-             'className': 'otp.core.Geocoder',
-             'url': 'http://bunet.5t.torino.it/otp-geocoder/geocode',
-             'addressParam': 'address'
+       {
+             'name': 'Geococker',
+             'className': 'otp.core.GeocoderPelias',
+             'url': 'http://prontotpl.5t.torino.it/suggest',
+             'addressParam': 'query'
          }
          
      ],
