@@ -19,7 +19,7 @@ otp.widgets.transit.RouteBasedWidget =
 
     module : null,
 
-    agency_id : null,
+    routeId : null,
 
     activeLeg : null,
     timeIndex : null,
@@ -69,10 +69,9 @@ otp.widgets.transit.RouteBasedWidget =
     },
 
     newRouteSelected : function() {
-        this.agency_id = null;
         this.activeLeg = null;
         var route = this.routeLookup[this.routeSelect.prop("selectedIndex")]
-        this.agency_id = route.routeData.id;
+        this.routeId = route.routeData.id;
         this.variantSelect.empty();
         this.clear() //stopList.empty();
         this.checkAndLoadVariants();
@@ -83,61 +82,59 @@ otp.widgets.transit.RouteBasedWidget =
         var variantId = this.variantSelect.val();
         //console.log("new variant selected: "+variantId);
         this.clear() //stopList.empty();
-        this.setActiveVariant(this.module.webapp.indexApi.routes[this.agency_id].variants[variantId]);
+        this.setActiveVariant(this.module.webapp.indexApi.routes[this.routeId].variants[variantId]);
     },
 
     update : function(leg) {
-        //this.clearTimes();
-        this.activeLeg = leg;
-        this.activeTime = leg.startTime;
-        //this.times = times;
+      this.activeLeg = leg;
+      this.activeTime = leg.startTime;
 
-        this.agency_id = leg.agencyId + ":" + leg.routeId;
+      this.routeId = leg.routeId;
 
-        var tiRouteInfo = this.module.webapp.indexApi.routes[this.agency_id];
-        $('#'+this.id+'-routeSelect option:eq('+tiRouteInfo.index+')').prop('selected', true);
+      console.log(this.module.webapp.indexApi.routes);
+      var tiRouteInfo = this.module.webapp.indexApi.routes[leg.routeId];
+      $('#'+this.id+'-routeSelect option:eq('+tiRouteInfo.index+')').prop('selected', true);
 
-        this.checkAndLoadVariants();
+      this.checkAndLoadVariants();
     },
 
     checkAndLoadVariants : function() {
-        var tiRouteInfo = this.module.webapp.indexApi.routes[this.agency_id];
-        if(tiRouteInfo.variants != null) {
-            //console.log("variants exist");
-            this.updateVariants();
-        }
-        else {
-            this.module.webapp.indexApi.loadVariants(this.agency_id, this, this.updateVariants);
-        }
+      var tiRouteInfo = this.module.webapp.indexApi.routes[this.routeId];
+       if(tiRouteInfo.variants != null) {
+           this.updateVariants();
+       }
+       else {
+           this.module.webapp.indexApi.loadVariants(this.routeId, this, this.updateVariants);
+       }
     },
 
     updateVariants : function() {
-        var this_ = this;
-        var route = this.module.webapp.indexApi.routes[this.agency_id];
+      var this_ = this;
+     var route = this.module.webapp.indexApi.routes[this.routeId];
 
-        if(!route.variants) {
-            console.log("ERROR: indexApi.routes.["+this.agency_id+"].variants null in RouteBasedWidget.updateVariants()");
-            return;
-        }
+     if(!route.variants) {
+         console.log("ERROR: indexApi.routes.["+this.routeId+"].variants null in RouteBasedWidget.updateVariants()");
+         return;
+     }
 
-        this.variantSelect.empty();
-        _.each(route.variants, function(variant) {
-            $('<option value='+ variant.id +'>'+variant.desc+'</option>').appendTo(this_.variantSelect);
-        });
+     this.variantSelect.empty();
+     _.each(route.variants, function(variant) {
+         $('<option value='+ variant.id +'>'+variant.desc+'</option>').appendTo(this_.variantSelect);
+     });
 
-        if(this.activeLeg) {
-            this.module.webapp.indexApi.readVariantForTrip(this.activeLeg.agencyId,  this.activeLeg.routeId, this.activeLeg.tripId, this, this.setActiveVariant);
-        }
+     if(this.activeLeg) {
+         this.module.webapp.indexApi.readVariantForTrip(this.activeLeg.routeId, this.activeLeg.tripId, this, this.setActiveVariant);
+     }
 
 
-        if(!this.activeLeg) {
-            this.newVariantSelected();
-        }
+     if(!this.activeLeg) {
+         this.newVariantSelected();
+     }
     },
 
     setActiveVariant : function(variantData) {
-        var this_ = this;
-        var route = this.module.webapp.indexApi.routes[this.agency_id];
+      var this_ = this;
+        var route = this.module.webapp.indexApi.routes[this.routeId];
         this.activeVariant = route.variants[variantData.id];
         $('#'+this.id+'-variantSelect option:eq('+this.activeVariant.index+')').prop('selected', true);
 
