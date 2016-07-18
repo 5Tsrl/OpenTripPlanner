@@ -243,16 +243,18 @@ otp.modules.planner.PlannerModule =
             //TRANSLATORS: Shown in a popup on first point of a path in a map
             //this.startMarker.bindPopup('<strong>' + pgettext('popup', 'Start') + '</strong>');
             this.startMarker.on('dragend', $.proxy(function() {
-                this.webapp.hideSplash();
+                //this.webapp.hideSplash();
                 //raf reverse geocoding
                 this.webapp.geocoders[0].reverse(this.startMarker.getLatLng(), function(result) {
                     console.log("got result: "+ result);
                     this_.setStartPoint(this_.startMarker.getLatLng(), true, result);
                 });
                 //this.setStartPoint(this.startMarker.getLatLng(), false);
+                /*raf 18/7/16 evita doppio calcolo
                 this.invokeHandlers("startChanged", [this.startLatLng]);
                 if(typeof this.userPlanTripStart == 'function') this.userPlanTripStart();
                 this.planTripFunction.apply(this);//planTrip();
+                */
             }, this));
             this.markerLayer.addLayer(this.startMarker);
         }
@@ -264,7 +266,7 @@ otp.modules.planner.PlannerModule =
         this.invokeHandlers("startChanged", [latlng, this.startName]);
 
         if(update) {
-            this.updateTipStep(2);
+            //this.updateTipStep(2);
             if(this.endLatLng) {
                 if(typeof this.userPlanTripStart == 'function') this.userPlanTripStart();
                 this.planTripFunction.apply(this);//this.planTrip();
@@ -289,9 +291,11 @@ otp.modules.planner.PlannerModule =
                     this_.setEndPoint(this_.endMarker.getLatLng(), true, result);
                 });
                 //this.setEndPoint(this.endMarker.getLatLng(), false);
+                /*raf 18/7/16
                 this.invokeHandlers("endChanged", [this.endLatLng]);
                 if(typeof this.userPlanTripStart == 'function') this.userPlanTripStart();
                 this.planTripFunction.apply(this);//this_.planTrip();
+                */
             }, this));
             this.markerLayer.addLayer(this.endMarker);
         }
