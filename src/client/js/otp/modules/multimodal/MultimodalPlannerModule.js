@@ -97,6 +97,10 @@ otp.modules.multimodal.MultimodalPlannerModule =
         modeSelector.addModeControl(new otp.widgets.tripoptions.TrafficSelector(this.optionsWidget));
         //modeSelector.addModeControl(new otp.widgets.tripoptions.EventCategorySelector(this.optionsWidget));
 
+        // hide wheelchair selector only if config explicitly set to false; show by default if setting is not present
+        if(otp.config.showWheelchairOption === undefined || otp.config.showWheelchairOption === true) {
+          modeSelector.addModeControl(new otp.widgets.tripoptions.WheelChairSelector(this.optionsWidget));
+        }
         modeSelector.refreshModeControls();
 
         this.optionsWidget.addSeparator();

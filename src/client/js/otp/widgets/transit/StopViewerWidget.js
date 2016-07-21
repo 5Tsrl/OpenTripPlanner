@@ -118,6 +118,8 @@ otp.widgets.transit.StopViewerWidget =
                     pushTime.routeLongName = this_.module.webapp.indexApi.routes[routeId].routeData.longName;
                     pushTime.time = time.realtimeDeparture;
                     pushTime.serviceDay = time.serviceDay;
+                    pushTime.headsign = time.headsign;
+                    pushTime.blockId = time.blockId;
                     this_.times.push(pushTime);
                 });
             });
