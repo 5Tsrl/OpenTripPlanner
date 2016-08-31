@@ -56,7 +56,7 @@ otp.locale.Italian = {
                 link:   '/home'
             },
             {
-                title:  'Calcolo percorsi',
+                title:  'Calcolo percorso',
                 link:   '#planner'
             },
             {
