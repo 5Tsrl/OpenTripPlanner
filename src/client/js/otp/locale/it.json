@@ -237,5 +237,18 @@
     "Closure": "Chiusure",
     "Weather": "Meteo",
     "Other": "Altro",
-    "Inserisci una parola chiave":"Inserisci una parola chiave"
+    "Inserisci una parola chiave":"Inserisci una parola chiave",
+    "Traffico": "Traffico",
+    "regolare": "regolare" ,
+    "intenso": "intenso" ,
+    "rallentamenti": "rallentamenti" ,    
+    "code": "code",
+    "fra": " fra ",
+    "e": " e ",
+    "in entrambe le direzioni": "in entrambe le direzioni.",
+    "in direzione":"in direzione ",
+    "Terminato": "Terminato",
+    "aggiornato alle":"aggiornato alle ",
+    "dal":" dal ",
+    "al":" al "
 }

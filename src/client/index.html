@@ -242,8 +242,8 @@ function initAudio() {
 	if (supportsAudio) {
 
 		var player = 	'<p class="player">\
-							<span id="playtoggle" />\
-							<audio preload="metadata">\
+							<span title="Ascolta il notiziario" id="playtoggle" />\
+							<audio title="Ascolta il notiziario" preload="metadata">\
 								<source src="http://www.muoversinpiemonte.it/notiziario/notiziario.mp3" type="audio/mpeg"></source>\
 							</audio>\
 						</p>';
@@ -450,21 +450,13 @@ $(document).ready(function() {
 </div>
 
 <div class="features">
-	<div class="notiziario close"><span class="tooltip">Ascolta il notiziario</span></div>
+	<div class="notiziario close"><span title="scolta..." class="tooltip">Ascolta il notiziario</span></div>
 	<a href="https://twitter.com/mipiemonte" class="twitter" target="_blank"><span class="tooltip">Informazioni traffico sul Twitter di Muoversi in Piemonte</span></a>
 </div>
 
 <div id="map">
 	<a class="powered-by" href="http://www.5t.torino.it">Powered by 5T</a>
-	<div class="legend">
-		<h2>Traffico</h2>
-		<ul>
-			<li class="green">Regolare</li>
-			<li class="yellow">Rallentamenti</li>
-			<li class="orange">Intenso</li>
-			<li class="red">Code</li>
-		</ul>
-	</div>
+	<div class="legend"></div>
 </div>
 <div class="mapoverlay"></div>
 

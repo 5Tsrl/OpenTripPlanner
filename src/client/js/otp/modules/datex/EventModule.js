@@ -63,7 +63,7 @@ otp.modules.datex.EventModel =
           id: null,
     },
     initialize: function(){
-
+      
         this.latlng = L.latLng(this.get('lat') , this.get('lng'));
 
         this.set('visible', true);
@@ -78,34 +78,38 @@ otp.modules.datex.EventModel =
 			//qualche minuscola...
 			this.set('primaryLocation',   this.get('primaryLocation').replace("Allacciamento","allacciamento").replace("Svincolo","svincolo")  );
 			this.set('secondaryLocation', this.get('secondaryLocation').replace("Allacciamento","allacciamento").replace("Svincolo","svincolo"));
-			this.set('locationDescription',  "fra "+this.get('primaryLocation')+" e "+this.get('secondaryLocation')  );
+			this.set('locationDescription', _tr('fra')+this.get('primaryLocation') + _tr('e') + this.get('secondaryLocation')  );
 		}else{
 			this.set('locationDescription', this.get('primaryLocation') );
         }
 
         //eventDirection
         if(this.get('direction') == "Entrambe"){
-            this.set('eventDirection', "in entrambe le direzioni.");
+            this.set('eventDirection', _tr("in entrambe le direzioni"));
         }
         else if (this.get('direction') != "" && this.get('secondaryLocation') != ""){
-             this.set('eventDirection', "in direzione "+ this.get('direction')+"." );
+             this.set('eventDirection', _tr("in direzione")+ this.get('direction')+"." );
         }
-
+        
+        //eventDescription in current locale
+        this.set('descriptionLocalized',this.get('eventDescription'))
+        if (i18n.lng() == 'en')
+          this.set('descriptionLocalized',this.get('eventDescriptionEn'))
+        
         //eventTerminated
-        this.set('terminated', (this.get('status') == 'Terminato' ? true : false));
+        this.set('terminated', (this.get('status') == _tr('Terminato') ? true : false));
 
         //ritorna la riga con le date di inizio/fine a seconda dell'evento
         if(this.get('dob')=='LOS' || this.get('dob')=='PRE' || this.get('dob')=='ACC'|| this.get('dob')=='FOS')
-			{this.set('eventDates',  "aggiornato alle " + this.get('formattedUpdateDate'));
-		}
+			     {this.set('eventDates',  _tr("aggiornato alle") + moment(this.get('formattedUpdateDate'),"HH:mm").format(otp.config.locale.time.time_format));}
         else {
-			var alDate="";
-			if(this.get('endDate')){
-				alDate= " al "+this.get('endDate').replace("23:59","");
-			}
-			this.set('eventDates',  "dal "+this.get('startDate').replace("00:00","") + alDate );
-		}
-        this.set('allText',  this.get('roadNumber') + this.get('roadName') + this.get('locationDescription')   +   this.get('eventDescription')  );
+    			var alDate="";
+    			if(this.get('endDate')){
+    				alDate= _tr("al")+moment(this.get('endDate'),"DD/MM/YY").format(otp.config.locale.time.date_format);
+    			}
+    			this.set('eventDates',  _tr("dal") +moment(this.get('startDate'),"DD/MM/YY").format(otp.config.locale.time.date_format) + alDate );
+    		}
+        this.set('allText',  this.get('roadNumber') + this.get('roadName') + this.get('locationDescription')   +   this.get('eventDescription') +    this.get('eventDescriptionEn') );
 
     },
     distanceTo: function(point) {
@@ -368,6 +372,7 @@ otp.modules.datex.EventModule =
         if(this.activated) return;
         this.initEvents();
         this.initInfos();
+        this.initLegend();
         //this.eventsLayer = new L.LayerGroup();
         this.trafficLayerGroup = new L.LayerGroup();
         this.closureLayerGroup = new L.LayerGroup();
@@ -415,7 +420,7 @@ otp.modules.datex.EventModule =
         this.trafficEventsWidget.showInfos(this.infos, this);
         this.trafficEventsWidget.setContentAndShow(this.events, this);
         //$('.legend').show()
-        if($('#nav-toggle').is(":visible") == false)
+        if($('#nav-toggle').is(":visible") == false)//no legenda su mobile
             $('.legend').css("bottom", "20px")
     },
 
@@ -516,7 +521,18 @@ otp.modules.datex.EventModule =
     initInfos : function() {
         this.infos = new otp.modules.datex.InfoCollection();
         //this.infos.on('reset', this.onResetEvents, this);
-        this.infos.fetch({reset: true});
+        this.infos.fetch({reset: true});        
+    },
+    initLegend : function() {
+        var legend = {};
+        legend.title = _tr('Traffico')
+        legend.regolare = _tr('regolare')
+        legend.rallentamenti = _tr('rallentamenti')
+        legend.intenso = _tr('intenso')
+        legend.code = _tr('code')
+        $('.legend').html( ich['otp-datexLegend']({legend: legend})
+        );
+        
         
     },
 

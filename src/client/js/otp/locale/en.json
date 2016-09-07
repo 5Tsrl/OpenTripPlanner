@@ -235,5 +235,19 @@
     "Closure": "Closure",
     "Weather": "Weather",
     "Other": "Other",
-    "Inserisci una parola chiave":"Insert keyword"
+    "Inserisci una parola chiave":"Insert keyword",
+    "Traffico": "Traffic",
+    "regolare": "free" ,
+    "intenso": "heavy" ,
+    "rallentamenti": "delayed" ,    
+    "code": "queued",
+    "fra": "between ",
+    "e": " and ",
+    "in entrambe le direzioni": "in both directions.",
+    "in direzione":"towards ",
+    "Terminato": "Terminated",
+    "aggiornato alle":"updated at ",
+    "dal":" since ",
+    "al":" to "
+    
 }
