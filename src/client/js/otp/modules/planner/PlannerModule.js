@@ -246,10 +246,12 @@ otp.modules.planner.PlannerModule =
                 //this.webapp.hideSplash();
                 //raf reverse geocoding
                 this.webapp.geocoders[0].reverse(this.startMarker.getLatLng(), function(result) {
-                    console.log("got result: "+ result);
+                    console.log("reverse geocoding result: "+ result);
                     this_.setStartPoint(this_.startMarker.getLatLng(), true, result);
                 });
                 //this.setStartPoint(this.startMarker.getLatLng(), false);
+                // start flag has beenpicked up, clear any name that was set
+                this.startName=null;
                 /*raf 18/7/16 evita doppio calcolo
                 this.invokeHandlers("startChanged", [this.startLatLng]);
                 if(typeof this.userPlanTripStart == 'function') this.userPlanTripStart();
@@ -284,14 +286,16 @@ otp.modules.planner.PlannerModule =
             //TRANSLATORS: shown in a popup on last point of a path in a map
             //this.endMarker.bindPopup('<strong>' + _tr('Destination') + '</strong>');
             this.endMarker.on('dragend', $.proxy(function() {
-                this.webapp.hideSplash();
+                //this.webapp.hideSplash();
                 //raf reverse geocoding
                 this.webapp.geocoders[0].reverse(this.endMarker.getLatLng(), function(result) {
                     console.log("got result: "+ result);
                     this_.setEndPoint(this_.endMarker.getLatLng(), true, result);
                 });
                 //this.setEndPoint(this.endMarker.getLatLng(), false);
-                /*raf 18/7/16
+                // end flag has beenpicked up, clear any name that was set
+                this.endName=null;
+                /*raf 18/7/16  evita doppio calcolo
                 this.invokeHandlers("endChanged", [this.endLatLng]);
                 if(typeof this.userPlanTripStart == 'function') this.userPlanTripStart();
                 this.planTripFunction.apply(this);//this_.planTrip();
@@ -329,11 +333,11 @@ otp.modules.planner.PlannerModule =
     },
 
     restoreMarkers : function(queryParams) {
-      	this.startLatLng = otp.util.Geo.stringToLatLng(otp.util.Itin.getLocationPlace(queryParams.fromPlace));
-    	this.setStartPoint(this.startLatLng, false);
+        this.startLatLng = otp.util.Geo.stringToLatLng(otp.util.Itin.getLocationPlace(queryParams.fromPlace));
+        this.setStartPoint(this.startLatLng, false,this.startName);
 
-      	this.endLatLng = otp.util.Geo.stringToLatLng(otp.util.Itin.getLocationPlace(queryParams.toPlace));
-    	this.setEndPoint(this.endLatLng, false);
+        this.endLatLng = otp.util.Geo.stringToLatLng(otp.util.Itin.getLocationPlace(queryParams.toPlace));
+        this.setEndPoint(this.endLatLng, false,this.endName);
     },
 
     planTrip : function(existingQueryParams, apiMethod) {
@@ -680,15 +684,15 @@ otp.modules.planner.PlannerModule =
     // legacy -- deprecated by restoreTrip (above)
     restorePlan : function(data){
 
-    	this.startLatLng = new L.LatLng(data.startLat, data.startLon);
-    	this.setStartPoint(this.startLatLng, false);
+        this.startLatLng = new L.LatLng(data.startLat, data.startLon);
+        this.setStartPoint(this.startLatLng, false,this.startName);
 
-    	this.endLatLng = new L.LatLng(data.endLat, data.endLon);
-    	this.setEndPoint(this.endLatLng, false);
+        this.endLatLng = new L.LatLng(data.endLat, data.endLon);
+        this.setEndPoint(this.endLatLng, false,this.endName);
 
-    	this.webapp.setBounds(new L.LatLngBounds([this.startLatLng, this.endLatLng]));
+        this.webapp.setBounds(new L.LatLngBounds([this.startLatLng, this.endLatLng]));
 
-    	this.planTrip(data.data, true);
+        this.planTrip(data.data, true);
     },
 
 
