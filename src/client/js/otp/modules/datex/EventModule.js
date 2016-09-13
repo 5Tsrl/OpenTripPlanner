@@ -373,6 +373,7 @@ otp.modules.datex.EventModule =
         this.initEvents();
         this.initInfos();
         this.initLegend();
+        this.initNotiziarioAndTwitter();
         //this.eventsLayer = new L.LayerGroup();
         this.trafficLayerGroup = new L.LayerGroup();
         this.closureLayerGroup = new L.LayerGroup();
@@ -530,10 +531,12 @@ otp.modules.datex.EventModule =
         legend.rallentamenti = _tr('rallentamenti')
         legend.intenso = _tr('intenso')
         legend.code = _tr('code')
-        $('.legend').html( ich['otp-datexLegend']({legend: legend})
-        );
-        
-        
+        $('.legend').html( ich['otp-datexLegend']({legend: legend}))
+    },
+
+    initNotiziarioAndTwitter : function() {
+      $('.features .notiziario').attr('title', _tr('Ascolta il notiziario'))
+      $('.features .twitter').attr('title', _tr('Seguici su Twitter'))
     },
 
     reloadEvents : function(events) {

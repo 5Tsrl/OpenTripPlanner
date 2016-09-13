@@ -53,7 +53,7 @@ otp.locale.Italian = {
     infoWidgets : [
             {
                 title:  'Home',
-                link:   '/home'
+                link:   'http://mip.muoversinpiemonte.it/'
             },
             {
                 title:  'Calcolo percorso',
@@ -66,12 +66,12 @@ otp.locale.Italian = {
             {
                 title:  'Il servizio',
                 //id:"id-servizio-it"
-                link:   '/home/page/il-servizio'
+                link:   'http://mip.muoversinpiemonte.it/page/il-servizio'
             },
             {
                 title:  'Contatti',
                 //id: "id-contatti-it"
-                link:   '/home/page/contatti'
+                link:   'http://mip.muoversinpiemonte.it/page/contatti'
             },
     ],
 

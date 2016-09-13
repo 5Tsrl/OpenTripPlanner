@@ -54,7 +54,7 @@ otp.locale.English = {
     infoWidgets : [
         {
             title:  'Home',
-            link:   '/home?setLng=en'
+            link:   'http://mip.muoversinpiemonte.it/'
         },
         {
             title:  'Journey Planner',
@@ -66,11 +66,11 @@ otp.locale.English = {
         },
         {
             title:  'About',
-            link:   '/home/page/about?setLng=en'
+            link:   'http://mip.muoversinpiemonte.it/page/about'
         },
         {
             title:  'Contact',
-            link:   '/home/page/contacts?setLng=en'
+            link:   'http://mip.muoversinpiemonte.it/page/contacts'
         },
     ],
 

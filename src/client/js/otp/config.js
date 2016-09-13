@@ -243,7 +243,8 @@ var options = {
 	debug: true,
 	getAsync: false, //TODO: make async
 	fallbackOnEmpty: true,
-    load: 'unspecific',
+  load: 'unspecific',
+  cookieDomain: '.muoversinpiemonte.it',
 };
 var _tr = null; //key
 var ngettext = null; // singular, plural, value
@@ -253,7 +254,6 @@ var npgettext = null; // context, singular, plural, value
 i18n.addPostProcessor('add_nekaj', function(val, key, opts) {
     return "|"+val+"|";
 });
-
 i18n.init(options, function(t) {
     //Sets locale and metric based on currently selected/detected language
     if (i18n.lng() in otp.config.locales) {
