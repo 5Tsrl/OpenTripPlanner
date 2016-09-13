@@ -771,7 +771,7 @@ msgstr "ovest"
 #: src/client/js/otp/util/Itin.js:118
 #, fuzzy
 msgid "northwest"
-msgstr "nod-ovest"
+msgstr "nord-ovest"
 
 #. depart at street name/corner of x y etc. (First instruction in
 #. itinerary)
