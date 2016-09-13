@@ -302,8 +302,8 @@ otp.widgets.ItinerariesWidget =
     renderHeaderContent : function(itin, index, parentDiv) {
         parentDiv.empty();
         var divTimes = $('<div class="times"></div>');
-        var partenza = moment(itin.itinData.startTime).format('HH:mm');
-        var arrivo   = moment(itin.itinData.endTime).format('HH:mm');
+        var partenza = moment(itin.itinData.startTime).format(otp.config.locale.time.time_format);
+        var arrivo   = moment(itin.itinData.endTime).format(otp.config.locale.time.time_format);
         var durata   = moment.duration(itin.itinData.duration, 'seconds').format('H[h] mm[m]');
         divTimes.html(partenza + ' &rarr; '+ arrivo + ' <span class="duration"><span class="hidden">durata: </span>'+ durata + '</span>' );
         var div = $('<div class="summary-aux"></div>').appendTo(parentDiv);
@@ -562,8 +562,13 @@ otp.widgets.ItinerariesWidget =
         alerts = alerts || [];
 
         // create an alert if this is a different day from the searched day
-        if(! itin.tripPlan.queryParams.time){itin.tripPlan.queryParams.time = moment().format('HH:mm')}
-        var queryTime = itin.tripPlan.queryParams.date + ' ' + itin.tripPlan.queryParams.time;
+        var queryParamTime;
+        if(! itin.tripPlan.queryParams.time){
+          queryParamTime = moment().format('HH:mm')
+        } else {
+          queryParamTime = moment(itin.tripPlan.queryParams.time, otp.config.locale.time.time_format).format('HH:mm')
+        }
+        var queryTime = itin.tripPlan.queryParams.date + ' ' + queryParamTime;
         queryTime = moment(queryTime, 'YYYY-MM-DD HH:mm').unix()*1000
         if(itin.differentServiceDayFromQuery(queryTime)) {
             //TRANSLATORS: Shown as alert text before showing itinerary.

@@ -458,8 +458,8 @@ otp.modules.planner.IconFactory = otp.Class({
         html += '</div>';
         //Removes AM/PM at the end of time if it exists (Time is too long
         //otherwise)
-        var time_format = (otp.config.locale.time.time_format.slice(-1) === 'a') ? otp.config.locale.time.time_format.slice(0, -1) : otp.config.locale.time.time_format;
-        html +=  '<span>' + otp.util.Time.formatItinTime(time, time_format) + '</span>';
+        //var time_format = (otp.config.locale.time.time_format.slice(-1) === 'a') ? otp.config.locale.time.time_format.slice(0, -1) : otp.config.locale.time.time_format;
+        html +=  '<span>' + otp.util.Time.formatItinTime(time, otp.config.locale.time.time_format) + '</span>';
         
         if(quadrant === 'nw') anchor = [89,52];//[32,44];
         if(quadrant === 'ne') anchor = [0,52];//[0,44];
