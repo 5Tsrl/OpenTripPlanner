@@ -41,16 +41,16 @@ otp.widgets.transit.RouteBasedWidget =
 
         var routeSelectDiv = $('<header class="otp-tripViewer-select notDraggable" />').appendTo(this.mainDiv);
         //TRANSLATORS: Public transit Route: routename (Used in Trip viewer)
-        $('<label for="'+this.id+'-routeSelect" >' + _tr('Route:') + '</label>').appendTo(routeSelectDiv);
-        this.routeSelect = $('<select id="'+this.id+'-routeSelect" style="width:100%;"></select>')
-        .appendTo($('<div style="margin-left:60px;">').appendTo(routeSelectDiv))
+        $('<label for="routeSelect" >' + _tr('Route:') + '</label>').appendTo(routeSelectDiv);
+        this.routeSelect = $('<select id="routeSelect"></select>')
+        .appendTo(routeSelectDiv)
         .change(function() {
             this_.newRouteSelected();
         });
 
         _.each(module.webapp.indexApi.routes, function(route, key) {
             var optionHtml = '<option>';
-            if(route.routeData.shortName) optionHtml += '('+route.routeData.shortName+') ';
+            if(route.routeData.shortName) optionHtml += route.routeData.shortName+' ';
             if(route.routeData.longName) optionHtml += route.routeData.longName;
             optionHtml += '</option>';
             this_.routeSelect.append($(optionHtml));
@@ -58,12 +58,13 @@ otp.widgets.transit.RouteBasedWidget =
         });
 
 
-        var variantSelectDiv = $('<header class="otp-tripViewer-select notDraggable" />').appendTo(this.mainDiv);
+        //var variantSelectDiv = $('<header class="otp-tripViewer-select notDraggable" />').appendTo(this.mainDiv);
+        var variantSelectDiv = $('<div class="otp-tripViewer-select notDraggable" />').appendTo(routeSelectDiv);
         //TRANSLATORS: Public Transit Route variant: Start - end stop (Used in
         //trip viewer)
-        $('<label for="'+this.id+'-variantSelect">' + _tr('Variant:') + '</label>').appendTo(variantSelectDiv);
-        this.variantSelect = $('<select id="'+this.id+'-variantSelect" style="width:100%;"></select>')
-        .appendTo($('<div style="margin-left:60px;">').appendTo(variantSelectDiv))
+        $('<label for="variantSelect">' + _tr('Variant:') + '</label>').appendTo(variantSelectDiv);
+        this.variantSelect = $('<select id="-variantSelect"></select>')
+        .appendTo(variantSelectDiv)
         .change(function() {
             this_.newVariantSelected();
         });

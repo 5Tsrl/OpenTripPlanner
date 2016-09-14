@@ -337,7 +337,7 @@ public class TripPattern implements Cloneable, Serializable {
     }
 
     private static String stopNameAndId (Stop stop) {
-        return stop.getName() + " (" + GtfsLibrary.convertIdToString(stop.getId()) + ")";
+        return stop.getName() //5t + " (" + GtfsLibrary.convertIdToString(stop.getId()) + ")";
     }
 
     /**
@@ -428,11 +428,13 @@ public class TripPattern implements Cloneable, Serializable {
             }
             PATTERN : for (TripPattern pattern : routeTripPatterns) {
                 List<Stop> stops = pattern.getStops();
-                StringBuilder sb = new StringBuilder(routeName);
+                //5t StringBuilder sb = new StringBuilder(routeName);
+                StringBuilder sb = new StringBuilder('');
 
                 /* First try to name with destination. */
                 Stop end = stops.get(stops.size() - 1);
-                sb.append(" to " + stopNameAndId(end));
+                //5t sb.append(" to " + stopNameAndId(end));
+                sb.append("verso " + stopNameAndId(end));
                 if (ends.get(end).size() == 1) {
                     pattern.name = sb.toString();
                     continue PATTERN; // only pattern with this last stop
@@ -440,7 +442,7 @@ public class TripPattern implements Cloneable, Serializable {
 
                 /* Then try to name with origin. */
                 Stop start = stops.get(0);
-                sb.append(" from " + stopNameAndId(start));
+                sb.append(" da " + stopNameAndId(start));
                 if (starts.get(start).size() == 1) {
                     pattern.name = (sb.toString());
                     continue PATTERN; // only pattern with this first stop
@@ -473,7 +475,7 @@ public class TripPattern implements Cloneable, Serializable {
                     // There are exactly two patterns sharing this start/end.
                     // The current one must be a subset of the other, because it has no unique via.
                     // Therefore we call it the express.
-                    sb.append(" express");
+                    sb.append(" diretto");
                 } else {
                     // The final fallback: reference a specific trip ID.
                     sb.append(" like trip " + pattern.getTrips().get(0).getId());

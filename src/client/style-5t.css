@@ -714,6 +714,7 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	-webkit-appearance: none;
 	-moz-appearance: none;
 }
+#otp-planner-tripViewerWidget select,
 #otp-planner-optionsWidget select,
 #otp-planner-optionsWidget input,.findplace input{
 	background: transparent;
@@ -1048,6 +1049,9 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 }
 
 #otp-planner-tripViewerWidget{top:120px}
+#otp-planner-tripViewerWidget label{font-weight: bold; }
+#otp-planner-tripViewerWidget select{width: 100%; margin: 10px 0 }
+
 
 /*   infopanel eventi su mappa   */
 .event-panel{
