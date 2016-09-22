@@ -337,7 +337,7 @@ public class TripPattern implements Cloneable, Serializable {
     }
 
     private static String stopNameAndId (Stop stop) {
-        return stop.getName() //5t + " (" + GtfsLibrary.convertIdToString(stop.getId()) + ")";
+        return stop.getName(); //5t + " (" + GtfsLibrary.convertIdToString(stop.getId()) + ")";
     }
 
     /**
@@ -429,7 +429,7 @@ public class TripPattern implements Cloneable, Serializable {
             PATTERN : for (TripPattern pattern : routeTripPatterns) {
                 List<Stop> stops = pattern.getStops();
                 //5t StringBuilder sb = new StringBuilder(routeName);
-                StringBuilder sb = new StringBuilder('');
+                StringBuilder sb = new StringBuilder();
 
                 /* First try to name with destination. */
                 Stop end = stops.get(stops.size() - 1);

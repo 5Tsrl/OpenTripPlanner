@@ -548,7 +548,7 @@ otp.modules.planner.PlannerModule =
             polyline.setStyle({ color : this.getModeColor(leg.mode), weight: weight, opacity: 0.9});
             this.pathLayer.addLayer(polyline);
             polyline.leg = leg;
-            polyline.bindPopup("("+leg.routeShortName+") "+leg.routeLongName);
+            polyline.bindPopup(leg.routeShortName+" - "+leg.routeLongName);
 
             /* Attempt at hover functionality for trip segments on map; disabled due to "flickering" problem
                Alt. future approach: create invisible polygon buffers around polylines

@@ -1542,19 +1542,22 @@ background:#fff;
 	height: auto;
 	border: 0;
 	line-height: 140%;
+  font-weight: bold;
+  padding: 0 0 5px 0;
 }
+
 .otp-stopViewer-timeList {
-    /*raf*/height:300px; top:120px
-	border-color: #eaeaea;
+  height:300px;    
+	border-style: none;
 	margin-top: 0;
 	bottom: 40px;
 }
 .otp-stopViewer-dateInput {
-	background: #fbfbfb;
+	background: #4089cd;
 	padding: 5px 9px 5px 5px;
-	color: #151515;
-	box-shadow: 0 0 10px -4px #e3e3e3 inset;
-	border: 1px solid #ebebeb;
+	color: #fff;
+  border: none;
+  border-bottom: 1px solid #7AADDC;
 }
 .otp-stopViewer-findButton {
 	float: left;

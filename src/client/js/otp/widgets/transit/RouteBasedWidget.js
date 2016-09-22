@@ -93,9 +93,9 @@ otp.widgets.transit.RouteBasedWidget =
 
         this.routeId = leg.routeId;
 
-        console.log(this.module.webapp.indexApi.routes);
+        //console.log(this.module.webapp.indexApi.routes);
         var tiRouteInfo = this.module.webapp.indexApi.routes[leg.routeId];
-        $('#'+this.id+'-routeSelect option:eq('+tiRouteInfo.index+')').prop('selected', true);
+        $('#routeSelect option:eq('+tiRouteInfo.index+')').prop('selected', true);
 
         this.checkAndLoadVariants();
     },

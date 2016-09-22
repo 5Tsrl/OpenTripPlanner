@@ -1,16 +1,18 @@
 <script id="otp-stopViewer" type="text/html">
     
     <div id="stopViewerWidget" class="_otp-stopViewer-container notDraggable">
-        <header class="otp-stopViewer-stopInfo">
-        	{{no_stops_selected}}
-        </header>
+        <header>
+          <div class="otp-stopViewer-stopInfo">
+        	   {{no_stops_selected}}
+          </div>
+          <div class="otp-stopViewer-date">
+               {{date}} <input type='text' class="otp-stopViewer-dateInput" />
+          </div>
+        </header>        
         
-        <div class=" text otp-stopViewer-date" style="overflow-y:hidden">
-			<b>{{date}}</b>: <input type='text' class="otp-stopViewer-dateInput" />
-        </div>
-        <div class="text otp-stopViewer-timeList" style="height:300px; top:120px"></div>
+        <div class="otp-stopViewer-timeList"></div>
         <!--<div class="otp-stopViewer-findButtonRow">
-			<button class="otp-stopViewer-findButton">{{find_stops}}</button>
+			     <button class="otp-stopViewer-findButton">{{find_stops}}</button>
         </div>-->
 
     </div>
@@ -24,7 +26,7 @@
         </div>
         <div class="otp-stopViewer-routeRow">
             {{#routeShortName}}
-                ({{routeShortName}})
+                {{routeShortName}} -
             {{/routeShortName}}
             {{routeLongName}}
         </div>

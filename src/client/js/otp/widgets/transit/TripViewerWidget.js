@@ -144,7 +144,7 @@ otp.widgets.transit.TripViewerWidget =
             */
             // highlight the boarded stops
             if(this.activeLeg && i >= this.activeLeg.from.stopIndex && i <= this.activeLeg.to.stopIndex) {
-                stopIcon.css({ background : '#bbb' });
+                stopIcon.css({ background : 'rgba(64, 137, 205, 0.8)' });//#4089cd
             }
 
             // set up hover functionality (open popup over stop)
@@ -172,7 +172,7 @@ otp.widgets.transit.TripViewerWidget =
 
         var url = variantData.route.url;
         var html = "";
-        if(url) html += 'Link to: <a href="' + url + '" target="_blank">Route Info</a>';
+        if(url) html += _tr('Link to')+' <a href="' + url + '" target="_blank">' + _tr('Route Info') +'</a>';
 
         // TriMet-specific code
         /*
