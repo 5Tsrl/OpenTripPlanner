@@ -60,7 +60,7 @@ otp.config = {
     /**
      * The OTP web service locations
      */
-    hostname : "http://oltrepo:8080",
+    hostname : "",
     //municoderHostname : "http://localhost:8080",
     //datastoreUrl : 'http://localhost:9000',
     // In the 0.10.x API the base path is "otp-rest-servlet/ws"
@@ -83,12 +83,6 @@ otp.config = {
      */
 
     baseLayers: [
-      {
-                name: 'Punti d\'interesse',
-                tileUrl : 'http://{s}.mz.5t.torino.it/hot/{z}/{x}/{y}.png',
-                subdomains : ['a','b','c'],
-                attribution : 'Data, imagery and map information provided by <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
-    	},
     {
             name: 'Mappa',
             //tileUrl: 'https://{s}.tiles.mapbox.com/styles/v1/5t/cikdsh8sv00bfb8m9zh4kmh0r/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNXQiLCJhIjoiY2lrOXBldm53MDAxN3dsbHljaWMxNXp1MSJ9.HM3QS7gUU6QH8CFygD67dA',
@@ -97,7 +91,12 @@ otp.config = {
             accessToken: 'pk.eyJ1IjoiNXQiLCJhIjoiY2lrOXBldm53MDAxN3dsbHljaWMxNXp1MSJ9.HM3QS7gUU6QH8CFygD67dA'
             
     },
-
+    {
+              name: 'Punti d\'interesse',
+              tileUrl : 'http://{s}.mz.5t.torino.it/hot/{z}/{x}/{y}.png',
+              subdomains : ['a','b','c'],
+              attribution : 'Data, imagery and map information provided by <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
+  	},
     {
             name: 'Rete Trasporti',
             tileUrl: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
@@ -198,7 +197,7 @@ otp.config = {
          {
              'name': 'Geococker',
              'className': 'otp.core.GeocoderPelias',
-             'url': 'http://mip.5t.torino.it/suggest',
+             'url': 'https://www.muoversinpiemonte.it/suggest',
              'addressParam': 'query',
              
          }
