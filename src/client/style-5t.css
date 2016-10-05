@@ -649,6 +649,14 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	display:block;
 	background:url(../images/5t/ico-layer.png) 50% 50% no-repeat
 }
+.leaflet-control-locate a{
+ color:#4089cd;
+ height:35px;width:35px;
+ display:block;
+ line-height: 30px;padding-left: 10px;
+ }
+ .leaflet-control-locate a span{font-size: 110%}
+  
 
 .leaflet-right .leaflet-control-layers-expanded a{display:none;}
 .leaflet-control-layers label{padding:3px 0;text-transform:uppercase;font-size:.9em;}

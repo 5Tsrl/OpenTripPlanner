@@ -65,8 +65,8 @@ otp.core.GeocoderPelias = otp.Class({
     reverse : function(latlng, callback) {
         var params = {};
         //params[this.addressParam] = address;
-        params['lat'] = latlng.lat;
-        params['lng'] = latlng.lng;
+        params['lat'] = (Math.round(latlng.lat*100000)/100000);
+        params['lng'] = (Math.round(latlng.lng*100000)/100000);
         var this_ = this;
         var revUrl = this.url.replace('suggest','reverse')
 
@@ -75,7 +75,8 @@ otp.core.GeocoderPelias = otp.Class({
                 var response = null;
                 if(data.features.length>0){
                     var props = data.features[0].properties;
-                    var response = props.name + ', ' + props.local_admin_name + ' ('+props.admin1_abbr +')'
+                    var response = props.name + ', ' + props.local_admin_name //+ ' ('+props.admin1_abbr +')'
+                    if (props.admin1_abbr){ response += ' ('+props.admin1_abbr +')'}
                 }
                 callback.call(this, response);
             })

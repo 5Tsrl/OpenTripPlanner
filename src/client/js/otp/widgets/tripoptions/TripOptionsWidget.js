@@ -256,6 +256,52 @@ otp.widgets.tripoptions.LocationsSelector =
                 this_.activeIndex = this.selectedIndex;
             });
         }
+        
+        if ("geolocation" in navigator) {
+           /* geolocation is available */
+           
+           var module = this.tripWidget.module;
+           var lmap = this.tripWidget.module.webapp.map.lmap;
+           
+           function setStartPointByLocation(e){
+                this_.geocoders[0].reverse(e.latlng, function(result) {
+                   //console.log("got result: "+ result);
+                   module.webapp.activeModule.setStartPoint(e.latlng, true, result);
+                });
+                //module.webapp.activeModule.setStartPoint(e.latlng, true);
+                lmap.off('locationfound', setStartPointByLocation);
+           }
+           function setEndPointByLocation(e){
+                this_.geocoders[0].reverse(e.latlng, function(result) {
+                      //console.log("got result: "+ result);
+                      module.webapp.activeModule.setEndPoint(e.latlng, true, result);
+                });
+                //module.webapp.activeModule.setEndPoint(e.latlng, true);
+                lmap.off('locationfound', setEndPointByLocation);
+           }
+           
+           $('#mylocation-start').click($.proxy(function(){
+               if(lmap.lc._active)  lmap.lc.stop();
+               lmap.lc.start();
+               lmap.on('locationfound', setStartPointByLocation);
+               /*
+               navigator.geolocation.getCurrentPosition(function(position) {
+                   module.setStartPoint({lat:position.coords.latitude, lng:position.coords.longitude}, true);
+               });*/
+           }, this));
+           
+             $('#mylocation-end').click($.proxy(function(){
+                 if(lmap.lc._active)  lmap.lc.stop();
+                 lmap.lc.start();
+                 lmap.on('locationfound', setEndPointByLocation);
+             }, this));
+               
+         } else {
+             /* geolocation is not available */
+               $('#mylocation-start').hide()
+               $('#mylocation-end').hide()
+               
+         }
     },
 
     initInput : function(input, setterFunction) {
