@@ -113,7 +113,8 @@ otp.modules.multimodal.MultimodalPlannerModule =
     },
 
     selected : function() {
-        $('.legend').css("bottom", "-265px")
+        $('.legend').css("bottom", "-265px");
+        $('.leaflet-pelias-control').hide()
     },
     routesLoaded : function() {
         // set trip / stop viewer widgets

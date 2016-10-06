@@ -682,6 +682,10 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 .leaflet-top .leaflet-control{margin-top:25px;}
 .leaflet-top .leaflet-control-zoom{margin-top:15px;}
 
+.leaflet-left .leaflet-control {
+    margin-left: 35px;
+}
+
 /* ----------  WIDGETS ----------*/
 
 .otp-widget-header {

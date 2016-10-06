@@ -47,7 +47,7 @@ otp.core.Map = otp.Class({
             //raf in caso di custom layer, sovrascrivo layer con un L.mapbox.styleLayer
             if(layerConfig.styleUrl){
                 L.mapbox.accessToken = layerConfig.accessToken
-                layer = new L.mapbox.styleLayer(layerConfig.styleUrl)
+                layer = new L.mapbox.styleLayer(layerConfig.styleUrl/*, layerProps*/)
                 
             }
 
@@ -61,21 +61,29 @@ otp.core.Map = otp.Class({
         
 
         var mapProps = { 
-            layers  : [ defaultBaseLayer ],
+            //layers  : [ defaultBaseLayer ], solo così mostra l'attribution su styleUrl mapbox
             center : (otp.config.initLatLng || new L.LatLng(0,0)),
             zoom : (otp.config.initZoom || 2),
-            zoomControl : false,
-            doubleClickZoom: true
+            zoomControl:false
         }
         if(otp.config.minZoom) mapProps['minZoom'] = otp.config.minZoom;  //_.extend(mapProps, { minZoom : otp.config.minZoom });
         if(otp.config.maxZoom) mapProps['maxZoom'] = otp.config.maxZoom; //_.extend(mapProps, { maxZoom : otp.config.maxZoom });
 
         //raf mapbox
         //this.lmap = new L.Map('map', mapProps);
-        this.lmap = new L.mapbox.map('map', null,mapProps);
-
+        this.lmap = new L.mapbox.map('map', null, mapProps);
+        this.baseLayers.Mappa.addTo(this.lmap);
         this.layer_control = L.control.layers(this.baseLayers).addTo(this.lmap);
         L.control.zoom({ position : 'topright' }).addTo(this.lmap);
+        
+        //mapzen geocoder control
+        var options ={
+     		  //focus: true,
+     		  //layers: ["street", "locality"]     		  
+     	  }
+     	  L.control.geocoder(null, options).addTo(this.lmap);
+        
+        
         
         //Locate control
         
@@ -215,7 +223,7 @@ L.geoJson(geojsonFeature).addTo(this.lmap);
         
         this.contextMenu = new otp.core.MapContextMenu(this);
       
-        this.activated = true;        
+        this.activated = true;   
     },
     
     addContextMenuItem : function(text, clickHandler) {
@@ -224,7 +232,7 @@ L.geoJson(geojsonFeature).addTo(this.lmap);
     
     activeModuleChanged : function(oldModule, newModule) {
         
-        //console.log("actModChanged: "+oldModule+", "+newModule);
+        console.log("actModChanged: "+oldModule+", "+newModule);
         
         // hide module-specific layers for "old" module, if applicable
         if(oldModule != null) {

@@ -413,6 +413,8 @@ otp.modules.datex.EventModule =
         lmap.addLayer(this.weatherLayerGroup);
         lmap.addLayer(this.othersLayerGroup);
         
+        $('.leaflet-pelias-control').show()
+        
         //this.refresh();
         this.webapp.map.lmap.on('dragend zoomend', $.proxy(this.refresh, this));
         this.webapp.map.lmap.addLayer(this.tagliatelLayer);
@@ -438,6 +440,7 @@ otp.modules.datex.EventModule =
         lmap.removeLayer(this.closureLayerGroup);
         lmap.removeLayer(this.weatherLayerGroup);
         lmap.removeLayer(this.othersLayerGroup);
+        $('.leaflet-pelias-control').hide()
         
         lmap.removeLayer(this.tagliatelLayer);
         this.trafficEventsWidget.hide();
