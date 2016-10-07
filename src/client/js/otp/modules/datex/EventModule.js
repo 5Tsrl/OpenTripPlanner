@@ -538,7 +538,24 @@ otp.modules.datex.EventModule =
     },
 
     initNotiziarioAndTwitter : function() {
-      $('.features .notiziario').attr('title', _tr('Ascolta il notiziario'))
+      $.ajax({
+       type: 'HEAD',
+       url:'https://www.muoversinpiemonte.it/notiziario/notiziario.mp3',
+       success: function(data, textStatus, request){
+            //console.log(request.getResponseHeader('last-modified'));
+            var lm = request.getResponseHeader('last-modified');
+            //console.log(lm, moment(new Date(lm)).format('HH:mm'))
+            lm = moment(new Date(lm)).format(otp.config.locale.time.time_format)
+            $('.features .notiziario').attr('title', _tr('Ascolta il notiziario') +' '+ lm)
+            
+       },
+       error: function (request, textStatus, errorThrown) {
+            alert('erore', request.getResponseHeader('some_header'));
+       }
+      });
+      
+      
+      
       $('.features .twitter').attr('title', _tr('Seguici su Twitter'))
     },
 
