@@ -652,7 +652,7 @@ otp.widgets.ItinerariesWidget =
         tripSummaryFooter.append(_tr('Valid') + ' ' + moment().format(otp.config.locale.time.format));
 
         var itinLink = this.constructLink(itin.tripPlan.queryParams, { itinIndex : index });
-        console.log(itinLink);
+        //console.log(itinLink);
         if(this.showItineraryLink) {
             //TRANSLATORS: Links to this itinerary
             tripSummaryFooter.append(' | <a href="'+itinLink+'">' + _tr("Link to Itinerary") + '</a>');

@@ -57,7 +57,9 @@ otp.util.Itin = {
             locationStr.split("::")[1] : locationStr;
         if (locationStr.indexOf(",") == -1) return null;
 
-        var [lat,lng]=location.split(",");
+        // explorer meschino var [lat,lng]=location.split(",");
+        var lat=location.split(",")[0];
+        var lng=location.split(",")[1];
         return {lat:lat,lng:lng};
     },
 
@@ -245,7 +247,7 @@ otp.util.Itin = {
                 return this.vertexTypeStrings[vertexType] +  " " + place.name;
             } else {
                 if (vertexType !== "NORMAL") {
-                    console.log(vertexType + " not found in strings!");
+                    //console.log(vertexType + " not found in strings!");
                 }
                 return place.name;
             }

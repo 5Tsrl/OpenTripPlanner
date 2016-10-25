@@ -310,7 +310,7 @@ otp.widgets.tripoptions.LocationsSelector =
             delay: 200, // 500ms between requests.
             source: function(request, response) {
                 this_.geocoders[this_.activeIndex].geocode(request.term, function(results) {
-                    console.log("got results "+results.length);
+                    //console.log("got results "+results.length);
                     response.call(this, _.pluck(results, 'description'));
                     input.data("results", this_.getResultLookup(results));
                 });
@@ -776,7 +776,7 @@ otp.widgets.tripoptions.ModeSelectorIcons =
         for(var i = 0; i < rad.length; i++) {
             rad[i].onclick = function() {
                 $("ul#tripmode li").removeClass("active")
-                console.log(this.value)
+                //console.log(this.value)
                 this.checked = true;
                 $(this.parentElement).addClass("active");
                 this_.tripWidget.inputChanged({
