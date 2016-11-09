@@ -54,7 +54,7 @@ otp.locale.English = {
     infoWidgets : [
         {
             title:  'Home',
-            link:   'http://mip.muoversinpiemonte.it/'
+            link:   'https://www.muoversinpiemonte.it/'
         },
         {
             title:  'Journey Planner',
@@ -66,11 +66,11 @@ otp.locale.English = {
         },
         {
             title:  'About',
-            link:   'http://mip.muoversinpiemonte.it/page/about'
+            link:   'https://www.muoversinpiemonte.it/page/about'
         },
         {
             title:  'Contact',
-            link:   'http://mip.muoversinpiemonte.it/page/contacts'
+            link:   'https://www.muoversinpiemonte.it/page/contacts'
         },
     ],
 
@@ -79,6 +79,7 @@ otp.locale.English = {
         format         : "MMM Do YYYY, h:mma", //moment.js
         date_format    : "MM/DD/YYYY", //momentjs must be same as date_picker format which is by default: mm/dd/yy
         time_format    : "h:mma", //momentjs
+        date_time_format: "MM/DD/YYYY h:mma", //momentjs
         time_format_picker : "hh:mmtt", //http://trentrichardson.com/examples/timepicker/#tp-formatting
     },
 

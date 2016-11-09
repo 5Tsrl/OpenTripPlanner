@@ -431,6 +431,7 @@ strong.trigger-option{
 #sidebar .lista-categorie li:hover .text{
   display:block;
 }
+#sidebar .otp-widget .lista-categorie li:hover .fonticon:before{color:#a2c8ed}
 
 
 }

@@ -53,7 +53,7 @@ otp.locale.Italian = {
     infoWidgets : [
             {
                 title:  'Home',
-                link:   'http://mip.muoversinpiemonte.it/'
+                link:   'https://www.muoversinpiemonte.it/'
             },
             {
                 title:  'Calcolo percorso',
@@ -66,20 +66,21 @@ otp.locale.Italian = {
             {
                 title:  'Il servizio',
                 //id:"id-servizio-it"
-                link:   'http://mip.muoversinpiemonte.it/page/il-servizio'
+                link:   'https://www.muoversinpiemonte.it/page/il-servizio'
             },
             {
                 title:  'Contatti',
                 //id: "id-contatti-it"
-                link:   'http://mip.muoversinpiemonte.it/page/contatti'
+                link:   'https://www.muoversinpiemonte.it/page/contatti'
             },
     ],
 
     time:
     {
         format: "DD.MM.YYYY, HH:mm", //momentjs
-        date_format: "DD/MM/YYYY", //momentjs
+        date_format: "DD.MM.YYYY", //momentjs
         time_format: "HH:mm", //momentjs
+        date_time_format: "DD.MM.YYYY HH:mm", //momentjs
         time_format_picker : "hh:mmtt", //http://trentrichardson.com/examples/timepicker/#tp-formatting
     },
 

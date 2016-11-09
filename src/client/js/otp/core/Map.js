@@ -186,7 +186,7 @@ otp.core.Map = otp.Class({
     
     activeModuleChanged : function(oldModule, newModule) {
         
-        console.log("actModChanged: "+oldModule+", "+newModule);
+        console.log("actModChanged: "+ (oldModule ? oldModule.id : 'nessuno' )+", "+newModule.id);
         
         // hide module-specific layers for "old" module, if applicable
         if(oldModule != null) {

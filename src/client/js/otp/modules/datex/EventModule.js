@@ -84,13 +84,14 @@ otp.modules.datex.EventModel =
         }
 
         //eventDirection
-        if(this.get('direction') == "Entrambe"){
-            this.set('eventDirection', _tr("in entrambe le direzioni"));
+        if(this.get('category') !='weather'){
+          if(this.get('direction') == "Entrambe"){
+              this.set('eventDirection', _tr("in entrambe le direzioni"));
+          }
+          else if (this.get('direction') != "" /*&& this.get('secondaryLocation') != ""*/){
+               this.set('eventDirection', _tr("in direzione")+ this.get('direction')+"." );
+          }
         }
-        else if (this.get('direction') != "" && this.get('secondaryLocation') != ""){
-             this.set('eventDirection', _tr("in direzione")+ this.get('direction')+"." );
-        }
-        
         //eventDescription in current locale
         this.set('descriptionLocalized',this.get('eventDescription'))
         if (i18n.lng() == 'en')
@@ -103,11 +104,22 @@ otp.modules.datex.EventModel =
         if(this.get('dob')=='LOS' || this.get('dob')=='PRE' || this.get('dob')=='ACC'|| this.get('dob')=='FOS')
 			     {this.set('eventDates',  _tr("aggiornato alle") + moment(this.get('formattedUpdateDate'),"HH:mm").format(otp.config.locale.time.time_format));}
         else {
-    			var alDate="";
+    			var dalDate="";
+          var alDate="";
+          if(moment(this.get('startDate'),"DD/MM/YY HH:mm").format("HH:mm") == '00:00'){ //solo data
+                dalDate= moment(this.get('startDate'),"DD/MM/YY").format(otp.config.locale.time.date_format);
+          } else {  //data e ora
+                dalDate= moment(this.get('startDate'),"DD/MM/YY HH:mm").format(otp.config.locale.time.date_time_format);  
+          }
+          
     			if(this.get('endDate')){
-    				alDate= _tr("al")+moment(this.get('endDate'),"DD/MM/YY").format(otp.config.locale.time.date_format);
+            if (moment(this.get('endDate'),"DD/MM/YY HH:mm").format("HH:mm") == '23:59'){
+                alDate= _tr("al")+moment(this.get('endDate'),"DD/MM/YY").format(otp.config.locale.time.date_format);
+            } else {
+              alDate= _tr("al")+moment(this.get('endDate'),"DD/MM/YY HH:mm").format(otp.config.locale.time.date_time_format);
+            }
     			}
-    			this.set('eventDates',  _tr("dal") +moment(this.get('startDate'),"DD/MM/YY").format(otp.config.locale.time.date_format) + alDate );
+    			this.set('eventDates',  _tr("dal") + dalDate + alDate );
     		}
         this.set('allText',  this.get('roadNumber') + this.get('roadName') + this.get('locationDescription')   +   this.get('eventDescription') +    this.get('eventDescriptionEn') );
 
@@ -550,7 +562,7 @@ otp.modules.datex.EventModule =
             
        },
        error: function (request, textStatus, errorThrown) {
-            alert('erore', request.getResponseHeader('some_header'));
+            console.log('erore', request.getResponseHeader('some_header'));
        }
       });
       
