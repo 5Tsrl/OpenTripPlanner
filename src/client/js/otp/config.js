@@ -89,9 +89,7 @@ otp.config = {
             //tileUrl: 'https://{s}.tiles.mapbox.com/styles/v1/5t/cikdsh8sv00bfb8m9zh4kmh0r/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNXQiLCJhIjoiY2lrOXBldm53MDAxN3dsbHljaWMxNXp1MSJ9.HM3QS7gUU6QH8CFygD67dA',
             //tileUrl: 'https://{s}.tiles.mapbox.com/styles/v1/5t/cikdsh8sv00bfb8m9zh4kmh0r/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNXQiLCJhIjoiY2lrOXBldm53MDAxN3dsbHljaWMxNXp1MSJ9.HM3QS7gUU6QH8CFygD67dA',
             styleUrl: 'mapbox://styles/5t/cikdsh8sv00bfb8m9zh4kmh0r',
-            accessToken: 'pk.eyJ1IjoiNXQiLCJhIjoiY2lrOXBldm53MDAxN3dsbHljaWMxNXp1MSJ9.HM3QS7gUU6QH8CFygD67dA',
-            attribution : 'Roby2107'
-            
+            accessToken: 'pk.eyJ1IjoiNXQiLCJhIjoiY2lrOXBldm53MDAxN3dsbHljaWMxNXp1MSJ9.HM3QS7gUU6QH8CFygD67dA'
     },
     {
               name: 'Punti d\'interesse',
@@ -106,10 +104,9 @@ otp.config = {
             attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors. Tiles from <a href="http://www.thunderforest.com/transport/">Andy Allan</a>'
     },
     {
-            name: 'Gray',
+            name: 'Sfondo',
             styleUrl: 'mapbox://styles/5ttorino/ciihb2oo900bcbhm06ky87eh8',
-            accessToken: 'pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw',
-            attribution : 'Raf'
+            accessToken: 'pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw'
 	},
 
     ],
@@ -127,7 +124,7 @@ otp.config = {
     // maxZoom : 20,
 
     /* Whether the map should be moved to contain the full itinerary when a result is received. */
-    zoomToFitResults    : false,
+    zoomToFitResults    : true,
 
     /**
      * Site name / description / branding display options
@@ -179,7 +176,7 @@ otp.config = {
         ,*/{
            id : 'traffic',
            className : 'otp.modules.datex.EventModule',
-           defaultBaseLayer : 'Gray',
+           defaultBaseLayer : 'Sfondo',
            //isDefault: true
        }
     ],
@@ -200,9 +197,8 @@ otp.config = {
          {
              'name': 'Geococker',
              'className': 'otp.core.GeocoderPelias',
-             'url': 'https://www.muoversinpiemonte.it/suggest',
-             'addressParam': 'query',
-             
+             'url': '/suggest',
+             'addressParam': 'query',             
          }
      ],
 

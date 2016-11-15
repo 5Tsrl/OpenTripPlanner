@@ -251,6 +251,12 @@ a:focus {
 #site-title {
 	margin: 0px;
 }
+#site-title a{
+  display:block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
 
 #logo_regPie {
   display: none;
