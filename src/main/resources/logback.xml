@@ -35,6 +35,8 @@
   <logger name="org.opentripplanner.routing.algorithm.GenericAStar" level="info" />
   <!-- Avoid printing debug messages about free-flowing vertices -->
   <logger name="org.opentripplanner.routing.vertextype.IntersectionVertex" level="info" />
+  <!-- raf logs about gtfsrt -->
+  <logger name="org.opentripplanner.routing.edgetype.TimeTable" level="debug" />
   <!-- Avoid printing debug messages when walk limits are exceeded -->
   <logger name="org.opentripplanner.routing.edgetype.PlainStreetEdge" level="info" />
   <!-- Avoid printing info messages about calendars when building graph -->
