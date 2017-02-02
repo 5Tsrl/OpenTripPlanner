@@ -198,8 +198,8 @@ public class TimetableSnapshotSource {
                 // Remove all updates from the buffer
                 buffer.clear(feedId);
             }
-
-            LOG.debug("message contains {} trip updates", updates.size());
+            //raf change level 
+            LOG.warn("message contains {} trip updates", updates.size());
             int uIndex = 0;
             for (TripUpdate tripUpdate : updates) {
                 if (fuzzyTripMatcher != null && tripUpdate.hasTrip()) {
@@ -262,7 +262,7 @@ public class TimetableSnapshotSource {
                 }
 
                 if (appliedBlockCount % logFrequency == 0) {
-                    LOG.info("Applied {} trip updates.", appliedBlockCount);
+                    LOG.warn("Applied {} trip updates.", appliedBlockCount);
                 }
             }
             LOG.debug("end of update message");

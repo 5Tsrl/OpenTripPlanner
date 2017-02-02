@@ -400,7 +400,7 @@ public class Timetable implements Serializable {
             StopTimeUpdate update = updates.next();
 
             int numStops = newTimes.getNumStops();
-            Integer delay = null;
+            Integer delay = 0;
 
             for (int i = 0; i < numStops; i++) {
                 boolean match = false;
@@ -447,11 +447,7 @@ public class Timetable implements Serializable {
                                 return null;
                             }
                         } else {
-                            if (delay == null) {
-                                newTimes.updateArrivalTime(i, TripTimes.UNAVAILABLE);
-                            } else {
-                                newTimes.updateArrivalDelay(i, delay);
-                            }
+                          newTimes.updateArrivalDelay(i, delay);//raf viene propagato l'ultimo valore settato
                         }
 
                         if (update.hasDeparture()) {
@@ -472,12 +468,8 @@ public class Timetable implements Serializable {
                                 LOG.error("Departure time at index {} is erroneous.", i);
                                 return null;
                             }
-                        } else {
-                            if (delay == null) {
-                                newTimes.updateDepartureTime(i, TripTimes.UNAVAILABLE);
-                            } else {
-                                newTimes.updateDepartureDelay(i, delay);
-                            }
+                        } else {                          
+                            newTimes.updateDepartureTime(i, delay); //raf viene propagato l'ultimo valore settato
                         }
                     }
 
@@ -487,25 +479,19 @@ public class Timetable implements Serializable {
                         update = null;
                     }
                 } else {
-                    if (delay == null) {
-                        newTimes.updateArrivalTime(i, TripTimes.UNAVAILABLE);
-                        newTimes.updateDepartureTime(i, TripTimes.UNAVAILABLE);
-                    } else {
-                        newTimes.updateArrivalDelay(i, delay);
-                        newTimes.updateDepartureDelay(i, delay);
-                    }
+                    newTimes.updateArrivalDelay(i, delay);
+                    newTimes.updateDepartureDelay(i, delay);
                 }
             }
             if (update != null) {
-                LOG.error("Part of a TripUpdate object could not be applied successfully.");
+                LOG.error("Part of a TripUpdate object for trip {} could not be applied successfully.", tripId);
                 return null;
             }
         }
         if (!newTimes.timesIncreasing()) {
-            LOG.error("TripTimes are non-increasing after applying GTFS-RT delay propagation.");
+            LOG.error("TripTimes are non-increasing after applying GTFS-RT delay propagation to trip {}.", tripId);
             return null;
         }
-
         LOG.debug("A valid TripUpdate object was applied using the Timetable class update method.");
         return newTimes;
     }
