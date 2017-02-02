@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Calendar;
 import java.util.Collection;
@@ -25,13 +26,15 @@ import java.util.stream.Stream;
 
 import javax.ws.rs.core.Response;
 
-import graphql.schema.GraphQLSchema;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import graphql.ExceptionWhileDataFetching;
+import graphql.schema.GraphQLSchema;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
@@ -968,7 +971,25 @@ public class GraphIndex {
         ExecutionResult executionResult = graphQL.execute(query, operationName, router, variables);
         HashMap<String, Object> content = new HashMap<>();
         if (!executionResult.getErrors().isEmpty()) {
-            content.put("errors", executionResult.getErrors());
+            content.put("errors",
+                executionResult
+                    .getErrors()
+                    .stream()
+                    .map(error -> {
+                        if (error instanceof ExceptionWhileDataFetching) {
+                            HashMap<String, Object> response = new HashMap<String, Object>();
+                            response.put("message", error.getMessage());
+                            response.put("locations", error.getLocations());
+                            response.put("errorType", error.getErrorType());
+                            // Convert stack trace to propr format
+                            Stream<StackTraceElement> stack = Arrays.stream(((ExceptionWhileDataFetching) error).getException().getStackTrace());
+                            response.put("stack", stack.map(StackTraceElement::toString).collect(Collectors.toList()));
+                            return response;
+                        } else {
+                            return error;
+                        }
+                    })
+                    .collect(Collectors.toList()));
         }
         if (executionResult.getData() != null) {
             content.put("data", executionResult.getData());
