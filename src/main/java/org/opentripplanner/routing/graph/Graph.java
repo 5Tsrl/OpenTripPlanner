@@ -56,6 +56,7 @@ import org.opentripplanner.traffic.StreetSpeedSnapshotSource;
 import org.opentripplanner.updater.GraphUpdaterConfigurator;
 import org.opentripplanner.updater.GraphUpdaterManager;
 import org.opentripplanner.updater.stoptime.TimetableSnapshotSource;
+import org.opentripplanner.updater.accessible_trip.AccessibleTripSnapshotSource;
 import org.opentripplanner.util.WorldEnvelope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,6 +125,8 @@ public class Graph implements Serializable {
     public final Map<AgencyAndId, Integer> serviceCodes = Maps.newHashMap();
 
     public transient TimetableSnapshotSource timetableSnapshotSource = null;
+    
+    public transient AccessibleTripSnapshotSource accessibleTripSnapshotSource = null;
 
     private transient List<GraphBuilderAnnotation> graphBuilderAnnotations = new LinkedList<GraphBuilderAnnotation>(); // initialize for tests
 
