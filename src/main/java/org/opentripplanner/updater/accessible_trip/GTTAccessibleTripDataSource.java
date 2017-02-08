@@ -65,7 +65,7 @@ public class GTTAccessibleTripDataSource implements AccessibleTripDataSource, Js
 
     @Override
     public boolean update() {
-        try {
+    	try {
             InputStream stream = HttpUtils.getData(url);
             if (stream == null) {
                 log.warn("Failed to get data from url " + url);
@@ -120,6 +120,7 @@ public class GTTAccessibleTripDataSource implements AccessibleTripDataSource, Js
 
     @Override
     public synchronized List<Trip> getTrips() {
+    	this.update();
         return trips;
     }
 

@@ -61,11 +61,6 @@ public class AccessibleTripUpdater extends PollingGraphUpdater {
      */
     private Boolean purgeExpiredData;
 
-    private Graph graph;
-
-    
-
-
     /**
      * Feed id that is used for the trip ids in the TripUpdates
      */
@@ -77,21 +72,16 @@ public class AccessibleTripUpdater extends PollingGraphUpdater {
     }
 
     @Override
-    protected void configurePolling (Graph graph, JsonNode config) throws Exception {
+    public void configurePolling (Graph graph, JsonNode config) throws Exception {
     	// Create update streamer from preferences
     	feedId = config.path("feedId").asText("");
-        // Set data source type from config JSON
-        String sourceType = config.path("sourceType").asText();
-
         AccessibleTripDataSource source = new GTTAccessibleTripDataSource();
-        
         if (source instanceof JsonConfigurable) {
             ((JsonConfigurable) source).configure(graph, config);
         }
 
         // Configure updater
         LOG.info("Setting up accessible trip updater.");
-        this.graph = graph;
         this.source = source;
         LOG.info("Creating accessible trip updater running every {} seconds : {}", frequencySec, source);
     }
@@ -130,10 +120,9 @@ public class AccessibleTripUpdater extends PollingGraphUpdater {
      */
     @Override
     public void runPolling() {
+    	LOG.debug("runPolling on AccessibleTripUpdater...");
         // Get update lists from update source
         List<Trip> updates = source.getTrips();
-        //boolean fullDataset = source.getFullDatasetValueOfLastUpdates();
-        
         if (updates != null) {
             // Handle trip updates via graph writer runnable
             AccessibleTripGraphWriterRunnable runnable =
@@ -144,6 +133,11 @@ public class AccessibleTripUpdater extends PollingGraphUpdater {
 
     @Override
     public void teardown() {
+    }
+    
+    public String toString() {
+        String s = (source == null) ? "NONE" : source.toString();
+        return "Streaming accessible trip updater with update source = " + s;
     }
 
 }
