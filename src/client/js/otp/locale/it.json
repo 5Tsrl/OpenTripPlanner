@@ -241,7 +241,7 @@
     "Traffico": "Traffico",
     "regolare": "regolare" ,
     "intenso": "intenso" ,
-    "rallentamenti": "rallentamenti" ,    
+    "rallentamenti": "rallentamenti" ,
     "code": "code",
     "fra": " fra ",
     "e": " e ",
@@ -254,6 +254,7 @@
     "Ascolta il notiziario":"Ascolta il notiziario delle ",
     "Seguici su Twitter":"Seguici su Twitter",
     "Link to" : "maggiori",
-    "Route Info": " info sulla linea"
-    
+    "Route Info": " info sulla linea",
+    "This itinerary departs on a different day from the previous one": "Questo percorso parte in un giorno differente rispetto a quello precedente",
+    "This itinerary departs on a different day than the one searched for": "Questa percorso inizia in un giorno differente rispetto a quello selezionato"
 }

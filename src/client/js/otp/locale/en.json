@@ -239,7 +239,7 @@
     "Traffico": "Traffic",
     "regolare": "free" ,
     "intenso": "heavy" ,
-    "rallentamenti": "delayed" ,    
+    "rallentamenti": "delayed" ,
     "code": "queued",
     "fra": "between ",
     "e": " and ",
@@ -252,6 +252,8 @@
     "Ascolta il notiziario":"Traffic news (Italian) updated at ",
     "Seguici su Twitter":"Follow us on Twitter",
     "Link to" : "Link to",
-    "Route Info": "Route Info"
-    
+    "Route Info": "Route Info",
+    "This itinerary departs on a different day from the previous one": "This itinerary departs on a different day from the previous one",
+    "This itinerary departs on a different day than the one searched for": "This itinerary departs on a different day than the one searched for"
+
 }
