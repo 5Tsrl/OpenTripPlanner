@@ -80,7 +80,7 @@ otp.widgets.ItinerariesWidget =
             // create an alert if we moved to another day
             var alerts = null;
             if(newItin.differentServiceDayFrom(oldItin)) {
-                alerts = [ "This itinerary departs on a different day from the previous one"];
+                alerts = [ _tr("This itinerary departs on a different day from the previous one")];
             }
 
             // refresh all itinerary headers
@@ -310,7 +310,7 @@ otp.widgets.ItinerariesWidget =
         div.append(divTimes);
         var divGraficBar = $('<div class="graphicbar"></div>').appendTo(div);
         div.prepend('<div class="otp-itinsAccord-header-number"><span>'+(index+1)+'</span></div>');
-        
+
 
         /*var maxSpan = itin.tripPlan.latestEndTime - itin.tripPlan.earliestStartTime;
         var startPct = (itin.itinData.startTime - itin.tripPlan.earliestStartTime) / maxSpan;
@@ -369,7 +369,7 @@ otp.widgets.ItinerariesWidget =
         for(var l=0; l<itin.itinData.legs.length; l++) {
             var leg = itin.itinData.legs[l];
             var waitIsset = false;
-            
+
             if(lastTime!=leg.startTime && lastTime!=0){
                 var legTimePerc = ((leg.startTime - lastTime)*100)/maxSpan;
                 if(legTimePerc>=1){
@@ -378,13 +378,13 @@ otp.widgets.ItinerariesWidget =
                     }).appendTo(divGraficBar);
                     waitIsset = true;
                 }
-                
+
             }
 
             var legTimePerc = (((leg.endTime - leg.startTime)*(100-(totPercReserved + 4)))/maxSpan) + minPerc;
 
             var border = '';
-            
+
             if(!waitIsset && l!=0){
                 border = '<span class="border"></span>';
                 //console.log('---test2---');
@@ -495,7 +495,7 @@ otp.widgets.ItinerariesWidget =
                     } else {
                         headerHtml += leg.route+" ";
                     }
-                        
+
                 }
                 //headerHtml += "("+leg.agencyId+") ";
                 headerHtml += '(<a href="'+leg.agencyUrl + '">'+leg.agencyName+'</a>) ';
@@ -572,7 +572,7 @@ otp.widgets.ItinerariesWidget =
         queryTime = moment(queryTime, 'YYYY-MM-DD HH:mm').unix()*1000
         if(itin.differentServiceDayFromQuery(queryTime)) {
             //TRANSLATORS: Shown as alert text before showing itinerary.
-            alerts = [ "This itinerary departs on a different day than the one searched for"];
+            alerts = [ _tr("This itinerary departs on a different day than the one searched for")];
         }
 
         // check for max walk exceedance
@@ -725,10 +725,10 @@ otp.widgets.ItinerariesWidget =
 
             $(stopHtml)
             .appendTo(legDiv)
-            
+
             .click(function(evt) {/*
                 var modalboxWidget_html = ich['otp-stopViewer']()
-                console.log(modalboxWidget_html) 
+                console.log(modalboxWidget_html)
                 //$('body').append(modalboxWidget_html)
                 $('.modalboxWidget').magnificPopup({
                     items:[
@@ -739,7 +739,7 @@ otp.widgets.ItinerariesWidget =
             		midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
             	});
                 */
-                
+
                 if(!this_.module.stopViewerWidget) {
                     this_.module.stopViewerWidget = new otp.widgets.transit.StopViewerWidget("otp-"+this_.module.id+"-stopViewerWidget", this_.module);
                     //raf devo chiamare inizialize a mano
@@ -750,18 +750,18 @@ otp.widgets.ItinerariesWidget =
                 this_.module.stopViewerWidget.setActiveTime(leg.startTime);
                 this_.module.stopViewerWidget.setStop(leg.from.stopId, leg.from.name);
                 this_.module.stopViewerWidget.bringToFront();
-                
+
                 $.magnificPopup.open({
                   items: {
                     src: this_.module.stopViewerWidget.mainDiv,
                     type: 'inline'
                   }
                 });
-                
-                
+
+
             });
-            
-            
+
+
 
             $('<div class="otp-itin-leg-buffer"></div>').appendTo(legDiv);
 
@@ -783,7 +783,7 @@ otp.widgets.ItinerariesWidget =
                 //if(this_.module.tripViewerWidget.minimized) this_.module.tripViewerWidget.unminimize();
                 this_.module.tripViewerWidget.update(leg);
                 this_.module.tripViewerWidget.bringToFront();
-                
+
                 $.magnificPopup.open({
                   items: {
                     src: this_.module.tripViewerWidget.mainDiv,
