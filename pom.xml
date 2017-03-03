@@ -330,7 +330,7 @@
         <repository>
             <id>central2</id>
             <name>check central first to avoid a lot of not found warnings</name>
-            <url>http://repo1.maven.org/maven2</url>
+            <url>https://repo1.maven.org/maven2</url>
         </repository>
         <repository>
             <id>download.java.net</id>
@@ -345,7 +345,7 @@
         <repository>
             <id>axis</id>
             <name>axis</name>
-            <url>http://people.apache.org/repo/m1-ibiblio-rsync-repository/org.apache.axis2/</url>
+            <url>https://people.apache.org/repo/m1-ibiblio-rsync-repository/org.apache.axis2/</url>
         </repository>
         <repository>
             <id>conveyal</id>
@@ -427,6 +427,11 @@
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-referencing</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-referencing3D</artifactId>
             <version>${geotools.version}</version>
         </dependency>
         <dependency>
