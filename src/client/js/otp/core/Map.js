@@ -112,7 +112,7 @@ otp.core.Map = otp.Class({
                 opacity: 0.9,
                 radius: 5
             },
-            icon: 'fa fa-location-arrow',  // class for icon, fa-location-arrow or fa-map-marker
+            icon: 'fa fa-dot-circle-o',  // class for icon, fa-location-arrow or fa-map-marker
             //follow: true,
             setView: 'untilPan'
         });

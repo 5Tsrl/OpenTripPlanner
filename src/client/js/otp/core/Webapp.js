@@ -369,11 +369,15 @@ otp.core.Webapp = otp.Class({
           routeplanner: function(query, page) {
             console.log('Router activated the planner module')
             that.setActiveModule(that.modules[0]);
+            ga('set', 'page', '/planner');
+            ga('send', 'pageview');
           },
           
           infotraffic: function(query, page) {
               console.log('Router activated the traffic module')
               that.setActiveModule(that.modules[1]);
+              ga('set', 'page', '/traffic');
+              ga('send', 'pageview');
           },
         });
         

@@ -426,6 +426,9 @@ otp.modules.planner.PlannerModule =
 
             this_.updateTipStep(3);
         });
+        //raf finally log a plan request to analytics
+        ga('set', 'page', '/triprequest');
+        ga('send', 'pageview');
     },
 
     planTripRequest : function(url, queryParams, successCallback) {

@@ -658,11 +658,11 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 }
 .leaflet-control-locate a{
  color:#4089cd;
- height:35px;width:35px;
+ height:35px;width:35px; line-height: 35px;
  display:block;
- line-height: 30px;padding-left: 10px;
+ text-align: center;
  }
- .leaflet-control-locate a span{font-size: 110%}
+ .leaflet-control-locate a span{font-size: 120%;}
   
 
 .leaflet-right .leaflet-control-layers-expanded a{display:none;}
@@ -889,10 +889,12 @@ strong.trigger-option.open .fonticon:before { content: '\e80f'; color:#fff} /* '
 	height:33px;
 	position:relative;
 }
+
 #tripmode .text{text-indent:-9999px;display:none}
 
 #tripmode .fonticon:before{display:block;font-size:2.4em;color:#345a7f}
-#tripmode .fonticon:hover:before,#tripmode .active .fonticon:before{color:#fff}
+#tripmode label:hover {background-color: #3675ae; border-radius: 100%}
+#tripmode .active .fonticon:before{color:#fff}
 #tripmode .public .fonticon:before{content: '\e80a'}
 #tripmode .car .fonticon:before{content: '\e80b'}
 #tripmode .bike .fonticon:before{content: '\e80c'}
@@ -1513,6 +1515,6 @@ background:#fff;
 /*  leaflet locate control */
 .leaflet-control-locate a{font-size:1.4em;color:#444}
 .leaflet-control-locate.active a{color:#2074B6}
-.leaflet-control-locate.active.following a{color:#FC8428}
+.leaflet-control-locate.active.following a{color:##4089cd} //5t #FC8428
 .leaflet-control-locate a{padding:3px 0 0 8px}
 .leaflet-control-locate.requesting a{padding:3px 0 0 4px}
