@@ -86,27 +86,25 @@ otp.config = {
     
     {
             name: 'Mappa',
-            tileUrl : 'http://{s}.mz.5t.torino.it/hot/{z}/{x}/{y}.png',
+            tileUrl : 'https://{s}map.5t.torino.it/hot/{z}/{x}/{y}.png',
             subdomains : ['a','b','c'],
             attribution : 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
   	},
     {
             name: 'Rete Trasporti',
-            tileUrl: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
+            tileUrl: 'https://{s}map.5t.torino.it/transport/{z}/{x}/{y}.png',
             subdomains : ['a','b','c'],
             attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors. Tiles from <a href="http://www.thunderforest.com/transport/">Andy Allan</a>'
     },
     {
             name: 'Sfondo',
-            tileUrl: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+            tileUrl: 'https://{s}map.5t.torino.it/light/{z}/{x}/{y}.png',
+            // tileUrl: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
             subdomains : ['a','b','c'],
-            attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
-            //styleUrl: 'mapbox://styles/5ttorino/ciihb2oo900bcbhm06ky87eh8',
-            //accessToken: 'pk.eyJ1IjoiNXR0b3Jpbm8iLCJhIjoiY2lnZGZqOHN2MXZ2aXVvbThqemtyeHJoeSJ9.VB1TQcIbXed4F9OD5uoDsw'
-	},
+            attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors. Imagery <a href="http://mapbox.com">Mapbox</a>'
+    },
 
     ],
-
 
     /**
      * Map start location and zoom settings: by default, the client uses the

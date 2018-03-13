@@ -85,34 +85,32 @@
 </script>
 
 <script id="otp-datexEventItem" type="text/html">
-        
-    	  <a href="#" class="dtxEvt {{ev.style}}" _onclick="this.markers['{{ev.id}}'].openPopup();">		
-            <h3>{{ev.roadNumber}} {{ev.roadName}}</h3>
-    		<p>{{ev.locationDescription}} {{ev.eventDirection}}
-    		<em class="{{ev.status}}">{{ev.descriptionLocalized}} {{ev.note}}</em>
-            {{#ev.terminated}}
-            <span style='color:green;font-weight:bold;'> Situazione tornata alla normalit&agrave;</span><br />
-            {{/ev.terminated}}
-    		<time datetime="updateDate" pubdate="">{{ev.eventDates}}</time>
-    		</p>
-            <span class="icon fonticon"></span>
-    	  </a>
-
+  <a href="#" class="dtxEvt {{ev.style}}" _onclick="this.markers['{{ev.id}}'].openPopup();">		
+    <h3>{{ev.road}}</h3>
+    <p>{{ev.where}}
+      <em class="{{ev.status}}">{{ev.what}}</em>
+        {{#ev.terminated}}
+          <span style='color:green;font-weight:bold;'> Situazione tornata alla normalit&agrave;</span><br />
+        {{/ev.terminated}}
+      <time datetime="updateDate" pubdate="">{{ev.when}}</time>
+    </p>
+    <span class="icon fonticon"></span>
+  </a>
 </script>
 
 <script id="otp-datexEventItemMap" type="text/html">
-        <div class="event-panel  {{ev.style}}">		
-            <div class="location">{{ev.roadNumber}} {{ev.roadName}}</div>
-    		<span class="locationDescription">{{ev.locationDescription}} {{ev.eventDirection}}</span>
-            <div>
-    		          <em class="{{ev.status}}">{{ev.descriptionLocalized}} {{ev.note}}</em>
-                      {{#ev.terminated}}
-                        <span style='color:green;font-weight:bold;'> Situazione tornata alla normalit&agrave;</span><br />
-                      {{/ev.terminated}}
-                      <time datetime="updateDate" pubdate="">{{ev.eventDates}}</time>
-            </div>
-            <span class="icon fonticon"></span>
-        </div>
+  <div class="event-panel {{ev.style}}">		
+    <div class="location">{{ev.road}}</div>
+    <span class="locationDescription">{{ev.where}}</span>
+    <div>
+      <em class="{{ev.status}}">{{ev.what}}</em>
+        {{#ev.terminated}}
+          <span style='color:green;font-weight:bold;'> Situazione tornata alla normalit&agrave;</span><br />
+        {{/ev.terminated}}
+      <time datetime="updateDate" pubdate="">{{ev.when}}</time>
+    </div>
+    <span class="icon fonticon"></span>
+  </div>
 </script>
 
 <script id="otp-infoItem" type="text/html">

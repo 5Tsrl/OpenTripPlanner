@@ -62,66 +62,83 @@ otp.modules.datex.EventModel =
           latlng: null,
           id: null,
     },
-    initialize: function(){
+    
+    initialize: function(){      
+      this.latlng = L.latLng(this.get('lat') , this.get('lng'));
+      this.set('visible', true);
+      this.set('catVisible', true);
+      this.set('filterVisible', true);
+      if (i18n.lng() === 'en') {
+        this.set('where', this.get('where_en'))
+        this.set('what',  this.get('what_en'))
+        this.set('when',  this.get('when_en'))
+      }
+
+      //eventTerminated
+      //this.set('terminated', (this.get('status') == _tr('Terminato') ? true : false));
+
+      this.set('allText',  this.get('road') + this.get('where')   +   this.get('what'));
+    },
+    
+    initializeOld: function(){
+      this.latlng = L.latLng(this.get('lat') , this.get('lng'));
+
+      this.set('visible', true);
+      this.set('catVisible', true);
+      this.set('filterVisible', true);
       
-        this.latlng = L.latLng(this.get('lat') , this.get('lng'));
+      this.set('roadNumber', this.get('roadNumber').replace("(", " (")  );
+      this.set('roadName', this.get('roadName').replace("(", " (")  );
 
-        this.set('visible', true);
-        this.set('catVisible', true);
-        this.set('filterVisible', true);
-        
-        this.set('roadNumber', this.get('roadNumber').replace("(", " (")  );
-        this.set('roadName', this.get('roadName').replace("(", " (")  );
+      //locationDescription
+      if(this.get('secondaryLocation')){
+        //qualche minuscola...
+        this.set('primaryLocation',   this.get('primaryLocation').replace("Allacciamento","allacciamento").replace("Svincolo","svincolo")  );
+        this.set('secondaryLocation', this.get('secondaryLocation').replace("Allacciamento","allacciamento").replace("Svincolo","svincolo"));
+        this.set('locationDescription', _tr('fra')+this.get('primaryLocation') + _tr('e') + this.get('secondaryLocation')  );
+      }else{
+        this.set('locationDescription', this.get('primaryLocation') );
+      }
 
-        //locationDescription
-        if(this.get('secondaryLocation')){
-			//qualche minuscola...
-			this.set('primaryLocation',   this.get('primaryLocation').replace("Allacciamento","allacciamento").replace("Svincolo","svincolo")  );
-			this.set('secondaryLocation', this.get('secondaryLocation').replace("Allacciamento","allacciamento").replace("Svincolo","svincolo"));
-			this.set('locationDescription', _tr('fra')+this.get('primaryLocation') + _tr('e') + this.get('secondaryLocation')  );
-		}else{
-			this.set('locationDescription', this.get('primaryLocation') );
+      //eventDirection
+      if(this.get('category') !='weather'){
+        if(this.get('direction') == "Entrambe"){
+            this.set('eventDirection', _tr("in entrambe le direzioni"));
         }
-
-        //eventDirection
-        if(this.get('category') !='weather'){
-          if(this.get('direction') == "Entrambe"){
-              this.set('eventDirection', _tr("in entrambe le direzioni"));
-          }
-          else if (this.get('direction') != "" /*&& this.get('secondaryLocation') != ""*/){
-               this.set('eventDirection', _tr("in direzione")+ this.get('direction')+"." );
-          }
+        else if (this.get('direction') != "" /*&& this.get('secondaryLocation') != ""*/){
+             this.set('eventDirection', _tr("in direzione")+ this.get('direction')+"." );
         }
-        //eventDescription in current locale
-        this.set('descriptionLocalized',this.get('eventDescription'))
-        if (i18n.lng() == 'en')
-          this.set('descriptionLocalized',this.get('eventDescriptionEn'))
-        
-        //eventTerminated
-        this.set('terminated', (this.get('status') == _tr('Terminato') ? true : false));
+      }
+      //eventDescription in current locale
+      this.set('descriptionLocalized',this.get('eventDescription'))
+      if (i18n.lng() == 'en')
+        this.set('descriptionLocalized',this.get('eventDescriptionEn'))
+      
+      //eventTerminated
+      this.set('terminated', (this.get('status') == _tr('Terminato') ? true : false));
 
-        //ritorna la riga con le date di inizio/fine a seconda dell'evento
-        if(this.get('dob')=='LOS' || this.get('dob')=='PRE' || this.get('dob')=='ACC'|| this.get('dob')=='FOS')
-			     {this.set('eventDates',  _tr("aggiornato alle") + moment(this.get('formattedUpdateDate'),"HH:mm").format(otp.config.locale.time.time_format));}
-        else {
-    			var dalDate="";
-          var alDate="";
-          if(moment(this.get('startDate'),"DD/MM/YY HH:mm").format("HH:mm") == '00:00'){ //solo data
-                dalDate= moment(this.get('startDate'),"DD/MM/YY").format(otp.config.locale.time.date_format);
-          } else {  //data e ora
-                dalDate= moment(this.get('startDate'),"DD/MM/YY HH:mm").format(otp.config.locale.time.date_time_format);  
+      //ritorna la riga con le date di inizio/fine a seconda dell'evento
+      if(this.get('dob')=='LOS' || this.get('dob')=='PRE' || this.get('dob')=='ACC'|| this.get('dob')=='FOS')
+		     {this.set('eventDates',  _tr("aggiornato alle") + moment(this.get('formattedUpdateDate'),"HH:mm").format(otp.config.locale.time.time_format));}
+      else {
+  			var dalDate="";
+        var alDate="";
+        if(moment(this.get('startDate'),"DD/MM/YY HH:mm").format("HH:mm") == '00:00'){ //solo data
+              dalDate= moment(this.get('startDate'),"DD/MM/YY").format(otp.config.locale.time.date_format);
+        } else {  //data e ora
+              dalDate= moment(this.get('startDate'),"DD/MM/YY HH:mm").format(otp.config.locale.time.date_time_format);  
+        }
+        
+  			if(this.get('endDate')){
+          if (moment(this.get('endDate'),"DD/MM/YY HH:mm").format("HH:mm") == '23:59'){
+              alDate= _tr("al")+moment(this.get('endDate'),"DD/MM/YY").format(otp.config.locale.time.date_format);
+          } else {
+            alDate= _tr("al")+moment(this.get('endDate'),"DD/MM/YY HH:mm").format(otp.config.locale.time.date_time_format);
           }
-          
-    			if(this.get('endDate')){
-            if (moment(this.get('endDate'),"DD/MM/YY HH:mm").format("HH:mm") == '23:59'){
-                alDate= _tr("al")+moment(this.get('endDate'),"DD/MM/YY").format(otp.config.locale.time.date_format);
-            } else {
-              alDate= _tr("al")+moment(this.get('endDate'),"DD/MM/YY HH:mm").format(otp.config.locale.time.date_time_format);
-            }
-    			}
-    			this.set('eventDates',  _tr("dal") + dalDate + alDate );
-    		}
-        this.set('allText',  this.get('roadNumber') + this.get('roadName') + this.get('locationDescription')   +   this.get('eventDescription') +    this.get('eventDescriptionEn') );
+  			}
+  			this.set('eventDates',  _tr("dal") + dalDate + alDate );
+  		}
+      this.set('allText',  this.get('roadNumber') + this.get('roadName') + this.get('locationDescription')   +   this.get('eventDescription') +    this.get('eventDescriptionEn') );
 
     },
     distanceTo: function(point) {
@@ -143,7 +160,7 @@ otp.modules.datex.EventModel =
 otp.modules.datex.EventCollection =
     Backbone.Collection.extend({
 
-    url: otp.config.hostname + '/traffic-events?category=traffic,closure,weather,others',
+    url: otp.config.hostname + '/traffic-events',
     //url: 'http://mip.5t.torino.it/traffic-events?category=traffic,closure,weather,others',
     model: otp.modules.datex.EventModel,
     
