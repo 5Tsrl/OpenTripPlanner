@@ -434,7 +434,7 @@ otp.modules.planner.PlannerModule =
     planTripRequest : function(url, queryParams, successCallback) {
         var this_ = this;
         //raf convert date to ISO 8601 to speak to the server
-        queryParams.date =  moment(this.date, ['YYYY-MM-DD',otp.config.locale.time.date_format]).format('YYYY-MM-DD'); 
+        queryParams.date =  moment(this.date, ['YYYY-MM-DD',otp.config.locale.time.date_format]).format('YYYY-MM-DD');
         this.currentRequest = $.ajax(url, {
             data:       queryParams,
             dataType:   'JSON',
@@ -461,7 +461,8 @@ otp.modules.planner.PlannerModule =
                     }
                 }
                 else {
-                    this_.noTripFound(data.error);
+                    // this_.noTripFound(data.error);
+                    this_.noTripFound(data);
                     //this_.noTripWidget.setContent(data.error.msg);
                     //this_.noTripWidget.show();
                 }
@@ -522,13 +523,14 @@ otp.modules.planner.PlannerModule =
     processPlan : function(tripPlan, restoring) {
     },
 
-    noTripFound : function(error) {
-        var msg = error.msg;
-        if (error.id in this.error_messages) {
-            msg = this.error_messages[error.id];
+    noTripFound : function(json) {
+      console.log(json.error);
+        var msg = json.error.msg;
+        if (json.error.id in this.error_messages) {
+            msg = this.error_messages[json.error.id];
         }
         //TRANSLATORS: Used in showing why trip wasn't found
-        if(error.id) msg += ' (' + _tr('Error %(error_id)d', {'error_id': error.id}) + ')';
+        // raf no error code if(json.error.id) msg += ' (' + _tr('Error %(error_id)d', {'error_id': json.error.id}) + ')';
         //TRANSLATORS: Title of no trip dialog
         otp.widgets.Dialogs.showOkDialog(msg, _tr('No Trip Found'));
     },
