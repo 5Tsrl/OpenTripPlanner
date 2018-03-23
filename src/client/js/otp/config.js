@@ -83,25 +83,22 @@ otp.config = {
      */
 
     baseLayers: [
-    
+
     {
-            name: 'Mappa',
-            tileUrl : 'https://{s}map.5t.torino.it/hot/{z}/{x}/{y}.png',
-            subdomains : ['a','b','c'],
-            attribution : 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
-  	},
-    {
-            name: 'Rete Trasporti',
-            tileUrl: 'https://{s}map.5t.torino.it/transport/{z}/{x}/{y}.png',
-            subdomains : ['a','b','c'],
-            attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors. Tiles from <a href="http://www.thunderforest.com/transport/">Andy Allan</a>'
+      name: 'Mappa',
+      tileUrl : 'https://{s}map.5t.torino.it/hot/{z}/{x}/{y}.png',
+      attribution : 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.'
     },
     {
-            name: 'Sfondo',
-            tileUrl: 'https://{s}map.5t.torino.it/light/{z}/{x}/{y}.png',
-            // tileUrl: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
-            subdomains : ['a','b','c'],
-            attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors. Imagery <a href="http://mapbox.com">Mapbox</a>'
+      name: 'Rete Trasporti',
+      tileUrl: 'https://{s}map.5t.torino.it/transport/{z}/{x}/{y}.png',
+      attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors. Tiles from <a href="http://www.thunderforest.com/transport/">Andy Allan</a>'
+    },
+    {
+      name: 'Sfondo',
+      tileUrl: 'https://{s}map.5t.torino.it/light/{z}/{x}/{y}.png',
+      // tileUrl: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+      attribution: 'Data from <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors. Imagery <a href="http://mapbox.com">Mapbox</a>'
     },
 
     ],
@@ -192,7 +189,7 @@ otp.config = {
              'name': 'Geococker',
              'className': 'otp.core.GeocoderPelias',
              'url': '/suggest',
-             'addressParam': 'query',             
+             'addressParam': 'query',
          }
      ],
 
@@ -312,10 +309,10 @@ otp.config.modes = {
         "TRANSIT,WALK"        : _tr("Transit"),
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets)
-    //    "BUS,WALK"         : _tr("Bus Only"), 
+    //    "BUS,WALK"         : _tr("Bus Only"),
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets)
-      //  "TRAM,RAIL,SUBWAY,FUNICULAR,GONDOLA,WALK"       : _tr("Rail Only"), 
+      //  "TRAM,RAIL,SUBWAY,FUNICULAR,GONDOLA,WALK"       : _tr("Rail Only"),
 
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets)
