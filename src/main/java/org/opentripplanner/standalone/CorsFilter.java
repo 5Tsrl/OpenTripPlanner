@@ -39,7 +39,9 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
                 preflightResponse.header("Access-Control-Allow-Method", "GET,POST");
             }
             // Allow caching of pre-flight options for up to an hour
-            preflightResponse.header("Access-Control-Max-Age", "3600");
+            // raf chrome max value is 600, 10 min
+            //preflightResponse.header("Access-Control-Max-Age", "3600");
+            preflightResponse.header("Access-Control-Max-Age", "600");
             requestContext.abortWith(preflightResponse.build());
         }
     }
