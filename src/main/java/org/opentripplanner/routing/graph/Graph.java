@@ -26,6 +26,8 @@ import org.joda.time.DateTime;
 import org.onebusaway.gtfs.impl.calendar.CalendarServiceImpl;
 import org.onebusaway.gtfs.model.Agency;
 import org.onebusaway.gtfs.model.AgencyAndId;
+import org.onebusaway.gtfs.model.Stop;
+import org.onebusaway.gtfs.model.FeedInfo;
 import org.onebusaway.gtfs.model.calendar.CalendarServiceData;
 import org.onebusaway.gtfs.model.calendar.ServiceDate;
 import org.onebusaway.gtfs.services.calendar.CalendarService;
@@ -50,6 +52,7 @@ import org.opentripplanner.routing.services.StreetVertexIndexService;
 import org.opentripplanner.routing.services.notes.StreetNotesService;
 import org.opentripplanner.routing.trippattern.Deduplicator;
 import org.opentripplanner.routing.vertextype.PatternArriveVertex;
+import org.opentripplanner.routing.vertextype.TransitStation;
 import org.opentripplanner.routing.vertextype.TransitStop;
 import org.opentripplanner.standalone.Router;
 import org.opentripplanner.traffic.StreetSpeedSnapshotSource;
@@ -134,6 +137,8 @@ public class Graph implements Serializable {
 
     private Collection<String> feedIds = new HashSet<>();
 
+    private Map<String, FeedInfo> feedInfoForId = new HashMap<>();
+
     private VertexComparatorFactory vertexComparatorFactory = new MortonVertexComparatorFactory();
 
     private transient TimeZone timeZone = null;
@@ -196,6 +201,9 @@ public class Graph implements Serializable {
     /** Has information how much time boarding a vehicle takes. Can be significant eg in airplanes or ferries. */
     public Map<TraverseMode, Integer> boardTimes = Collections.EMPTY_MAP;
 
+    /** Has information how different transport modes are weighted. By default a weight of 1 is assigned. higher weight means higher cost. */
+    public Map<TraverseMode, Double> modeWeights = Collections.EMPTY_MAP;
+    
     /** Has information how much time alighting a vehicle takes. Can be significant eg in airplanes or ferries. */
     public Map<TraverseMode, Integer> alightTimes = Collections.EMPTY_MAP;
 
@@ -207,6 +215,9 @@ public class Graph implements Serializable {
 
     /** The difference in meters between the WGS84 ellipsoid height and geoid height at the graph's center */
     public Double ellipsoidToGeoidDifference = 0.0;
+
+    /** Parent stops **/
+    public Map<AgencyAndId, Stop> parentStopById = new HashMap<>();
 
     public Graph(Graph basedOn) {
         this();
@@ -745,7 +756,7 @@ public class Graph implements Serializable {
             // vertex list is transient because it can be reconstructed from edges
             LOG.debug("Loading edges...");
             List<Edge> edges = (ArrayList<Edge>) in.readObject();
-            graph.vertices = new HashMap<String, Vertex>();
+            graph.vertices = new ConcurrentHashMap<String, Vertex>();
             
             for (Edge e : edges) {
                 graph.vertices.put(e.getFromVertex().getLabel(), e.getFromVertex());
@@ -906,11 +917,19 @@ public class Graph implements Serializable {
         return agenciesForFeedId.get(feedId);
     }
 
+    public FeedInfo getFeedInfo(String feedId) {
+        return feedInfoForId.get(feedId);
+    }
+
     public void addAgency(String feedId, Agency agency) {
         Collection<Agency> agencies = agenciesForFeedId.getOrDefault(feedId, new HashSet<>());
         agencies.add(agency);
         this.agenciesForFeedId.put(feedId, agencies);
         this.feedIds.add(feedId);
+    }
+
+    public void addFeedInfo(FeedInfo info) {
+        this.feedInfoForId.put(info.getId().toString(), info);
     }
 
     /**

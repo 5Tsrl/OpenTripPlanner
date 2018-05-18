@@ -19,10 +19,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Maps;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 import org.onebusaway.gtfs.model.Agency;
 import org.onebusaway.gtfs.model.AgencyAndId;
+import org.onebusaway.gtfs.model.FeedInfo;
 import org.onebusaway.gtfs.model.Route;
 import org.onebusaway.gtfs.model.Stop;
 import org.onebusaway.gtfs.model.Trip;
@@ -62,6 +64,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -84,8 +87,6 @@ import java.util.concurrent.Future;
 @Path("/routers/{routerId}/index")    // It would be nice to get rid of the final /index.
 @Produces(MediaType.APPLICATION_JSON) // One @Produces annotation for all endpoints.
 public class IndexAPI {
-
-    @SuppressWarnings("unused")
     private static final Logger LOG = LoggerFactory.getLogger(IndexAPI.class);
     private static final double MAX_STOP_SEARCH_RADIUS = 5000;
     private static final String MSG_404 = "FOUR ZERO FOUR";
@@ -116,6 +117,17 @@ public class IndexAPI {
     @Path("/feeds")
     public Response getFeeds() {
         return Response.status(Status.OK).entity(index.agenciesForFeedId.keySet()).build();
+    }
+
+    @GET
+    @Path("/feeds/{feedId}")
+    public Response getFeedInfo(@PathParam("feedId") String feedId) {
+        FeedInfo feedInfo = index.feedInfoForId.get(feedId);
+        if (feedInfo == null) {
+            return Response.status(Status.NOT_FOUND).entity(MSG_404).build();
+        } else {
+            return Response.status(Status.OK).entity(feedInfo).build();
+        }
     }
 
    /** Return a list of all agencies in the graph. */
@@ -260,10 +272,11 @@ public class IndexAPI {
     public Response getStoptimesForStop (@PathParam("stopId") String stopIdString,
                                          @QueryParam("startTime") long startTime,
                                          @QueryParam("timeRange") @DefaultValue("86400") int timeRange,
-                                         @QueryParam("numberOfDepartures") @DefaultValue("2") int numberOfDepartures) {
+                                         @QueryParam("numberOfDepartures") @DefaultValue("2") int numberOfDepartures,
+                                         @QueryParam("omitNonPickups") boolean omitNonPickups) {
         Stop stop = index.stopForId.get(GtfsLibrary.convertIdFromString(stopIdString));
         if (stop == null) return Response.status(Status.NOT_FOUND).entity(MSG_404).build();
-        return Response.status(Status.OK).entity(index.stopTimesForStop(stop, startTime, timeRange, numberOfDepartures)).build();
+        return Response.status(Status.OK).entity(index.stopTimesForStop(stop, startTime, timeRange, numberOfDepartures, omitNonPickups )).build();
     }
 
     /**
@@ -273,7 +286,8 @@ public class IndexAPI {
     @GET
     @Path("/stops/{stopId}/stoptimes/{date}")
     public Response getStoptimesForStopAndDate (@PathParam("stopId") String stopIdString,
-                                                @PathParam("date") String date) {
+                                                @PathParam("date") String date,
+                                                @QueryParam("omitNonPickups") boolean omitNonPickups) {
         Stop stop = index.stopForId.get(GtfsLibrary.convertIdFromString(stopIdString));
         if (stop == null) return Response.status(Status.NOT_FOUND).entity(MSG_404).build();
         ServiceDate sd;
@@ -284,7 +298,7 @@ public class IndexAPI {
             return Response.status(Status.BAD_REQUEST).entity(MSG_400).build();
         }
 
-        List<StopTimesInPattern> ret = index.getStopTimesForStop(stop, sd);
+        List<StopTimesInPattern> ret = index.getStopTimesForStop(stop, sd, omitNonPickups);
         return Response.status(Status.OK).entity(ret).build();
     }
     
@@ -592,43 +606,42 @@ public class IndexAPI {
     @POST
     @Path("/graphql")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getGraphQL (HashMap<String, Object> query, @HeaderParam("OTPTimeout") @DefaultValue("10000") int timeout, @HeaderParam("OTPMaxResolves") @DefaultValue("1000000") long maxResolves) {
-        Map<String, Object> variables = null;
-        if (query.get("variables") instanceof Map) {
-            variables = (Map) query.get("variables");
-        } else if (query.get("variables") instanceof String && ((String) query.get("variables")).length() > 0) {
+    public Response getGraphQL (HashMap<String, Object> queryParameters, @Context HttpHeaders httpHeaders, @HeaderParam("OTPTimeout") @DefaultValue("10000") int timeout, @HeaderParam("OTPMaxResolves") @DefaultValue("1000000") long maxResolves) {        
+        
+        String query = (String) queryParameters.get("query");
+        Object queryVariables = queryParameters.getOrDefault("variables", null);
+        String operationName = (String) queryParameters.getOrDefault("operationName", null);
+
+        Map<String, Object> variables;
+        if (queryVariables instanceof Map) {
+            variables = (Map) queryVariables;
+        } else if (queryVariables instanceof String && !((String) queryVariables).isEmpty()) {
             try {
-                variables = deserializer.readValue((String) query.get("variables"), Map.class);
+                variables = deserializer.readValue((String) queryVariables, Map.class);
             } catch (IOException e) {
                 LOG.error("Variables must be a valid json object");
                 return Response.status(Status.BAD_REQUEST).entity(MSG_400).build();
             }
+        } else {
+            variables = new HashMap<>();
         }
-        String operationName = (String) query.getOrDefault("operationName", null);
-        return index.getGraphQLResponse((String) query.get("query"), router, variables, operationName, timeout, maxResolves);
+        return index.getGraphQLResponse(query, router, variables, operationName, timeout, maxResolves, httpHeaders.getRequestHeaders());
     }
 
     @POST
     @Path("/graphql")
     @Consumes("application/graphql")
-    public Response getGraphQL (String query, @HeaderParam("OTPTimeout") @DefaultValue("10000") int timeout, @HeaderParam("OTPMaxResolves") @DefaultValue("1000000") long maxResolves) {
-        return index.getGraphQLResponse(query, router, null, null, timeout, maxResolves);
+    public Response getGraphQL (String query, @Context HttpHeaders httpHeaders, @HeaderParam("OTPTimeout") @DefaultValue("10000") int timeout, @HeaderParam("OTPMaxResolves") @DefaultValue("1000000") long maxResolves) {
+       return index.getGraphQLResponse(query, router, null, null, timeout, maxResolves, httpHeaders.getRequestHeaders());
     }
-
-//    @GET
-//    @Path("/graphql")
-//    public Response getGraphQL (@QueryParam("query") String query,
-//                                @QueryParam("variables") HashMap<String, Object> variables) {
-//        return index.getGraphQLResponse(query, variables == null ? new HashMap<>() : variables);
-//    }
 
     @POST
     @Path("/graphql/batch")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getGraphQLBatch (List<HashMap<String, Object>> queries, @HeaderParam("OTPTimeout") @DefaultValue("10000") int timeout, @HeaderParam("OTPMaxResolves") @DefaultValue("1000000") long maxResolves) {
+    public Response getGraphQLBatch (List<HashMap<String, Object>> queries, @Context HttpHeaders httpHeaders, @HeaderParam("OTPTimeout") @DefaultValue("10000") int timeout, @HeaderParam("OTPMaxResolves") @DefaultValue("1000000") long maxResolves) {
         List<Map<String, Object>> responses = new ArrayList<>();
-        List<Callable<Map>> futures = new ArrayList();
-
+        List<Callable<Map>> futures = new ArrayList<>();
+  
         for (HashMap<String, Object> query : queries) {
             Map<String, Object> variables;
             if (query.get("variables") instanceof Map) {
@@ -637,16 +650,16 @@ public class IndexAPI {
                 try {
                     variables = deserializer.readValue((String) query.get("variables"), Map.class);
                 } catch (IOException e) {
-                    LOG.error("Variables must be a valid json object");
+                    LOG.error("Variables must be a valid json object: '{}'", query.get("variables"));
                     return Response.status(Status.BAD_REQUEST).entity(MSG_400).build();
                 }
             } else {
-                variables = null;
+                variables = Maps.newHashMap();
             }
+            
             String operationName = (String) query.getOrDefault("operationName", null);
 
-            futures.add(() -> index.getGraphQLExecutionResult((String) query.get("query"), router,
-                variables, operationName, timeout, maxResolves));
+            futures.add(() -> index.getGraphQLExecutionResult((String) query.get("query"), router,variables, operationName, timeout, maxResolves, httpHeaders.getRequestHeaders()));
         }
 
         try {
@@ -658,7 +671,8 @@ public class IndexAPI {
                 response.put("payload", results.get(i).get());
                 responses.add(response);
             }
-        } catch (CancellationException | ExecutionException |InterruptedException e) {
+        } catch (CancellationException | ExecutionException | InterruptedException e) {
+            LOG.warn("Returning error 500, {}:{}", e.getClass(), e.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }
         return Response.status(Status.OK).entity(responses).build();

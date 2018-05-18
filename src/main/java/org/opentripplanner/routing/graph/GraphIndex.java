@@ -5,25 +5,19 @@ import static java.util.stream.Collectors.toList;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.attribute.FileAttribute;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -33,16 +27,21 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import graphql.ExceptionWhileDataFetching;
+import graphql.GraphQLError;
 import graphql.schema.GraphQLSchema;
+
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
+import io.sentry.Sentry;
+import io.sentry.context.Context;
 import org.apache.lucene.util.PriorityQueue;
 import org.joda.time.LocalDate;
 import org.onebusaway.gtfs.model.Agency;
 import org.onebusaway.gtfs.model.AgencyAndId;
+import org.onebusaway.gtfs.model.FeedInfo;
 import org.onebusaway.gtfs.model.Route;
 import org.onebusaway.gtfs.model.Stop;
 import org.onebusaway.gtfs.model.Trip;
@@ -54,6 +53,7 @@ import org.opentripplanner.common.geometry.SphericalDistanceLibrary;
 import org.opentripplanner.common.model.GenericLocation;
 import org.opentripplanner.common.model.P2;
 import org.opentripplanner.gtfs.GtfsLibrary;
+import org.opentripplanner.index.FieldErrorInstrumentation;
 import org.opentripplanner.index.IndexGraphQLSchema;
 import org.opentripplanner.index.ResourceConstrainedExecutorServiceExecutionStrategy;
 import org.opentripplanner.index.model.StopTimesInPattern;
@@ -70,9 +70,12 @@ import org.opentripplanner.routing.algorithm.strategies.SearchTerminationStrateg
 import org.opentripplanner.routing.bike_park.BikePark;
 import org.opentripplanner.routing.bike_rental.BikeRentalStation;
 import org.opentripplanner.routing.car_park.CarPark;
+import org.opentripplanner.routing.core.Fare.FareType;
+import org.opentripplanner.routing.core.FareRuleSet;
 import org.opentripplanner.routing.core.RoutingRequest;
 import org.opentripplanner.routing.core.ServiceDay;
 import org.opentripplanner.routing.core.State;
+import org.opentripplanner.routing.core.TicketType;
 import org.opentripplanner.routing.core.TraverseMode;
 import org.opentripplanner.routing.edgetype.ParkAndRideLinkEdge;
 import org.opentripplanner.routing.edgetype.StreetBikeParkLink;
@@ -80,7 +83,9 @@ import org.opentripplanner.routing.edgetype.TablePatternEdge;
 import org.opentripplanner.routing.edgetype.Timetable;
 import org.opentripplanner.routing.edgetype.TimetableSnapshot;
 import org.opentripplanner.routing.edgetype.TripPattern;
+import org.opentripplanner.routing.impl.DefaultFareServiceImpl;
 import org.opentripplanner.routing.services.AlertPatchService;
+import org.opentripplanner.routing.services.FareService;
 import org.opentripplanner.routing.spt.DominanceFunction;
 import org.opentripplanner.routing.spt.ShortestPathTree;
 import org.opentripplanner.routing.trippattern.FrequencyEntry;
@@ -111,6 +116,7 @@ public class GraphIndex {
     // TODO: consistently key on model object or id string
     public final Map<String, Vertex> vertexForId = Maps.newHashMap();
     public final Map<String, Map<String, Agency>> agenciesForFeedId = Maps.newHashMap();
+    public final Map<String, FeedInfo> feedInfoForId = Maps.newHashMap();
     public final Map<AgencyAndId, Stop> stopForId = Maps.newHashMap();
     public final Map<AgencyAndId, Stop> stationForId = Maps.newHashMap();
     public final Map<AgencyAndId, Trip> tripForId = Maps.newHashMap();
@@ -126,6 +132,7 @@ public class GraphIndex {
     final HashGridSpatialIndex<TransitStop> stopSpatialIndex = new HashGridSpatialIndex<TransitStop>();
     public final Map<Stop, StopCluster> stopClusterForStop = Maps.newHashMap();
     public final Map<String, StopCluster> stopClusterForId = Maps.newHashMap();
+    public final Map<AgencyAndId, TicketType> ticketTypesForId = Maps.newHashMap();
 
     /* Should eventually be replaced with new serviceId indexes. */
     private final CalendarService calendarService;
@@ -153,6 +160,20 @@ public class GraphIndex {
 
     public GraphIndex (Graph graph) {
         LOG.info("Indexing graph...");
+        
+        FareService fareService = graph.getService(FareService.class);
+        if(fareService instanceof DefaultFareServiceImpl) {
+            LOG.info("Collecting fare information...");
+            DefaultFareServiceImpl defaultFareServiceImpl = (DefaultFareServiceImpl) fareService;
+            Map<FareType, Collection<FareRuleSet>> data = defaultFareServiceImpl.getFareRulesPerType();
+            for(Entry<FareType, Collection<FareRuleSet>> kv:data.entrySet()) {
+                if(FareType.regular == kv.getKey()) {
+                    for(FareRuleSet rs: kv.getValue()) {
+                        ticketTypesForId.put(rs.getFareAttribute().getId(), new TicketType(rs));
+                    }
+                }
+            }                             
+        }
 
         for (String feedId : graph.getFeedIds()) {
             for (Agency agency : graph.getAgencies(feedId)) {
@@ -160,6 +181,7 @@ public class GraphIndex {
                 agencyForId.put(agency.getId(), agency);
                 this.agenciesForFeedId.put(feedId, agencyForId);
             }
+            this.feedInfoForId.put(feedId, graph.getFeedInfo(feedId));
         }
 
         Collection<Edge> edges = graph.getEdges();
@@ -206,7 +228,9 @@ public class GraphIndex {
                 tripForId.put(trip.getId(), trip);
             }
             for (Stop stop: pattern.getStops()) {
-                patternsForStop.put(stop, pattern);
+                if (!patternsForStop.containsEntry(stop, pattern)) {
+                    patternsForStop.put(stop, pattern);
+                }
             }
         }
         for (Route route : patternsForRoute.asMap().keySet()) {
@@ -242,14 +266,6 @@ public class GraphIndex {
                 stopClusterSpatialIndex.insert(envelope, cluster);
             }
         }
-    }
-
-    private void analyzeServices() {
-        // This is a mess because CalendarService, CalendarServiceData, etc. are all in OBA.
-        // TODO catalog days of the week and exceptions for each service day.
-        // Make a table of which services are running on each calendar day.
-        // Really the calendarService should be entirely replaced with a set
-        // of simple indexes in GraphIndex.
     }
 
     /** Get all trip patterns running through any stop in the given stop cluster. */
@@ -495,8 +511,8 @@ public class GraphIndex {
             return stop.getId().getAgencyId() + ";" + stop.getId().getId() + ";" + pattern.code;
         }
 
-        public List<TripTimeShort> getStoptimes(GraphIndex index, long startTime, int timeRange, int numberOfDepartures) {
-            return index.stopTimesForPattern(stop, pattern, startTime, timeRange, numberOfDepartures);
+        public List<TripTimeShort> getStoptimes(GraphIndex index, long startTime, int timeRange, int numberOfDepartures, boolean omitNonPickups) {
+            return index.stopTimesForPattern(stop, pattern, startTime, timeRange, numberOfDepartures, omitNonPickups);
         }
 
         public static DepartureRow fromId(GraphIndex index, String id) {
@@ -515,7 +531,6 @@ public class GraphIndex {
     private class PlaceFinderTraverseVisitor implements ExtendedTraverseVisitor {
         public List<PlaceAndDistance> placesFound = new ArrayList<>();
         private Set<TraverseMode> filterByModes;
-        private Set<PlaceType> filterByPlaceTypes;
         private Set<AgencyAndId> filterByStops;
         private Set<AgencyAndId> filterByRoutes;
         private Set<String> filterByBikeRentalStation;
@@ -541,7 +556,6 @@ public class GraphIndex {
                 List<String> filterByBikeParks,
                 List<String> filterByCarParks) {
             this.filterByModes = toSet(filterByModes);
-            this.filterByPlaceTypes = toSet(filterByPlaceTypes);
             this.filterByStops = toSet(filterByStops);
             this.filterByRoutes = toSet(filterByRoutes);
             this.filterByBikeRentalStation = toSet(filterByBikeRentalStations);
@@ -690,8 +704,8 @@ public class GraphIndex {
      * Fetch upcoming vehicle departures from a stop.
      * Fetches two departures for each pattern during the next 24 hours as default
      */
-    public Collection<StopTimesInPattern> stopTimesForStop(Stop stop) {
-        return stopTimesForStop(stop, System.currentTimeMillis()/1000, 24 * 60 * 60, 2);
+    public Collection<StopTimesInPattern> stopTimesForStop(Stop stop, boolean omitNonPickups) {
+        return stopTimesForStop(stop, System.currentTimeMillis()/1000, 24 * 60 * 60, 2, omitNonPickups);
     }
 
     /**
@@ -705,15 +719,16 @@ public class GraphIndex {
      * @param startTime Start time for the search. Seconds from UNIX epoch
      * @param timeRange Searches forward for timeRange seconds from startTime
      * @param numberOfDepartures Number of departures to fetch per pattern
+     * @param omitNonPickups If true, do not include vehicles that will not pick up passengers.
      * @return
      */
-    public List<StopTimesInPattern> stopTimesForStop(final Stop stop, final long startTime, final int timeRange, final int numberOfDepartures) {
+    public List<StopTimesInPattern> stopTimesForStop(final Stop stop, final long startTime, final int timeRange, final int numberOfDepartures, boolean omitNonPickups) {
    
         final List<StopTimesInPattern> ret = new ArrayList<>();
 
         for (final TripPattern pattern : patternsForStop.get(stop)) {
             
-            final List<TripTimeShort> stopTimesForStop = stopTimesForPattern(stop, pattern, startTime, timeRange, numberOfDepartures);
+            final List<TripTimeShort> stopTimesForStop = stopTimesForPattern(stop, pattern, startTime, timeRange, numberOfDepartures, omitNonPickups);
 
             
             if (stopTimesForStop.size() >0) {
@@ -746,7 +761,7 @@ public class GraphIndex {
      * @return
      */
     public List<TripTimeShort> stopTimesForPattern(final Stop stop, final TripPattern pattern, long startTime, final int timeRange,
-            int numberOfDepartures) {
+            int numberOfDepartures, boolean omitNonPickups) {
 
         if (pattern == null) { 
             return Collections.emptyList();
@@ -767,9 +782,9 @@ public class GraphIndex {
 
         final TimetableSnapshot snapshot = (graph.timetableSnapshotSource != null)
             ? graph.timetableSnapshotSource.getTimetableSnapshot() : null;
-            
-        final ServiceDate[] serviceDates = { new ServiceDate().previous(), new ServiceDate(),
-                new ServiceDate().next() };
+
+        Date date = new Date(startTime * 1000);
+        final ServiceDate[] serviceDates = {new ServiceDate(date).previous(), new ServiceDate(date), new ServiceDate(date).next()};
 
         // Loop through all possible days
         for (final ServiceDate serviceDate : serviceDates) {
@@ -792,6 +807,7 @@ public class GraphIndex {
             // loop through all stops of pattern
             for (final Stop currStop : pattern.stopPattern.stops) {
                 if (currStop.equals(stop)) {
+                    if(omitNonPickups && pattern.stopPattern.pickups[stopIndex] == pattern.stopPattern.PICKDROP_NONE) continue;
                     for (final TripTimes triptimes : tt.tripTimes) {
                         if (!sd.serviceRunning(triptimes.serviceCode))
                             continue;
@@ -825,7 +841,10 @@ public class GraphIndex {
 
         final List<TripTimeShort> result = new ArrayList<>();
         while(ret.size()>0) {
-            result.add(0, ret.pop());
+            TripTimeShort tripTimeShort = ret.pop();
+            if (!result.contains(tripTimeShort)) {
+                result.add(0, tripTimeShort);
+            }
         }
         
         return result; 
@@ -840,7 +859,7 @@ public class GraphIndex {
      * @param serviceDate Return all departures for the specified date
      * @return
      */
-    public List<StopTimesInPattern> getStopTimesForStop(Stop stop, ServiceDate serviceDate) {
+    public List<StopTimesInPattern> getStopTimesForStop(Stop stop, ServiceDate serviceDate, boolean omitNonPickups) {
         List<StopTimesInPattern> ret = new ArrayList<>();
         TimetableSnapshot snapshot = null;
         if (graph.timetableSnapshotSource != null) {
@@ -858,7 +877,8 @@ public class GraphIndex {
             ServiceDay sd = new ServiceDay(graph, serviceDate, calendarService, pattern.route.getAgency().getId());
             int sidx = 0;
             for (Stop currStop : pattern.stopPattern.stops) {
-                if (currStop == stop) {
+                if (currStop.equals(stop)) {
+                    if(omitNonPickups && pattern.stopPattern.pickups[sidx] == pattern.stopPattern.PICKDROP_NONE) continue;
                     for (TripTimes t : tt.tripTimes) {
                         if (!sd.serviceRunning(t.serviceCode)) continue;
                         stopTimes.times.add(new TripTimeShort(t, sidx, stop, sd));
@@ -966,30 +986,30 @@ public class GraphIndex {
 
     private void clusterByParentStation() {
         LOG.info("Clustering stops by parent station...");
-        for (Stop stop : stopForId.values()) {
-            String ps = stop.getParentStation();
-            if (ps == null || ps.isEmpty()) {
-                continue;
-            }
-            StopCluster cluster;
-            if (stopClusterForId.containsKey(ps)) {
-                cluster = stopClusterForId.get(ps);
-            } else {
-                cluster = new StopCluster(ps, stop.getName());
+    	for (Stop stop : stopForId.values()) {
+    	    String ps = stop.getParentStation();
+    	    if (ps == null || ps.isEmpty()) {
+    	        continue;
+    	    }
+    	    StopCluster cluster;
+    	    if (stopClusterForId.containsKey(ps)) {
+    	        cluster = stopClusterForId.get(ps);
+    	    } else {
+    	        cluster = new StopCluster(ps, stop.getName());
+    	        Stop parent = graph.parentStopById.get(new AgencyAndId(stop.getId().getAgencyId(), ps));
+                cluster.setCoordinates(parent.getLat(), parent.getLon());
                 stopClusterForId.put(ps, cluster);
-            }
-            cluster.children.add(stop);
-            stopClusterForStop.put(stop, cluster);
-        }
-        for (Map.Entry<String, StopCluster> cluster : stopClusterForId.entrySet()) {
-            cluster.getValue().computeCenter();
-        }
+
+	        }
+    	    cluster.children.add(stop);
+    	    stopClusterForStop.put(stop, cluster);    
+    	}
     }
 
-    public Response getGraphQLResponse(String query, Router router, Map<String, Object> variables, String operationName, int timeout, long maxResolves) {
+    public Response getGraphQLResponse(String query, Router router, Map<String, Object> variables, String operationName, int timeout, long maxResolves, MultivaluedMap<String, String> headers) {
         Response.ResponseBuilder res = Response.status(Response.Status.OK);
         HashMap<String, Object> content = getGraphQLExecutionResult(query, router, variables,
-            operationName, timeout, maxResolves);
+            operationName, timeout, maxResolves, headers);
         if (content.get("errors") != null) {
             // TODO: Put correct error code, eg. 400 for syntax error
             res = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
@@ -998,18 +1018,19 @@ public class GraphIndex {
     }
 
     public HashMap<String, Object> getGraphQLExecutionResult(String query, Router router,
-        Map<String, Object> variables, String operationName, int timeout, long maxResolves) {
-        GraphQL graphQL = new GraphQL(
-            indexSchema,
+        Map<String, Object> variables, String operationName, int timeout, long maxResolves, MultivaluedMap<String, String> headers) {
+        
+        GraphQL graphQL = GraphQL.newGraphQL(indexSchema).queryExecutionStrategy(
             new ResourceConstrainedExecutorServiceExecutionStrategy(threadPool, timeout, TimeUnit.MILLISECONDS, maxResolves)
-        );
+        ).instrumentation(FieldErrorInstrumentation.get(query, router, variables, headers)).build();
 
         if (variables == null) {
             variables = new HashMap<>();
         }
-
+        
         ExecutionResult executionResult = graphQL.execute(query, operationName, router, variables);
         HashMap<String, Object> content = new HashMap<>();
+        
         if (!executionResult.getErrors().isEmpty()) {
             content.put("errors",
                 executionResult
@@ -1017,6 +1038,9 @@ public class GraphIndex {
                     .stream()
                     .map(error -> {
                         if (error instanceof ExceptionWhileDataFetching) {
+                            StringWriter sw = new StringWriter();
+                            PrintWriter pw = new PrintWriter(sw);
+                            ((ExceptionWhileDataFetching) error).getException().printStackTrace(pw);
                             HashMap<String, Object> response = new HashMap<String, Object>();
                             response.put("message", error.getMessage());
                             response.put("locations", error.getLocations());
@@ -1030,6 +1054,12 @@ public class GraphIndex {
                         }
                     })
                     .collect(Collectors.toList()));
+
+            for (GraphQLError error :executionResult.getErrors()) {
+                Sentry.getContext().addExtra("message",error.getMessage());
+                Sentry.getContext().addExtra("errorType",error.getErrorType());
+                Sentry.capture(((ExceptionWhileDataFetching) error).getException());
+            }
         }
         if (executionResult.getData() != null) {
             content.put("data", executionResult.getData());
@@ -1118,5 +1148,9 @@ public class GraphIndex {
             allAgencies.addAll(agencyForId.values());
         }
         return allAgencies;
+    }
+
+    public Collection<TicketType> getAllTicketTypes() {
+        return ticketTypesForId.values();
     }
 }

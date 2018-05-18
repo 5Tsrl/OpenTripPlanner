@@ -110,6 +110,10 @@ public abstract class RoutingResource {
     @QueryParam("walkReluctance")
     protected Double walkReluctance;
 
+    /** How much more reluctant is the user to walk on streets with car traffic allowed **/
+    @QueryParam("walkOnStreetReluctance")
+    protected Double walkOnStreetReluctance;
+
     /**
      * How much worse is waiting for a transit vehicle than being on a transit vehicle, as a
      * multiplier. The default value treats wait and on-vehicle time as the same.
@@ -350,6 +354,9 @@ public abstract class RoutingResource {
     @QueryParam("maxHours")
     private Double maxHours;
 
+    @QueryParam("useRequestedDateTimeInMaxHours")
+    private Boolean useRequestedDateTimeInMaxHours;
+
     @QueryParam("disableAlertFiltering")
     private Boolean disableAlertFiltering;
 
@@ -358,6 +365,15 @@ public abstract class RoutingResource {
      */
     @QueryParam("geoidElevation")
     private Boolean geoidElevation;
+    
+    /** 
+     * @see {@link org.opentripplanner.routing.core.RoutingRequest#carParkCarLegWeight} 
+     */
+    @QueryParam("carParkCarLegWeight")
+    private Double carParkCarLegWeight;
+
+    @QueryParam("heuristicStepsPerMainStep")
+    private Integer heuristicStepsPerMainStep;
 
     /* 
      * somewhat ugly bug fix: the graphService is only needed here for fetching per-graph time zones. 
@@ -403,11 +419,18 @@ public abstract class RoutingResource {
         if (maxPreTransitTime != null)
             request.setMaxPreTransitTime(maxPreTransitTime);
 
+        if(carParkCarLegWeight != null) {
+            request.setCarParkCarLegWeight(carParkCarLegWeight);
+        }
+        
         if (walkReluctance != null)
             request.setWalkReluctance(walkReluctance);
 
         if (waitReluctance != null)
             request.setWaitReluctance(waitReluctance);
+
+        if (walkOnStreetReluctance != null)
+            request.setWalkOnStreetReluctance(walkOnStreetReluctance);
 
         if (waitAtBeginningFactor != null)
             request.setWaitAtBeginningFactor(waitAtBeginningFactor);
@@ -548,11 +571,17 @@ public abstract class RoutingResource {
         if (maxHours != null)
             request.maxHours = maxHours;
 
+        if (useRequestedDateTimeInMaxHours != null)
+            request.useRequestedDateTimeInMaxHours = useRequestedDateTimeInMaxHours;
+
         if (disableAlertFiltering != null)
             request.disableAlertFiltering = disableAlertFiltering;
 
         if (geoidElevation != null)
             request.geoidElevation = geoidElevation;
+
+        if (heuristicStepsPerMainStep != null)
+            request.heuristicStepsPerMainStep = heuristicStepsPerMainStep;
 
         //getLocale function returns defaultLocale if locale is null
         request.locale = ResourceBundleSingleton.INSTANCE.getLocale(locale);

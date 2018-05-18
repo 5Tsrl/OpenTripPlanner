@@ -45,6 +45,7 @@ import org.opentripplanner.standalone.Router;
 import org.opentripplanner.standalone.S3BucketConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import java.io.File;
 import java.io.IOException;
@@ -109,10 +110,12 @@ public class GraphBuilder implements Runnable {
     }
     
     public void setPath (String path) {
+        MDC.put("routerPath", path);
         graphFile = new File(path.concat("/Graph.obj"));
     }
     
     public void setPath (File path) {
+        MDC.put("routerPath", path.getPath());
         graphFile = new File(path, "Graph.obj");
     }
 
@@ -238,12 +241,14 @@ public class GraphBuilder implements Runnable {
             streetEdgeFactory.useElevationData = builderParams.fetchElevationUS || (demFile != null);
             osmModule.edgeFactory = streetEdgeFactory;
             osmModule.customNamer = builderParams.customNamer;
-            DefaultWayPropertySetSource defaultWayPropertySetSource = new DefaultWayPropertySetSource();
-            osmModule.setDefaultWayPropertySetSource(defaultWayPropertySetSource);
+            osmModule.setDefaultWayPropertySetSource(builderParams.wayPropertySet);
             osmModule.skipVisibility = !builderParams.areaVisibility;
+            osmModule.platformEntriesLinking = builderParams.platformEntriesLinking;
             osmModule.staticBikeRental = builderParams.staticBikeRental;
             osmModule.staticBikeParkAndRide = builderParams.staticBikeParkAndRide;
             osmModule.staticParkAndRide = builderParams.staticParkAndRide;
+            osmModule.banDiscouragedWalking = builderParams.banDiscouragedWalking;
+            osmModule.banDiscouragedBiking = builderParams.banDiscouragedBiking;
             graphBuilder.addModule(osmModule);
             PruneFloatingIslands pruneFloatingIslands = new PruneFloatingIslands();
             pruneFloatingIslands.setPruningThresholdIslandWithoutStops(builderParams.pruningThresholdIslandWithoutStops);
@@ -275,7 +280,9 @@ public class GraphBuilder implements Runnable {
         }
         // This module is outside the hasGTFS conditional block because it also links things like bike rental
         // which need to be handled even when there's no transit.
-        graphBuilder.addModule(new StreetLinkerModule());
+        StreetLinkerModule streetLinkerModule = new StreetLinkerModule();
+        streetLinkerModule.setAddExtraEdgesToAreas(builderParams.areaVisibility);
+        graphBuilder.addModule(streetLinkerModule);
         // Load elevation data and apply it to the streets.
         // We want to do run this module after loading the OSM street network but before finding transfers.
         if (builderParams.elevationBucket != null) {
@@ -307,7 +314,7 @@ public class GraphBuilder implements Runnable {
             // The stops can be linked to each other once they are already linked to the street network.
             if ( ! builderParams.useTransfersTxt) {
                 // This module will use streets or straight line distance depending on whether OSM data is found in the graph.
-                graphBuilder.addModule(new DirectTransferGenerator());
+                graphBuilder.addModule(new DirectTransferGenerator(builderParams.maxTransferDistance));
             }
         }
         graphBuilder.addModule(new EmbedConfig(builderConfig, routerConfig));

@@ -110,6 +110,10 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
                 source = new SmooveBikeRentalDataSource();
             } else if (sourceType.equals("share-bike")) {
                 source = new ShareBikeRentalDataSource();
+            } else if (sourceType.equals("uip-bike")) {
+                source = new UIPBikeRentalDataSource(apiKey);
+            } else if (sourceType.equals("gbfs")) {
+                source = new GbfsBikeRentalDataSource();
             }
         }
 
@@ -129,6 +133,10 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
 
     @Override
     public void setup() throws InterruptedException, ExecutionException {
+        while (graph.getVertices() == null) {
+            LOG.warn("Graph has no vertices. Sleeping 5 sec");
+            Thread.sleep(5000);
+        }
         // Creation of network linker library will not modify the graph
         linker = new SimpleStreetSplitter(graph);
 

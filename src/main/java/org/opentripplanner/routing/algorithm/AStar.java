@@ -245,6 +245,7 @@ public class AStar {
              */
             if (abortTime < Long.MAX_VALUE  && System.currentTimeMillis() > abortTime) {
                 LOG.warn("Search timeout. origin={} target={}", runState.rctx.origin, runState.rctx.target);
+
                 // Rather than returning null to indicate that the search was aborted/timed out,
                 // we instead set a flag in the routing context and return the SPT anyway. This
                 // allows returning a partial list results even when a timeout occurs.
@@ -367,7 +368,11 @@ public class AStar {
     }
 
     public List<GraphPath> getPathsToTarget() {
-        List<GraphPath> ret = new LinkedList<>();
+        if (runState == null || runState.targetAcceptedStates == null) {
+            return Collections.emptyList();
+        }
+
+        final List<GraphPath> ret = new LinkedList<>();
         for (State s : runState.targetAcceptedStates) {
             if (s.isFinal()) {
                 ret.add(new GraphPath(s, true));
