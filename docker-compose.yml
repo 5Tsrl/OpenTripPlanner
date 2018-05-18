@@ -12,7 +12,7 @@ services:
             - /data/otp-${ROUTER_NAME}/graphs/:/opt/opentripplanner/graphs/
         network_mode: bridge
         command:
-            -'java $JAVA_OPTS -jar $JAR --build $DIR/$ROUTER_NAME'
+            -'java $JAVA_OPTS -jar otp-shaded.jar --build $DIR/$ROUTER_NAME'
         
     otp-mato:
         image: registry:5000/otp
@@ -31,4 +31,4 @@ services:
         restart: unless-stopped
         network_mode: bridge
         command:
-            -'java $JAVA_OPTS -Duser.timezone=$TZ -jar $JAR --vrbose --server --port $PORT --securePort $SECURE_PORT --graphs ./graphs --router $ROUTER_NAME'
+            -'java $JAVA_OPTS -Duser.timezone=$TZ -jar otp-shaded.jar --vrbose --server --port $PORT --securePort $SECURE_PORT --graphs ./graphs --router $ROUTER_NAME'
