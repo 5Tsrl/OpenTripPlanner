@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+    bg-mato:
+        image: registry:5000/otp
+        container_name: bg-mato
+        environment:
+            - TZ='Europe/Rome'
+            - JAVA_OPTS='-Xms8G -Xmx8G'
+            - ROUTER_NAME=mato
+        volumes:
+            - /data/otp-${ROUTER_NAME}/graphs/:/opt/opentripplanner/graphs/
+        network_mode: bridge
+        command:
+            -'java $JAVA_OPTS -jar $JAR --build $DIR/$ROUTER_NAME'
+        
+    otp-mato:
+        image: registry:5000/otp
+        container_name: otp-mato
+        environment:
+            - TZ='Europe/Rome'
+            - JAVA_OPTS='-Xms8G -Xmx8G'
+            - PORT=8080
+            - SECURE_PORT=8081
+            - ROUTER_NAME=mato
+        volumes:
+            - /data/otp-${ROUTER_NAME}/graphs/:/opt/opentripplanner/graphs/
+            - /data/otp/graphs/${ROUTER_NAME}:/opt/opentripplanner/graphs/
+        ports:
+            - 8079:${PORT}
+            - 8180:${SECURE_PORT}
+        restart: unless-stopped
+        network_mode: bridge
+        command:
+            -'java $JAVA_OPTS -Duser.timezone=$TZ -jar $JAR --vrbose --server --port $PORT --securePort $SECURE_PORT --graphs ./graphs --router $ROUTER_NAME'
