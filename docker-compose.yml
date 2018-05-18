@@ -25,7 +25,6 @@ services:
             - ROUTER_NAME=mato
         volumes:
             - /data/otp-${ROUTER_NAME}/graphs/:/opt/opentripplanner/graphs/
-            - /data/otp/graphs/${ROUTER_NAME}:/opt/opentripplanner/graphs/
         ports:
             - 8079:${PORT}
             - 8180:${SECURE_PORT}
