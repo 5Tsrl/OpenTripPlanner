@@ -1,15 +1,16 @@
 FROM openjdk:8u121-jre-alpine
 
-RUN apk add --update curl bash ttf-dejavu && \
-	rm -rf /var/cache/apk/*
-
-#VOLUME /opt/opentripplanner/graphs
-
-ENV OTP_ROOT="/opt/opentripplanner"
+ENV \
+  OTP_ROOT='/var/otp/' \
+  TZ='Europe/Rome' \
+  JAVA_OPTS='-Xms4G -Xmx4G'
 
 WORKDIR ${OTP_ROOT}
 
-#ADD run.sh ${OTP_ROOT}/run.sh
 COPY target/*-shaded.jar otp-shaded.jar
 
-#ENTRYPOINT exec ./run.sh
+RUN chmod -R 777 ${OTP_ROOT}
+
+ # docker build -t registry:5000/otp  . ;
+ # docker-compose up otp-mato-build-graph
+ # docker-compose up -d otp-mato

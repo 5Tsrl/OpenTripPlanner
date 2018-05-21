@@ -1,0 +1,5 @@
+.git/
+src/
+docs/
+target/*
+!target/*shaded.jar
