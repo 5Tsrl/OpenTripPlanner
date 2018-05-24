@@ -5,6 +5,8 @@ ENV \
   TZ='Europe/Rome' \
   JAVA_OPTS='-Xms4G -Xmx4G'
 
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && apk update && apk add tzdata
+
 WORKDIR ${OTP_ROOT}
 
 COPY target/*-shaded.jar otp-shaded.jar
