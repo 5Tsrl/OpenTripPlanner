@@ -9,10 +9,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
 
 WORKDIR ${OTP_ROOT}
 
-COPY target/*-shaded.jar otp-shaded.jar
+COPY target/otp-1.3.0-SNAPSHOT-shaded.jar otp-shaded.jar
 
 RUN chmod -R 777 ${OTP_ROOT}
 
  # docker build -t registry:5000/otp  . ;
- # docker-compose up otp-mato-build-graph
- # docker-compose up -d otp-mato
+ # docker-compose up otp-build-graph
+ # docker-compose up -d otp-run-mato

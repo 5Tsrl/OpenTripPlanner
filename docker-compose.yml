@@ -9,9 +9,9 @@ services:
         network_mode: bridge
         command: java -Xms4G -Xmx4G -jar otp-shaded.jar --build ./graphs/mato
 
-    otp-mato:
+    otp-run-mato:
         image: registry:5000/otp
-        container_name: otp-mato
+        container_name: otp-run-mato
         volumes:
             - /data/otp-graphs/:/var/otp/graphs/
         ports:
