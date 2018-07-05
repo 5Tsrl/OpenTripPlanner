@@ -27,3 +27,4 @@ gen-py/
 .sonar
 _site/
 otp-batch-analyst
+node_modules
