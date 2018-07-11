@@ -33,29 +33,29 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class is attached to the graph:
- * 
+ *
  * <pre>
  * GraphUpdaterManager updaterManager = graph.getUpdaterManager();
  * </pre>
- * 
+ *
  * Each updater will run in its own thread. When changes to the graph have to be made by these
  * updaters, this should be done via the execute method of this manager to prevent race conditions
  * between graph write operations.
- * 
+ *
  */
 public class GraphUpdaterManager {
 
     private static Logger LOG = LoggerFactory.getLogger(GraphUpdaterManager.class);
-    
+
     /**
      * Text used for naming threads when the graph lacks a routerId.
      */
     private static String DEFAULT_ROUTER_ID = "(default)";
-    
+
     /**
      * Thread factory used to create new threads.
      */
-    
+
     private ThreadFactory threadFactory;
 
     /**
@@ -74,25 +74,25 @@ public class GraphUpdaterManager {
     /**
      * List with updaters to be able to free resources TODO: is this list necessary?
      */
-    List<GraphUpdater> updaterList = new ArrayList<GraphUpdater>();
+    private List<GraphUpdater> updaterList = new ArrayList<GraphUpdater>();
 
     /**
      * Parent graph of this manager
      */
-    Graph graph;
+    private Graph graph;
 
     /**
      * Constructor
-     * 
+     *
      * @param graph is parent graph of manager
      */
     public GraphUpdaterManager(Graph graph) {
         this.graph = graph;
-        
+
         String routerId = graph.routerId;
         if(routerId == null || routerId.isEmpty())
             routerId = DEFAULT_ROUTER_ID;
-        
+
         threadFactory = new ThreadFactoryBuilder().setNameFormat("GraphUpdater-" + routerId + "-%d").build();
         scheduler = Executors.newSingleThreadScheduledExecutor(threadFactory);
         updaterPool = Executors.newCachedThreadPool(threadFactory);
@@ -134,75 +134,49 @@ public class GraphUpdaterManager {
 
     /**
      * Adds an updater to the manager and runs it immediately in its own thread.
-     * 
+     *
      * @param updater is the updater to add and run
      */
     public void addUpdater(final GraphUpdater updater) {
         updaterList.add(updater);
-        updaterPool.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    updater.setup();
-                    try {
-                        updater.run();
-                    } catch (Exception e) {
-                        LOG.error("Error while running updater {}:", updater.getClass().getName(), e);
-                    }
-                } catch (Exception e) {
-                    LOG.error("Error while setting up updater {}:", updater.getClass().getName(), e);
-                }
-            }
-        });
     }
 
     /**
      * This is the method to use to modify the graph from the updaters. The runnables will be
      * scheduled after each other, guaranteeing that only one of these runnables will be active at
      * any time.
-     * 
+     *
      * @param runnable is a graph writer runnable
      */
     public void execute(GraphWriterRunnable runnable) {
-        executeReturningFuture(runnable);
-    }
-
-    /**
-     * This is another method to use to modify the graph from the updaters. It behaves like execute,
-     * but blocks until the runnable has been executed. This might be particularly useful in the 
-     * setup method of an updater.
-     * 
-     * @param runnable is a graph writer runnable
-     * @throws ExecutionException
-     * @throws InterruptedException
-     * @see GraphUpdaterManager.execute
-     */
-    public void executeBlocking(GraphWriterRunnable runnable) throws InterruptedException,
-            ExecutionException {
-        Future<?> future = executeReturningFuture(runnable);
-        // Ask for result of future. Will block and return null when runnable is successfully
-        // finished, throws otherwise
-        future.get();
-    }
-
-    private Future<?> executeReturningFuture(final GraphWriterRunnable runnable) {
-        // TODO: check for high water mark?
-        Future<?> future = scheduler.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    runnable.run(graph);
-                } catch (Exception e) {
-                    LOG.error("Error while running graph writer {}:", runnable.getClass().getName(),
-                            e);
-                }
+        scheduler.submit(() -> {
+            try {
+                runnable.run(graph);
+            } catch (Exception e) {
+                LOG.error("Error while running graph writer {}:", runnable.getClass().getName(), e);
             }
         });
-        return future;
     }
 
     public int size() {
         return updaterList.size();
+    }
+
+    /**
+     * This should be called only once at startup to kick off every updater in its own thread, and only after all
+     * the updaters have had their setup methods called.
+     */
+    public void startUpdaters() {
+        for (GraphUpdater updater : updaterList) {
+            LOG.info("Starting new thread for updater {}", updater.toString());
+            updaterPool.execute(() -> {
+                try {
+                    updater.run();
+                } catch (Exception e) {
+                    LOG.error("Error while running updater {}:", updater.getClass().getName(), e);
+                }
+            });
+        }
     }
 
     /**
