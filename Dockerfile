@@ -1,11 +1,11 @@
-FROM openjdk:8u121-jre-alpine
+FROM openjdk:8-jre-alpine
 
 ENV \
   OTP_ROOT='/var/otp/' \
   TZ='Europe/Rome' \
   JAVA_OPTS='-Xms4G -Xmx4G'
 
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && apk update && apk add tzdata
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && apk update && apk add tzdata ttf-dejavu
 
 WORKDIR ${OTP_ROOT}
 
