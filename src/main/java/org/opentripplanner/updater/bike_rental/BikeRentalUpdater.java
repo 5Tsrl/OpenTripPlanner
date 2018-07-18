@@ -39,9 +39,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Dynamic bike-rental station updater which encapsulate one BikeRentalDataSource.
- * 
+ *
  * Usage example ('bike1' name is an example) in the file 'Graph.properties':
- * 
+ *
  * <pre>
  * bike1.type = bike-rental
  * bike1.frequencySec = 60
@@ -61,8 +61,6 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
     Map<BikeRentalStation, BikeRentalStationVertex> verticesByStation = new HashMap<BikeRentalStation, BikeRentalStationVertex>();
 
     private BikeRentalDataSource source;
-
-    private Graph graph;
 
     private SimpleStreetSplitter linker;
 
@@ -125,28 +123,22 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
 
         // Configure updater
         LOG.info("Setting up bike rental updater.");
-        this.graph = graph;
         this.source = source;
         this.network = config.path("networks").asText(DEFAULT_NETWORK_LIST);
-        LOG.info("Creating bike-rental updater running every {} seconds : {}", frequencySec, source);
+        if (frequencySec <= 0) {
+            LOG.info("Creating bike-rental updater running once only (non-polling): {}", source);
+        } else {
+            LOG.info("Creating bike-rental updater running every {} seconds: {}", frequencySec, source);
+        }
+
     }
 
     @Override
-    public void setup() throws InterruptedException, ExecutionException {
-        while (graph.getVertices() == null) {
-            LOG.warn("Graph has no vertices. Sleeping 5 sec");
-            Thread.sleep(5000);
-        }
+    public void setup(Graph graph) throws InterruptedException, ExecutionException {
         // Creation of network linker library will not modify the graph
         linker = new SimpleStreetSplitter(graph);
-
         // Adding a bike rental station service needs a graph writer runnable
-        updaterManager.executeBlocking(new GraphWriterRunnable() {
-            @Override
-            public void run(Graph graph) {
-                service = graph.getService(BikeRentalStationService.class, true);
-            }
-        });
+        service = graph.getService(BikeRentalStationService.class, true);
     }
 
     @Override

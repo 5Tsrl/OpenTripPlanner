@@ -108,19 +108,14 @@ public class CarParkUpdater extends PollingGraphUpdater {
     }
 
     @Override
-    public void setup() throws InterruptedException, ExecutionException {
+    public void setup(Graph graph) throws InterruptedException, ExecutionException {
         // Creation of network linker library will not modify the graph
         linker = new SimpleStreetSplitter(graph);
 
         streetIndex = graph.streetIndex;
 
         // Adding a car parking service needs a graph writer runnable
-        updaterManager.executeBlocking(new GraphWriterRunnable() {
-            @Override
-            public void run(Graph graph) {
-                carParkService = graph.getService(CarParkService.class, true);
-            }
-        });
+        carParkService = graph.getService(CarParkService.class, true);
     }
 
     @Override

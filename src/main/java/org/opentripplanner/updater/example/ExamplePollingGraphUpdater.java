@@ -68,7 +68,7 @@ public class ExamplePollingGraphUpdater extends PollingGraphUpdater {
 
     // Here the updater can be initialized.
     @Override
-    public void setup() {
+    public void setup(Graph graph) {
         LOG.info("Setup example polling updater");
     }
 

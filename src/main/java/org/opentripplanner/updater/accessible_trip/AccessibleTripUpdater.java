@@ -29,14 +29,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Dynamic accessibility info updater which encapsulate one AcceesibleTripDataSource.
- * 
+ *
  * Usage example () in the file router-config.json
 	type: "accessible-trip-updater",
     frequencySec: 20,
     sourceType: "trip-http",
     url: "http://mat.5t.torino.it/accessible-trips.json",
     feedId: "1"
- * 
+ *
  */
 public class AccessibleTripUpdater extends PollingGraphUpdater {
 
@@ -45,7 +45,7 @@ public class AccessibleTripUpdater extends PollingGraphUpdater {
     private GraphUpdaterManager updaterManager;
 
     private AccessibleTripDataSource source;
-    
+
     /**
      * Property to set on the RealtimeDataSnapshotSource
      */
@@ -87,31 +87,26 @@ public class AccessibleTripUpdater extends PollingGraphUpdater {
     }
 
     @Override
-    public void setup() throws InterruptedException, ExecutionException {
-        // Create a realtime data snapshot source and wait for runnable to be executed
-        updaterManager.executeBlocking(new GraphWriterRunnable() {
-            @Override
-            public void run(Graph graph) {
-                // Only create a realtime data snapshot source if none exists already
-                AccessibleTripSnapshotSource snapshotSource = graph.accessibleTripSnapshotSource;
-                if (snapshotSource == null) {
-                    snapshotSource = new AccessibleTripSnapshotSource(graph);
-                    // Add snapshot source to graph
-                    graph.accessibleTripSnapshotSource = (snapshotSource);
-                }
+    public void setup(Graph graph) throws InterruptedException, ExecutionException {
 
-                // Set properties of realtime data snapshot source
-                if (logFrequency != null) {
-                    snapshotSource.logFrequency = (logFrequency);
-                }
-                if (maxSnapshotFrequency != null) {
-                    snapshotSource.maxSnapshotFrequency = (maxSnapshotFrequency);
-                }
-                if (purgeExpiredData != null) {
-                    snapshotSource.purgeExpiredData = (purgeExpiredData);
-                }
-            }
-        });
+    	// Only create a realtime data snapshot source if none exists already
+    	AccessibleTripSnapshotSource snapshotSource = graph.accessibleTripSnapshotSource;
+    	if (snapshotSource == null) {
+    		snapshotSource = new AccessibleTripSnapshotSource(graph);
+    		// Add snapshot source to graph
+    		graph.accessibleTripSnapshotSource = (snapshotSource);
+    	}
+
+    	// Set properties of realtime data snapshot source
+    	if (logFrequency != null) {
+    		snapshotSource.logFrequency = (logFrequency);
+    	}
+    	if (maxSnapshotFrequency != null) {
+    		snapshotSource.maxSnapshotFrequency = (maxSnapshotFrequency);
+    	}
+    	if (purgeExpiredData != null) {
+    		snapshotSource.purgeExpiredData = (purgeExpiredData);
+    	}
     }
 
     /**
@@ -134,7 +129,7 @@ public class AccessibleTripUpdater extends PollingGraphUpdater {
     @Override
     public void teardown() {
     }
-    
+
     public String toString() {
         String s = (source == null) ? "NONE" : source.toString();
         return "Streaming accessible trip updater with update source = " + s;
