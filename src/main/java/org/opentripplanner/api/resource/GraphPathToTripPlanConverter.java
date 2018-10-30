@@ -1,32 +1,21 @@
-/* This program is free software: you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public License
- as published by the Free Software Foundation, either version 3 of
- the License, or (props, at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-
 package org.opentripplanner.api.resource;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
-import org.onebusaway.gtfs.model.*;
 import org.opentripplanner.api.model.*;
 import org.opentripplanner.api.resource.TripPlanFilter;
 import org.opentripplanner.common.geometry.DirectionUtils;
 import org.opentripplanner.common.geometry.GeometryUtils;
 import org.opentripplanner.common.geometry.PackedCoordinateSequence;
 import org.opentripplanner.common.model.P2;
+import org.opentripplanner.model.Agency;
+import org.opentripplanner.model.Route;
+import org.opentripplanner.model.Stop;
+import org.opentripplanner.model.Trip;
 import org.opentripplanner.profile.BikeRentalStationInfo;
 import org.opentripplanner.routing.alertpatch.Alert;
 import org.opentripplanner.routing.alertpatch.AlertPatch;
-import org.opentripplanner.routing.bike_rental.BikeRentalStation;
 import org.opentripplanner.routing.core.*;
 import org.opentripplanner.routing.edgetype.*;
 import org.opentripplanner.routing.error.TrivialPathException;
@@ -43,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * A library class with only static methods used in converting internal GraphPaths to TripPlans, which are
@@ -53,6 +43,8 @@ public abstract class GraphPathToTripPlanConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(GraphPathToTripPlanConverter.class);
     private static final double MAX_ZAG_DISTANCE = 30; // TODO add documentation, what is a "zag"?
+    private static final double WALK_LEG_DISTANCE_EPSILON = 2.0;
+    private static final double WALK_LEG_DURATION_EPSILON = 5e3;
 
     /**
      * Generates a TripPlan from a set of paths
@@ -163,6 +155,8 @@ public abstract class GraphPathToTripPlanConverter {
 
         fixupLegs(itinerary.legs, legsStates);
 
+        itinerary.legs = filterLegs(itinerary.legs);
+
         itinerary.duration = lastState.getElapsedTimeSeconds();
         itinerary.startTime = makeCalendar(states[0]);
         itinerary.endTime = makeCalendar(lastState);
@@ -179,6 +173,13 @@ public abstract class GraphPathToTripPlanConverter {
         }
 
         return itinerary;
+    }
+
+    private static List<Leg> filterLegs(List<Leg> legs) {
+        return legs.stream().filter(leg -> {
+            return !"WALK".equals(leg.mode) || (leg.distance > WALK_LEG_DISTANCE_EPSILON && leg.endTime.getTimeInMillis() - leg.startTime.getTimeInMillis() > WALK_LEG_DURATION_EPSILON);
+        }).collect(Collectors.toList());
+
     }
 
     private static Calendar makeCalendar(State state) {
@@ -242,8 +243,8 @@ public abstract class GraphPathToTripPlanConverter {
         List<int[]> legsIndexes = new ArrayList<int[]>();
 
         for (int i = 1; i < states.length - 1; i++) {
-            TraverseMode backMode = states[i].getBackMode();
-            TraverseMode forwardMode = states[i + 1].getBackMode();
+            TraverseMode backMode = states[i].getBackMode() != null ? states[i].getBackMode() : states[i].getBackState().getNonTransitMode();
+            TraverseMode forwardMode = states[i + 1].getBackMode() != null ? states[i + 1].getBackMode() : states[i + 1].getBackState().getNonTransitMode();
 
             if (backMode == null || forwardMode == null) continue;
 

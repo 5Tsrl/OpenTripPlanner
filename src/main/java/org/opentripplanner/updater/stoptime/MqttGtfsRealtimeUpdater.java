@@ -70,18 +70,18 @@ public class MqttGtfsRealtimeUpdater implements GraphUpdater {
         this.updaterManager = updaterManager;
     }
 
-    @Override public void setup(Graph graph) throws Exception {
+    @Override public void setup(Graph setupGraph) throws Exception {
+        // Only create a realtime data snapshot source if none exists already
+        if (setupGraph.timetableSnapshotSource == null) {
+            TimetableSnapshotSource snapshotSource = new TimetableSnapshotSource(setupGraph);
+            // Add snapshot source to graph
 
-    	if (graph.timetableSnapshotSource == null) {
-    		TimetableSnapshotSource snapshotSource = new TimetableSnapshotSource(graph);
-    		// Add snapshot source to graph
-
-    		if (fuzzyTripMatching) {
-    			this.fuzzyTripMatcher = new GtfsRealtimeFuzzyTripMatcher(graph.index);
-    			snapshotSource.fuzzyTripMatcher = fuzzyTripMatcher;
-    		}
-    		graph.timetableSnapshotSource = (snapshotSource);
-    	}
+            if (fuzzyTripMatching) {
+                this.fuzzyTripMatcher = new GtfsRealtimeFuzzyTripMatcher(setupGraph.index);
+                snapshotSource.fuzzyTripMatcher = fuzzyTripMatcher;
+            }
+            setupGraph.timetableSnapshotSource = (snapshotSource);
+        }
     }
 
     @Override public void run() throws Exception {
@@ -96,6 +96,7 @@ public class MqttGtfsRealtimeUpdater implements GraphUpdater {
                     client.subscribe(topic, qos);
                 } catch (MqttException e) {
                     LOG.warn("Could not subscribe to: " + topic);
+                    LOG.error(e.toString());
                 }
             }
 

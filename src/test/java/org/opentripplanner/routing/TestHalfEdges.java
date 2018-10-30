@@ -1,29 +1,15 @@
-/* This program is free software: you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public License
- as published by the Free Software Foundation, either version 3 of
- the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-
 package org.opentripplanner.routing;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.linearref.LinearLocation;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.onebusaway.gtfs.model.AgencyAndId;
-import org.onebusaway.gtfs.model.Stop;
+import org.opentripplanner.model.FeedScopedId;
+import org.opentripplanner.model.Stop;
 import org.opentripplanner.common.geometry.GeometryUtils;
 import org.opentripplanner.common.model.GenericLocation;
 import org.opentripplanner.graph_builder.module.StreetLinkerModule;
@@ -35,7 +21,6 @@ import org.opentripplanner.routing.core.TraverseMode;
 import org.opentripplanner.routing.core.TraverseModeSet;
 import org.opentripplanner.routing.edgetype.StreetEdge;
 import org.opentripplanner.routing.edgetype.StreetTraversalPermission;
-import org.opentripplanner.routing.edgetype.TemporaryFreeEdge;
 import org.opentripplanner.routing.error.TrivialPathException;
 import org.opentripplanner.routing.graph.Edge;
 import org.opentripplanner.routing.graph.Graph;
@@ -49,9 +34,11 @@ import org.opentripplanner.routing.vertextype.IntersectionVertex;
 import org.opentripplanner.routing.vertextype.TransitStop;
 import org.opentripplanner.util.TestUtils;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import static com.google.common.collect.Iterables.filter;
@@ -121,13 +108,13 @@ public class TestHalfEdges {
         s1.setName("transitVertex 1");
         s1.setLon(-74.005);
         s1.setLat(40.0099999);
-        s1.setId(new AgencyAndId("A", "fleem station"));
+        s1.setId(new FeedScopedId("A", "fleem station"));
 
         Stop s2 = new Stop();
         s2.setName("transitVertex 2");
         s2.setLon(-74.002);
         s2.setLat(40.0099999);
-        s2.setId(new AgencyAndId("A", "morx station"));
+        s2.setId(new FeedScopedId("A", "morx station"));
 
         station1 = new TransitStop(graph, s1);
         station2 = new TransitStop(graph, s2);
@@ -451,14 +438,26 @@ public class TestHalfEdges {
         end.dispose();
         assertEquals(2, edges.size());
 
+        // test that traveling between origin and destination that are close to each other doesn't throw TrivialPathException
+        // when there are intermediatedPlaces
+        RoutingRequest intermediateWalking = new RoutingRequest(TraverseMode.WALK);
+        List<String> intermediatePlaces = Arrays.asList("Home::42.0,-76.0");
+        intermediateWalking.setIntermediatePlacesFromStrings(intermediatePlaces);
+        start = (TemporaryStreetLocation) finder.getVertexForLocation(
+                new GenericLocation(40.004, -74.0), intermediateWalking, false);
+        end = (TemporaryStreetLocation) finder.getVertexForLocation(
+                new GenericLocation(40.008, -74.0), intermediateWalking, true);
+        assertNotNull(start);
+        assertNotNull(end);
 
-        // test that it is possible to travel between two splits on the same street
+        // test that traveling between places that are close to each other throws TrivialPathException
         RoutingRequest walking = new RoutingRequest(TraverseMode.WALK);
         start = (TemporaryStreetLocation) finder.getVertexForLocation(
                 new GenericLocation(40.004, -74.0), walking, false);
         exception.expect(TrivialPathException.class);
         end = (TemporaryStreetLocation) finder.getVertexForLocation(
                 new GenericLocation(40.008, -74.0), walking, true);
+
          /*assertNotNull(end);
         // The visibility for temp edges for start and end is set in the setRoutingContext call
         walking.setRoutingContext(graph, start, end);

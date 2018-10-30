@@ -1,16 +1,3 @@
-/* This program is free software: you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public License
- as published by the Free Software Foundation, either version 3 of
- the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-
 package org.opentripplanner.updater;
 
 import com.beust.jcommander.internal.Lists;
@@ -53,9 +40,8 @@ public class GraphUpdaterManager {
     private static String DEFAULT_ROUTER_ID = "(default)";
 
     /**
-     * Thread factory used to create new threads.
+     * Thread factory used to create new threads, giving them more human-readable names including the routerId.
      */
-
     private ThreadFactory threadFactory;
 
     /**
@@ -63,28 +49,30 @@ public class GraphUpdaterManager {
      * but never simultaneous writes. We ensure this policy is respected by having a single writer
      * thread, which sequentially executes all graph updater tasks. Each task is a runnable that is
      * scheduled with the ExecutorService to run at regular intervals.
+     * FIXME in reality we're not using scheduleAtFixedInterval. We're scheduling for immediate execution from separate threads that sleep in a loop.
      */
     private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     /**
-     * Pool with updaters
+     * A pool of threads on which the updaters will run.
+     * This creates a pool that will auto-scale up to any size (maximum pool size is MAX_INT).
+     * FIXME The polling updaters occupy an entire thread, sleeping in between polling operations.
      */
     private ExecutorService updaterPool = Executors.newCachedThreadPool();
 
     /**
-     * List with updaters to be able to free resources TODO: is this list necessary?
+     * Keep track of all updaters so we can cleanly free resources associated with them at shutdown.
      */
-    private List<GraphUpdater> updaterList = new ArrayList<GraphUpdater>();
+    private List<GraphUpdater> updaterList = new ArrayList<>();
 
     /**
-     * Parent graph of this manager
+     * The Graph that will be updated.
      */
     private Graph graph;
 
     /**
-     * Constructor
-     *
-     * @param graph is parent graph of manager
+     * Constructor.
+     * @param graph is the Graph that will be updated.
      */
     public GraphUpdaterManager(Graph graph) {
         this.graph = graph;

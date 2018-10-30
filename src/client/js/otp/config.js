@@ -322,6 +322,9 @@ otp.config.modes = {
     //Options widgets) http://en.wikipedia.org/wiki/Park_and_ride#Kiss_and_ride
     "CAR,WALK,TRANSIT"          : _tr('Kiss and Ride'),
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
+    //Options widgets) (Use public transit and get picked up by a car, i.e. reverse of kiss and ride)
+    "CAR_PICKUP,WALK,TRANSIT"          : _tr('Ride and Kiss'),
+    //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets) (Park bicycle at Public transit station and take a
     //transit
     "BICYCLE_PARK,WALK,TRANSIT" : _tr('Bike and Ride'),
@@ -331,8 +334,8 @@ otp.config.modes = {
     // IDEA: maybe we start with a big array (like below), and the pull out modes from this array when turning off various modes...
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets)
-    //    'WALK,BICYCLE_RENT'        :_tr('Rented Bicycle'),
+    'WALK,BICYCLE_RENT'        : _tr('Rented Bicycle'),
     //TRANSLATORS: Travel by: mode of transport (Used in selection in Travel
     //Options widgets)
-    //    'TRANSIT,WALK,BICYCLE_RENT': _tr('Transit & Rented Bicycle')
+    'TRANSIT,WALK,BICYCLE_RENT': _tr('Transit & Rented Bicycle')
     };

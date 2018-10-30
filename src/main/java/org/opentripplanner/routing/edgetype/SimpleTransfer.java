@@ -1,18 +1,6 @@
-/* This program is free software: you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public License
- as published by the Free Software Foundation, either version 3 of
- the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-
 package org.opentripplanner.routing.edgetype;
 
+import org.opentripplanner.graph_builder.module.NearbyStopFinder;
 import org.opentripplanner.routing.core.RoutingRequest;
 import org.opentripplanner.routing.core.State;
 import org.opentripplanner.routing.core.StateEditor;
@@ -32,6 +20,7 @@ import java.util.Locale;
  */
 public class SimpleTransfer extends Edge {
     private static final long serialVersionUID = 20140408L;
+    private int penaltySeconds;
 
     private double distance;
     
@@ -47,6 +36,11 @@ public class SimpleTransfer extends Edge {
 
     public SimpleTransfer(TransitStop from, TransitStop to, double distance, LineString geometry) {
         this(from, to, distance, geometry, null);
+    }
+
+    public SimpleTransfer(TransitStop from, NearbyStopFinder.StopAtDistance sd) {
+        this(from, sd.tstop, sd.dist, sd.geom, sd.edges);
+        this.penaltySeconds = sd.penaltySeconds;
     }
 
     @Override
@@ -69,8 +63,11 @@ public class SimpleTransfer extends Edge {
         double walkspeed = rr.walkSpeed;
         StateEditor se = s0.edit(this);
         se.setBackMode(TraverseMode.WALK);
-        int time = (int) Math.ceil(distance / walkspeed) + 2 * StreetTransitLink.STL_TRAVERSE_COST;
+
+        int time = (int) Math.ceil(distance / walkspeed) + 2 * StreetTransitLink.STL_TRAVERSE_COST + this.penaltySeconds;
+
         se.incrementTimeInSeconds(time);
+
         se.incrementWeight(time * rr.walkReluctance);
         se.incrementWalkDistance(distance);
         return se.makeState();
@@ -108,6 +105,6 @@ public class SimpleTransfer extends Edge {
 
     @Override
     public String toString() {
-        return "SimpleTransfer " + getName();
+        return "SimpleTransfer " + getName() + " (" + getDistance() + "m)";
     }
 }

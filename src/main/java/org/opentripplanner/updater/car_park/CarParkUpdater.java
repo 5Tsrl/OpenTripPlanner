@@ -104,7 +104,7 @@ public class CarParkUpdater extends PollingGraphUpdater {
         // Configure updater
         this.graph = graph;
         this.source = source;
-        LOG.info("Creating car-park updater running every {} seconds : {}", frequencySec, source);
+        LOG.info("Creating car-park updater running every {} seconds : {}", pollingPeriodSeconds, source);
     }
 
     @Override
@@ -115,7 +115,12 @@ public class CarParkUpdater extends PollingGraphUpdater {
         streetIndex = graph.streetIndex;
 
         // Adding a car parking service needs a graph writer runnable
-        carParkService = graph.getService(CarParkService.class, true);
+        updaterManager.execute(new GraphWriterRunnable() {
+            @Override
+            public void run(Graph graph) {
+                carParkService = graph.getService(CarParkService.class, true);
+            }
+        });
     }
 
     @Override

@@ -1,16 +1,3 @@
-/* This program is free software: you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public License
- as published by the Free Software Foundation, either version 3 of
- the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-
 package org.opentripplanner.graph_builder.module.osm;
 
 import java.util.ArrayList;
@@ -42,7 +29,6 @@ import org.opentripplanner.routing.graph.Edge;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.routing.graph.Vertex;
 import org.opentripplanner.routing.spt.DominanceFunction;
-import org.opentripplanner.routing.spt.DominanceFunction.EarliestArrival;
 import org.opentripplanner.routing.spt.GraphPath;
 import org.opentripplanner.routing.spt.ShortestPathTree;
 import org.opentripplanner.routing.vertextype.IntersectionVertex;
@@ -82,7 +68,7 @@ public class WalkableAreaBuilder {
 
     private static Logger LOG = LoggerFactory.getLogger(WalkableAreaBuilder.class);
 
-    private final int MAX_AREA_NODES = 500;
+    private final int MAX_AREA_NODES = 1000;
 
     private static final double VISIBILITY_EPSILON = 0.000000001;
 
@@ -95,17 +81,17 @@ public class WalkableAreaBuilder {
     private StreetEdgeFactory edgeFactory;
 
     // This is an awful hack, but this class (WalkableAreaBuilder) ought to be rewritten.
-    private Handler __handler;
+    private Handler handler;
 
     private HashMap<Coordinate, IntersectionVertex> areaBoundaryVertexForCoordinate = new HashMap<Coordinate, IntersectionVertex>();
 
     public WalkableAreaBuilder(Graph graph, OSMDatabase osmdb, WayPropertySet wayPropertySet,
-            StreetEdgeFactory edgeFactory, Handler __handler) {
+            StreetEdgeFactory edgeFactory, Handler handler) {
         this.graph = graph;
         this.osmdb = osmdb;
         this.wayPropertySet = wayPropertySet;
         this.edgeFactory = edgeFactory;
-        this.__handler = __handler;
+        this.handler = handler;
     }
 
     /**
@@ -262,9 +248,9 @@ public class WalkableAreaBuilder {
                     if (alreadyAddedEdges.contains(nodePair))
                         continue;
 
-                    IntersectionVertex startEndpoint = __handler.getVertexForOsmNode(nodeI,
+                    IntersectionVertex startEndpoint = handler.getVertexForOsmNode(nodeI,
                             areaEntity);
-                    IntersectionVertex endEndpoint = __handler.getVertexForOsmNode(nodeJ,
+                    IntersectionVertex endEndpoint = handler.getVertexForOsmNode(nodeJ,
                             areaEntity);
 
                     Coordinate[] coordinates = new Coordinate[] { startEndpoint.getCoordinate(),
@@ -373,9 +359,16 @@ public class WalkableAreaBuilder {
             VLPoint vlPoint = visibilityPolygon.get(p);
             coordinates[p] = new Coordinate(vlPoint.x, vlPoint.y);
         }
-        LinearRing shell = GeometryUtils.getGeometryFactory().createLinearRing(coordinates);
-        Polygon poly = GeometryUtils.getGeometryFactory().createPolygon(shell, new LinearRing[0]);
-        return poly;
+
+        Polygon poly = GeometryUtils.getGeometryFactory().createPolygon(coordinates);
+        Geometry expanded = poly.buffer(VISIBILITY_EPSILON);
+
+        if (expanded instanceof Polygon) {
+            return (Polygon)expanded;
+        } else if (expanded instanceof MultiPolygon && expanded.getNumGeometries() > 0) {
+            return (Polygon)expanded.getGeometryN(0);
+        }
+        return null;
     }
 
     private void createEdgesForRingSegment(Set<Edge> edges, AreaEdgeList edgeList, Area area,
@@ -387,8 +380,8 @@ public class WalkableAreaBuilder {
             return;
         }
         alreadyAddedEdges.add(nodePair);
-        IntersectionVertex startEndpoint = __handler.getVertexForOsmNode(node, area.parent);
-        IntersectionVertex endEndpoint = __handler.getVertexForOsmNode(nextNode, area.parent);
+        IntersectionVertex startEndpoint = handler.getVertexForOsmNode(node, area.parent);
+        IntersectionVertex endEndpoint = handler.getVertexForOsmNode(nextNode, area.parent);
 
         createSegments(node, nextNode, startEndpoint, endEndpoint, Arrays.asList(area), edgeList,
                 edges);
@@ -433,7 +426,7 @@ public class WalkableAreaBuilder {
 
             String label = "way (area) " + areaEntity.getId() + " from " + startEndpoint.getLabel()
                     + " to " + endEndpoint.getLabel();
-            I18NString name = __handler.getNameForWay(areaEntity, label);
+            I18NString name = handler.getNameForWay(areaEntity, label);
 
             AreaEdge street = edgeFactory.createAreaEdge(startEndpoint, endEndpoint, line, name,
                     length, areaPermissions, false, edgeList);
@@ -458,7 +451,7 @@ public class WalkableAreaBuilder {
 
             label = "way (area) " + areaEntity.getId() + " from " + endEndpoint.getLabel() + " to "
                     + startEndpoint.getLabel();
-            name = __handler.getNameForWay(areaEntity, label);
+            name = handler.getNameForWay(areaEntity, label);
 
             AreaEdge backStreet = edgeFactory.createAreaEdge(endEndpoint, startEndpoint,
                     (LineString) line.reverse(), name, length, areaPermissions, true, edgeList);
@@ -476,7 +469,7 @@ public class WalkableAreaBuilder {
             edges.add(backStreet);
 
             WayProperties wayData = wayPropertySet.getDataForWay(areaEntity);
-            __handler.applyWayProperties(street, backStreet, wayData, areaEntity);
+            handler.applyWayProperties(street, backStreet, wayData, areaEntity);
 
         } else {
             // take the part that intersects with the start vertex
@@ -546,7 +539,7 @@ public class WalkableAreaBuilder {
             namedArea.setStreetClass(cls);
 
             String id = "way (area) " + areaEntity.getId() + " (splitter linking)";
-            I18NString name = __handler.getNameForWay(areaEntity, id);
+            I18NString name = handler.getNameForWay(areaEntity, id);
             namedArea.setName(name);
 
             WayProperties wayData = wayPropertySet.getDataForWay(areaEntity);

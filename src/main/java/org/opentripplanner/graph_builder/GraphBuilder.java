@@ -1,16 +1,3 @@
-/* This program is free software: you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public License
- as published by the Free Software Foundation, either version 3 of
- the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-
 package org.opentripplanner.graph_builder;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -27,7 +14,6 @@ import org.opentripplanner.graph_builder.module.ned.DegreeGridNEDTileSource;
 import org.opentripplanner.graph_builder.module.ned.ElevationModule;
 import org.opentripplanner.graph_builder.module.ned.GeotiffGridCoverageFactoryImpl;
 import org.opentripplanner.graph_builder.module.ned.NEDGridCoverageFactoryImpl;
-import org.opentripplanner.graph_builder.module.osm.DefaultWayPropertySetSource;
 import org.opentripplanner.graph_builder.module.osm.OpenStreetMapModule;
 import org.opentripplanner.graph_builder.services.DefaultStreetEdgeFactory;
 import org.opentripplanner.graph_builder.services.GraphBuilderModule;
@@ -67,18 +53,28 @@ public class GraphBuilder implements Runnable {
 
     private List<GraphBuilderModule> _graphBuilderModules = new ArrayList<GraphBuilderModule>();
 
-    private File graphFile;
+    private final File graphFile;
     
     private boolean _alwaysRebuild = true;
 
-    private List<RoutingRequest> _modeList;
+    private List<RoutingRequest> modeList;
     
-    private String _baseGraph = null;
+    private String baseGraph = null;
     
     private Graph graph = new Graph();
 
     /** Should the graph be serialized to disk after being created or not? */
     public boolean serializeGraph = true;
+
+    public GraphBuilder(File path, GraphBuilderParameters builderParams) {
+        MDC.put("routerPath", path.getAbsolutePath());
+        graphFile = new File(path, "Graph.obj");
+        graph.stopClusterMode = builderParams.stopClusterMode;
+    }
+
+    public GraphBuilder() {
+        graphFile = new File(System.getProperty("java.io.tmpdir"), "Graph.obj");
+    }
 
     public void addModule(GraphBuilderModule loader) {
         _graphBuilderModules.add(loader);
@@ -93,7 +89,7 @@ public class GraphBuilder implements Runnable {
     }
     
     public void setBaseGraph(String baseGraph) {
-        this._baseGraph = baseGraph;
+        this.baseGraph = baseGraph;
         try {
             graph = Graph.load(new File(baseGraph), LoadLevel.FULL);
         } catch (Exception e) {
@@ -102,21 +98,11 @@ public class GraphBuilder implements Runnable {
     }
 
     public void addMode(RoutingRequest mo) {
-        _modeList.add(mo);
+        modeList.add(mo);
     }
 
     public void setModes(List<RoutingRequest> modeList) {
-        _modeList = modeList;
-    }
-    
-    public void setPath (String path) {
-        MDC.put("routerPath", path);
-        graphFile = new File(path.concat("/Graph.obj"));
-    }
-    
-    public void setPath (File path) {
-        MDC.put("routerPath", path.getPath());
-        graphFile = new File(path, "Graph.obj");
+        this.modeList = modeList;
     }
 
     public Graph getGraph() {
@@ -184,7 +170,6 @@ public class GraphBuilder implements Runnable {
      */
     public static GraphBuilder forDirectory(CommandLineParameters params, File dir) {
         LOG.info("Wiring up and configuring graph builder task.");
-        GraphBuilder graphBuilder = new GraphBuilder();
         List<File> gtfsFiles = Lists.newArrayList();
         List<File> osmFiles =  Lists.newArrayList();
         JsonNode builderConfig = null;
@@ -195,13 +180,16 @@ public class GraphBuilder implements Runnable {
             LOG.error("'{}' is not a readable directory.", dir);
             return null;
         }
-        graphBuilder.setPath(dir);
         // Find and parse config files first to reveal syntax errors early without waiting for graph build.
         builderConfig = OTPMain.loadJson(new File(dir, BUILDER_CONFIG_FILENAME));
         GraphBuilderParameters builderParams = new GraphBuilderParameters(builderConfig);
+
+        GraphBuilder graphBuilder = new GraphBuilder(dir, builderParams);
+
         // Load the router config JSON to fail fast, but we will only apply it later when a router starts up
         routerConfig = OTPMain.loadJson(new File(dir, Router.ROUTER_CONFIG_FILENAME));
         LOG.info(ReflectionLibrary.dumpFields(builderParams));
+
         for (File file : dir.listFiles()) {
             switch (InputFileType.forFile(file)) {
                 case GTFS:
@@ -296,18 +284,18 @@ public class GraphBuilder implements Runnable {
             awsTileSource.awsBucketName = bucketConfig.bucketName;
             NEDGridCoverageFactoryImpl gcf = new NEDGridCoverageFactoryImpl(cacheDirectory);
             gcf.tileSource = awsTileSource;
-            GraphBuilderModule elevationBuilder = new ElevationModule(gcf);
+            GraphBuilderModule elevationBuilder = new ElevationModule(gcf, builderParams.elevationUnitMultiplier);
             graphBuilder.addModule(elevationBuilder);
         } else if (builderParams.fetchElevationUS) {
             // Download the elevation tiles from the official web service
             File cacheDirectory = new File(params.cacheDirectory, "ned");
             ElevationGridCoverageFactory gcf = new NEDGridCoverageFactoryImpl(cacheDirectory);
-            GraphBuilderModule elevationBuilder = new ElevationModule(gcf);
+            GraphBuilderModule elevationBuilder = new ElevationModule(gcf, builderParams.elevationUnitMultiplier);
             graphBuilder.addModule(elevationBuilder);
         } else if (demFile != null) {
             // Load the elevation from a file in the graph inputs directory
             ElevationGridCoverageFactory gcf = new GeotiffGridCoverageFactoryImpl(demFile);
-            GraphBuilderModule elevationBuilder = new ElevationModule(gcf);
+            GraphBuilderModule elevationBuilder = new ElevationModule(gcf, builderParams.elevationUnitMultiplier);
             graphBuilder.addModule(elevationBuilder);
         }
         if ( hasGTFS ) {

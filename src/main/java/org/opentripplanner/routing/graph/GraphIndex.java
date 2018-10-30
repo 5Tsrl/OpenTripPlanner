@@ -21,6 +21,13 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import com.google.common.collect.ArrayListMultimap;
+import java.util.BitSet;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Calendar;
+
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -42,14 +49,14 @@ import io.sentry.event.EventBuilder;
 
 import org.apache.lucene.util.PriorityQueue;
 import org.joda.time.LocalDate;
-import org.onebusaway.gtfs.model.Agency;
-import org.onebusaway.gtfs.model.AgencyAndId;
-import org.onebusaway.gtfs.model.FeedInfo;
-import org.onebusaway.gtfs.model.Route;
-import org.onebusaway.gtfs.model.Stop;
-import org.onebusaway.gtfs.model.Trip;
-import org.onebusaway.gtfs.model.calendar.ServiceDate;
-import org.onebusaway.gtfs.services.calendar.CalendarService;
+import org.opentripplanner.model.Agency;
+import org.opentripplanner.model.FeedScopedId;
+import org.opentripplanner.model.FeedInfo;
+import org.opentripplanner.model.Route;
+import org.opentripplanner.model.Stop;
+import org.opentripplanner.model.Trip;
+import org.opentripplanner.model.calendar.ServiceDate;
+import org.opentripplanner.model.CalendarService;
 import org.opentripplanner.common.LuceneIndex;
 import org.opentripplanner.common.geometry.HashGridSpatialIndex;
 import org.opentripplanner.common.geometry.SphericalDistanceLibrary;
@@ -63,6 +70,7 @@ import org.opentripplanner.index.model.StopTimesInPattern;
 import org.opentripplanner.index.model.TripTimeShort;
 import org.opentripplanner.profile.ProfileTransfer;
 import org.opentripplanner.profile.StopCluster;
+import org.opentripplanner.profile.StopClusterMode;
 import org.opentripplanner.profile.StopNameNormalizer;
 import org.opentripplanner.profile.StopTreeCache;
 import org.opentripplanner.routing.alertpatch.AlertPatch;
@@ -120,26 +128,26 @@ public class GraphIndex {
     public final Map<String, Vertex> vertexForId = Maps.newHashMap();
     public final Map<String, Map<String, Agency>> agenciesForFeedId = Maps.newHashMap();
     public final Map<String, FeedInfo> feedInfoForId = Maps.newHashMap();
-    public final Map<AgencyAndId, Stop> stopForId = Maps.newHashMap();
-    public final Map<AgencyAndId, Stop> stationForId = Maps.newHashMap();
-    public final Map<AgencyAndId, Trip> tripForId = Maps.newHashMap();
-    public final Map<AgencyAndId, Route> routeForId = Maps.newHashMap();
-    public final Map<AgencyAndId, String> serviceForId = Maps.newHashMap();
+    public final Map<FeedScopedId, Stop> stopForId = Maps.newHashMap();
+    public final Map<FeedScopedId, Stop> stationForId = Maps.newHashMap();
+    public final Map<FeedScopedId, Trip> tripForId = Maps.newHashMap();
+    public final Map<FeedScopedId, Route> routeForId = Maps.newHashMap();
+    public final Map<FeedScopedId, String> serviceForId = Maps.newHashMap();
     public final Map<String, TripPattern> patternForId = Maps.newHashMap();
     public final Map<Stop, TransitStop> stopVertexForStop = Maps.newHashMap();
     public final Map<Trip, TripPattern> patternForTrip = Maps.newHashMap();
     public final Multimap<String, TripPattern> patternsForFeedId = ArrayListMultimap.create();
     public final Multimap<Route, TripPattern> patternsForRoute = ArrayListMultimap.create();
     public final Multimap<Stop, TripPattern> patternsForStop = ArrayListMultimap.create();
-    public final Multimap<AgencyAndId, Stop> stopsForParentStation = ArrayListMultimap.create();
+    public final Multimap<FeedScopedId, Stop> stopsForParentStation = ArrayListMultimap.create();
     final HashGridSpatialIndex<TransitStop> stopSpatialIndex = new HashGridSpatialIndex<TransitStop>();
     public final Map<Stop, StopCluster> stopClusterForStop = Maps.newHashMap();
     public final Map<String, StopCluster> stopClusterForId = Maps.newHashMap();
-    public final Map<AgencyAndId, TicketType> ticketTypesForId = Maps.newHashMap();
+    public final Map<FeedScopedId, TicketType> ticketTypesForId = Maps.newHashMap();
 
     /* Should eventually be replaced with new serviceId indexes. */
     private final CalendarService calendarService;
-    private final Map<AgencyAndId,Integer> serviceCodes;
+    private final Map<FeedScopedId,Integer> serviceCodes;
 
     /* Full-text search extensions */
     public LuceneIndex luceneIndex;
@@ -163,7 +171,7 @@ public class GraphIndex {
 
     public GraphIndex (Graph graph) {
         LOG.info("Indexing graph...");
-        
+
         FareService fareService = graph.getService(FareService.class);
         if(fareService instanceof DefaultFareServiceImpl) {
             LOG.info("Collecting fare information...");
@@ -175,7 +183,7 @@ public class GraphIndex {
                         ticketTypesForId.put(rs.getFareAttribute().getId(), new TicketType(rs));
                     }
                 }
-            }                             
+            }
         }
 
         for (String feedId : graph.getFeedIds()) {
@@ -209,7 +217,7 @@ public class GraphIndex {
                 stopVertexForStop.put(stop, transitStop);
                 if (stop.getParentStation() != null) {
                     stopsForParentStation.put(
-                        new AgencyAndId(stop.getId().getAgencyId(), stop.getParentStation()), stop);
+                        new FeedScopedId(stop.getId().getAgencyId(), stop.getParentStation()), stop);
                 }
             }
             else if (vertex instanceof TransitStation) {
@@ -263,13 +271,14 @@ public class GraphIndex {
         if (stopClusterSpatialIndex == null) {
             clusterStops();
             LOG.info("Creating a spatial index for stop clusters.");
-            stopClusterSpatialIndex = new HashGridSpatialIndex<StopCluster>();
+            stopClusterSpatialIndex = new HashGridSpatialIndex<>();
             for (StopCluster cluster : stopClusterForId.values()) {
                 Envelope envelope = new Envelope(new Coordinate(cluster.lon, cluster.lat));
                 stopClusterSpatialIndex.insert(envelope, cluster);
             }
         }
     }
+
 
     /** Get all trip patterns running through any stop in the given stop cluster. */
     private Set<TripPattern> patternsForStopCluster(StopCluster sc) {
@@ -392,8 +401,8 @@ public class GraphIndex {
     public List<PlaceAndDistance> findClosestPlacesByWalking(double lat, double lon, int maxDistance, int maxResults,
             List<TraverseMode> filterByModes,
             List<PlaceType> filterByPlaceTypes,
-            List<AgencyAndId> filterByStops,
-            List<AgencyAndId> filterByRoutes,
+            List<FeedScopedId> filterByStops,
+            List<FeedScopedId> filterByRoutes,
             List<String> filterByBikeRentalStations,
             List<String> filterByBikeParks,
             List<String> filterByCarParks) {
@@ -520,7 +529,7 @@ public class GraphIndex {
 
         public static DepartureRow fromId(GraphIndex index, String id) {
             String[] parts = id.split(";", 3);
-            AgencyAndId stopId = new AgencyAndId(parts[0], parts[1]);
+            FeedScopedId stopId = new FeedScopedId(parts[0], parts[1]);
             String code = parts[2];
             return new DepartureRow(index.stopForId.get(stopId), index.patternForId.get(code));
         }
@@ -534,11 +543,11 @@ public class GraphIndex {
     private class PlaceFinderTraverseVisitor implements ExtendedTraverseVisitor {
         public List<PlaceAndDistance> placesFound = new ArrayList<>();
         private Set<TraverseMode> filterByModes;
-        private Set<AgencyAndId> filterByStops;
-        private Set<AgencyAndId> filterByRoutes;
+        private Set<FeedScopedId> filterByStops;
+        private Set<FeedScopedId> filterByRoutes;
         private Set<String> filterByBikeRentalStation;
         private Set<String> seenDepartureRows = new HashSet<String>();
-        private Set<AgencyAndId> seenStops = new HashSet<AgencyAndId>();
+        private Set<FeedScopedId> seenStops = new HashSet<FeedScopedId>();
         private Set<String> seenBicycleRentalStations = new HashSet<String>();
         private Set<String> seenBikeParks = new HashSet<String>();
         private Set<String> seenCarParks = new HashSet<String>();
@@ -553,8 +562,8 @@ public class GraphIndex {
         public PlaceFinderTraverseVisitor(
                 List<TraverseMode> filterByModes,
                 List<PlaceType> filterByPlaceTypes,
-                List<AgencyAndId> filterByStops,
-                List<AgencyAndId> filterByRoutes,
+                List<FeedScopedId> filterByStops,
+                List<FeedScopedId> filterByRoutes,
                 List<String> filterByBikeRentalStations,
                 List<String> filterByBikeParks,
                 List<String> filterByCarParks) {
@@ -678,7 +687,7 @@ public class GraphIndex {
     /** An OBA Service Date is a local date without timezone, only year month and day. */
     public BitSet servicesRunning (ServiceDate date) {
         BitSet services = new BitSet(calendarService.getServiceIds().size());
-        for (AgencyAndId serviceId : calendarService.getServiceIdsOnDate(date)) {
+        for (FeedScopedId serviceId : calendarService.getServiceIdsOnDate(date)) {
             int n = serviceCodes.get(serviceId);
             if (n < 0) continue;
             services.set(n);
@@ -712,10 +721,10 @@ public class GraphIndex {
     }
 
     /**
-     * Fetch upcoming vehicle departures from a stop. It goes though all patterns passing the stop
-     * for the previous, current and next service date. It uses a priority queue to keep track of
-     * the next departures. The queue is shared between all dates, as services from the previous
-     * service date can visit the stop later than the current service date's services. This happens
+     * Fetch upcoming vehicle departures from a stop.
+     * It goes though all patterns passing the stop for the previous, current and next service date.
+     * It uses a priority queue to keep track of the next departures. The queue is shared between all dates, as services
+     * from the previous service date can visit the stop later than the current service date's services. This happens
      * eg. with sleeper trains.
      *
      * @param stop Stop object to perform the search for
@@ -726,14 +735,14 @@ public class GraphIndex {
      * @return
      */
     public List<StopTimesInPattern> stopTimesForStop(final Stop stop, final long startTime, final int timeRange, final int numberOfDepartures, boolean omitNonPickups) {
-   
+
         final List<StopTimesInPattern> ret = new ArrayList<>();
 
         for (final TripPattern pattern : patternsForStop.get(stop)) {
-            
+
             final List<TripTimeShort> stopTimesForStop = stopTimesForPattern(stop, pattern, startTime, timeRange, numberOfDepartures, omitNonPickups);
 
-            
+
             if (stopTimesForStop.size() >0) {
                 final StopTimesInPattern stopTimes = new StopTimesInPattern(pattern);
                 stopTimes.times.addAll(stopTimesForStop);
@@ -742,7 +751,7 @@ public class GraphIndex {
         }
         return ret;
     }
-    
+
     /**
      * Fetch next n upcoming vehicle departures for a stop of pattern. It goes
      * though the previous, current and next service date. It uses a priority
@@ -766,43 +775,39 @@ public class GraphIndex {
     public List<TripTimeShort> stopTimesForPattern(final Stop stop, final TripPattern pattern, long startTime, final int timeRange,
             int numberOfDepartures, boolean omitNonPickups) {
 
-        if (pattern == null) { 
+        if (pattern == null) {
             return Collections.emptyList();
         }
-
         if (startTime == 0) {
             startTime = System.currentTimeMillis() / 1000;
         }
 
         final PriorityQueue<TripTimeShort> ret = new PriorityQueue<TripTimeShort>(numberOfDepartures) {
-            
-            @Override
+
+                @Override
             protected boolean lessThan(final TripTimeShort t1, final TripTimeShort t2) {
                 return (t1.serviceDay + t1.realtimeDeparture) > (t2.serviceDay
                         + t2.realtimeDeparture);
-            }
-        };
+                }
+            };
 
         final TimetableSnapshot snapshot = (graph.timetableSnapshotSource != null)
             ? graph.timetableSnapshotSource.getTimetableSnapshot() : null;
 
         Date date = new Date(startTime * 1000);
         final ServiceDate[] serviceDates = {new ServiceDate(date).previous(), new ServiceDate(date), new ServiceDate(date).next()};
-
-        // Loop through all possible days
+            // Loop through all possible days
         for (final ServiceDate serviceDate : serviceDates) {
             final ServiceDay sd = new ServiceDay(graph, serviceDate, calendarService,
                     pattern.route.getAgency().getId());
-            Timetable tt;
+                Timetable tt;
+                if (snapshot != null){
+                    tt = snapshot.resolve(pattern, serviceDate);
+                } else {
+                    tt = pattern.scheduledTimetable;
+                }
 
-            if (snapshot != null) {
-                tt = snapshot.resolve(pattern, serviceDate);
-            } else {
-                tt = pattern.scheduledTimetable;
-            }
-
-            if (!tt.temporallyViable(sd, startTime, timeRange, true))
-                continue;
+                if (!tt.temporallyViable(sd, startTime, timeRange, true)) continue;
 
             final int starttimeSecondsSinceMidnight = sd.secondsSinceMidnight(startTime);
             int stopIndex = 0;
@@ -817,43 +822,37 @@ public class GraphIndex {
                         int stopDepartureTime = triptimes.getDepartureTime(stopIndex);
                         if (stopDepartureTime != -1 && stopDepartureTime >= starttimeSecondsSinceMidnight && stopDepartureTime < starttimeSecondsSinceMidnight + timeRange) {
                             ret.insertWithOverflow(new TripTimeShort(triptimes, stopIndex, currStop, sd));
+                            }
                         }
-                    }
 
-                    // TODO: This needs to be adapted after #1647 is merged
+                        // TODO: This needs to be adapted after #1647 is merged
                     for (final FrequencyEntry freq : tt.frequencyEntries) {
-                        if (!sd.serviceRunning(freq.tripTimes.serviceCode))
-                            continue;
+                            if (!sd.serviceRunning(freq.tripTimes.serviceCode)) continue;
                         int departureTime = freq.nextDepartureTime(stopIndex, starttimeSecondsSinceMidnight);
-                        if (departureTime == -1)
-                            continue;
+                            if (departureTime == -1) continue;
                         final int lastDeparture = freq.endTime + freq.tripTimes.getArrivalTime(stopIndex)
                                 - freq.tripTimes.getDepartureTime(0);
-
                         while (departureTime <= lastDeparture && ret.size() < numberOfDepartures) {
                             ret.insertWithOverflow(new TripTimeShort(freq.materialize(stopIndex, departureTime, true),
                                     stopIndex, currStop, sd));
-                            departureTime += freq.headway;
+                                departureTime += freq.headway;
+                            }
                         }
                     }
-                }
-
                 stopIndex++;
+                }
             }
-        }
 
         final List<TripTimeShort> result = new ArrayList<>();
         while(ret.size()>0) {
             TripTimeShort tripTimeShort = ret.pop();
             if (!result.contains(tripTimeShort)) {
                 result.add(0, tripTimeShort);
+                }
             }
+        return result;
         }
-        
-        return result; 
-    }
-  
-    
+
     /**
      * Get a list of all trips that pass through a stop during a single ServiceDate. Useful when creating complete stop
      * timetables for a single day.
@@ -923,38 +922,30 @@ public class GraphIndex {
     }
 
     /**
-     * Stop clusters can be built in one of two ways, either by geographical proximity, or 
+     * Stop clusters can be built in one of two ways, either by geographical proximity and name, or
      * according to a parent/child station topology, if it exists.
-     * 
-     * Some challenges faced by DC and Trimet:
-     * FIXME OBA parentStation field is a string, not an AgencyAndId, so it has no agency/feed scope
-     * But the DC regional graph has no parent stations pre-defined, so no use dealing with them for now.
-     * However Trimet stops have "landmark" or Transit Center parent stations, so we don't use the parent stop field.
-     *
-     * We can't use a similarity comparison, we need exact matches. This is because many street names differ by only
-     * one letter or number, e.g. 34th and 35th or Avenue A and Avenue B.
-     * Therefore normalizing the names before the comparison is essential.
-     * The agency must provide either parent station information or a well thought out stop naming scheme to cluster
-     * stops -- no guessing is reasonable without that information.
      */
-    public void clusterStops() {
-    	if (graph.stopClusterMode != null) {
-            switch (graph.stopClusterMode) {
-                case "parentStation":
-                    clusterByParentStation();
-                    break;
-                case "proximity":
-                    clusterByProximity();
-                    break;
-                default:
-                    clusterByProximity();
-            }
+    private void clusterStops() {
+    	if (graph.stopClusterMode == StopClusterMode.parentStation) {
+            clusterByParentStation();
         } else {
-            clusterByProximity();
+            clusterByProximityAndName();
         }
     }
 
-    private void clusterByProximity() {	
+    /**
+     * Cluster stops by proximity and name.
+     * This functionality was developed for the Washington, DC area and probably will not work anywhere else in the
+     * world. It depends on the exact way stops are named and the way street intersections are named in that geographic
+     * region and in the GTFS data sets which represent it. Based on comments, apparently it might work for TriMet
+     * as well.
+     *
+     * We can't use a name similarity comparison, we need exact matches. This is because many street names differ by
+     * only one letter or number, e.g. 34th and 35th or Avenue A and Avenue B. Therefore normalizing the names before
+     * the comparison is essential. The agency must provide either parent station information or a well thought out stop
+     * naming scheme to cluster stops -- no guessing is reasonable without that information.
+     */
+    private void clusterByProximityAndName() {
     	int psIdx = 0; // unique index for next parent stop
 	    LOG.info("Clustering stops by geographic proximity and name...");
 	    // Each stop without a cluster will greedily claim other stops without clusters.
@@ -987,6 +978,16 @@ public class GraphIndex {
 	    }
     }
 
+    /**
+     * Rather than using the names and geographic locations of stops to cluster them, group them by their declared
+     * parent station in the GTFS data. This should be a much more reliable method where these fields have been
+     * included in the GTFS data. However:
+     *
+     * FIXME OBA parentStation field is a string, not an AgencyAndId, so it has no agency/feed scope.
+     * That means it would only work reliably if there is only one GTFS feed loaded.
+     * The DC regional graph has no parent stations pre-defined, so we use the alternative proximity / name method.
+     * Trimet stops have "landmark" or Transit Center parent stations, so we don't use the parent stop field.
+     */
     private void clusterByParentStation() {
         LOG.info("Clustering stops by parent station...");
     	for (Stop stop : stopForId.values()) {
@@ -999,7 +1000,7 @@ public class GraphIndex {
     	        cluster = stopClusterForId.get(ps);
     	    } else {
     	        cluster = new StopCluster(ps, stop.getName());
-    	        Stop parent = graph.parentStopById.get(new AgencyAndId(stop.getId().getAgencyId(), ps));
+    	        Stop parent = graph.parentStopById.get(new FeedScopedId(stop.getId().getAgencyId(), ps));
                 cluster.setCoordinates(parent.getLat(), parent.getLon());
                 stopClusterForId.put(ps, cluster);
 
@@ -1022,7 +1023,7 @@ public class GraphIndex {
 
     public HashMap<String, Object> getGraphQLExecutionResult(String query, Router router,
         Map<String, Object> variables, String operationName, int timeout, long maxResolves, MultivaluedMap<String, String> headers) {
-        
+
         GraphQL graphQL = GraphQL.newGraphQL(indexSchema).queryExecutionStrategy(
             new ResourceConstrainedExecutorServiceExecutionStrategy(threadPool, timeout, TimeUnit.MILLISECONDS, maxResolves)
         ).instrumentation(FieldErrorInstrumentation.get(query, router, variables, headers)).build();
@@ -1030,10 +1031,10 @@ public class GraphIndex {
         if (variables == null) {
             variables = new HashMap<>();
         }
-        
+
         ExecutionResult executionResult = graphQL.execute(query, operationName, router, variables);
         HashMap<String, Object> content = new HashMap<>();
-        
+
         if (!executionResult.getErrors().isEmpty()) {
             content.put("errors",
                 executionResult
@@ -1133,7 +1134,7 @@ public class GraphIndex {
      * I am creating this method only to allow merging pull request #2032 which adds GraphQL.
      * Note that if the same agency ID is defined in several feeds, this will return one of them
      * at random. That is obviously not the right behavior. The problem is that agencies are
-     * not currently keyed on an AgencyAndId object, but on separate feedId and id Strings.
+     * not currently keyed on an FeedScopedId object, but on separate feedId and id Strings.
      * A real fix will involve replacing or heavily modifying the OBA GTFS loader, which is now
      * possible since we have forked it.
      */
