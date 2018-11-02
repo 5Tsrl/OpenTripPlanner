@@ -19,6 +19,7 @@ otp-openlayers-client/src/main/webapp/js/otp-min.js
 *.iml
 *.iws
 *.swp
+*.log
 .externalToolBuilders
 gen-java/
 gen-javabean/

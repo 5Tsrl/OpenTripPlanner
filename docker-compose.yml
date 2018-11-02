@@ -2,7 +2,8 @@ version: '3'
 
 services:
     otp-mato-build-graph:
-        image: registry:5000/otp
+        image: registry:5000/opentripplannerwc
+        build: .
         container_name: otp-mato-build-graph
         volumes:
             - /data/otp-graphs/:/var/otp/graphs/
@@ -10,7 +11,7 @@ services:
         command: java -Xms4G -Xmx4G -jar otp-shaded.jar --build ./graphs/mato
 
     otp-run-mato:
-        image: registry:5000/otp
+        image: registry:5000/opentripplannerwc
         container_name: otp-run-mato
         volumes:
             - /data/otp-graphs/:/var/otp/graphs/
