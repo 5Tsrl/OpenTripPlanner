@@ -2,7 +2,7 @@ package org.opentripplanner.updater.accessible_trip;
 
 import java.util.List;
 
-import org.onebusaway.gtfs.model.Trip;
+import org.opentripplanner.model.Trip;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.updater.GraphWriterRunnable;
 import org.slf4j.Logger;

@@ -1,7 +1,7 @@
 package org.opentripplanner.updater.accessible_trip;
 
 import java.util.List;
-import org.onebusaway.gtfs.model.Trip;
+import org.opentripplanner.model.Trip;
 /**
  * A dynamic source of accessible trips info for route calculation for impaired people.
  *

@@ -3,8 +3,8 @@ package org.opentripplanner.updater.accessible_trip;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.onebusaway.gtfs.model.Trip;
-import org.onebusaway.gtfs.model.calendar.ServiceDate;
+import org.opentripplanner.model.Trip;
+import org.opentripplanner.model.calendar.ServiceDate;
 import org.opentripplanner.routing.edgetype.TimetableSnapshot;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.routing.graph.GraphIndex;
@@ -123,13 +123,13 @@ public class AccessibleTripSnapshotSource {
 
     private boolean handleTrip(final Trip tripUpdate) {
 
-        Trip trip = graphIndex.tripForId.get(tripUpdate.getId());
+        /*Trip trip = graphIndex.tripForId.get(tripUpdate.getId());
 
         if (trip == null) {
             LOG.warn("No trip found for tripId {}, skipping TripUpdate.", tripUpdate.getId().toString());
             return false;
         }
-        trip.setWheelchairAccessible(tripUpdate.getWheelchairAccessible());
+        trip.setWheelchairAccessible(tripUpdate.getWheelchairAccessible());*/
         return true;
     }
 

@@ -3,7 +3,7 @@ package org.opentripplanner.updater.accessible_trip;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import org.onebusaway.gtfs.model.Trip;
+import org.opentripplanner.model.Trip;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.updater.GraphUpdaterManager;
 import org.opentripplanner.updater.GraphWriterRunnable;
@@ -70,7 +70,7 @@ public class AccessibleTripUpdater extends PollingGraphUpdater {
         // Configure updater
         LOG.info("Setting up accessible trip updater.");
         this.source = source;
-        LOG.info("Creating accessible trip updater running every {} seconds : {}", frequencySec, source);
+        LOG.info("Creating accessible trip updater running every {} seconds : {}", pollingPeriodSeconds, source);
     }
 
     @Override

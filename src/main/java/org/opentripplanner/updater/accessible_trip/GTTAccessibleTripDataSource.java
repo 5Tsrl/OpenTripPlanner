@@ -11,8 +11,9 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.onebusaway.gtfs.model.AgencyAndId;
-import org.onebusaway.gtfs.model.Trip;
+//import org.onebusaway.gtfs.model.AgencyAndId;
+import org.opentripplanner.model.FeedScopedId;
+import org.opentripplanner.model.Trip;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.updater.JsonConfigurable;
 import org.opentripplanner.util.HttpUtils;
@@ -92,7 +93,8 @@ public class GTTAccessibleTripDataSource implements AccessibleTripDataSource, Js
         for (JsonNode tripNode : mapper.readTree(data)) {
             Trip trip = new Trip();
             // We need string IDs but they are in JSON as numbers. Avoid null from textValue(). See pull req #1450.
-            trip.setId(new AgencyAndId(feedId, tripNode.get("trip_id").textValue()));
+            //trip.setId(new AgencyAndId(feedId, tripNode.get("trip_id").textValue()));
+            trip.setId(new FeedScopedId(feedId, tripNode.get("trip_id").textValue()));
 
             trip.setWheelchairAccessible(tripNode.get("accessible").intValue());
             if (trip != null && trip.getId() != null) {

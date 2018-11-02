@@ -40,6 +40,8 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
     private Map<BikeRentalStation, BikeRentalStationVertex> verticesByStation = new HashMap<BikeRentalStation, BikeRentalStationVertex>();
 
     private BikeRentalDataSource source;
+    
+    private Graph graph;
 
     private SimpleStreetSplitter linker;
 
@@ -108,6 +110,7 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
 
         // Configure updater
         LOG.info("Setting up bike rental updater.");
+        this.graph = graph;
         this.source = source;
         this.network = config.path("networks").asText(DEFAULT_NETWORK_LIST);
         if (pollingPeriodSeconds <= 0) {
