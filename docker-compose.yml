@@ -1,18 +1,18 @@
 version: '3'
 
 services:
-    otp-mato-build-graph:
+    build-graph-mato:
         image: registry:5000/opentripplannerwc
         build: .
-        container_name: otp-mato-build-graph
+        container_name: build-graph-mato
         volumes:
             - /data/otp-graphs/:/var/otp/graphs/
         network_mode: bridge
-        command: java -Xms4G -Xmx4G -jar otp-shaded.jar --build ./graphs/mato
+        command: java -Xms4G -Xmx4G -Duser.timezone="Europe/Rome" -jar ./otp-shaded.jar --verbose --build ./graphs/mato
 
-    otp-run-mato:
+    run-otp-mato:
         image: registry:5000/opentripplannerwc
-        container_name: otp-run-mato
+        container_name: run-otp-mato
         volumes:
             - /data/otp-graphs/:/var/otp/graphs/
         ports:
