@@ -12,4 +12,8 @@ ADD src ${OTP_ROOT}/src
 add .git ${OTP_ROOT}/.git
 
 # Build OTP
+<<<<<<< HEAD
 RUN mvn  package -DskipTests
+=======
+RUN mvn package -DskipTests
+>>>>>>> upstream/master
