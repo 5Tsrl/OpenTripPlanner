@@ -114,7 +114,9 @@ public class LuceneIndex {
         Document doc = new Document();
         doc.add(new TextField("name", stop.getName(), Field.Store.YES));
         if (stop.getCode() != null) {
-            doc.add(new StringField("code", stop.getCode(), Field.Store.YES));
+        	StringField codeField = new StringField("code", stop.getCode(), Field.Store.YES);
+        	codeField.setBoost(10);
+            doc.add(codeField);
         }
         doc.add(new DoubleField("lat", stop.getLat(), Field.Store.YES));
         doc.add(new DoubleField("lon", stop.getLon(), Field.Store.YES));
@@ -180,8 +182,9 @@ public class LuceneIndex {
                 termQuery.add(new TermQuery(new Term("name", term.toLowerCase())), BooleanClause.Occur.SHOULD);
                 termQuery.add(new PrefixQuery(new Term("name", term.toLowerCase())), BooleanClause.Occur.SHOULD);
                 // This makes it possible to search for a stop code
-                termQuery.add(new TermQuery(new Term("code", term)),
-                        BooleanClause.Occur.SHOULD);
+                termQuery.add(new TermQuery(new Term("code", term)),                 BooleanClause.Occur.SHOULD);
+                // 5T aggiungo autocomplete su stop code
+                termQuery.add(new PrefixQuery(new Term("code", term)),                 BooleanClause.Occur.SHOULD);
             }
         } else {
             List<String> list = new ArrayList<String>();
