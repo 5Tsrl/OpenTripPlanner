@@ -1,0 +1,6 @@
+.git/
+src/
+docs/
+otp-*/
+target/*
+!target/*shaded.jar

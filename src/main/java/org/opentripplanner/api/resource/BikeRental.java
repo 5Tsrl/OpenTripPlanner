@@ -41,7 +41,7 @@ public class BikeRental {
         Router router = otpServer.getRouter(routerId);
         if (router == null) return null;
         BikeRentalStationService bikeRentalService = router.graph.getService(BikeRentalStationService.class);
-        Locale locale;
+        /* 5t Locale locale;
         locale = ResourceBundleSingleton.INSTANCE.getLocale(locale_param);
         if (bikeRentalService == null) return new BikeRentalStationList();
         Envelope envelope;
@@ -49,16 +49,16 @@ public class BikeRental {
             envelope = getEnvelope(lowerLeft, upperRight);
         } else {
             envelope = new Envelope(-180,180,-90,90); 
-        }
+        }*/
         Collection<BikeRentalStation> stations = bikeRentalService.getBikeRentalStations();
-        List<BikeRentalStation> out = new ArrayList<>();
-        for (BikeRentalStation station : stations) {
+        List<BikeRentalStation> out = new ArrayList<>(stations);        
+        /*for (BikeRentalStation station : stations) {
             if (envelope.contains(station.x, station.y)) {
                 BikeRentalStation station_localized = station.clone();
                 station_localized.locale = locale;
                 out.add(station_localized);
             }
-        }
+        }*/
         BikeRentalStationList brsl = new BikeRentalStationList();
         brsl.stations = out;
         return brsl;

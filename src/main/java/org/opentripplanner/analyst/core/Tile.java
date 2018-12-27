@@ -22,13 +22,13 @@ import org.opentripplanner.routing.spt.ShortestPathTree;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**  
+/**
  * Analyst 8-bit tile format:
  * Seconds are converted to minutes.
  * Minutes are clamped to +-120
  * Unreachable pixels are set to Byte.MIN_VALUE (-128)
  * Result is stored in image pixel as a signed byte.
- * 
+ *
  * So:
  *  -119 to +119 are interpreted literally,
  *  +120 means >= +120,
@@ -45,7 +45,7 @@ public abstract class Tile {
      *  Each row in the input array is a 5-element array consisting of:
      *  colorIndex, red, green, blue, alpha
      *  Color indexes must be in increasing order. Negative indexes will be stored as signed
-     *  bytes, so -1 is 0xFF etc. 
+     *  bytes, so -1 is 0xFF etc.
      */
     private static IndexColorModel interpolatedColorMap(int[][] breaks) {
         byte[][] vals = new byte[4][256];
@@ -69,31 +69,85 @@ public abstract class Tile {
             }
             br0 = br1;
         }
-        return new IndexColorModel(8, 256, vals[0], vals[1], vals[2], vals[3]);        
+        return new IndexColorModel(8, 256, vals[0], vals[1], vals[2], vals[3]);
     }
 
     /*
      * Pixels are travel times in minutes, stored as signed bytes. This allows us to represent
      * times and time differences with absolute values up to 2 hours.
      */
-    private static final IndexColorModel ICM_SMOOTH_COLOR_15 = interpolatedColorMap( new int[][] { 
-        {0,     0,   0,   0,  0},  
-        {15,  100, 100, 100, 80},  
-        {30,    0, 200,   0, 80},  
+    private static final IndexColorModel ICM_SMOOTH_COLOR_15 = interpolatedColorMap( new int[][] {
+        {0,     0,   0,   0,  0},
+        {15,  100, 100, 100, 80},
+        {30,    0, 200,   0, 80},
         {45,    0,   0, 200, 80},
         {60,  200, 200,   0, 80},
         {75,  200,   0,   0, 80},
         {90,  200,   0, 200, 50},
-        {120, 200,   0, 200,  0} 
-    }); 
-    
-    private static final IndexColorModel ICM_STEP_COLOR_15 = interpolatedColorMap( new int[][] { 
-        {-128, 100, 100, 100, 200}, // for unreachable places 
-        {0,   100, 100, 100,  0},  
-        {15,  100, 100, 100, 90},  
-        {15,    0, 140,   0, 10},  
-        {30,    0, 140,   0, 90},  
-        {30,    0,   0, 140, 10},  
+        {120, 200,   0, 200,  0}
+    });
+
+    private static final IndexColorModel ICM_STEP_COLOR_15_TROPPO_CHIARO = interpolatedColorMap( new int[][] {
+        {-128, 100, 100, 100, 200}, // for unreachable places
+        {0,   255, 195, 18, 150},
+        {30,  255, 195, 18, 180},
+        {30,  196, 229, 56, 150},
+        {60,  196, 229, 56, 180},
+        {60,  18, 203, 196, 150},
+        {90,  18, 203, 196, 180},
+        {90,  253, 167, 223, 150},
+        {119, 253, 167, 223, 180},
+        {119, 237, 76, 103, 200},
+        {128, 237, 76, 103, 200}
+    });
+
+    private static final IndexColorModel ICM_STEP_COLOR_15 = interpolatedColorMap( new int[][] {
+        {-128, 100, 100, 100, 200}, // for unreachable places
+        {0,   238, 90, 36, 180},
+        {15,  238, 90, 36, 200},
+        {15,  0, 148, 50, 180},
+        {30,  0, 148, 50, 200},
+
+        {30,  255, 195, 18, 180},
+        {45,  255, 195, 18, 200},
+
+        {45,  6, 82, 221, 180},
+        {60,  6, 82, 221, 200},
+
+        {60,  253, 167, 223, 180},
+        {75,  253, 167, 223, 200},
+
+        {75,  153, 128, 250, 180},
+        {90, 153, 128, 250, 200},
+
+        {90, 131, 52, 113, 180},
+        {119, 131, 52, 113, 200},
+
+        {119, 100, 100, 100, 200},
+        {128, 100, 100, 100, 200}
+    });
+
+    // in produz fino al 7/12/18
+    private static final IndexColorModel ICM_STEP_COLOR_15_BACK2 = interpolatedColorMap( new int[][] {
+        {-128, 100, 100, 100, 200}, // for unreachable places
+        {0,   238, 90, 36, 120},
+        {30,  238, 90, 36, 150},
+        {30,  0, 148, 50, 120},
+        {60,  0, 148, 50, 150},
+        {60,  6, 82, 221, 120},
+        {90,  6, 82, 221, 150},
+        {90,  153, 128, 250, 120},
+        {119, 153, 128, 250, 150},
+        {119, 100, 100, 100, 200},
+        {128, 100, 100, 100, 200}
+    });
+    private static final IndexColorModel ICM_STEP_COLOR_15_BACK = interpolatedColorMap( new int[][] {
+        {-128, 100, 100, 100, 200}, // for unreachable places
+        {0,   100, 100, 100,  0},
+        {15,  100, 100, 100, 90},
+        {15,    0, 140,   0, 10},
+        {30,    0, 140,   0, 90},
+        {30,    0,   0, 140, 10},
         {45,    0,   0, 140, 90},
         {45,  140, 140,   0, 10},
         {60,  140, 140,   0, 90},
@@ -102,13 +156,13 @@ public abstract class Tile {
         {75,  140,   0, 140, 10},
         {90,  140,   0, 140, 90},
         {90,  100, 100, 100, 50},
-        {121, 100, 100, 100, 200} 
+        {121, 100, 100, 100, 200}
     });
-    
-    private static final IndexColorModel ICM_DIFFERENCE_15 = interpolatedColorMap( new int[][] { 
+
+    private static final IndexColorModel ICM_DIFFERENCE_15 = interpolatedColorMap( new int[][] {
         {-128,   0,   0, 0,   0},
         {-127, 150,   0, 0,  80},
-        {-60,  150,   0, 0,  80},  
+        {-60,  150,   0, 0,  80},
         {-15,  150, 150, 0, 80},
         {0, 150,  150,   0,  0},
         {0,    0,   0,   0,  0},
@@ -119,10 +173,10 @@ public abstract class Tile {
     });
 
     // SAMENESS bands (northern lights color scheme)
-    private static final IndexColorModel ICM_SAMENESS_5 = interpolatedColorMap( new int[][] { 
+    private static final IndexColorModel ICM_SAMENESS_5 = interpolatedColorMap( new int[][] {
         {-20,  80,  80,  80,   0},
         {-15, 100,   0, 100,  80},
-        {-10,   0,   0, 150,  80},  
+        {-10,   0,   0, 150,  80},
         {-5,    0, 150,   0,  80},
         { 0,    0, 150,   0, 150},
         { 5,    0, 150,   0,  80},
@@ -132,37 +186,37 @@ public abstract class Tile {
         {-20,   0,   0,   0,   0} // wrap around to hide inaccessible areas
     });
 
-    private static final IndexColorModel ICM_GRAY_60 = interpolatedColorMap( new int[][] { 
+    private static final IndexColorModel ICM_GRAY_60 = interpolatedColorMap( new int[][] {
         {-128, 0, 0, 0, 255}, // black out neg/missing/unreachable
         {   0, 0, 0, 0, 255},
         {  60, 0, 0, 0,   0},
         { 120, 0, 0, 0,   0}
     });
 
-    private static final IndexColorModel ICM_MASK_60 = interpolatedColorMap( new int[][] { 
+    private static final IndexColorModel ICM_MASK_60 = interpolatedColorMap( new int[][] {
         { 0, 0, 0, 0, 255},
         {60, 0, 0, 0,   0}
     });
 
-//  int[][] breaks = { 
+//  int[][] breaks = {
 //  // break, r, g, b, a
-//  {0,     0, 150,   0, 20},  
-//  {15,    0, 150,   0, 80},  
-//  {20,    0,   0,  50, 80},  
-//  {30,    0,   0, 150, 80},  
-//  {40,   50,  50,   0, 80},  
-//  {60,  150, 150,   0, 80},  
-//  {70,  150,  50,   0, 80},  
-//  {90,  150,   0,   0, 80},  
+//  {0,     0, 150,   0, 20},
+//  {15,    0, 150,   0, 80},
+//  {20,    0,   0,  50, 80},
+//  {30,    0,   0, 150, 80},
+//  {40,   50,  50,   0, 80},
+//  {60,  150, 150,   0, 80},
+//  {70,  150,  50,   0, 80},
+//  {90,  150,   0,   0, 80},
 //  {255, 150,   0, 150,  0}
-//}; 
-//int[][] breaks = { 
+//};
+//int[][] breaks = {
 //      // break, r, g, b, a
-//      {0,   100, 100, 100, 80},  
-//      {15,  100, 100, 100, 80},  
-//      {15,    0, 150,   0, 80},  
-//      {30,    0, 150,   0, 80},  
-//      {30,    0,   0, 150, 80},  
+//      {0,   100, 100, 100, 80},
+//      {15,  100, 100, 100, 80},
+//      {15,    0, 150,   0, 80},
+//      {30,    0, 150,   0, 80},
+//      {30,    0,   0, 150, 80},
 //      {45,    0,   0, 150, 80},
 //      {45,  150, 150,   0, 80},
 //      {60,  150, 150,   0, 80},
@@ -170,32 +224,32 @@ public abstract class Tile {
 //      {75,  150,   0,   0, 80},
 //      {75,    0, 100, 100, 80},
 //      {255,   0, 100, 100,  0}
-//  }; 
+//  };
 
-    public static final Map<Style, IndexColorModel> modelsByStyle; 
+    public static final Map<Style, IndexColorModel> modelsByStyle;
     static {
         modelsByStyle = new EnumMap<Style, IndexColorModel>(Style.class);
         modelsByStyle.put(Style.COLOR30, ICM_STEP_COLOR_15);
         modelsByStyle.put(Style.DIFFERENCE, ICM_DIFFERENCE_15);
-        modelsByStyle.put(Style.TRANSPARENT, ICM_GRAY_60); 
+        modelsByStyle.put(Style.TRANSPARENT, ICM_GRAY_60);
         modelsByStyle.put(Style.MASK, ICM_MASK_60);
         modelsByStyle.put(Style.BOARDINGS, buildBoardingColorMap());
     }
-    
+
     /* INSTANCE */
     final GridGeometry2D gg;
     final int width, height;
-    
+
     Tile(TileRequest req) {
         GridEnvelope2D gridEnv = new GridEnvelope2D(0, 0, req.width, req.height);
         this.gg = new GridGeometry2D(gridEnv, (org.opengis.geometry.Envelope)(req.bbox));
-        // TODO: check that gg intersects graph area 
+        // TODO: check that gg intersects graph area
         LOG.debug("preparing tile for {}", gg.getEnvelope2D());
         // Envelope2D worldEnv = gg.getEnvelope2D();
         this.width = gridEnv.width;
         this.height = gridEnv.height;
     }
-    
+
     private static IndexColorModel buildOldDefaultColorMap() {
     	Color[] palette = new Color[256];
     	final int ALPHA = 0x60FFFFFF; // ARGB
@@ -229,7 +283,7 @@ public abstract class Tile {
         }
         return new IndexColorModel(8, 256, r, g, b, a);
     }
-    
+
     private static IndexColorModel buildBoardingColorMap() {
         byte[] r = new byte[256];
         byte[] g = new byte[256];
@@ -252,7 +306,7 @@ public abstract class Tile {
         else
             return new BufferedImage(width, height, BufferedImage.TYPE_BYTE_INDEXED, colorModel);
     }
-    
+
     final byte UNREACHABLE = Byte.MIN_VALUE;
 
     public BufferedImage generateImage(TimeSurface surf, RenderRequest renderRequest) {
@@ -303,7 +357,7 @@ public abstract class Tile {
                 long t1 = s.eval(surfA);
                 long t2 = s.eval(surfB);
                 if (t1 != Long.MAX_VALUE && t2 != Long.MAX_VALUE) {
-                    double t = (k1 * t1 + k2 * t2) / 60 + intercept; 
+                    double t = (k1 * t1 + k2 * t2) / 60 + intercept;
                     if (t < -120)
                         t = -120;
                     else if (t > 120)
@@ -339,7 +393,7 @@ public abstract class Tile {
         // These params control spacing of colour bar.
         int startVal = 0;
         int finalVal = 150;
-        int labelSpacing = 30; 
+        int labelSpacing = 30;
         if (style == Style.DIFFERENCE) {
             startVal = -120;
             finalVal = 120;
@@ -355,7 +409,8 @@ public abstract class Tile {
         BufferedImage legend = model.convertToIntDiscrete(raster, false);
         Graphics2D gr = legend.createGraphics();
         gr.setColor(new Color(0));
-        gr.drawString("travel time (minutes)", 0, 10);
+        // gr.drawString("travel time (minutes)", 0, 10);
+        gr.drawString("Tempo di viaggio in minuti", 5, 12);
         float scale = width / (float) bandsTotal;
         for (int i = startVal; i < bandsTotal; i += labelSpacing)
             gr.drawString(Integer.toString(i), scale * (-startVal + i), height);
