@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+
+  mip-map:
+    image: registry:5000/mip-map
+    build: .
+    container_name: mip-map
+    network_mode: bridge
+    ports:
+    - 8086:80
+    restart: unless-stopped
