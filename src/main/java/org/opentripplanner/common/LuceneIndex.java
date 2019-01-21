@@ -7,6 +7,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.DoubleField;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
@@ -50,6 +51,8 @@ public class LuceneIndex {
     private File basePath;
     private Directory directory; // the Lucene Directory, not to be confused with a filesystem directory
     private IndexSearcher searcher; // Will be null until index is built.
+    
+    private FieldType stopCodeStringType; //5t
 
     /**
      * @param basePath the filesystem location under which to save indexes
@@ -58,6 +61,13 @@ public class LuceneIndex {
     public LuceneIndex(final GraphIndex graphIndex, File basePath, boolean background) {
         this.graphIndex = graphIndex;
         this.basePath = basePath;
+        
+        // https://stackoverflow.com/questions/28109237/lucene-error-in-document-field-setboost
+    	// Start with a copy of the standard field type
+    	this.stopCodeStringType = new FieldType(StringField.TYPE_STORED);
+    	this.stopCodeStringType.setOmitNorms(false);
+        
+        
         if (background) {
             new BackgroundIndexer().start();
         } else {
@@ -114,8 +124,11 @@ public class LuceneIndex {
         Document doc = new Document();
         doc.add(new TextField("name", stop.getName(), Field.Store.YES));
         if (stop.getCode() != null) {
-        	StringField codeField = new StringField("code", stop.getCode(), Field.Store.YES);
-        	codeField.setBoost(10);
+        	
+        	//StringField doesn't do anything special except have a customized fieldtype, so just use Field.
+        	//Field nameField = new Field("name", name, myStringType);
+        	Field codeField = new Field("code", stop.getCode(), this.stopCodeStringType);
+        	codeField.setBoost(100);
             doc.add(codeField);
         }
         doc.add(new DoubleField("lat", stop.getLat(), Field.Store.YES));
@@ -184,7 +197,9 @@ public class LuceneIndex {
                 // This makes it possible to search for a stop code
                 termQuery.add(new TermQuery(new Term("code", term)),                 BooleanClause.Occur.SHOULD);
                 // 5T aggiungo autocomplete su stop code
-                termQuery.add(new PrefixQuery(new Term("code", term)),                 BooleanClause.Occur.SHOULD);
+                PrefixQuery stopcodeQuery = new PrefixQuery(new Term("code", term));
+                stopcodeQuery.setBoost(10);
+                termQuery.add(stopcodeQuery, BooleanClause.Occur.SHOULD);
             }
         } else {
             List<String> list = new ArrayList<String>();

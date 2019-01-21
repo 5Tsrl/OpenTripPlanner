@@ -15,6 +15,7 @@ COPY target/otp-1.4.0-SNAPSHOT-shaded.jar otp-shaded.jar
 
 RUN chmod -R 777 ${OTP_ROOT}
 
- # docker build -t registry:5000/opentripplannerwc  . ;
- # docker-compose run otp-build-graph
- # docker-compose up -d otp-run-mato
+# mvn clean package -DskipTests
+# docker build -t registry:5000/opentripplannerwc  . ;
+# docker-compose run otp-build-graph
+# docker-compose up -d otp-run-mato
