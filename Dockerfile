@@ -9,11 +9,12 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
   echo $TZ > /etc/timezone && \
   apk add --no-cache tzdata ttf-dejavu
 
+USER 1000:1000
 WORKDIR ${OTP_ROOT}
 
 COPY target/otp-1.4.0-SNAPSHOT-shaded.jar otp-shaded.jar
 
-RUN chmod -R 777 ${OTP_ROOT}
+#RUN chmod -R 777 ${OTP_ROOT}
 
 # mvn clean package -DskipTests
 # docker build -t registry:5000/opentripplannerwc  . ;
