@@ -51,7 +51,7 @@ otp.modules.datex.InfoListView =
             	  }, this);
                 return this;
             },
-            
+
 });
 
 
@@ -62,9 +62,10 @@ otp.modules.datex.EventModel =
           latlng: null,
           id: null,
     },
-    
-    initialize: function(){      
-      this.latlng = L.latLng(this.get('lat') , this.get('lng'));
+
+    initialize: function(){
+      this.latlng = L.latLng(this.get('lat') , this.get('lng'))
+      //   this.set('id', this.get('lat') +'-' + this.get('lng'))
       this.set('visible', true);
       this.set('catVisible', true);
       this.set('filterVisible', true);
@@ -79,14 +80,14 @@ otp.modules.datex.EventModel =
 
       this.set('allText',  this.get('road') + this.get('where')   +   this.get('what'));
     },
-    
+
     initializeOld: function(){
       this.latlng = L.latLng(this.get('lat') , this.get('lng'));
 
       this.set('visible', true);
       this.set('catVisible', true);
       this.set('filterVisible', true);
-      
+
       this.set('roadNumber', this.get('roadNumber').replace("(", " (")  );
       this.set('roadName', this.get('roadName').replace("(", " (")  );
 
@@ -113,7 +114,7 @@ otp.modules.datex.EventModel =
       this.set('descriptionLocalized',this.get('eventDescription'))
       if (i18n.lng() == 'en')
         this.set('descriptionLocalized',this.get('eventDescriptionEn'))
-      
+
       //eventTerminated
       this.set('terminated', (this.get('status') == _tr('Terminato') ? true : false));
 
@@ -126,9 +127,9 @@ otp.modules.datex.EventModel =
         if(moment(this.get('startDate'),"DD/MM/YY HH:mm").format("HH:mm") == '00:00'){ //solo data
               dalDate= moment(this.get('startDate'),"DD/MM/YY").format(otp.config.locale.time.date_format);
         } else {  //data e ora
-              dalDate= moment(this.get('startDate'),"DD/MM/YY HH:mm").format(otp.config.locale.time.date_time_format);  
+              dalDate= moment(this.get('startDate'),"DD/MM/YY HH:mm").format(otp.config.locale.time.date_time_format);
         }
-        
+
   			if(this.get('endDate')){
           if (moment(this.get('endDate'),"DD/MM/YY HH:mm").format("HH:mm") == '23:59'){
               alDate= _tr("al")+moment(this.get('endDate'),"DD/MM/YY").format(otp.config.locale.time.date_format);
@@ -160,20 +161,20 @@ otp.modules.datex.EventModel =
 otp.modules.datex.EventCollection =
     Backbone.Collection.extend({
 
+    // url: otp.config.hostname + '/events-mock.json',
     url: otp.config.hostname + '/traffic-events',
     //url: 'http://mip.5t.torino.it/traffic-events?category=traffic,closure,weather,others',
     model: otp.modules.datex.EventModel,
-    
+
     initialize: function(){
-            //Backbone.eventBus.on('traffic-on', function(){alert('minchia, codeChanged!')});
             Backbone.eventBus.on('traffic-switch', this.trafficSwitch, this);
             Backbone.eventBus.on('closure-switch', this.closureSwitch, this);
             Backbone.eventBus.on('weather-switch', this.weatherSwitch, this);
             Backbone.eventBus.on('others-switch',  this.othersSwitch, this);
-            
+
             Backbone.eventBus.on('filterEventsChanged',  this.filterEventsChanged, this);
-            
-            
+
+
     },
     trafficSwitch: function(){
         _.each(this.where({category: 'traffic'}), function(ev){
@@ -181,50 +182,37 @@ otp.modules.datex.EventCollection =
       });
       Backbone.eventBus.trigger('rinfresca');
     },
-    
+
     closureSwitch: function(){
         _.each(this.where({category: 'closure'}), function(ev){
             ev.toggleCatVisibility();
       });
       Backbone.eventBus.trigger('rinfresca');
     },
-    
+
     weatherSwitch: function(){
         _.each(this.where({category: 'weather'}), function(ev){
             ev.toggleCatVisibility();
       });
       Backbone.eventBus.trigger('rinfresca');
     },
-    
+
     othersSwitch: function(){
         _.each(this.where({category: 'others'}), function(ev){
             ev.toggleCatVisibility();
       });
       Backbone.eventBus.trigger('rinfresca');
     },
-    
+
     filterEventsChanged: function(e){
             //console.log('evento', e);
             var ftext = e.currentTarget.value.toLowerCase();
-            //console.log('ftext', ftext);
-            /*var filtered = this.filter( function(datexEvent){
-                return datexEvent.get('eventDescription').indexOf(ftext) > -1
-            });*/
-            //console.log('filtrati', filtered);
             this.each( function(datexEvent){
                     datexEvent.set('filterVisible', datexEvent.get('allText').toLowerCase().indexOf(ftext) > -1);
                 });
-            /*
-            _.each(this.filter( function(datexEvent){
-                    return datexEvent.get('eventDescription').indexOf(ftext) > -1
-                }), function(ev){
-                    ev.set('filterVisible': );
-                    
-            });
-            */
             Backbone.eventBus.trigger('rinfresca');
     },
-    
+
     getTraffic: function() {
       return this.where({category: 'traffic'});
     },
@@ -245,7 +233,7 @@ otp.modules.datex.CategoryView =
                 Backbone.eventBus.on('weather-switch', this.toggleWeather, this);
                 Backbone.eventBus.on('others-switch', this.toggleOthers, this);
         },
-        
+
         events: {
            "change #input-eventCategory-code" : function(){Backbone.eventBus.trigger('traffic-switch')},
            "change #input-eventCategory-chiusure" : function(){Backbone.eventBus.trigger('closure-switch')},
@@ -276,14 +264,14 @@ otp.modules.datex.CategoryView =
         toggleOthers: function(){
             $('.altro').toggleClass('active');
         }
-        
+
 });
 
 otp.modules.datex.FilterEventsView =
     Backbone.View.extend({
         tagName: 'div',
         className: 'filtroEvt',
-        
+
         events: {
            "keyup #input-filterEvents" : function(e){Backbone.eventBus.trigger('filterEventsChanged',e)},
          },
@@ -302,7 +290,7 @@ otp.modules.datex.EventView =
         events: {
             "click .dtxEvt":  function(){Backbone.eventBus.trigger('evtClicked', this.model.id)}
         },
-        
+
 
     	render: function(){
     		//this.$el.html( this.template(this.model.toJSON()));
@@ -321,9 +309,9 @@ otp.modules.datex.EventListView =
                 this.collection.on('reset', this.render, this);
                 Backbone.eventBus.on('rinfresca', this.rinfresca, this);
             },
-            
+
             render: function(){
-                this.collection.each(function(evt){    
+                this.collection.each(function(evt){
                     if (evt.get('visible') && evt.get('catVisible')  && evt.get('filterVisible')) {
             			var eventView = new otp.modules.datex.EventView({ model: evt });
             			this.$el.append(eventView.render().el);
@@ -331,7 +319,7 @@ otp.modules.datex.EventListView =
             	  }, this);
                 return this;
             },
-            
+
             rinfresca: function(){
                 //console.log(this.collection.length)
                 $('.lista-eventi').remove('');
@@ -339,7 +327,7 @@ otp.modules.datex.EventListView =
                 this.render().$el.appendTo($('#tab2 .main .eventsCtnr'));
                 return this;
             },
-            
+
 });
 
 
@@ -365,33 +353,33 @@ otp.modules.datex.EventModule =
     infos     : null,
     eventLookup :   { },
     //eventsLayer   : null,
-    
+
     trafficLayerGroup : null,
     closureLayerGroup : null,
     weatherLayerGroup : null,
     othersLayerGroup  : null,
-    
-    
+
+
     tagliatelLayer : null,
 
     initialize : function(webapp) {
         otp.modules.Module.prototype.initialize.apply(this, arguments);
         this.icons = new otp.modules.planner.IconFactory();
         Backbone.eventBus = _.extend({}, Backbone.Events);
-        
-        
+
+
         Backbone.eventBus.on('traffic-switch', this.trafficSwitchMap, this);
         Backbone.eventBus.on('closure-switch', this.closureSwitchMap, this);
         Backbone.eventBus.on('weather-switch', this.weatherSwitchMap, this);
         Backbone.eventBus.on('others-switch',  this.othersSwitchMap, this);
-        
+
         Backbone.eventBus.on('evtClicked',  function(evid){
             this.markers[evid].openPopup();
         }, this);
-        
-        
+
+
         console.log('EventModule initialized');
-        
+
     },
     /**
      * Called when the module is made active for the first time.
@@ -408,8 +396,8 @@ otp.modules.datex.EventModule =
         this.closureLayerGroup = new L.LayerGroup();
         this.weatherLayerGroup = new L.LayerGroup();
         this.othersLayerGroup  = new L.LayerGroup();
-        
-        
+
+
         //this.tagliatelLayer = new L.tileLayer.wms("http://172.21.9.6:8180/geoserver/gwc/service/wms?&configuration=optima&", {
         this.tagliatelLayer = new L.tileLayer.wms(otp.config.hostname + "/traffic-layer?&configuration=optima&", {
                                         layers: 'optima:rlin_tre_fore0_cache',
@@ -441,9 +429,9 @@ otp.modules.datex.EventModule =
         lmap.addLayer(this.closureLayerGroup);
         lmap.addLayer(this.weatherLayerGroup);
         lmap.addLayer(this.othersLayerGroup);
-        
+
         $('.leaflet-pelias-control').show()
-        
+
         //this.refresh();
         this.webapp.map.lmap.on('dragend zoomend', $.proxy(this.refresh, this));
         this.webapp.map.lmap.addLayer(this.tagliatelLayer);
@@ -470,7 +458,7 @@ otp.modules.datex.EventModule =
         lmap.removeLayer(this.weatherLayerGroup);
         lmap.removeLayer(this.othersLayerGroup);
         $('.leaflet-pelias-control').hide()
-        
+
         lmap.removeLayer(this.tagliatelLayer);
         this.trafficEventsWidget.hide();
     },
@@ -509,12 +497,10 @@ otp.modules.datex.EventModule =
         var eventData = event.toJSON(),
             marker;
         icon = icon || this.icons.getEventMarker(eventData);
-        //icon = icon || this.icons.lavori;
 
         //console.log(event);
         marker = new L.Marker(new L.LatLng(eventData.lat, eventData.lng), {icon: icon});
         this.markers[event.id] = marker;
-        //this.eventsLayer.addLayer(marker);
         if(event.get('category') == 'traffic')
             this.trafficLayerGroup.addLayer(marker);
         else if (event.get('category') == 'closure')
@@ -523,8 +509,8 @@ otp.modules.datex.EventModule =
             this.weatherLayerGroup.addLayer(marker);
         else if (event.get('category') == 'others')
             this.othersLayerGroup.addLayer(marker);
-            
-        
+
+
         marker.bindPopup(this.constructEventInfo(title, eventData));
     },
 
@@ -554,7 +540,7 @@ otp.modules.datex.EventModule =
     initInfos : function() {
         this.infos = new otp.modules.datex.InfoCollection();
         //this.infos.on('reset', this.onResetEvents, this);
-        this.infos.fetch({reset: true});        
+        this.infos.fetch({reset: true});
     },
     initLegend : function() {
         var legend = {};
@@ -569,22 +555,22 @@ otp.modules.datex.EventModule =
     initNotiziarioAndTwitter : function() {
       $.ajax({
        type: 'HEAD',
-       url:'https://www.muoversinpiemonte.it/notiziario/notiziario.mp3',
+       url:'/notiziario.mp3',
        success: function(data, textStatus, request){
             //console.log(request.getResponseHeader('last-modified'));
             var lm = request.getResponseHeader('last-modified');
             //console.log(lm, moment(new Date(lm)).format('HH:mm'))
             lm = moment(new Date(lm)).format(otp.config.locale.time.time_format)
             $('.features .notiziario').attr('title', _tr('Ascolta il notiziario') +' '+ lm)
-            
+
        },
        error: function (request, textStatus, errorThrown) {
             console.log('erore', request.getResponseHeader('some_header'));
        }
       });
-      
-      
-      
+
+
+
       $('.features .twitter').attr('title', _tr('Seguici su Twitter'))
     },
 
@@ -598,7 +584,7 @@ otp.modules.datex.EventModule =
     },
 
     constructEventInfo : function(title, event) {
-        
+
         var popup = ich['otp-datexEventItemMap']({ev:event})
         /*
         var info = '<div class="event-panel lavori">'
@@ -608,10 +594,10 @@ otp.modules.datex.EventModule =
         info += '</div>' */
         return popup[0];
         //return info;
-        
-        
+
+
     },
-    
+
     trafficSwitchMap : function(){
         var lmap = this.webapp.map.lmap;
         if( lmap.hasLayer(this.trafficLayerGroup)  ){
@@ -636,7 +622,7 @@ otp.modules.datex.EventModule =
             lmap.removeLayer(this.othersLayerGroup);
         } else lmap.addLayer(this.othersLayerGroup);
     },
-    
+
     //refresh event markers based on zoom level
     refresh : function() {
         this.filterEventsOnMapBounds();
@@ -646,7 +632,7 @@ otp.modules.datex.EventModule =
         /*
         if(this.moduleSelected){
         	 if( lmap.getZoom() < 8){
-                 console.log('togli stazioni'); 
+                 console.log('togli stazioni');
                  if( lmap.hasLayer(this.trafficLayerGroup)  ){
                   lmap.removeLayer(this.trafficLayerGroup);
                  }
@@ -679,7 +665,7 @@ otp.modules.datex.EventModule =
         	 if(lmap.getZoom() >= 16  ){
         		 console.log('icone grandi');
         	 }
-             
+
         }*/
     },
     filterEventsOnMapBounds: function() {
