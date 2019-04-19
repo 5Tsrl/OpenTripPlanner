@@ -79,15 +79,13 @@ public class CityBikesBikeRentalDataSource implements BikeRentalDataSource, Json
         for (JsonNode stationNode : mapper.readTree(data)) {
             BikeRentalStation brStation = new BikeRentalStation();
             // We need string IDs but they are in JSON as numbers. Avoid null from textValue(). See pull req #1450.
-            try {
-                brStation.id = String.valueOf(stationNode.get("id").intValue());
-            } catch (Exception e) {
-                log.error("lo stationNode ", stationNode);
-                log.error("eccezione completa", e);
-                //e.printStackTrace();
-                break;
+            brStation.id = String.valueOf(stationNode.get("id").intValue());
+            if(stationNode.get("lng") != null){
+                brStation.x = stationNode.get("lng").doubleValue() / 1000000.0;
+            } else {
+                log.warn("Azz, beccato lng null nella station con id: " + stationNode.get("id"));
+                throw new IOException("Beccato lng null nella station con id: " + stationNode.get("id"));
             }
-            brStation.x = stationNode.get("lng").doubleValue() / 1000000.0;
             brStation.y = stationNode.get("lat").doubleValue() / 1000000.0;
             brStation.name = new NonLocalizedString(stationNode.get("name").textValue());
             brStation.bikesAvailable = stationNode.get("bikes").intValue();
