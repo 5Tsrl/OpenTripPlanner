@@ -84,6 +84,7 @@ public class CityBikesBikeRentalDataSource implements BikeRentalDataSource, Json
                 brStation.x = stationNode.get("lng").doubleValue() / 1000000.0;
             } else {
                 log.warn("Azz, beccato lng null nella station con id: " + stationNode.get("id"));
+                log.warn(data);
                 throw new IOException("Beccato lng null nella station con id: " + stationNode.get("id"));
             }
             brStation.y = stationNode.get("lat").doubleValue() / 1000000.0;
