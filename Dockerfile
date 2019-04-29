@@ -16,5 +16,4 @@ RUN chmod -R 777 ${OTP_ROOT}
 # mvn clean package -D skipTests
 # docker build -t registry:5000/otpmaster  . ;
 # docker push registry:5000/otpmaster
-# docker-compose up otpmaster-build-graph
-# docker-compose up -d otpmaster-run-mato
+# poi su progetto otm-manager si lanciano i vari build e run

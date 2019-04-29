@@ -126,12 +126,13 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
 
     @Override
     protected void runPolling() throws Exception {
-        LOG.debug("Updating bike rental stations from " + source);
+        // LOG.debug("Updating bike rental stations from " + source);
         if (!source.update()) {
             LOG.debug("No updates");
             return;
         }
         List<BikeRentalStation> stations = source.getStations();
+        LOG.debug("Updating n. "+ stations.size() +" bike rental stations");
 
         // Create graph writer runnable to apply these stations to the graph
         BikeRentalGraphWriterRunnable graphWriterRunnable = new BikeRentalGraphWriterRunnable(stations);
@@ -171,9 +172,10 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
                         LOG.warn("{} not near any streets; it will not be usable.", station);
                     }
                     verticesByStation.put(station, vertex);
+                    LOG.debug(station + " su new vertex " + vertex);
                     new RentABikeOnEdge(vertex, vertex, station.networks);
                     if (station.allowDropoff)
-                        new RentABikeOffEdge(vertex, vertex, station.networks);
+                    new RentABikeOffEdge(vertex, vertex, station.networks);
                 } else {
                     vertex.setBikesAvailable(station.bikesAvailable);
                     vertex.setSpacesAvailable(station.spacesAvailable);
@@ -184,7 +186,7 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
             for (Entry<BikeRentalStation, BikeRentalStationVertex> entry : verticesByStation.entrySet()) {
                 BikeRentalStation station = entry.getKey();
                 if (stationSet.contains(station))
-                    continue;
+                continue;
                 BikeRentalStationVertex vertex = entry.getValue();
                 if (graph.containsVertex(vertex)) {
                     graph.removeVertexAndEdges(vertex);
@@ -196,6 +198,7 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
             for (BikeRentalStation station : toRemove) {
                 // post-iteration removal to avoid concurrent modification
                 verticesByStation.remove(station);
+                LOG.debug("Rimosso il vertice della BikeRentalStation " + station);
             }
         }
     }

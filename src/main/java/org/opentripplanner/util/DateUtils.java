@@ -90,7 +90,7 @@ public class DateUtils implements DateConstants {
         int hour = 0, min = 0, sec = 0;
         // raf 8.00 didn't parse, tentativo di fix, 
         if(time.indexOf(".") >= 0){
-            time = time.replaceAll(".", ":");
+            time = time.replaceAll("[.]", ":");
         }
         try {
             String[] hms = time.toUpperCase().split(":");
