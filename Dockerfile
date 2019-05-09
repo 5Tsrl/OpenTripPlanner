@@ -3,7 +3,7 @@ FROM openjdk:8-jre-alpine
 ENV \
   OTP_ROOT='/var/otp/' \
   TZ='Europe/Rome' \
-  JAVA_OPTS='-Xms4G -Xmx4G'
+  JAVA_OPTS='-Xms4G -Xmx4G -Duser.timezone="Europe/Rome" -Djava.util.prefs.userRoot=/tmp/'
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
   echo $TZ > /etc/timezone && \
@@ -11,12 +11,12 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 
 USER 1000:1000
 WORKDIR ${OTP_ROOT}
-
 COPY target/otp-1.4.0-SNAPSHOT-shaded.jar otp-shaded.jar
-
-#RUN chmod -R 777 ${OTP_ROOT}
+COPY entrypoint.sh .
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["--help"]
 
 # mvn clean package -DskipTests
-# docker build -t registry:5000/opentripplannerwc  . ;
+# docker build -t registry:5000/opentripplannerwc  .   oppure docker-compose build --force build-graph-mato
 # docker-compose run otp-build-graph
 # docker-compose up -d otp-run-mato
