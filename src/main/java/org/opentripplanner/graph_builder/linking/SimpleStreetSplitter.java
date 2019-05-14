@@ -312,6 +312,14 @@ public class SimpleStreetSplitter {
                     graph.addBuilderAnnotation(new StopLinkedTooFar((TransitStop)vertex, distanceMeters));
                 }
             }
+            // 5T BikeRentalStation Warn if a linkage was made, but the linkage was suspiciously long.
+            if (!(vertex instanceof TransitStop)) { // cerco di beccare le BikeRentalStation...
+                double distanceDegreesLatitude = distances.get(candidateEdges.get(0).getId());
+                int distanceMeters = (int)SphericalDistanceLibrary.degreesLatitudeToMeters(distanceDegreesLatitude);
+                if (distanceMeters > WARNING_DISTANCE_METERS) {
+                    LOG.debug("link suspiciously long . vertex: {}  distanceMeters: {}", vertex, distanceMeters);
+                }
+            }
 
             return true;
         }
