@@ -682,7 +682,7 @@ public class TimetableSnapshotSource {
         // TODO: filter/interpolate stop times like in PatternHopFactory?
 
         // Create StopPattern
-        final StopPattern stopPattern = new StopPattern(stopTimes);
+        final StopPattern stopPattern = new StopPattern(stopTimes, graph.deduplicator);
 
         // Get cached trip pattern or create one if it doesn't exist yet
         final TripPattern pattern = tripPatternCache.getOrCreateTripPattern(stopPattern, trip.getRoute(), graph);
@@ -870,6 +870,18 @@ public class TimetableSnapshotSource {
         Preconditions.checkArgument(tripUpdate.getStopTimeUpdateCount() == stops.size(),
                 "number of stop should match the number of stop time updates");
 
+        final TripPattern pattern = getPatternForTripId(feedId, trip.getId().getId());
+        if (pattern != null) {
+            if (checkNewStopTimeUpdateStopsMatchesPatten(stops, pattern)) {
+                // TripUpdate stop pattern matches existing trip. Handle as scheduled trip
+                LOG.warn("MODIFIED trip {} matches existing SCHEDULED trip. Treating as such.", trip.getId().getId());
+                return handleScheduledTrip(tripUpdate, feedId, serviceDate);
+            }
+            // Do not modify scheduled trips as it causes canceled trip to appear in indexes and replacement trip not added to indexes
+            LOG.error("MODIFIED trip {} matches existing SCHEDULED trip. Stop patterns do not match SKIPPING", trip.getId().getId());
+            return false;
+        }
+
         // Cancel scheduled trip
 
         final String tripId = tripUpdate.getTrip().getTripId();
@@ -883,6 +895,10 @@ public class TimetableSnapshotSource {
         final boolean success =
                 addTripToGraphAndBuffer(feedId, graph, trip, tripUpdate, stops, serviceDate, RealTimeState.MODIFIED);
         return success;
+    }
+
+    private boolean checkNewStopTimeUpdateStopsMatchesPatten(List<Stop> stops, TripPattern pattern) {
+        return stops.equals(pattern.getStops());
     }
 
     private boolean handleCanceledTrip(final TripUpdate tripUpdate, final String feedId, final ServiceDate serviceDate) {

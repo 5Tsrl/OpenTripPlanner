@@ -22,6 +22,8 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import com.google.common.collect.ArrayListMultimap;
+
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.List;
@@ -39,8 +41,9 @@ import graphql.GraphQLError;
 import graphql.schema.GraphQLSchema;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
 import io.sentry.Sentry;
@@ -112,6 +115,10 @@ import org.opentripplanner.updater.alerts.GtfsRealtimeAlertsUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+
 /**
  * This class contains all the transient indexes of graph elements -- those that are not
  * serialized with the graph. Caching these maps is essentially an optimization, but a big one.
@@ -145,6 +152,7 @@ public class GraphIndex {
     public final Map<Stop, StopCluster> stopClusterForStop = Maps.newHashMap();
     public final Map<String, StopCluster> stopClusterForId = Maps.newHashMap();
     public final Map<FeedScopedId, TicketType> ticketTypesForId = Maps.newHashMap();
+    public final Map<FeedScopedId, Geometry> flexAreasById = Maps.newHashMap();
 
     /* Should eventually be replaced with new serviceId indexes. */
     private final CalendarService calendarService;
@@ -231,6 +239,7 @@ public class GraphIndex {
             Envelope envelope = new Envelope(stopVertex.getCoordinate());
             stopSpatialIndex.insert(envelope, stopVertex);
         }
+
         for (TripPattern pattern : patternForId.values()) {
             patternsForFeedId.put(pattern.getFeedId(), pattern);
             patternsForRoute.put(pattern.route, pattern);
@@ -261,6 +270,13 @@ public class GraphIndex {
         indexSchema = new IndexGraphQLSchema(this).indexSchema;
         getLuceneIndex();
         LOG.info("Done indexing graph.");
+
+        LOG.info("Initializing areas....");
+        if (graph.flexAreasById != null) {
+            for (FeedScopedId id : graph.flexAreasById.keySet()) {
+                flexAreasById.put(id, graph.flexAreasById.get(id));
+            }
+        }
     }
 
     /**
@@ -862,9 +878,10 @@ public class GraphIndex {
      *
      * @param stop Stop object to perform the search for
      * @param serviceDate Return all departures for the specified date
+     * @param omitCanceled
      * @return
      */
-    public List<StopTimesInPattern> getStopTimesForStop(Stop stop, ServiceDate serviceDate, boolean omitNonPickups) {
+    public List<StopTimesInPattern> getStopTimesForStop(Stop stop, ServiceDate serviceDate, boolean omitNonPickups, boolean omitCanceled) {
         List<StopTimesInPattern> ret = new ArrayList<>();
         TimetableSnapshot snapshot = null;
         if (graph.timetableSnapshotSource != null) {
@@ -886,6 +903,7 @@ public class GraphIndex {
                     if(omitNonPickups && pattern.stopPattern.pickups[sidx] == pattern.stopPattern.PICKDROP_NONE) continue;
                     for (TripTimes t : tt.tripTimes) {
                         if (!sd.serviceRunning(t.serviceCode)) continue;
+                        if (omitCanceled && t.isTimeCanceled(sidx)) continue;
                         stopTimes.times.add(new TripTimeShort(t, sidx, stop, sd));
                     }
                 }
@@ -1187,7 +1205,6 @@ public class GraphIndex {
         }
         return allAgencies;
     }
-
     public Collection<TicketType> getAllTicketTypes() {
         return ticketTypesForId.values();
     }

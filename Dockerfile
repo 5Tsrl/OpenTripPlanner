@@ -11,7 +11,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 
 USER 1000:1000
 WORKDIR ${OTP_ROOT}
-COPY target/otp-1.4.0-SNAPSHOT-shaded.jar otp-shaded.jar
+COPY target/otp-1.5.0-SNAPSHOT-shaded.jar otp-shaded.jar
 COPY entrypoint.sh .
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["--help"]

@@ -12,7 +12,6 @@ import org.opentripplanner.updater.stoptime.MqttGtfsRealtimeUpdater;
 import org.opentripplanner.updater.stoptime.PollingStoptimeUpdater;
 import org.opentripplanner.updater.stoptime.WebsocketGtfsRealtimeUpdater;
 import org.opentripplanner.updater.street_notes.WinkkiPollingGraphUpdater;
-import org.opentripplanner.updater.traffic.OpenTrafficUpdater;
 import org.opentripplanner.updater.accessible_trip.AccessibleTripUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Upon loading a Graph, configure/decorate it using a JSON tree from Jackson. This mainly involves starting
  * graph updater processes (GTFS-RT, bike rental, etc.), hence the class name.
- * 
+ *
  * When a Graph is loaded, one should call setupGraph() with the JSON tree containing configuration for the Graph.
  * That method creates "graph updaters" according to the given JSON, which should contain an array or object field
  * called "updaters". Each child element represents one updater.
@@ -100,9 +99,6 @@ public abstract class GraphUpdaterConfigurator {
                 }
                 else if (type.equals("winkki-polling-updater")) {
                     updater = new WinkkiPollingGraphUpdater();
-                }
-                else if (type.equals("opentraffic-updater")) {
-                    updater = new OpenTrafficUpdater();
                 }
                 else if (type.equals("accessible-trip-updater")) {
                     updater = new AccessibleTripUpdater();
