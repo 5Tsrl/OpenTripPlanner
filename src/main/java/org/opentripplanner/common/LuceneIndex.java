@@ -51,7 +51,7 @@ public class LuceneIndex {
     private File basePath;
     private Directory directory; // the Lucene Directory, not to be confused with a filesystem directory
     private IndexSearcher searcher; // Will be null until index is built.
-    
+
     private FieldType stopCodeStringType; //5t
 
     /**
@@ -61,13 +61,7 @@ public class LuceneIndex {
     public LuceneIndex(final GraphIndex graphIndex, File basePath, boolean background) {
         this.graphIndex = graphIndex;
         this.basePath = basePath;
-        
-        // https://stackoverflow.com/questions/28109237/lucene-error-in-document-field-setboost
-    	// Start with a copy of the standard field type
-    	this.stopCodeStringType = new FieldType(StringField.TYPE_STORED);
-    	this.stopCodeStringType.setOmitNorms(false);
-        
-        
+
         if (background) {
             new BackgroundIndexer().start();
         } else {
@@ -87,19 +81,19 @@ public class LuceneIndex {
             //directory = new RAMDirectory(); // only a little faster
             IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_47, analyzer).setOpenMode(OpenMode.CREATE);
             final IndexWriter writer = new IndexWriter(directory, config);
-            for (Stop station : graphIndex.stationForId.values()) {
-                addStation(writer, station);
-            }
+            // for (Stop station : graphIndex.stationForId.values()) {
+            //     addStation(writer, station);
+            // }
             for (Stop stop : graphIndex.stopForId.values()) {
                 addStop(writer, stop);
             }
-            graphIndex.clusterStopsAsNeeded();
-            for (StopCluster stopCluster : graphIndex.stopClusterForId.values()) {
-                addCluster(writer, stopCluster);
-            }
-            for (StreetVertex sv : Iterables.filter(graphIndex.vertexForId.values(), StreetVertex.class)) {
-                addCorner(writer, sv);
-            }
+            // graphIndex.clusterStopsAsNeeded();
+            // for (StopCluster stopCluster : graphIndex.stopClusterForId.values()) {
+            //     addCluster(writer, stopCluster);
+            // }
+            // for (StreetVertex sv : Iterables.filter(graphIndex.vertexForId.values(), StreetVertex.class)) {
+            //     addCorner(writer, sv);
+            // }
             writer.close();
             long elapsedTime = System.currentTimeMillis() - startTime;
             LOG.info("Built Lucene index in {} msec", elapsedTime);
@@ -122,14 +116,20 @@ public class LuceneIndex {
 
     private void addStop(IndexWriter iwriter, Stop stop) throws IOException {
         Document doc = new Document();
-        doc.add(new TextField("name", stop.getName(), Field.Store.YES));
+
+        // 5t doc.add(new TextField("name", stop.getName(), Field.Store.YES));
+        Field nameField = new TextField("name", stop.getName(), Field.Store.YES);
+        nameField.setBoost(0.1f);
+        doc.add(nameField);
         if (stop.getCode() != null) {
-        	
-        	//StringField doesn't do anything special except have a customized fieldtype, so just use Field.
-        	//Field nameField = new Field("name", name, myStringType);
-        	Field codeField = new Field("code", stop.getCode(), this.stopCodeStringType);
-        	codeField.setBoost(100);
+        	// 5t doc.add(new StringField("code", stop.getCode(), Field.Store.YES));
+        	Field codeField = new TextField("code", stop.getCode(), Field.Store.YES);
+        	codeField.setBoost(1.9f);
             doc.add(codeField);
+        } else {
+            // doc.setBoost(0.1f);
+            // brutale
+            return;
         }
         doc.add(new DoubleField("lat", stop.getLat(), Field.Store.YES));
         doc.add(new DoubleField("lon", stop.getLon(), Field.Store.YES));
@@ -192,14 +192,30 @@ public class LuceneIndex {
         BooleanQuery termQuery = new BooleanQuery();
         if (autocomplete) {
             for (String term : queryString.split(" ")) {
-                termQuery.add(new TermQuery(new Term("name", term.toLowerCase())), BooleanClause.Occur.SHOULD);
-                termQuery.add(new PrefixQuery(new Term("name", term.toLowerCase())), BooleanClause.Occur.SHOULD);
+
+                // 5T cerchiamo solo per code...  (dopo innumerevoli tentativi  di pesare più il code del nome...)
+
+                // 5t termQuery.add(new TermQuery(new Term("name", term.toLowerCase())), BooleanClause.Occur.SHOULD);
+                // 5t termQuery.add(new PrefixQuery(new Term("name", term.toLowerCase())), BooleanClause.Occur.SHOULD);
+                /*
+                TermQuery nameQuery = new TermQuery(new Term("name", term.toLowerCase()));
+                nameQuery.setBoost(0.3f);
+                termQuery.add(nameQuery, BooleanClause.Occur.SHOULD);
+                */
                 // This makes it possible to search for a stop code
-                termQuery.add(new TermQuery(new Term("code", term)),                 BooleanClause.Occur.SHOULD);
-                // 5T aggiungo autocomplete su stop code
-                PrefixQuery stopcodeQuery = new PrefixQuery(new Term("code", term));
-                stopcodeQuery.setBoost(10);
-                termQuery.add(stopcodeQuery, BooleanClause.Occur.SHOULD);
+                // termQuery.add(new TermQuery(new Term("code", term)),                 BooleanClause.Occur.SHOULD);
+                // 5T
+                PrefixQuery codePrefixQuery = new PrefixQuery(new Term("code", term));
+                codePrefixQuery.setBoost(0.3f);
+                termQuery.add(codePrefixQuery, BooleanClause.Occur.SHOULD);
+
+
+                TermQuery codeTermQuery = new TermQuery(new Term("code", term));
+                codeTermQuery.setBoost(1.7f);
+                termQuery.add(codeTermQuery, BooleanClause.Occur.SHOULD);
+
+
+                // LOG.info("Built termQuery {} per term {}", termQuery.toString(), term);
             }
         } else {
             List<String> list = new ArrayList<String>();
@@ -246,7 +262,7 @@ public class LuceneIndex {
         }
         List<LuceneResult> result = Lists.newArrayList();
         try {
-            TopScoreDocCollector collector = TopScoreDocCollector.create(10, true);
+            TopScoreDocCollector collector = TopScoreDocCollector.create(30, true); // 5t era 10
             searcher.search(query, collector);
             ScoreDoc[] docs = collector.topDocs().scoreDocs;
             for (int i = 0; i < docs.length; i++) {
@@ -303,4 +319,3 @@ public class LuceneIndex {
 
     public static enum Category { STOP, STATION, CORNER, CLUSTER; }
 }
-

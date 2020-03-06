@@ -17,6 +17,7 @@ ENTRYPOINT ["./entrypoint.sh"]
 CMD ["--help"]
 
 # mvn clean package -DskipTests
-# docker build -t registry:5000/opentripplannerwc  .   oppure docker-compose build --force build-graph-mato
+# docker build -t registry:5000/otpwc  .        era opentripplannerwc  .   oppure docker-compose build --force build-graph-mato
+# docker push registry:5000/otpwc
 # docker-compose run otp-build-graph
 # docker-compose up -d otp-run-mato
