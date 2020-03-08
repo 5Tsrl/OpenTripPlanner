@@ -424,7 +424,7 @@ public class GraphIndex {
             List<String> filterByBikeParks,
             List<String> filterByCarParks) {
         RoutingRequest rr = new RoutingRequest(TraverseMode.WALK);
-        // rr.allowBikeRental = true;  // 5t sembra usato solo in mato vicino a te..., non ha senso bikerental
+        rr.allowBikeRental = true;
         //rr.bikeParkAndRide = true;
         //rr.parkAndRide = true;
         //rr.modes = new TraverseModeSet(TraverseMode.WALK, TraverseMode.BICYCLE, TraverseMode.CAR);
@@ -467,7 +467,6 @@ public class GraphIndex {
         rr.rctx.destroy();
         List<PlaceAndDistance> results = visitor.placesFound;
         results.sort((pad1, pad2) -> pad1.distance - pad2.distance);
-        // 5t LOG.info("results-sorted[0]: " + results.get(0).distance);
         return results.subList(0, min(results.size(), maxResults));
     }
 
