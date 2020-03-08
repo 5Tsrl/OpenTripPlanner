@@ -40,7 +40,7 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
     private Map<BikeRentalStation, BikeRentalStationVertex> verticesByStation = new HashMap<BikeRentalStation, BikeRentalStationVertex>();
 
     private BikeRentalDataSource source;
-    
+
     private Graph graph;
 
     private SimpleStreetSplitter linker;
@@ -165,7 +165,7 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
         @Override
         public void run(Graph graph) {
             // Apply stations to graph
-            // 5t Set<BikeRentalStation> stationSet = new HashSet<>();
+            Set<BikeRentalStation> stationSet = new HashSet<>();
             Set<String> defaultNetworks = new HashSet<>(Arrays.asList(network));
             /* add any new stations and update bike counts for existing stations */
             for (BikeRentalStation station : stations) {
@@ -174,10 +174,9 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
                     station.networks = defaultNetworks;
                 }
                 service.addBikeRentalStation(station);
-                // 5t stationSet.add(station);
+                stationSet.add(station);
                 BikeRentalStationVertex vertex = verticesByStation.get(station);
                 if (vertex == null) {
-                    LOG.warn("{} aggiunta una stazione di bike sharing", station);
                     vertex = new BikeRentalStationVertex(graph, station);
                     if (!linker.link(vertex)) {
                         // the toString includes the text "Bike rental station"
@@ -192,8 +191,7 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
                 }
             }
             /* remove existing stations that were not present in the update */
-            /* 5t non rimuovo le stazioni non presenti, per lavorare in update....  */
-            /*List<BikeRentalStation> toRemove = new ArrayList<BikeRentalStation>();
+            List<BikeRentalStation> toRemove = new ArrayList<BikeRentalStation>();
             for (Entry<BikeRentalStation, BikeRentalStationVertex> entry : verticesByStation.entrySet()) {
                 BikeRentalStation station = entry.getKey();
                 if (stationSet.contains(station))
@@ -209,7 +207,7 @@ public class BikeRentalUpdater extends PollingGraphUpdater {
             for (BikeRentalStation station : toRemove) {
                 // post-iteration removal to avoid concurrent modification
                 verticesByStation.remove(station);
-            }*/
+            }
         }
     }
 }
