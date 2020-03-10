@@ -467,7 +467,31 @@ public class GraphIndex {
         rr.rctx.destroy();
         List<PlaceAndDistance> results = visitor.placesFound;
         results.sort((pad1, pad2) -> pad1.distance - pad2.distance);
-        return results.subList(0, min(results.size(), maxResults));
+        // 5t todo filtrare lista risultati per includere un solo veicolo per bikerentalstation network di tipo free floating
+        List<PlaceAndDistance> uniqueResults = getOneVehPerNetworkResults(results);
+        // return results.subList(0, min(results.size(), maxResults));
+        return uniqueResults.subList(0, min(uniqueResults.size(), maxResults));
+    }
+    private List<PlaceAndDistance> getOneVehPerNetworkResults (List<PlaceAndDistance> results){
+        List<PlaceAndDistance> uniqueResults = new ArrayList<PlaceAndDistance>();
+        Set<String> seenNetworks = new HashSet<String>();
+        // loop through all PlaceAndDistance in input
+        for (final PlaceAndDistance pad : results) {
+            if (pad.place instanceof BikeRentalStation) {
+              BikeRentalStation brs = (BikeRentalStation) pad.place;
+              if(seenNetworks.containsAll(brs.networks)) {
+                continue;
+              } else {
+                seenNetworks.addAll(brs.networks);
+                uniqueResults.add(pad);
+              }
+            } else {
+              uniqueResults.add(pad);
+            }
+        }
+        LOG.info("seenNetworks: {}", seenNetworks.toString());
+        return uniqueResults;
+      
     }
 
     public LuceneIndex getLuceneIndex() {
