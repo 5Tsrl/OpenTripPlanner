@@ -410,6 +410,29 @@ public class IndexAPI {
        }
    }
 
+   /** Return all defined blocks. */
+   @GET
+   @Path("/blocks")
+   public Response getBlocks () {
+       Collection<String> blocks = index.tripsForBlockId.keySet();
+       if (blocks != null) {
+           return Response.status(Status.OK).entity(blocks).build();
+       } else {
+           return Response.status(Status.NOT_FOUND).entity(MSG_404).build();
+       }
+   }
+
+   /** Return all trips on the given blockId. */
+   @GET
+   @Path("/blocks/{blockId}/trips")
+   public Response getTripsForBlock (@PathParam("blockId") String blockIdString) {
+     Collection<Trip> trips = index.tripsForBlockId.get(blockIdString);
+     if (trips != null) {
+       return Response.status(Status.OK).entity(TripShort.list(trips)).build();
+     } else {
+       return Response.status(Status.NOT_FOUND).entity(MSG_404).build();
+     }
+   }
 
     // Not implemented, results would be too voluminous.
     // @Path("/trips")

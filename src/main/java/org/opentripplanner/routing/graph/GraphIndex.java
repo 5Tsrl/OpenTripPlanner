@@ -148,6 +148,8 @@ public class GraphIndex {
     public final Multimap<Route, TripPattern> patternsForRoute = ArrayListMultimap.create();
     public final Multimap<Stop, TripPattern> patternsForStop = ArrayListMultimap.create();
     public final Multimap<FeedScopedId, Stop> stopsForParentStation = ArrayListMultimap.create();
+    //5t
+    public final Multimap<String, Trip> tripsForBlockId = ArrayListMultimap.create();
     final HashGridSpatialIndex<TransitStop> stopSpatialIndex = new HashGridSpatialIndex<TransitStop>();
     public final Map<Stop, StopCluster> stopClusterForStop = Maps.newHashMap();
     public final Map<String, StopCluster> stopClusterForId = Maps.newHashMap();
@@ -247,6 +249,11 @@ public class GraphIndex {
             for (Trip trip : pattern.getTrips()) {
                 patternForTrip.put(trip, pattern);
                 tripForId.put(trip.getId(), trip);
+                // 5t
+                if(trip.getBlockId() != null) {
+                  String feedScopedBlockId = trip.getId().getAgencyId() + ":" + trip.getBlockId();
+                  tripsForBlockId.put(feedScopedBlockId, trip);
+                }
             }
             for (Stop stop: pattern.getStops()) {
                 if (!patternsForStop.containsEntry(stop, pattern)) {

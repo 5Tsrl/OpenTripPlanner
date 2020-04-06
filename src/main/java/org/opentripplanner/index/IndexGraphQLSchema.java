@@ -3190,6 +3190,20 @@ public class IndexGraphQLSchema {
                         })
                         .build())
                 .field(GraphQLFieldDefinition.newFieldDefinition()
+                    .name("tripsByBlock")
+                    .description("Finds all trips on a given block identified by a feed scoped blockId. ")
+                    .type(new GraphQLList(tripType))
+                    .argument(GraphQLArgument.newArgument()
+                        .name("blockId")
+                        .description("feed scoped id of the block")
+                        .type(new GraphQLNonNull(Scalars.GraphQLString))
+                        .build())
+                    .dataFetcher(environment -> {
+                        Stream<Trip> stream = index.tripsForBlockId.get(environment.getArgument("blockId")).stream();
+                        return stream.collect(Collectors.toList());
+                    })
+                    .build())
+                .field(GraphQLFieldDefinition.newFieldDefinition()
                         .name("cancelledTripTimes")
                         .argument(GraphQLArgument.newArgument()
                                 .name("feeds")
