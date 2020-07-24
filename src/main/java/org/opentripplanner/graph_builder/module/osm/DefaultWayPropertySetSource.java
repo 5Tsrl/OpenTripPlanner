@@ -481,7 +481,11 @@ public class DefaultWayPropertySetSource implements WayPropertySetSource {
         props.createNames("highway=pedestrian", "name.pedestrian_path");
         props.createNames("highway=pedestrian;area=yes", "name.pedestrian_area");
         props.createNames("highway=path", "name.path");
+
         props.createNames("highway=footway", "name.pedestrian_path");
+        // 5t ma non c'è verso di farglielo acchiappare
+        props.createNames("highway=footway;footway=crossing", "name.pedestrian_crossing");
+
         props.createNames("highway=bridleway", "name.bridleway");
         props.createNames("highway=footway;bicycle=no", "name.pedestrian_path");
 
