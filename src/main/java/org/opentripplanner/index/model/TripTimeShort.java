@@ -33,7 +33,7 @@ public class TripTimeShort {
     public FeedScopedId tripId;
     public String blockId;
     public String headsign;
-    //raf
+    //5t
     public int wheelchairAccessible = UNDEFINED ;
     public int continuousPickup;
     public int continuousDropOff;

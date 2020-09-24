@@ -618,7 +618,7 @@ public class Timetable implements Serializable {
                             if (delay == null) {
                                 newTimes.cancelArrivalTime(i);
                             } else {
-                                newTimes.updateArrivalDelay(i, delay);//raf viene propagato l'ultimo valore settato
+                                newTimes.updateArrivalDelay(i, delay);//5t viene propagato l'ultimo valore settato
                                 if (newTimes.isCanceledArrival(i)) {
                                     newTimes.unCancelArrivalTime(i);
                                 }

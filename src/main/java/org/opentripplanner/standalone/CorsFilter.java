@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
  * The Same Origin Policy states that JavaScript code (or other scripts) running on a web page may
  * not interact with resources originating from sites with a different hostname, protocol, or port
  * number.
- * 
+ *
  * We used to use JSONP ("JSON with padding") as a way to get around this. Despite being very
  * common, this is of course a big hack to defeat a security policy. Modern
  * browsers respect "Cross Origin Resource Sharing" (CORS) headers, so we
@@ -39,7 +39,7 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
                 preflightResponse.header("Access-Control-Allow-Method", "GET,POST");
             }
             // Allow caching of pre-flight options for up to an hour
-            // raf chrome max value is 600, 10 min
+            // 5t chrome max value is 600, 10 min
             //preflightResponse.header("Access-Control-Max-Age", "3600");
             preflightResponse.header("Access-Control-Max-Age", "600");
             requestContext.abortWith(preflightResponse.build());
